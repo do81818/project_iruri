@@ -233,7 +233,6 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.security-version}</version>
 		</dependency>
-
 	</dependencies>
 
 

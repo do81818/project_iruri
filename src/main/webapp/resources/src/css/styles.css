@@ -1,0 +1,131 @@
+@charset "utf-8";
+
+/* 부트스트랩은 이후 min.css 파일로 변환 후 교체 */
+/* bootstrap.bundle.js 도 동일 */
+@import "bootstrap.css";
+@import "reset.css";
+
+/* 컴포넌트 */
+@import "component/header.css";
+@import "component/footer.css";
+@import "component/card.css";
+
+/* 페이지 */
+@import "page/mainPage.css";
+@import "page/loginPage.css";
+@import "page/signUpPage.css";
+
+:root {
+  /* font-size */
+  --header-gnb-fontSize: 22px;
+  --header-infoMenu-fontSize: 12px;
+  --footer-title-fontSize: 20px;
+  --footer-normal-fontSize: 13px;
+
+  /* font-family */
+  --NanumBarunGothic: "NanumBarunGothic", sans-serif;
+  --Cafe24Ssurround: "Cafe24Ssurround", sans-serif;
+  --Cafe24SsurroundAir: "Cafe24SsurroundAir", sans-serif;
+
+  /* colors */
+  --iruri-red-color: #ff0000;
+  --iruri-yellow-color: #ffeb00;
+  --iruri-blue-color: #185abd;
+  --iruri-light-blue-color: #02a3ff;
+  --iruri-green-color: #80ff48;
+  --iruri-indigo-color: #0a1931;
+  --iruri-dark-gray-color: #666;
+  --iruri-gray-color: #999;
+  --iruri-light-gray-color: #ccc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 푸터 하단 고정 */
+html {
+  position: relative;
+  min-height: 100vh;
+}
+
+.iruri__footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: -480px;
+}
+
+@font-face {
+  font-family: "Cafe24Ssurround";
+  src: url(../font/Cafe24Ssurround.ttf);
+}
+
+@font-face {
+  font-family: "Cafe24SsurroundAir";
+  src: url(../font/Cafe24SsurroundAir.ttf);
+}
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  src: url(../font/NanumBarunGothic.ttf);
+}
+
+.show {
+  display: flex;
+}
+
+.iruri-search-icon,
+.iruri-roulette-icon,
+.iruri-login-icon,
+.iruri-logout-icon,
+.iruri-mypage-icon,
+.iruri-level-icon,
+.iruri-time-icon,
+.iruri-check-no-icon,
+.iruri-check-yes-icon {
+  display: inline-block;
+  background-size: cover;
+  width: 16px;
+  height: 16px;
+}
+
+.iruri-search-icon {
+  background-image: url("../img/icon/search.png");
+}
+
+.iruri-roulette-icon {
+  background-image: url("../img/icon/roulette.png");
+}
+
+.iruri-login-icon {
+  background-image: url("../img/icon/login.png");
+}
+
+.iruri-logout-icon {
+  background-image: url("../img/icon/logout.png");
+}
+
+.iruri-mypage-icon {
+  background-image: url("../img/icon/mypage.png");
+}
+
+.iruri-level-icon {
+  background-image: url("../img/icon/ex_level.png");
+  opacity: 0.6;
+}
+
+.iruri-time-icon {
+  background-image: url("../img/icon/ex_time.png");
+  opacity: 0.6;
+}
+
+.iruri-check-no-icon {
+  background-image: url("../img/icon/check_no.png");
+}
+
+.iruri-check-yes-icon {
+  background-image: url("../img/icon/check_yes.png");
+}
+
