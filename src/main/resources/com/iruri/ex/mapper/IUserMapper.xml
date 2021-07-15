@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.IUserMapper">
+
+	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
+		<result property="userId" column="user_id"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userNickname" column="user_nickname"/>
+		<result property="userName" column="user_name"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userSigndate" column="user_signdate"/>
+		<result property="userPoint" column="user_point"/>
+		<result property="userBlackList" column="user_blacklist"/>
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.AuthVO" id="authMap">
+		<result property="authNumber" column="auth_number"/>
+		<result property="authId" column="auth_id"/>
+		<result property="authContent" column="auth_content"/>
+		<result property="userId" column="user_id"/>
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="getIUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM 
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.user_email = #{userEmail}
+		]]>
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="signUpUser">
+		<![CDATA[
+INSERT INTO iuser
+(
+    user_id,
+    user_email,
+    user_pw,
+    user_nickname,
+    user_phone
+)
+VALUES
+(
+   	(SELECT NVL(MAX(user_id), MAX(user_id)) + 1 FROM iuser),
+    #{userEmail},
+    #{userPw}, 
+    #{userNickname}, 
+    #{userPhone}
+)    
+		]]>
+	</insert>
+
+</mapper>

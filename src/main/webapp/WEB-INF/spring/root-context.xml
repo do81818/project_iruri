@@ -26,5 +26,5 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan base-package="edu.bit.ex.mapper" />	
+	<mybatis-spring:scan base-package="com.iruri.ex.mapper" />	
 </beans>
