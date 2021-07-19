@@ -30,8 +30,53 @@
 }
 
 .gnb__item {
+  text-align: center;
+  position: relative;
   font-size: var(--header-gnb-fontSize);
 }
+
+.subMenu-container {
+  display: none;
+  position: absolute;
+  top: 20px;
+  z-index: 5;
+  width: 100%;
+  height: 146px;
+}
+
+.subMenu {
+  position: absolute;
+  top: 20px;
+  right: -25%;
+  bottom: 0;
+  z-index: 100;
+  width: calc(100% + 40px);
+  padding: 12px 8px;
+  background-color: white;
+  box-shadow: 7px 7px 13px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--iruri-blue-color);
+}
+
+.subMenu li {
+  font-family: var(--NanumBarunGothic);
+  text-align: left;
+  padding: 16px 10px;
+  font-size: 17px;
+}
+
+.subMenu li a {
+  color: var(--iruri-gray-color);
+}
+
+.subMenu li:hover {
+  background-color: var(--iruri-yellow-color);
+}
+
+.subMenu li:hover a {
+  color: var(--iruri-blue-color);
+}
+
+
 
 .gnbHoverTarget {
   position: absolute;
@@ -42,7 +87,7 @@
 
 .gnb__item,
 .gnbHoverTarget {
-  transition: all 0.35s ease-in-out;
+  transition: left 0.35s ease-in-out;
 }
 
 .header__infoMenu {

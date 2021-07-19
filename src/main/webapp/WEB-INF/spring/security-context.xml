@@ -17,7 +17,7 @@
 		<intercept-url pattern="/*" access="permitAll" />
 		
 	    <form-login login-page="/loginPage"
-		    default-target-url="/loginCheck"
+		    default-target-url="/"
 		    authentication-failure-url="/loginPage?error"
 		    username-parameter="email"
 		    password-parameter="password" />

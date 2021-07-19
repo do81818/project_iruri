@@ -25,18 +25,6 @@
 		<result property="userId" column="user_id"/>
 	</resultMap>
 	
-	<!-- 로그인 -->
-	<select id="getIUser" resultMap="iUserMap">
-		<![CDATA[
-SELECT
-	u.*, a.*
-FROM 
-	iuser u, authority a
-WHERE
-	u.user_id = a.user_id AND u.user_email = #{userEmail}
-		]]>
-	</select>
-	
 	<!-- 회원가입 -->
 	<insert id="signUpUser">
 		<![CDATA[
@@ -58,5 +46,29 @@ VALUES
 )    
 		]]>
 	</insert>
+	
+		<!-- 로그인 -->
+	<select id="getIUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM 
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.user_email = #{userEmail}
+		]]>
+	</select>
+	
+	<!-- 카카오 유저 찾기 -->
+	<select id="findSocialUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.kakao_id = #{kakaoId}
+		]]>
+	</select>
 
 </mapper>

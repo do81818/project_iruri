@@ -10,6 +10,8 @@ public interface IUserMapper {
     // 회원가입
     void signUpUser(IUserVO iUserVO);
     // 로그인
-    IUserVO getIUser(String userId);
-
+    IUserVO getIUser(String userEmail);
+    // 소셜회원 찾기
+    IUserVO findSocialUser(int socialId);
+    
 }

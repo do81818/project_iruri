@@ -21,6 +21,7 @@ import lombok.ToString;
     USER_SIGNDATE   DATE                No        sysdate   가입일
     USER_POINT      NUMBER              No        0         포인트
     USER_BLACKLIST  CHAR(1 BYTE)        No        0         블랙리스트
+    KAKAO_ID        NUMBER              YES                 카카오 아이디
  */
 
 @Getter
@@ -39,6 +40,7 @@ public class IUserVO {
     private Timestamp userSigndate;
     private int userPoint;
     private boolean userBlackList;
+    private int kakaoId;
     
     private List<AuthVO> authList;
 }

@@ -20,12 +20,11 @@ public class IUserDetailsService implements UserDetailsService {
         private IUserMapper iUserMapper;
 
         @Override
-        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
             
-            log.warn("Load User By UserName : " + username);
+            log.warn("Load User By UserName : " + userEmail);
             
-            
-            IUserVO vo = iUserMapper.getIUser(username);
+            IUserVO vo = iUserMapper.getIUser(userEmail);
             
             log.warn("queried by IUserVO mapper:" + vo);
             

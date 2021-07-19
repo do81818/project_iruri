@@ -7,10 +7,38 @@
 
   <nav class="header__gnb">
     <ul class="gnb__items">
-      <li class="gnb__item">챌린지</li>
-      <li class="gnb__item">이루리운동</li>
-      <li class="gnb__item">커뮤니티</li>
-      <li class="gnb__item">PT클래스</li>
+      <li class="gnb__item">
+        <a>챌린지</a>
+      </li>
+      <li class="gnb__item item-iruriTraining">
+        <a>이루리운동</a>
+        <div class="subMenu-container">
+          <ul class="subMenu">
+            <li>
+              <a href="#">Ai자세교정</a>
+            </li>
+            <li>
+              <a href="#">운동영상</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="gnb__item item-community">
+        <a>커뮤니티</a>
+        <div class="subMenu-container">
+          <ul class="subMenu">
+            <li>
+              <a href="#">이루리팁</a>
+            </li>
+            <li>
+              <a href="#">자유게시판</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="gnb__item">
+        <a>PT클래스</a>
+      </li>
     </ul>
   </nav>
 
@@ -58,6 +86,7 @@
     </sec:authorize>
   </div>
 </header>
+
 <div class="container search_window">
   <form:form action="${CONTEXT_PATH}" method="GET">
     <input class="search_area" placeholder="검색어를 입력하세요" />
