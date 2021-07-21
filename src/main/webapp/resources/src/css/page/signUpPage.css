@@ -102,6 +102,19 @@
    bottom: 10px;
 }
 
+.signUp__emailAuthBtn {
+  display: none;
+  justify-content: flex-end;
+}
+
+.signUp__emailAuthBtn #emailAuthKey {
+  width: 600px;
+}
+
+.signUp__emailAuthBtn .authBtn {
+  width: 150px;
+}
+
 .signUp__agree {
   display: flex;
   margin: 20px 0px 0px 140px;

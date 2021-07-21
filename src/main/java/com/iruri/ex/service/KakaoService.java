@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.iruri.ex.security.ApiKeys;
 import com.iruri.ex.security.IUserDetailsService;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.KakaoAuth;
@@ -31,7 +32,7 @@ public class KakaoService {
     @Autowired
     IUserDetailsService iUserDetailsService;
 
-    private final static String K_CLIENT_ID = "d575d2c5d3ba998a1b5e51f9f6a24072";
+    private final static String K_CLIENT_ID = ApiKeys.K_CLIENT_ID;
     private final static String K_REDIRECT_URI = "http://localhost:8282/ex/auth/kakao/callback";
     
     public String getAuthorizationUrl() {

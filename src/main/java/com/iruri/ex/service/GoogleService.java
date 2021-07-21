@@ -4,22 +4,17 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,11 +27,11 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.iruri.ex.security.ApiKeys;
 import com.iruri.ex.security.IUserDetailsService;
 import com.iruri.ex.vo.GoogleAuth;
 import com.iruri.ex.vo.GoogleProfile;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.NaverProfile;
 
 import lombok.extern.log4j.Log4j;
 
@@ -49,7 +44,7 @@ public class GoogleService {
     @Autowired
     IUserDetailsService iUserDetailsService;
     
-    private final static String G_CLIENT_ID = "245140385098-t3nm98ju7aq730v7mj0non5br41l51s3.apps.googleusercontent.com";
+    private final static String G_CLIENT_ID = ApiKeys.G_CLIENT_ID;
     private final static String G_REDIRECT_URI = "http://localhost:8282/ex/auth/google/callback";
     
     public String getAuthorizationUrl() {
@@ -68,7 +63,7 @@ public class GoogleService {
     }
     
     private final static String G_TOKEN_URI = "https://www.googleapis.com/oauth2/v4/token";
-    private final static String G_CLIENT_SECRET = "7TikRAw0PtSawGMLwyOhCqLn"; // 클라이언트 시크릿은 커밋하면 리얼 븅싄
+    private final static String G_CLIENT_SECRET = ApiKeys.G_CLIENT_SECRET;
     
     public GoogleAuth getGoogleTokenInfo(String code) {
         

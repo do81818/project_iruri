@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.iruri.ex.security.ApiKeys;
 import com.iruri.ex.security.IUserDetailsService;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.NaverAuth;
@@ -34,7 +35,7 @@ public class NaverService {
     @Autowired
     IUserDetailsService iUserDetailsService;
     
-    private final static String N_CLIENT_ID = "C0EmkdVZxGINvoALrSGN";
+    private final static String N_CLIENT_ID = ApiKeys.N_CLIENT_ID;
     private final static String N_REDIRECT_URI = "http://localhost:8282/ex/auth/naver/callback";
 
     public String getAuthorizationUrl() {
@@ -49,7 +50,7 @@ public class NaverService {
     }
     
     private final static String N_TOKEN_URI = "https://nid.naver.com/oauth2.0/token";
-    private final static String N_CLIENT_SECRET = "fWpmifbWYr"; // 이건 진짜 깃허브에 올리면 ㄹㅇ 븅싄
+    private final static String N_CLIENT_SECRET = ApiKeys.N_CLIENT_SECRET;
     
     public NaverAuth getNaverTokenInfo(String code, String state) {
         

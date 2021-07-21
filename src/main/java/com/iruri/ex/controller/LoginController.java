@@ -1,6 +1,8 @@
 package com.iruri.ex.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iruri.ex.security.UserRegService;
 import com.iruri.ex.service.GoogleService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.KakaoService;
@@ -29,6 +32,8 @@ public class LoginController {
     GoogleService googleService;
     @Autowired
     IUserService iuserService;
+    @Autowired
+    UserRegService regService;
     
 
     // 로그인 페이지 이동
@@ -51,13 +56,28 @@ public class LoginController {
         return "/signUp";
     }
     
+    // 유저 닉네임 중복체크
     @GetMapping("/signUp/nicknameCheck")
     @ResponseBody
     public int signUpNicknameCheck(@RequestParam("userNickname") String userNickname) {
-        log.info(userNickname);
         
+        return regService.userNicknameCheck(userNickname);
+    }
+    
+    // 유저 이메일 중복체크
+    @GetMapping("/signUp/emailCheck")
+    @ResponseBody
+    public int signUpEmailCheck(@RequestParam("userEmail") String userEmail) {
+
+        log.info(userEmail);
         
-        return 1;
+        int validateNumber = regService.userEmailCheck(userEmail);
+        
+        if(validateNumber == 0) {
+            return 0;
+        }
+        
+        return validateNumber; 
     }
     
     // 회원가입 폼 정보 전달

@@ -44,34 +44,41 @@ function emailValidateReg() {
     if(!EMAIL_REGEXP.test(email.value)) {
       validateMessage.innerText = '이메일 주소 양식에 맞게 작성해주세요';
       validateMessage.style.display = 'block';
+      document.querySelector('.signUp__emailAuthBtn').style.display = 'none';
       
       if(email.value === '@' || form2.value === '') {
         validateMessage.style.display = 'none';  
+      	document.querySelector('.signUp__emailAuthBtn').style.display = 'none';
       }
     } else {
       validateMessage.style.display = 'none';
+      emailDuplicationValidate();
     }
   });
 };
 
 // 이메일 중복 검증
-// 버튼 눌렀을때 이벤트 발생
 function emailDuplicationValidate() {
-  // let emailCheck = document.querySelector('.signUp__emailForm .validateCheck');
+	const validateMessage = document.querySelector('.signUp__emailForm .validateCheck');
 
-  // result.addEventListener('click', () => {
-  //   let userEmail = email.value;
-  //   $.ajax({
-  //     url: '${CONTEXT_PATH}/user/emailCheck?userEmail=' + userEmail,
-  //     type: 'get',
-  //     success: function(data) {
-  //       if(data == 1) {
-  //         emailCheck.innerText = '사용중인 이메일 입니다';
-  //         emailCheck.style.display = 'block';
-  //       }
-  //     }
-  //   })
-  // });
+	const authBtn = document.querySelector('.authBtn');
+	const emailInput = email.value;
+	
+	fetch("signUp/emailCheck?userEmail=" + emailInput)
+	.then(data => data.text())
+	.then(number => {
+		console.log(number);
+	
+		if(number === '1') {
+			validateMessage.innerText = '사용중인 이메일입니다';
+			validateMessage.style.display = 'block';
+		} else {
+			validateMessage.style.display = 'none';
+			document.querySelector('.signUp__emailAuthBtn').style.display = 'block';
+		}
+});
+	
+	
 
   // 인증 버튼을 눌렀을 시
   // 1. Ajax를 이용해서 DB 중복 검사 후 이메일이 중복일 경우 "동일한 메일주소가 있습니다" 경고 메시지 출력
@@ -137,7 +144,7 @@ function nicknameValidateReg() {
 
   const nicknameForm = document.querySelector('.signUp__nicknameForm');
 
-  nicknameForm.addEventListener('change', () => {
+  nicknameForm.addEventListener('input', () => {
     const nicknameInput = nicknameForm.querySelector('#userNickname');
     const validateMessage = nicknameForm.querySelector('.validateCheck');
     
@@ -149,6 +156,7 @@ function nicknameValidateReg() {
     } else if (nicknameInput === '') {
       validateMessage.style.display = 'none';
     } else {
+   	  validateMessage.style.display = 'none';
       nicknameDuplicationValidate();
     }
   });
@@ -160,13 +168,20 @@ function nicknameDuplicationValidate() {
 	const nicknameForm = document.querySelector('.signUp__nicknameForm');
 	
 	const nicknameInput = nicknameForm.querySelector('#userNickname').value;
+	const validateMessage = nicknameForm.querySelector('.validateCheck');
 	
 	fetch("signUp/nicknameCheck?userNickname=" + nicknameInput)
-		.then(data => { console.log(data.text) });
+		.then(data => data.text())
+		.then(number => {
+			if(number === '1') {
+				validateMessage.innerText = '사용중인 닉네임입니다.';
+				validateMessage.style.display = 'block';
+			} else {
+				validateMessage.style.display = 'none';
+			}
+		});
 }
 
-// - 닉네임 중복확인을 한다.
-// - 중복일 때 "사용중인 닉네임입니다"라는 경고문구가 입력칸 옆에 뜬다.
 
 // 이후 회원가입 완료 버튼을 눌렀을때 필수 입력칸이 비어있거나 올바르지 못한 값이라면
 // '필수 내용을 입력해주세요' 라는 경고메시지를 모달로 출력
@@ -178,7 +193,6 @@ function nicknameDuplicationValidate() {
 function init() {
   userEmailInputCombine();
   emailValidateReg();
-  emailDuplicationValidate();
   passwordValidateReg();
   passwordCheckValidate();
   nicknameValidateReg();

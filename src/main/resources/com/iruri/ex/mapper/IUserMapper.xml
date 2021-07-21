@@ -95,10 +95,30 @@ WHERE
 		]]>
 	</select>
 	
-	<select id="checkOverNickname">
-	
+	<!-- 유저 닉네임 중복 체크 -->
+	<select id="checkOverNickname" parameterType="String" resultType="int">
+		<![CDATA[
+SELECT
+	count(*)
+FROM
+	iuser
+WHERE
+	user_nickname = #{userNickname}
+		]]>
 	</select>
 	
+	<!-- 유저 이메일 중복 체크 -->
+	<select id="checkOverEmail" parameterType="String" resultType="int">
+		<![CDATA[
+SELECT
+	count(*)
+FROM
+	iuser
+WHERE
+	user_email = #{userEmail}
+		]]>
+	</select>
+
 	<!-- 7. 필요한 데이터를 추출할 sql문을 작성한다. -->
 	<!--  ![CDATA] 는 아래 코드를 xml문이 아닌 sql문으로 인식하게 하는 것이다.-->
 	<select id="selectOne" resultMap="iUserMap">

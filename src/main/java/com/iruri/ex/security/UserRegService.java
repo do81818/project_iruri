@@ -15,4 +15,9 @@ public class UserRegService {
             
             return iUserMapper.checkOverNickname(userNickname);
         }
+        
+        public int userEmailCheck(String userEmail) {
+            
+            return iUserMapper.checkOverEmail(userEmail);
+        }
 }

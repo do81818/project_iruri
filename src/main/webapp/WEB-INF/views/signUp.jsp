@@ -36,6 +36,11 @@
             </select>
             <div class="validateCheck"></div>
           </div>
+          
+          <div class="signUp__emailAuthBtn">
+            <input type="text" id="emailAuthKey">
+            <input type="button" class="authBtn" value="인증하기">
+          </div>
 
           <div class="signUp__passwordForm">
             <label for="userPw">비밀번호</label>

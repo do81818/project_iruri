@@ -17,9 +17,8 @@ public interface IUserMapper {
     IUserVO findGoogleUser(String socialEmail);
     // 닉네임 중복 체크
     int checkOverNickname(String userNickname);
-    
-    
-    
+    // 이메일 중복 체크
+    int checkOverEmail(String userEmail);
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     IUserVO selectOne(String userEmail);
     
