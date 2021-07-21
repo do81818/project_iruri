@@ -56,7 +56,8 @@ public class LoginController {
     public int signUpNicknameCheck(@RequestParam("userNickname") String userNickname) {
         log.info(userNickname);
         
-        return "SUCCESS";
+        
+        return 1;
     }
     
     // 회원가입 폼 정보 전달

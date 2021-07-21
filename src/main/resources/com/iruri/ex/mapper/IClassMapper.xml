@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.IClassMapper">
+
+	<resultMap type="com.iruri.ex.vo.IClassVO" id="iClassMap">
+		<result property="classId" column="CLASS_ID"/>
+		<result property="classTitle" column="CLASS_TITLE"/>
+		<result property="classContent" column="CLASS_CONTENT"/>
+		<result property="classGoal" column="CLASS_GOAL"/>
+		<result property="classExerciseCount" column="CLASS_EXERCISECOUNT"/>
+		<result property="classStartDate" column="CLASS_STARTDATE"/>
+		<result property="classEndDate" column="CLASS_ENDDATE"/>
+		<result property="classImage" column="CLASS_IMAGE"/>
+		<result property="classLike" column="CLASS_LIKE"/>
+		<result property="classState" column="CLASS_STATE"/>
+		<result property="classHit" column="CLASS_HIT"/>
+		<result property="classJoinMember" column="CLASS_JOINMEMBER"/>
+		<result property="classTrainerInfo" column="CLASS_TRAINERINFO"/>
+		<result property="classTotalMember" column="CLASS_TOTALMEMBER"/>
+		<result property="classPrice" column="CLASS_PRICE"/>
+		<result property="classNeed" column="CLASS_NEED"/>
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="classLevel" column="CLASS_LEVEL"/>
+	</resultMap>
+
+	
+	
+	<select id="selectAll" resultMap="iClassMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM 
+			iclass
+		WHERE
+			user_id = #{userId}
+		]]>
+	</select>
+
+</mapper>
