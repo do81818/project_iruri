@@ -22,7 +22,7 @@
           <h3 class="login__title">로그인</h3>
 
           <c:url value="/login" var="loginUrl" />
-          <form:form name="f" action="${loginUrl}" method="POST">
+          <form:form name="f" action="${loginUrl}" method="POST" id="loginForm">
             <div class="login-email">
               <label for="email">이메일</label>
               <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요"/>
@@ -59,11 +59,11 @@
               <i class="kakao-icon"></i>
               <span>카카오아이디로 로그인</span>
             </a>
-            <a href="#">
+            <a href="${naverUrl}">
               <i class="naver-icon"></i>
               <span>네이버아이디로 로그인</span>
             </a>
-            <a href="#">
+            <a href="${googleUrl}">
               <i class="google-icon"></i>
               <span>구글아이디로 로그인</span>
             </a>

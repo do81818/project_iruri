@@ -12,6 +12,10 @@ public interface IUserMapper {
     // 로그인
     IUserVO getIUser(String userEmail);
     // 소셜회원 찾기
-    IUserVO findSocialUser(int socialId);
+    IUserVO findKakaoUser(String socialEmail);
+    IUserVO findNaverUser(String socialEmail);
+    IUserVO findGoogleUser(String socialEmail);
+    // 닉네임 중복 체크
+    int checkOverNickname(String userNickname);
     
 }

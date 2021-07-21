@@ -26,7 +26,7 @@
             <label for="userEmail">email</label>
             <input type="text" id="userEmail1" autocomplete="off" />
             <span>@</span>
-            <input type="text" id="userEmail2" autocomplete="off"/>
+            <input type="text" id="userEmail2" autocomplete="off" />
             <input type="text" id="userEmail" name="userEmail" />
             <select class="email__select">
               <option value="">직접 입력하기</option>
@@ -34,28 +34,32 @@
               <option value="hanmail.com">hanmail.com</option>
               <option value="gmail.com">gmail.com</option>
             </select>
+            <div class="validateCheck"></div>
           </div>
 
           <div class="signUp__passwordForm">
             <label for="userPw">비밀번호</label>
             <input type="password" id="userPw" name="userPw" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off" />
+            <div class="validateCheck"></div>
           </div>
 
           <div class="signUp__passwordCheckForm">
             <label for="userPasswordCheck">비밀번호 확인</label>
             <input type="password" id="userPasswordCheck" autocomplete="off"/>
+            <div class="validateCheck"></div>
           </div>
 
           <div class="signUp__nicknameForm">
             <label for="userNickname">닉네임</label>
-            <input type="text" id="userNickname" name="userNickname" placeholder="10자 이내 한글, 영문 대소문자, 숫자 사용" autocomplete="off"  />
+            <input type="text" id="userNickname" name="userNickname" placeholder="10자 이내 한글, 영문 대소문자, 숫자 사용" autocomplete="off" />
+            <div class="validateCheck"></div>
           </div>
-
+          
           <div class="signUp__phoneForm">
             <label for="userPhone">전화번호</label>
             <input type="text" id="userPhone" name="userPhone" placeholder="'-'을 제외한 숫자만 입력" autocomplete="off" />
+            <div class="validateCheck"></div>
           </div>
-          <span>*'-'을 제외한 숫자만 입력하세요</span>
 
           <div>
             <div class="signUp__agree">
@@ -82,7 +86,7 @@
             </div>
 
             <div>
-              <input type="submit" value="로그인" />
+              <input type="submit" value="회원가입" />
             </div>
           </div>
         </form:form>

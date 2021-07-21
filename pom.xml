@@ -193,6 +193,19 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- httpcore -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.6</version>
+        </dependency>
+        
+        <!-- httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>       
 
 		<!-- 자바 객체를 JSON으로 -->
 		<dependency>
@@ -233,7 +246,7 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.security-version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>

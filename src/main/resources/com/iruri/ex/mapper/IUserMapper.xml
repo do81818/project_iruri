@@ -60,15 +60,43 @@ WHERE
 	</select>
 	
 	<!-- 카카오 유저 찾기 -->
-	<select id="findSocialUser" resultMap="iUserMap">
+	<select id="findKakaoUser" resultMap="iUserMap">
 		<![CDATA[
 SELECT
 	u.*, a.*
 FROM
 	iuser u, authority a
 WHERE
-	u.user_id = a.user_id AND u.kakao_id = #{kakaoId}
+	u.user_id = a.user_id AND u.kakao_id = #{socialEmail}
 		]]>
+	</select>
+	
+	<!-- 네이버 유저 찾기 -->
+	<select id="findNaverUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.naver_id = #{socialEmail}
+		]]>
+	</select>
+	
+	<!-- 구글 유저 찾기 -->
+	<select id="findGoogleUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.google_id = #{socialEmail}
+		]]>
+	</select>
+	
+	<select id="checkOverNickname">
+	
 	</select>
 
 </mapper>
