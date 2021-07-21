@@ -14,6 +14,8 @@
 @import "page/mainPage.css";
 @import "page/loginPage.css";
 @import "page/signUpPage.css";
+@import "page/c_main_styles.css";
+@import "page/c_make_form_styles.css";
 
 :root {
   /* font-size */
