@@ -29,7 +29,6 @@ public class MypageTrainerController {
     IClassService iClassService;
 
 	// 마이페이지로 이동
-	// 메인 페이지 이동
     @RequestMapping("/mypage/trainer")
     public String mypageT(Principal principal,Model model) {
         log.info("main() ... ");

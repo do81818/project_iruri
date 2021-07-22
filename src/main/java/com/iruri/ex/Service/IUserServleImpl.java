@@ -15,6 +15,7 @@ public class IUserServleImpl implements IUserService {
 //    @Autowired
 //    private BCryptPasswordEncoder passEncoder;
     
+    // 매퍼와 연결해준다.
     @Autowired
     private IUserMapper iUserMapper;
     
@@ -41,9 +42,9 @@ public class IUserServleImpl implements IUserService {
     
     
     
+    // @Override 우리가 정의한거랑 다를 때 오류를 내준다 
     
-    
-    // 4. 서비스에서 만든 메소드를 구현한다. \
+    // 4. 서비스에서 만든 메소드를 구현한다. 
     // 5. 매퍼에 메소드를 만든 후 파라미터로 보내준다
     // 8. 메퍼에서 받은 객체를 받는다. 
     // 9. 컨트롤러에서 사용해주기 위해 7번으을 리턴해준다
@@ -51,9 +52,12 @@ public class IUserServleImpl implements IUserService {
     public IUserVO selectOne(String userEmail) {
         
         IUserVO vo = iUserMapper.selectOne(userEmail);
+        
+        // null이면 exception 이 안뜨고 null 을 리턴? 
         if(vo == null) {
             return null;
         }
+         
         return vo;
     }
 
