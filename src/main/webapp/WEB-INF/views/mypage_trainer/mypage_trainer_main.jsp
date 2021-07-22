@@ -40,7 +40,7 @@
 						</div>
 						<div class="user_detail">
 							<c:if test="${user.authList[0].authContent eq 'ROLE_TRAINER'}">
-								<div>트레이너</div>
+								<div>트레이너입니다</div>
 							</c:if>
 							<div>${user.userEmail}</div>
 							
