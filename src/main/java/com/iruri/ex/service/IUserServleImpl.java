@@ -1,4 +1,4 @@
-package com.iruri.ex.Service;
+package com.iruri.ex.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,27 @@ public class IUserServleImpl implements IUserService {
         iUserMapper.signUpUser(iUserVO);
     }
     
-    public IUserVO findSocialUser(int socialId) {
+    public IUserVO findKakaoUser(String socialEmail) {
         
-        IUserVO vo = iUserMapper.findSocialUser(socialId);
+        IUserVO vo = iUserMapper.findKakaoUser(socialEmail);
+        if(vo == null) {
+            return null;
+        }
+        return vo;
+    }
+    
+    public IUserVO findNaverUser(String socialEmail) {
+        
+        IUserVO vo = iUserMapper.findNaverUser(socialEmail);
+        if(vo == null) {
+            return null;
+        }
+        return vo;
+    }
+    
+    public IUserVO findGoogleUser(String socialEmail) {
+        
+        IUserVO vo = iUserMapper.findGoogleUser(socialEmail);
         if(vo == null) {
             return null;
         }

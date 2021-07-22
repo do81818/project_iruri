@@ -1,9 +1,8 @@
-package com.iruri.ex.Service;
+package com.iruri.ex.service;
 
 import java.util.List;
 
 import com.iruri.ex.vo.IClassVO;
-import com.iruri.ex.vo.IUserVO;
 
 public interface IClassService {
     

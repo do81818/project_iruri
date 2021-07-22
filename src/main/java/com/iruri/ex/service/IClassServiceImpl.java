@@ -1,4 +1,4 @@
-package com.iruri.ex.Service;
+package com.iruri.ex.service;
 
 import java.util.List;
 

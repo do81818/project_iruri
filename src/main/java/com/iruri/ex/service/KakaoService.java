@@ -1,4 +1,4 @@
-package com.iruri.ex.Service;
+package com.iruri.ex.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.iruri.ex.security.ApiKeys;
 import com.iruri.ex.security.IUserDetailsService;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.KakaoAuth;
@@ -31,7 +32,7 @@ public class KakaoService {
     @Autowired
     IUserDetailsService iUserDetailsService;
 
-    private final static String K_CLIENT_ID = "d575d2c5d3ba998a1b5e51f9f6a24072";
+    private final static String K_CLIENT_ID = ApiKeys.K_CLIENT_ID;
     private final static String K_REDIRECT_URI = "http://localhost:8282/ex/auth/kakao/callback";
     
     public String getAuthorizationUrl() {
@@ -103,20 +104,17 @@ public class KakaoService {
      }
      
      public void setContextHolder(String code) {
-         log.info("KakaoService: " + code);
+         log.info("setContextHolder: " + code);
          
          KakaoAuth kakaoAuth = getKakaoTokenInfo(code);
          KakaoProfile profile = getKakaoProfile(kakaoAuth.getAccess_token());
-     
+         
          // 1. 사용자 로그인
-         IUserVO originUser = iUserService.findSocialUser(profile.getId());
-  
+         IUserVO originUser = iUserService.findKakaoUser(profile.getKakao_account().getEmail());
          // 2. 사용자 정보를 받아 UserDetailsService 에 전달해서 UserDetails 객체 생성
          UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());
-         
          // 3. 해당 객체를 Authentication 에 전달하여 인증함
          Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-         
          // 4. 인증된 정보를 Security Context에 전달하여 "인증된 유저" 로 정의함
          SecurityContextHolder.getContext().setAuthentication(authentication);
      }
