@@ -15,15 +15,12 @@
 @import "page/mainPage.css";
 @import "page/loginPage.css";
 @import "page/signUpPage.css";
-<<<<<<< HEAD
+@import "page/c_main_styles.css";
+@import "page/c_make_form_styles.css";
 @import "page/mypage_trainer.css";
-
-
-=======
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
->>>>>>> d2caae091726b960e1ccc9f6cfe6a2d897896e53
 
 :root {
   /* font-size */

@@ -1,0 +1,577 @@
+@charset "utf-8";
+
+/*----------공통사항---------*/
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url('../font/NanumBarunGothic.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('../font/Cafe24Ssurround.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('../font/Cafe24SsurroundAir.ttf');
+    /* format('truetype'); */
+}
+
+ :root {
+    /* font-size */
+    --header-gnb-font-size: 22px;
+    --header-side-nav-font-size: 12px;
+    --footer-title-font-size: 20px;
+    --footer-normal-font-size: 13px;
+    /* colors */
+    --iruri-red-color: #ff0000;
+    --iruri-yellow-color: #ffeb00;
+    --iruri-blue-color: #185abd;
+    --iruri-light-blue-color: #02a3ff;
+    --iruri-green-color: #80ff48;
+    --iruri-indigo-color: #0a1931;
+    --iruri-dark-gray-color: #666;
+    --iruri-gray-color: #999;
+    --iruri-light-gray-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NanumBarunGothic', sans-serif;
+}
+
+.c_container {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+
+/*---------------------------------------------*/
+
+div {
+    display: block;
+}
+
+.c_detail_main,
+.c_detail_maininfo {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+
+/*챌린지 대표이미지*/
+
+.c_detail_start {
+    margin-top: 80px;
+}
+
+
+/*챌린지 상세페이지 대표 이미지*/
+
+.c_detail_img {
+    width: 537px;
+    height: 490px;
+    background: url('/ex/resources/src/img/icon/537-490.png') no-repeat;
+    border-radius: 50px;
+    margin-right: 50px;
+    float: left;
+    margin-bottom: 127px;
+}
+
+
+/*이미지 옆 정보 부분*/
+
+.c_detail_info1 {
+    float: left;
+    width: 557px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--iruri-blue-color);
+}
+
+.c_detail_info2 {
+    float: left;
+    margin-top: 16px;
+    width: 557px;
+    padding: 10px 0;
+    height: 226px;
+}
+
+
+/*챌린지, 클래스 미니 카테고리*/
+
+.c_mini_subject {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    margin-bottom: 18px;
+}
+
+
+/*챌린지 큰 제목*/
+
+.c_subject {
+    font-family: 'Cafe24Ssurround';
+    font-size: 32px;
+    color: var(--iruri-blue-color);
+    margin-bottom: 18px;
+}
+
+
+/*챌린지 하트수*/
+
+.c_heart_count {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    color: var(--iruri-red-color);
+    margin-bottom: 14px;
+}
+
+.iruri_heart_icon {
+    display: inline-block;
+    background-size: cover;
+    height: 15px;
+    width: 16px;
+    background: url('/ex/resources/src/img/icon/heart_red.png') center/16px no-repeat;
+}
+
+
+/*챌린지 목표*/
+
+.c_goal {
+    height: 100px;
+    font-size: 16px;
+    line-height: 25px;
+    color: var(--iruri-dark-gray-color);
+}
+
+
+/*챌린지 상단(정보)*/
+
+.info_ul {
+    float: left;
+}
+
+.c_mini_info1 {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 14px;
+    color: var(--iruri-gray-color);
+    padding: 5px 0;
+    width: 85px;
+}
+
+.c_mini_info2 {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 14px;
+    color: var(--iruri-blue-color);
+    padding: 5px 0;
+    width: 85px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+
+/*참여하기 버튼*/
+
+.c_join_button {
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    width: 176px;
+    height: 55px;
+    text-align: center;
+    line-height: 55px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 27px;
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top: 150px;
+}
+
+
+/*상세정보, 인증하기 , 커뮤니티*/
+
+.c_menu {
+    display: flex;
+    width: 1200px;
+    margin: 0 auto;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 60;
+    border-bottom: 1px solid var(--iruri-dark-gray-color);
+}
+
+.c_menu ul {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.c_menu a {
+    text-decoration: none;
+}
+
+.c_menu ul li {
+    width: 20%;
+    height: 70px;
+    display: inline-block;
+    font-size: 27px;
+    line-height: 70px;
+    font-family: 'Cafe24SsurroundAir';
+    color: var(--iruri-indigo-color);
+}
+
+
+/*메뉴바 스티키*/
+
+.c_menu.sticky {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    background: var(--iruri-yellow-color);
+    color: var(--iruri-indigo-color);
+}
+
+.c_menu.sticky ul {
+    text-align: center;
+    width: 1200px;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.c_menu.sticky ul li {
+    width: 240px;
+    height: 70px;
+    display: inline-block;
+    font-size: 27px;
+    line-height: 70px;
+}
+
+
+/*챌린지 상세정보*/
+
+.c_detail_maininfo {
+    height: auto;
+    display: flex;
+    width: 1200px;
+}
+
+.c_main_info {
+    width: 1200px;
+    padding: 0 60px;
+    font-size: 20px;
+    color: var(--iruri-dark-gray-color);
+    line-height: 35px;
+    height: auto;
+    margin-bottom: 116px;
+    margin-top: 76px;
+}
+
+
+/*밑줄효과*/
+
+.c_menu_hover {
+    position: absolute;
+    border-bottom: 4px solid transparent;
+    z-index: -1;
+    transform: translateX(-60px);
+}
+
+.c_menu_hover.sticky {
+    position: absolute;
+    border-bottom: 4px solid transparent;
+    z-index: 70;
+    transform: translateX(-60px);
+}
+
+.c_menu li,
+.c_menu_hover {
+    transition: all 0.35s ease-in-out;
+}
+
+
+/*인증사진 리스트*/
+
+.c_certify {
+    background-color: var(--iruri-blue-color);
+    padding-top: 118px;
+}
+
+
+/*인증글 총 수 */
+
+.c_certify_total {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 8px;
+    left: 100%;
+    transform: translate(-100%);
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 17px;
+    border: 1px solid white;
+    padding: 8px 16px;
+}
+
+
+/*인증사진 리스트*/
+
+.c_certify_img_list {
+    padding-bottom: 85px;
+    display: inline-block;
+}
+
+.c_certify_img {
+    margin-bottom: 36px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.c_certify_img_list div {
+    display: inline-block;
+    border: none;
+    width: 270px;
+    height: 270px;
+    margin: 0 36px 36px 0;
+}
+
+.c_certify_img_list div img {
+    border-radius: 30px;
+}
+
+.c_certify_img_list div:nth-of-type(4n) {
+    margin: 0 0 36px 0;
+}
+
+
+/*페이징(인증글, 화살표 색 다름)*/
+
+.page_nation,
+.page_nation_certify {
+    display: flex;
+    width: 100%;
+    padding-bottom: 85px;
+    justify-content: center;
+}
+
+.page_nation a,
+.page_nation_certify a {
+    display: block;
+    margin: 0 10px;
+    float: left;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    text-decoration: none;
+}
+
+.page_nation_certify .prev {
+    position: relative;
+    top: 9px;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_left_light_blue.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-right: 7px;
+}
+
+.page_nation_certify .next {
+    position: relative;
+    top: 9px;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_right_light_blue.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-left: 7px;
+}
+
+.page_nation .prev {
+    position: relative;
+    top: 9px;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_left.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-right: 7px;
+}
+
+.page_nation .next {
+    position: relative;
+    top: 9px;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_right.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-left: 7px;
+}
+
+.page_nation a.active,
+.page_nation_certify a.active {
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    border-radius: 18px;
+}
+
+
+/* 댓글갯수 */
+
+table,
+tr,
+td {
+    border: 0;
+    border-collapse: collapse;
+    clear: both;
+}
+
+.c_before_reply {
+    padding: 85px 0;
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+.reply_count {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 8px;
+    left: 100%;
+    transform: translate(-100%);
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--iruri-blue-color);
+    border-radius: 17px;
+    border: 1px solid var(--iruri-blue-color);
+    padding: 8px 16px;
+}
+
+.reply_table td:nth-of-type(1),
+.reply_table td:nth-of-type(2) {
+    padding: 23px 35px;
+    border-top: 1px solid var(--iruri-light-gray-color);
+    border-bottom: 1px solid var(--iruri-light-gray-color);
+}
+
+.reply_nickname {
+    width: 145px;
+    vertical-align: top;
+    color: var(--iruri-indigo-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reply_content {
+    max-width: 100%;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--iruri-dark-gray-color);
+    line-height: 25px;
+}
+
+.reply_date {
+    font-size: 14px;
+    color: var(--iruri-gray-color);
+}
+
+
+/*챌린지 참여 확인 모달*/
+
+#c_parti_modal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.c_parti_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: #fff;
+    padding: 10px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+    position: fixed;
+}
+
+.c_parti_modal_content {
+    padding: 44px 40px;
+}
+
+.c_parti_modal_content>form>ul {
+    list-style: none;
+    font-size: 16px;
+    line-height: 25px;
+    position: relative;
+    text-align: center;
+}
+
+
+/*취소, 개설 버튼*/
+
+.c_parti_modal_button {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.c_parti_modal_button button {
+    width: 100px;
+    height: 55px;
+    border-radius: 27px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 22px 0 22px;
+}
+
+.c_parti_modal_cancle {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+.c_parti_modal_submit {
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+}
