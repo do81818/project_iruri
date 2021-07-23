@@ -16,4 +16,6 @@ public interface IClassMapper {
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     List<IClassVO> selectAll(int userId);
     
+    //챌린지 개설 폼
+    void insertChallenge(IClassVO iClassVO);
 }
