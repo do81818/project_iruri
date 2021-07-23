@@ -24,4 +24,8 @@ public interface IUserMapper {
     IUserVO selectOne(String userEmail);
     // 파라미터로 뭘가져올지 써준다.
     
+    // 동훈님설명
+    // 6. 메퍼에서 메소드를 만든다. serviceImpl에서 받는 메소드 이다
+	IUserVO selectOne(String userEmail);
+    
 }
