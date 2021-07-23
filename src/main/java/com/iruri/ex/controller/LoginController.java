@@ -1,5 +1,15 @@
 package com.iruri.ex.controller;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -74,6 +84,41 @@ public class LoginController {
         int validateNumber = regService.userEmailCheck(userEmail);
         
         if(validateNumber == 0) {
+            
+            String host = "smtp.naver.com";
+            String user = "do81818@naver.com";
+            String password = "dkffltldkzltm!23";
+            
+            Properties prop = new Properties();
+            prop.put("mail.smtp.host", host);
+            prop.put("mail.smtp.port", 587);
+            prop.put("mail.smtp.auth", "true");
+            
+            Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(user, password);
+                }
+            });
+            
+            try {
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(user));
+
+                // 수신자 메일 주소
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress("do81818@gmail.com"));
+                
+                // 매일 제목
+                message.setSubject("제목을 입력하세요");
+                // 메일 내용
+                message.setText("내용을 입력하세요");
+                
+                Transport.send(message);
+                log.info("이메일을 보냈습니다.");
+                
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            
             return 0;
         }
         
