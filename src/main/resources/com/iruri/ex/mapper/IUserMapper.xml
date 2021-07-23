@@ -133,16 +133,8 @@ WHERE
 		]]>
 	</select>
 	
-	<!-- 7.필요한 데이터 가져오기 -->
-	<select id="selectOne" resultMap="iUserMap">
-		<![CDATA[
-		SELECT
-	u.*, a.*
-FROM 
-	iuser u, authority a
-WHERE
-	u.user_id = a.user_id AND u.user_email = #{userEmail}
-		]]>
-	</select>
+	
+
+	
 
 </mapper>

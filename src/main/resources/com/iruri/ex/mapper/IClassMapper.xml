@@ -38,5 +38,18 @@
 			user_id = #{userId}
 		]]>
 	</select>
+	
+	<select id="classcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+		WHERE
+			user_id = #{userId} 
+		
+			
+		]]> 
+	</select>
 
 </mapper>
