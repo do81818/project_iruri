@@ -11,8 +11,8 @@
   <head>
      <%@ include file="../include/static.jsp" %> 
     <title>마이페이지 메인</title> 
-    <script src="${RESOURCES_PATH}/src/js/mypage_main.js" defer></script>
-    <script src="${RESOURCES_PATH}/src/js/mypage_chart.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/mypage_user_main.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/mypage_user_chart.js" defer></script>
   	
        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -28,7 +28,7 @@
   <div class="container content">
     <div class="m_information_box">
       <div id = "m_userinformation_box">
-        <div id="m_nickname">루리
+        <div id="m_nickname">   <p>${user.userNickname}</p>
         <button class ="m_information_change">정보수정</button>
         
       </div>
@@ -63,10 +63,10 @@
                 <li class="m_gender">키 </li>
                 <li class="m_gender">몸무게 </li>
               
-                <li class="m_usergender">여자</li>
-                <li class="m_usergender">26세</li>
-                <li class="m_usergender">168.4</li>
-                <li class="m_usergender">54kg</li>
+                <li class="m_usergender">${userinfoList[0].userGender}</li>
+                <li class="m_usergender">${userinfoList[0].userBirth}</li>
+                <li class="m_usergender">${userinfoList[0].userHeight}</li>
+                <li class="m_usergender">${userinfoList[0].userWeight}</li>
               </ul>
             </div>
           </div>

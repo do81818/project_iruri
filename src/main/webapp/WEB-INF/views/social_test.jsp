@@ -15,12 +15,18 @@
     <script src="${RESOURCES_PATH}/src/js/headerHover.js" defer></script>
   </head>
   <body>
-    <%@ include file="include/headerTemplate.jsp" %>
+  
+<%--   <%@ include file="include/headerTemplate.jsp" %>
     <div class="iruri__wrapper">
       <h1>카카오 프로파일</h1>      
         <img class="profile_img" src="${user.kakao_account.profile.thumbnail_image_url}">
         <h2 class="profile_nickname">${user.kakao_account.profile.nickname}</h2>\
     </div>
-    <%@ include file="include/footerTemplate.jsp" %>
+    <%@ include file="include/footerTemplate.jsp" %> --%>
+    
+    
+
+    
+    
 </body>
 </html>

@@ -16,6 +16,8 @@ public class IUserServleImpl implements IUserService {
 //    private BCryptPasswordEncoder passEncoder;
     
     @Autowired
+    
+    
     private IUserMapper iUserMapper;
     
     public void signUpUser(IUserVO iUserVO) {
@@ -34,6 +36,19 @@ public class IUserServleImpl implements IUserService {
             return null;
         }
         return vo;
+    }
+    
+    // 4. 서비스에서 만든 메소드를 구현한다.
+    // 5. 메퍼에 메소드를만든 후 파라미터로 보내준다.
+    // 6. 메퍼에서 받은 객체를 받는다
+    // 7. 컨트롤러에서 사용해주기 위해 7번으로 리턴해준다.
+    
+    public IUserVO selectOne(String userEmail) {
+    	IUserVO vo = iUserMapper.selectOne(userEmail);
+    	if(vo == null) {
+    		return null;
+    	}
+    	return vo;
     }
 
 }

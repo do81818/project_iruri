@@ -14,8 +14,9 @@
 @import "page/mainPage.css";
 @import "page/loginPage.css";
 @import "page/signUpPage.css";
-@import "page/mypage_main.css";
-@import "page/mypage_modal.css";
+@import "page/mypage_user_main.css";
+@import "page/mypage_user_modal.css";
+@import "page/mypage_user_boardlist.css";
 
 :root {
   /* font-size */
