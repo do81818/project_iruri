@@ -24,27 +24,28 @@
         <div class="c_makeForm_insert">
 
 
-            <form class="c_makeForm" action="#">
+            <form:form class="c_makeForm" method="POST" action="insert_challenge" accept-charset="euc-kr">
                 <!--accept-charset="utf-8" name="c_make_form" method="GET"-->
                 <h2 class="c_makeForm_title">챌린지 개설</h2>
 
                 <div class="c_name">
                     <p>챌린지명</p>
-                    <input type="text" class="inputbox_size1">
+                    <input type="text" class="inputbox_size1" name="classTitle">
+                
                 </div>
 
 
-                <div class="c_kind">
+               <div class="c_kind">
                     <p>운동종류</p>
-                    <input type="checkbox" id="cb1"><label for="cb1" class="cb_label">헬스</label>
-                    <input type="checkbox" id="cb2"><label for="cb2" class="cb_label">필라테스</label>
-                    <input type="checkbox" id="cb3"><label for="cb3" class="cb_label">요가</label>
-                    <input type="checkbox" id="cb4"><label for="cb4" class="cb_label">바디프로필</label>
-                    <input type="checkbox" id="cb5"><label for="cb5" class="cb_label">댄스</label>
+                    <input type="checkbox" id="cb1" name="exerciseKind" value="헬스"><label for="cb1" class="cb_label">헬스</label>
+                    <input type="checkbox" id="cb2" name="exerciseKind" value="필라테스"><label for="cb2" class="cb_label">필라테스</label>
+                    <input type="checkbox" id="cb3" name="exerciseKind" value="요가"><label for="cb3" class="cb_label">요가</label>
+                    <input type="checkbox" id="cb4" name="exerciseKind" value="바디프로필"><label for="cb4" class="cb_label">바디프로필</label>
+                    <input type="checkbox" id="cb5" name="exerciseKind" value="댄스"><label for="cb5" class="cb_label">댄스</label>
                 </div>
 
 
-                <div class="c_strength">
+                <!-- <div class="c_strength">
                     <p>운동강도</p>
                     <input type="radio" name="strength" id="easy"><label for="easy" class="rd_label">easy</label>
                     <input type="radio" name="strength" id="normal"><label for="normal" class="rd_label">normal</label>
@@ -124,8 +125,7 @@
                     </div>
 
                 </div>
-
-
+ -->
 
                 <div class="button">
                     <p></p>
@@ -134,7 +134,7 @@
                 </div>
 
 
-            </form>
+            </form:form>
 
         </div>
 
