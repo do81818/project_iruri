@@ -1,6 +1,5 @@
 package com.iruri.ex.vo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -44,8 +43,8 @@ public class IClassVO {
     private String classContent;
     private String classGoal;
     private int classExerciseCount;
-    private Date classStartDate;
-    private Date classEndDate;
+    private Timestamp classStartDate;
+    private Timestamp classEndDate;
     private String classImage;
     private int classLike;
     private String classState;

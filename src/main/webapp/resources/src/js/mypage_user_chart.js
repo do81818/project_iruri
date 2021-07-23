@@ -1,4 +1,4 @@
-/*
+
 
 // 차트 설정 1번
 var config1 = {
@@ -112,4 +112,3 @@ document.getElementById('addData1').onclick = function(){
 }
 
 
-*/
