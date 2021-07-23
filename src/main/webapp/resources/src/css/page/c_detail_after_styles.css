@@ -149,7 +149,7 @@ div {
 
 /*챌린지 목표*/
 
-.c_goal {
+.c_detail_goal {
     height: 100px;
     font-size: 16px;
     line-height: 25px;
@@ -482,7 +482,7 @@ ul li {
     padding: 85px 0 0 0;
 }
 
-.reply_insertBox {
+.c_reply_insertBox {
     width: inherit;
     height: 111px;
     padding: 24px 38px;
@@ -492,20 +492,20 @@ ul li {
     display: flex;
 }
 
-.reply_insertBox table {
+.c_reply_insertBox table {
     width: 100%;
 }
 
-.reply_textarea {
+.c_reply_textarea {
     width: 95%;
 }
 
-.reply_insertButton {
+.c_reply_insertButton {
     width: 5%;
     text-align: right;
 }
 
-.reply_insertButton>button {
+.c_reply_insertButton>button {
     font-size: 18px;
     background-color: white;
     border: none;
@@ -514,7 +514,7 @@ ul li {
     color: var(--iruri-blue-color);
 }
 
-.reply_textarea>textarea {
+.c_reply_textarea>textarea {
     width: 98%;
     height: 100%;
     resize: none;
@@ -526,7 +526,7 @@ ul li {
     border: none;
 }
 
-.reply_textarea>textarea::placeholder {
+.c_reply_textarea>textarea::placeholder {
     font-size: 16px;
     font-family: 'NanumBarunGothic';
     color: var(--iruri-gray-color);

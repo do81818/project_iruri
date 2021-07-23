@@ -17,6 +17,8 @@
 @import "page/signUpPage.css";
 @import "page/c_main_styles.css";
 @import "page/c_make_form_styles.css";
+@import "page/c_detail_before_styles.css";
+@import "page/c_detail_after_styles.css";
 @import "page/mypage_trainer.css";
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";

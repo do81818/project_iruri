@@ -11,9 +11,9 @@
   <head>
     <%@ include file="../include/static.jsp" %> <!-- 경로를 확인해 주세요 -->
     <title>챌린지 상세(참여 전)</title> <!-- 페이지 이름을 적어주세요 -->
-    <script src="${RESOURCES_PATH}/src/challenge/js/c_menu_hover.js" defer></script>
-    <script src="${RESOURCES_PATH}/src/challenge/js/c_modal.js" defer></script>
-    <script src="${RESOURCES_PATH}/src/challenge/js/c_sticky.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_sticky.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -43,7 +43,7 @@
                         <i class="iruri_heart_icon"></i> 001
                     </div>
 
-                    <div class="c_goal">
+                    <div class="c_detail_goal">
                         하체부종, 힙업, 종아리알, 하체비만<br> 다리 관리의 모든 것
                     </div>
                 </div>
@@ -114,14 +114,14 @@
     <!--상세정보, 인증하기, 커뮤니티 메뉴바-->
 
 
-    <div class="c_menu">
-        <ul>
-            <li class="first"><a href="#info">상세정보</a></li>
-            <li><a href="#certify">인증하기</a></li>
-            <li><a href="#reply">커뮤니티</a></li>
+    <nav class="c_menu">
+				<ul>
+					<li><a href="#info">상세정보</a></li>
+					<li><a href="#certify">인증하기</a></li>
+					<li><a href="#reply">커뮤니티</a></li>
+				</ul>
 
-        </ul>
-    </div>
+			</nav>
 
     <!--밑줄 효과-->
     <span class="c_menu_hover"></span>
