@@ -34,7 +34,6 @@
           </li>
           <li class="fnb__item">
             <a href="#">카카오 채널 문의</a>
-            <button class="iruri__ask"></button>
           </li>
           <li class="fnb__item">
             <a href="#">이메일 문의</a>

@@ -9,14 +9,21 @@
 @import "component/header.css";
 @import "component/footer.css";
 @import "component/card.css";
+@import "component/paging.css";
 
 /* 페이지 */
 @import "page/mainPage.css";
 @import "page/loginPage.css";
 @import "page/signUpPage.css";
+<<<<<<< HEAD
+@import "page/mypage_trainer.css";
+
+
+=======
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
+>>>>>>> d2caae091726b960e1ccc9f6cfe6a2d897896e53
 
 :root {
   /* font-size */
