@@ -50,6 +50,7 @@ public class IClassVO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classStartDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date classStartDate;
     private Date classEndDate;
     private String classImage;
     private int classLike;
@@ -63,5 +64,8 @@ public class IClassVO {
     private int categoryId;
     private int userId;
     private String classLevel;
+    
+    private List<ExerciseDateVO> ExerciseDateList;
+    private List<ExerciseKindVO> ExerciseKindList;
     
 }

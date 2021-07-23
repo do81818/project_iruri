@@ -16,10 +16,10 @@
 <!-- 경로를 확인해 주세요 -->
 <title>챌린지 상세(참여 후)</title>
 <!-- 페이지 이름을 적어주세요 -->
-<script src="${RESOURCES_PATH}/src/challenge/js/c_menu_hover.js" defer></script>
-<script src="${RESOURCES_PATH}/src/challenge/js/c_modal.js" defer></script>
-<script src="${RESOURCES_PATH}/src/challenge/js/c_sticky.js" defer></script>
-<script src="${RESOURCES_PATH}/src/challenge/js/c_radio_check.js" defer></script>
+<script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
+<script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+<script src="${RESOURCES_PATH}/src/js/challenge/c_sticky.js" defer></script>
+<script src="${RESOURCES_PATH}/src/js/challenge/c_radio_check.js" defer></script>
 </head>
 <body>
 	<div class="iruri__wrapper">
@@ -45,7 +45,7 @@
 								<i class="iruri_heart_icon"></i> 001
 							</div>
 
-							<div class="c_goal">
+							<div class="c_detail_goal">
 								하체부종, 힙업, 종아리알, 하체비만<br> 다리 관리의 모든 것
 							</div>
 						</div>
@@ -249,11 +249,11 @@
 	</div>
 	<!-- 댓글 입력창 -->
 	<div class="c_reply_insert" id="reply">
-		<form class="reply_insertBox" action="">
+		<form class="c_reply_insertBox" action="">
 			<table>
 				<tr>
-					<td class="reply_textarea"><textarea placeholder="글을 작성하세요."></textarea></td>
-					<td class="reply_insertButton"><button>입력</button></td>
+					<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."></textarea></td>
+					<td class="c_reply_insertButton"><button>입력</button></td>
 				</tr>
 			</table>
 		</form>

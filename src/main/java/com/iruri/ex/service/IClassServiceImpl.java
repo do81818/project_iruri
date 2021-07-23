@@ -9,6 +9,9 @@ import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class IClassServiceImpl implements IClassService {
     
@@ -22,6 +25,14 @@ public class IClassServiceImpl implements IClassService {
             return null;
         }
         return vo;
+    }
+
+    @Override
+    public void insertChallenge(IClassVO iClassVO) {
+        log.info("insertChallenge");
+        
+        iClassMapper.insertChallenge(iClassVO);
+        
     }
 
 
