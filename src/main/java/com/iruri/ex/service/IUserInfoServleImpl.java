@@ -1,5 +1,6 @@
 package com.iruri.ex.service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,25 @@ public class IUserInfoServleImpl implements IUserInfoService {
     
     @Override
     public List<IUserInfoVO> userinfoList(int userId){
+    	
     	List<IUserInfoVO> vo = iUserinfoMapper.selectAll(userId);
+    	
     	if(vo == null) {
     		return null;
     	}
+    	
     	return vo;
+    }
+    
+    
+    @Override
+    public int userheightdate(int userId){
+    	
+    	int vo = iUserinfoMapper.userheightdate(userId);
+        
+    	return vo;
+    	
+    	
     }
 
 
