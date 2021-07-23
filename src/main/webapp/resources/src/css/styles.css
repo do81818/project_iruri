@@ -9,6 +9,7 @@
 @import "component/header.css";
 @import "component/footer.css";
 @import "component/card.css";
+@import "component/paging.css";
 
 /* 페이지 */
 @import "page/mainPage.css";
@@ -16,6 +17,10 @@
 @import "page/signUpPage.css";
 @import "page/c_main_styles.css";
 @import "page/c_make_form_styles.css";
+@import "page/mypage_trainer.css";
+@import "page/mypage_user_main.css";
+@import "page/mypage_user_modal.css";
+@import "page/mypage_user_boardlist.css";
 
 :root {
   /* font-size */

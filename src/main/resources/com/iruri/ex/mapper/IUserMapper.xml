@@ -5,6 +5,7 @@
 <mapper namespace="com.iruri.ex.mapper.IUserMapper">
 
 	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
+
 		<result property="userId" column="user_id"/>
 		<result property="userEmail" column="user_email"/>
 		<result property="userPw" column="user_pw"/>
@@ -60,14 +61,87 @@ WHERE
 	</select>
 	
 	<!-- 카카오 유저 찾기 -->
-	<select id="findSocialUser" resultMap="iUserMap">
+	<select id="findKakaoUser" resultMap="iUserMap">
 		<![CDATA[
 SELECT
 	u.*, a.*
 FROM
 	iuser u, authority a
 WHERE
-	u.user_id = a.user_id AND u.kakao_id = #{kakaoId}
+	u.user_id = a.user_id AND u.kakao_id = #{socialEmail}
+		]]>
+	</select>
+	
+	<!-- 네이버 유저 찾기 -->
+	<select id="findNaverUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.naver_id = #{socialEmail}
+		]]>
+	</select>
+	
+	<!-- 구글 유저 찾기 -->
+	<select id="findGoogleUser" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.google_id = #{socialEmail}
+		]]>
+	</select>
+	
+	<!-- 유저 닉네임 중복 체크 -->
+	<select id="checkOverNickname" parameterType="String" resultType="int">
+		<![CDATA[
+SELECT
+	count(*)
+FROM
+	iuser
+WHERE
+	user_nickname = #{userNickname}
+		]]>
+	</select>
+	
+	<!-- 유저 이메일 중복 체크 -->
+	<select id="checkOverEmail" parameterType="String" resultType="int">
+		<![CDATA[
+SELECT
+	count(*)
+FROM
+	iuser
+WHERE
+	user_email = #{userEmail}
+		]]>
+	</select>
+
+	<!-- 7. 필요한 데이터를 추출할 sql문을 작성한다. -->
+	<!--  ![CDATA] 는 아래 코드를 xml문이 아닌 sql문으로 인식하게 하는 것이다.-->
+	<select id="selectOne" resultMap="iUserMap">
+		<![CDATA[
+SELECT
+	u.*, a.*
+FROM 
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.user_email = #{userEmail}
+		]]>
+	</select>
+	
+	<!-- 7.필요한 데이터 가져오기 -->
+	<select id="selectOne" resultMap="iUserMap">
+		<![CDATA[
+		SELECT
+	u.*, a.*
+FROM 
+	iuser u, authority a
+WHERE
+	u.user_id = a.user_id AND u.user_email = #{userEmail}
 		]]>
 	</select>
 

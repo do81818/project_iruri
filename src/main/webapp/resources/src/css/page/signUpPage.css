@@ -21,12 +21,16 @@
   display: none;
 }
 
+.signUp__emailForm input {
+  width: 29.2%;
+}
+
 .signUp__emailForm label,
 .signUp__passwordForm label,
 .signUp__passwordCheckForm label,
 .signUp__nicknameForm label,
 .signUp__phoneForm label {
-  width: 135px;
+  width: 18%;
   font-size: 18px;
   color: var(--iruri-blue-color);
   font-weight: bold;
@@ -36,10 +40,10 @@
 .signUp__passwordCheckForm input,
 .signUp__nicknameForm input,
 .signUp__phoneForm input {
-  width: 585px;
+  width: 80%;
 }
 
-.signUp__emailForm ~ span {
+.signUp__emailForm > span {
   font-size: 16px;
   color: var(--iruri-dark-gray-color);
 }
@@ -64,10 +68,11 @@
 }
 
 .email__select {
-  width: 135px;
+  width: 18%;
   padding: 10px 5px;
 }
 
+.signUp__emailForm input:focus,
 .signUp__passwordForm input:focus,
 .signUp__passwordCheckForm input:focus,
 .signUp__nicknameForm input:focus,
@@ -77,13 +82,37 @@
   box-shadow: 0 0 8px rgba(2, 163, 255, 0.3);
 }
 
-.signUp__phoneForm + span {
+.signUp__emailForm .validateCheck,
+.signUp__passwordForm .validateCheck,
+.signUp__passwordCheckForm .validateCheck,
+.signUp__nicknameForm .validateCheck,
+.signUp__phoneForm .validateCheck {
   position: relative;
   left: 145px;
   color: var(--iruri-red-color);
   font-weight: bold;
   font-size: 12px;
-  visibility: hidden;
+  display: none;
+}
+
+.signUp__emailForm .validateCheck,
+.signUp__passwordForm .validateCheck,
+.signUp__passwordCheckForm .validateCheck,
+.signUp__nicknameForm .validateCheck {
+   bottom: 10px;
+}
+
+.signUp__emailAuthBtn {
+  display: none;
+  justify-content: flex-end;
+}
+
+.signUp__emailAuthBtn #emailAuthKey {
+  width: 600px;
+}
+
+.signUp__emailAuthBtn .authBtn {
+  width: 150px;
 }
 
 .signUp__agree {
@@ -111,7 +140,7 @@
 .signUp__terms textarea {
   margin-bottom: 32px;
   height: 145px;
-  width: 725px;
+  width: 98%;
   border: 1px solid var(--iruri-light-gray-color);
   border-radius: 5px;
   padding: 15px 20px;

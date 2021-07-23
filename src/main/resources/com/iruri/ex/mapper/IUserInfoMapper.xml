@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.IUserInfoMapper">
+
+	<resultMap type="com.iruri.ex.vo.IUserInfoVO" id="iUserinfoMap">
+
+		<result property="infoId" column="info_id"/>
+		<result property="userBirth" column="user_birth"/>
+		<result property="userHeight" column="user_height"/>
+		<result property="userWeight" column="user_weight"/>
+		<result property="userGender" column="user_gender"/>
+		<result property="userId" column="user_id"/>
+		
+<!-- 		<collection property="IuserinfoList" resultMap="authMap">
+		</collection> -->
+	</resultMap>
+
+
+	
+
+	
+	<!-- 7.필요한 데이터 가져오기 -->
+	<select id="selectAll" resultMap="iUserinfoMap">
+		<![CDATA[
+SELECT
+	*
+FROM 
+	iuserinfo
+WHERE
+	user_id = #{userId}
+		]]>
+	</select>
+
+</mapper>
