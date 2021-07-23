@@ -53,6 +53,19 @@
 		]]>
 	</select>
 	
+	<select id="classcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+		WHERE
+			user_id = #{userId} 
+		
+			
+		]]> 
+	</select>
+	
 	<!-- 챌린지 개설 시 폼 값 입력 -->
 	<insert id="insertChallenge">
 	<![CDATA[
