@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.iruri.ex.Service.IUserService;
+import com.iruri.ex.service.IUserService;
 import com.iruri.ex.vo.IUserVO;
 
 import lombok.extern.log4j.Log4j;
