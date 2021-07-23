@@ -192,12 +192,16 @@
 
 
   .class_list{
+  	width: 100%; /* container_content에 명시된 width 값의 100% 를 사용 */
     display: flex;
+    flex-wrap: wrap; /* flex 요소의 자식 요소들이 강제로 한줄에 배치되게 할 것인지, 또는 가능한 영역 내에서 벗어나지 않고 여러행으로 나누어 표현 할 것인지 결정하는 속성*/
     margin-bottom: 100px;
 
   }
 
   .pt_card{
+  	padding-top: auto;
+  	margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
     

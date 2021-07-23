@@ -4,12 +4,14 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
@@ -52,9 +54,12 @@ public class MypageTrainerController {
         // -> 리턴한 뷰에서 모델을 인식할 수 있다.
         model.addAttribute("user", vo);
         
-        model.addAttribute("classList", iClassService.classList(vo.getUserId()));
+        /*
+         * List<IClassVO> classList = iClassService.classList(vo.getUserId());
+         * model.addAttribute("classList", classList);
+         */
         
-       log.info(iClassService.classList(vo.getUserId()));
+        /* log.info(iClassService.classList(vo.getUserId())); */
         /* log.info(vo.getAuthList().get(0).getAuthContent()); */
         
         
@@ -62,18 +67,15 @@ public class MypageTrainerController {
     }
     
     
-    
+    // ajax
+    @ResponseBody
     @RequestMapping("/mypage/trainerTest")
-    public String mypageT2() {
+    public List<IClassVO> mypageT2(Principal principal) {
         
-       //IUserVO vo = iUserService.selectOne(principal.getName());    
-        
-      //List<IClassVO> list = iClassService.classList(vo.getUserId());
-        
-        
-        String s = "httt";
-        
-      return s;
+      IUserVO vo = iUserService.selectOne(principal.getName());
+      List<IClassVO> classVOList =  iClassService.classList(vo.getUserId());
+      
+      return classVOList;
     }  
     
     
