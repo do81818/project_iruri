@@ -12,7 +12,7 @@
     <%@ include file="../include/static.jsp" %><!-- 경로를 확인해 주세요 -->
     <title>챌린지 개설 폼</title> <!-- 페이지 이름을 적어주세요 -->
  
-    <script src="${RESOURCES_PATH}/src/js/c_check.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -98,29 +98,29 @@
                 <div class="c_img_list">
                     <p></p>
                     <div class="c_img_detail">
-                        <p>1</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>2</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>3</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>4</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <p></p>
                     <div class="c_img_detail">
-                        <p>5</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>6</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>7</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
                     <div class="c_img_detail">
-                        <p>8</p>
+                        <img alt="" src="/ex/resources/src/img/icon/123-123.png">
                     </div>
 
                 </div>

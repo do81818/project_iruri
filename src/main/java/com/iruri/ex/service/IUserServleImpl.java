@@ -65,7 +65,7 @@ public class IUserServleImpl implements IUserService {
     // 4. 서비스에서 만든 메소드를 구현한다. 
     // 5. 매퍼에 메소드를 만든 후 파라미터로 보내준다
     // 8. 메퍼에서 받은 객체를 받는다. 
-    // 9. 컨트롤러에서 사용해주기 위해 7번으을 리턴해준다
+    // 9. 컨트롤러에서 사용해주기 위해 7번으로 리턴해준다
     @Override
     public IUserVO selectOne(String userEmail) {
         
