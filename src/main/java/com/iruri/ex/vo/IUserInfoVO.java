@@ -1,6 +1,6 @@
 package com.iruri.ex.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -28,11 +28,10 @@ import lombok.ToString;
 public class IUserInfoVO {
     
     private int infoId;
-    private Date userBirth;
+    private Timestamp userBirth;
     private int userHeight;
     private int userWeight;
     private String userGender;
     private int userId;
-    private Date userWriteDate;
 
 }
