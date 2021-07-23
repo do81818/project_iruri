@@ -1,0 +1,148 @@
+.iruri__signUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--NanumBarunGothic);
+}
+
+.signUp__wrap {
+  width: 760px;
+}
+
+.signUp__title {
+  padding: 68px 0 56px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#userEmail {
+  display: none;
+}
+
+.signUp__emailForm label,
+.signUp__passwordForm label,
+.signUp__passwordCheckForm label,
+.signUp__nicknameForm label,
+.signUp__phoneForm label {
+  width: 135px;
+  font-size: 18px;
+  color: var(--iruri-blue-color);
+  font-weight: bold;
+}
+
+.signUp__passwordForm input,
+.signUp__passwordCheckForm input,
+.signUp__nicknameForm input,
+.signUp__phoneForm input {
+  width: 585px;
+}
+
+.signUp__emailForm ~ span {
+  font-size: 16px;
+  color: var(--iruri-dark-gray-color);
+}
+
+.signUp__emailForm input,
+.email__select,
+.signUp__passwordForm input,
+.signUp__passwordCheckForm input,
+.signUp__nicknameForm input,
+.signUp__phoneForm input {
+  height: 44px;
+  border: 1px solid var(--iruri-light-gray-color);
+  border-radius: 5px;
+  padding: 20px;
+  color: var(--iruri-indigo-color);
+  outline: none;
+  margin: 20px 0;
+}
+
+.signUp__phoneForm input {
+  margin-bottom: 10px;
+}
+
+.email__select {
+  width: 135px;
+  padding: 10px 5px;
+}
+
+.signUp__passwordForm input:focus,
+.signUp__passwordCheckForm input:focus,
+.signUp__nicknameForm input:focus,
+.signUp__phoneForm input:focus {
+  border: 1px solid var(--iruri-blue-color);
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(2, 163, 255, 0.3);
+}
+
+.signUp__phoneForm + span {
+  position: relative;
+  left: 145px;
+  color: var(--iruri-red-color);
+  font-weight: bold;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.signUp__agree {
+  display: flex;
+  margin: 20px 0px 0px 140px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.signUp__agree div:first-child {
+  margin-right: 25px;
+}
+
+.signUp__terms {
+  margin-top: 50px;
+}
+
+.signUp__terms h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--iruri-indigo-color);
+  margin-bottom: 14px;
+}
+
+.signUp__terms textarea {
+  margin-bottom: 32px;
+  height: 145px;
+  width: 725px;
+  border: 1px solid var(--iruri-light-gray-color);
+  border-radius: 5px;
+  padding: 15px 20px;
+  font-size: 14px;
+  color: var(--iruri-dark-gray-color);
+  resize: none;
+  background-color: inherit;
+}
+
+.terms_agree {
+  text-align: center;
+}
+
+.signUp__terms + div {
+  text-align: center;
+}
+
+.signUp__wrap input[type="submit"] {
+  width: 320px;
+  height: 55px;
+  font-size: 16px;
+  color: white;
+  background-color: var(--iruri-blue-color);
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  margin: 62px 0 32px;
+}
+
+.no__signUp {
+  font-size: 16px;
+  color: var(--iruri-gray-color);
+  margin-bottom: 32px;
+}
