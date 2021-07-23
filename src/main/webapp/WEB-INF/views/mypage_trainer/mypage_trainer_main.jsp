@@ -12,20 +12,76 @@
     <%@ include file="../include/static.jsp" %>  <!-- 경로를 확인해 주세요 --><!-- ../include/static.jsp  -->
     <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
     <script src="" defer></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.js"></script>
 	
-	<script type="text/javascript" >
-		$.ajax({
-			url : 'http://localhost:8282/ex/mypage/trainerTest',
-			type : 'get',
-			success : function(data){
-				//var html = data[0].classTitle;
-				console.log(html);
-				$('#pt_title_id').html(html);
-			}
-		});
+	<script type="text/javascript">
+		window.onload = function() {
+			
+			$.ajax({
+				url : 'http://localhost:8282/ex/mypage/trainerTest',
+				type : 'GET',
+				cache : false,
+				dataType : 'json',
+				success : function(vo){
+					
+					var htmls = ''; 
+					
+					if(vo.length < 1) {
+						htmls = '현재 등록된 클래스가 없습니다.';
+					} else {
+						
+						const PTList = document.querySelector('.class_list');
+						
+						
+						vo.forEach(function(listItem) {
+							console.log(listItem.classStartDate);
+							
+							htmls +=	'<div class="pt_card">';
+							htmls += 		'<div class="pt_image_and_mark">';
+							htmls +=			'<img src="../image/360-250.png" class="pt_image">';
+							htmls +=			'<div class="pt_mark">1:1</div>';
+							htmls += 		'</div>';
+	
+							htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
+	
+							htmls +=		'<div class="pt_title">';
+							htmls +=		 listItem.classTitle;
+							htmls +=		'</div>';
+	
+							htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
+	
+							htmls +=		'<div class="pt_icon">';
+							htmls +=			'<div class="pt_icon-blue">';
+							/* htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + classLevel; */
+							htmls +=			'</div>';
+							htmls +=			'<div class="pt_icon-blue">';
+							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
+							htmls +=			'</div>';
+							htmls +=		'</div>';
+	
+							htmls +=		'<div class="pt_icon">';
+							htmls +=			'<div class="pt_icon-red">댄스</div>';
+							htmls +=			'<div class="pt_icon-red">피트니스</div>';
+							htmls +=		'</div>';
+	
+							/* htmls +=		'<div class="pt_price">₩' + classPrice + '</div>'; */
+	
+							htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
+							htmls +=		'수정</button>';
+							htmls += 	'</div>';
+						});
+						
+						PTList.innerHTML = htmls; 
+						
+					}
+					
+				}
+			});
+		}
+
 	
 	</script>
+	
+	</head>
 			
 	
   <body>
@@ -94,216 +150,9 @@
 					</ul>
 				</div>
 
-
 				<!-- 클래스 목록  -->
-				<div class="class_list">
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="https://via.placeholder.com/360x250" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title" id="pt_title_id">
-							<%-- ${classList[0].classTitle} <br> 30일 챌린지 --%>
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="../image/360-250.png" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title">
-							스쿼트, 런지, 플랭크 <br> 30일 챌린지
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="../image/360-250.png" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title">
-							스쿼트, 런지, 플랭크 <br> 30일 챌린지
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-				</div>
-
-				<div class="class_list">
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="../image/360-250.png" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title">
-							스쿼트, 런지, 플랭크 <br> 30일 챌린지
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="../image/360-250.png" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title">
-							스쿼트, 런지, 플랭크 <br> 30일 챌린지
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-
-					<div class="pt_card">
-						<div class="pt_image_and_mark">
-							<img src="../image/360-250.png" class="pt_image">
-							<div class="pt_mark">1:1</div>
-						</div>
-
-						<div class="trainer_name">트레이너이름</div>
-
-						<div class="pt_title">
-							스쿼트, 런지, 플랭크 <br> 30일 챌린지
-						</div>
-
-						<div class="pt_date">2021.03.01~2021.04.01</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">EASY
-							</div>
-							<div class="pt_icon-blue">
-								<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금
-							</div>
-						</div>
-
-						<div class="pt_icon">
-							<div class="pt_icon-red">댄스</div>
-							<div class="pt_icon-red">피트니스</div>
-						</div>
-
-						<div class="pt_price">\69000</div>
-
-						<button class="pt_update_button" type="button" onclick=""​>
-							수정</button>
-					</div>
-				</div>
-
+				<div class="class_list"></div>
+				
 				<!-- 페이징 -->
 				<div class="page_nation">
 					<a class="arrow prev" href="#"></a> 
