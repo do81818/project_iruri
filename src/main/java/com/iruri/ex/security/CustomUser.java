@@ -1,4 +1,4 @@
-package com.iruri.ex.vo;
+package com.iruri.ex.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import com.iruri.ex.vo.AuthVO;
+import com.iruri.ex.vo.IUserVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,15 +18,15 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class IUserUser extends User {
+public class CustomUser extends User {
 
     private IUserVO iUser;
     
-    public IUserUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
     
-    public IUserUser(IUserVO iUserVO) {
+    public CustomUser(IUserVO iUserVO) {
         super(iUserVO.getUserEmail(), iUserVO.getUserPw(), getAuth(iUserVO));
         this.iUser = iUserVO;
         

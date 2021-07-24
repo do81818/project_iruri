@@ -1,14 +1,13 @@
 package com.iruri.ex.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.iruri.ex.security.CustomUser;
 import com.iruri.ex.service.IUserService;
-import com.iruri.ex.vo.IUserVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,12 +28,12 @@ public class MainController {
 	
 	// 로그인한 유저의 정보 가져오기
 	@RequestMapping("/test")
-    public String test(Principal principal, Model model) {
+    public String test(Authentication auth, Model model) {
         log.info("test() ... ");
         
-        //principal객체에 얻어온 이메일을 iuserService 에 보낸다.
-        IUserVO vo = iUserService.selectOne(principal.getName());
-        model.addAttribute("user", vo);
+        CustomUser principal = (CustomUser)auth.getPrincipal();
+        log.info(principal.getIUser().getUserId());
+        model.addAttribute("user", principal.getIUser());
         
         return "/social_test";
     }
