@@ -1,6 +1,6 @@
 package com.iruri.ex.service;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +26,8 @@ public class IClassServiceImpl implements IClassService {
         }
         return vo;
     }
-    
-    @Override
-    public int classcount(int userId) {
 
-        int vo = iClassMapper.classcount(userId);
-
-        return vo;
-    }
-
+    //챌린지 개설 폼 값 입력
     @Override
     public void insertChallenge(IClassVO iClassVO) {
         log.info("insertChallenge");
@@ -45,4 +38,6 @@ public class IClassServiceImpl implements IClassService {
 
 
 
+
+ 
 }

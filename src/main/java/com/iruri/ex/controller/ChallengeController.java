@@ -76,33 +76,39 @@ public class ChallengeController {
         IUserVO vo = iUserService.selectOne(principal.getName());
         
         log.info("challenge_make_form()...");
-        
+   
+
+    
         java.sql.Date s =  java.sql.Date.valueOf("2006-03-21");
         java.sql.Date e =  java.sql.Date .valueOf("2007-03-21");
         // DB에서 클래스타이틀이 한글이 깨져요
-        iClassVO.setClassId(110);
+        //iClassVO.setClassId(114);
         iClassVO.setClassContent("클래스생성테스트내용"); 
-        iClassVO.setClassGoal("목표2");
-        iClassVO.setClassExerciseCount(0);
-        iClassVO.setClassStartDate(s);
-        iClassVO.setClassEndDate(e);
+        //iClassVO.setClassGoal("목표2");
+        //iClassVO.setClassExerciseCount(0);
+        //iClassVO.setClassStartDate(s);
+        //iClassVO.setClassEndDate(e);
         iClassVO.setClassImage("이미지경로2");
         iClassVO.setClassLike(0);
         iClassVO.setClassState("show");
         iClassVO.setClassHit(0);
         iClassVO.setClassJoinMember(0);
         iClassVO.setClassTrainerInfo("테스트트레이너인포");
-        iClassVO.setClassTotalMember(20);
+        //iClassVO.setClassTotalMember(20);
         iClassVO.setClassPrice(150000);
         iClassVO.setClassNeed("준비물테스트");
         iClassVO.setCategoryId(2);
-        iClassVO.setClassLevel("easy");
+        //iClassVO.setClassLevel("easy");
         iClassVO.setUserId(vo.getUserId());
+       
         
         log.info("iClassVO: " + iClassVO);
         log.info("exerciseKindVO: " + exerciseKindVO.getExerciseKind());
+     
         
         iClassService.insertChallenge(iClassVO);
+       
+        
         
         return "redirect:iruri/insert_challenge";
     }
