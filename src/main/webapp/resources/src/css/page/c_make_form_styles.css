@@ -160,15 +160,29 @@ body {
     display: none;
 }
 
-.c_makeForm input[type=radio]+label {
+.c_strength input[type=radio]+label,
+.c_exNum input[type=radio]+label,
+.c_img_direct input[type=radio]+label,
+.c_img_basic input[type=radio]+label {
     display: inline-block;
     cursor: pointer;
     padding-left: 30px;
     background: url("/ex/resources/src/img/icon/check_no.png") left/22px no-repeat;
 }
 
-.c_makeForm input[type=radio]:checked+label {
-    background-image: url("/ex/resources/src/img/icon/check_yes.png");
+.c_strength input[type=radio]:checked+label,
+.c_exNum input[type=radio]:checked+label,
+.c_img_direct input[type=radio]:checked+label,
+.c_img_basic input[type=radio]:checked+label {
+    background-image: url('/ex/resources/src/img/icon/check_yes.png');
+}
+
+.c_img_detail input[type=radio]+label {
+    cursor: pointer;
+}
+
+.c_img_detail input[type=radio]:checked+label {
+    outline: 5px solid var(--iruri-yellow-color);
 }
 
 
@@ -243,7 +257,7 @@ input[type=date] {
     cursor: pointer;
 }
 
-.c_img_detail>img {
+.img_rd img {
     border-radius: 30px;
 }
 

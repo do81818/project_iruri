@@ -52,7 +52,7 @@
                 <div class="c_detail_info2">
                     <div class="info_ul">
                         <ul>
-                            <li class="c_mini_info1">운동종류</li>
+                          
                             <li class="c_mini_info1">운동강도</li>
                             <li class="c_mini_info1">운동기간</li>
                             <li class="c_mini_info1">운동횟수</li>
@@ -63,7 +63,7 @@
 
                     <div class="info_ul">
                         <ul>
-                            <li class="c_mini_info2">헬스</li>
+                     
                             <li class="c_mini_info2">EASY</li>
                             <li class="c_mini_info2">2021.03.01~2021.04.01</li>
                             <li class="c_mini_info2">주 3일</li>

@@ -55,3 +55,13 @@ function img_cancle_click(obj) {
         agreements[item] = false;
     }
 }
+
+
+//챌린지 개설 폼-모집인원 체크박스 선택시 텍스트박스 비활성화
+function c_person_limit(form) {
+    if (form.querySelector('#cb6').checked == true) {
+        form.querySelector('#c_text').disabled = 'disabled';
+    } else {
+        form.querySelector('#c_text').disabled = false;
+    }
+}
