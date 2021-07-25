@@ -23,11 +23,11 @@ public class IUserDetailsService implements UserDetailsService {
             
             log.warn("Load User By UserName : " + userEmail);
             
-            IUserVO IUser = iUserMapper.getIUser(userEmail);
+            IUserVO currentUser = iUserMapper.getIUser(userEmail);
             
-            log.warn("queried by IUserVO mapper:" + IUser);
+            log.warn("queried by IUserVO mapper:" + currentUser);
             
-            return IUser == null ? null : new CustomUser(IUser);
+            return currentUser == null ? null : new IUserDetails(currentUser);
         }
         
 }
