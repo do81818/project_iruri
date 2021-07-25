@@ -70,7 +70,7 @@ function emailDuplicationValidate() {
 		console.log(number);
 	
 		if(number === '1') {
-			validateMessage.innerText = '사용중인 이메일입니다';
+			validateMessage.innerText = '동일한 메일주소가 있습니다';
 			validateMessage.style.display = 'block';
 		} else {
 			validateMessage.style.display = 'none';

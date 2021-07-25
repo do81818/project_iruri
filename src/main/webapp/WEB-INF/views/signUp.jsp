@@ -19,7 +19,7 @@
       
       <main class="iruri__signUp">
         <c:url value="/signUpUser" var="signUpUrl" />
-        <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap">
+        <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap" accept-charset="UTF-8">
           <h3 class="signUp__title">회원 가입</h3>
 
           <div class="signUp__emailForm">
