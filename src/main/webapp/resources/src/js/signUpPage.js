@@ -1,14 +1,22 @@
+(function() {
+
 const form1 = document.getElementById('userEmail1');
 const form2 = document.getElementById('userEmail2');
 const email = document.getElementById('userEmail');
 const emailSelect = document.querySelector('.email__select');
 const result = document.querySelector('.signUp__emailForm');
 
+const checkList = {
+	email : false,
+	nickname : false,
+	argee : false,
+};
+
 let string1 = '';
 let string2 = '';
 let resultString = '';
 
-// 이메일 조합
+// 이메일 합치기
 function userEmailInputCombine() {
 	form1.addEventListener('input', function(e) {
 	  string1 = e.target.value;
@@ -32,61 +40,87 @@ function userEmailInputCombine() {
 	  resultString = string1 + '@' + string2; 
 	  email.value = resultString;
   });
-};
-
-// 이메일 양식 검증 정규식
-function emailValidateReg() {
-  const EMAIL_REGEXP = /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-  result.addEventListener('change', () => {
-    const validateMessage = document.querySelector('.signUp__emailForm .validateCheck');
-
-    if(!EMAIL_REGEXP.test(email.value)) {
-      validateMessage.innerText = '이메일 주소 양식에 맞게 작성해주세요';
-      validateMessage.style.display = 'block';
-      document.querySelector('.signUp__emailAuthBtn').style.display = 'none';
-      
-      if(email.value === '@' || form2.value === '') {
-        validateMessage.style.display = 'none';  
-      	document.querySelector('.signUp__emailAuthBtn').style.display = 'none';
-      }
-    } else {
-      validateMessage.style.display = 'none';
-      emailDuplicationValidate();
-    }
-  });
-};
-
-// 이메일 중복 검증
-function emailDuplicationValidate() {
-	const validateMessage = document.querySelector('.signUp__emailForm .validateCheck');
-
-	const authBtn = document.querySelector('.authBtn');
-	const emailInput = email.value;
-	
-	fetch("signUp/emailCheck?userEmail=" + emailInput)
-	.then(data => data.text())
-	.then(number => {
-		console.log(number);
-	
-		if(number === '1') {
-			validateMessage.innerText = '동일한 메일주소가 있습니다';
-			validateMessage.style.display = 'block';
-		} else {
-			validateMessage.style.display = 'none';
-			document.querySelector('.signUp__emailAuthBtn').style.display = 'block';
-		}
-});
-	
-	
-
-  // 인증 버튼을 눌렀을 시
-  // 1. Ajax를 이용해서 DB 중복 검사 후 이메일이 중복일 경우 "동일한 메일주소가 있습니다" 경고 메시지 출력
-  // 2. 중복이 아닌 경우 해당 메일 주소로 4자리 인증번호가 보내지고 화면에는 인증번호 입력칸이 뜬다. 옆에는 입력가능 시간이 뜬다.(3분)
-  // 3. 사용자의 메일 주소로 전송된 인증번호를 입력하면 인증이 완료된다.
-
 }
 
+// 이메일 양식 체크
+function emailValidateReg() {
+  result.addEventListener('change', () => {
+    // 이메일 정규식 /^[0-9a-zA-Z]([_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+    const validateMessage = document.querySelector('.signUp__emailForm .validateCheck');
+    const authNumberDiv = document.querySelector('.signUp__emailAuthBtn');
+    const emailInput = email.value;
+    checkList.email = false;
+
+    if(email.value === '@' || form2.value === '') {
+      validateMessage.style.display = 'none';
+      authNumberDiv.style.display = 'none';
+    } else {
+      	fetch("signUp/emailCheck?userEmail=" + emailInput)
+        .then(data => data.text())
+        .then(number => {
+          if(number === '-1') {
+            validateMessage.innerText = '이메일 주소 양식에 맞게 작성해주세요';
+            validateMessage.style.display = 'block';
+            authNumberDiv.style.display = 'none';
+          } else if(number === '1') {
+            validateMessage.innerText = '동일한 메일주소가 있습니다';
+            validateMessage.style.display = 'block';
+            authNumberDiv.style.display = 'none';
+          } else {
+            validateMessage.style.display = 'none';
+            authNumberDiv.style.display = 'block';
+            SendAuthNumber();
+          }
+        });
+    }
+  });
+}
+
+// 이메일 발송
+function SendAuthNumber() {
+  const authNumberDiv = document.querySelector('.signUp__emailAuthBtn');
+  const authKey = document.querySelector('#emailAuthKey');
+  const authBtn = document.querySelector('.authBtn');
+  const validateMessage = document.querySelector('.signUp__emailForm .validateCheck');
+  const emailInput = email.value;
+  let x = null;
+
+  const timer = document.querySelector('#emailTimer');
+  authBtn.addEventListener('click', () => {
+  if(authKey.value === '') {
+    clearInterval(x);
+    
+    fetch("signUp/sendAuthNumber?userEmail=" + emailInput);
+    let time = 180;
+    
+    x = setInterval(() => {
+      min = parseInt(time/60);
+      sec = time % 60;
+      
+      timer.innerText = `${min}:${sec < 10 ? `0${sec}` : sec}`;
+      time--;
+      
+      if(time < 0) {
+        clearInterval(x);
+        timer.innerText = '0:00';
+      }
+    }, 1000);
+  } else {
+      fetch("signUp/checkAuthNumber?authNumber=" + authKey.value)
+        .then(data => data.text())
+        .then(number => {
+          if(number == 1 ) {
+            clearInterval(x);
+            timer.innerText = '';
+            authNumberDiv.style.display = 'none';
+            checkList.email = true;
+            validateMessage.innerText = '이메일 인증되었습니다';
+            validateMessage.style.display = 'block';
+          }
+        });
+    }
+  });
+}
 
 // 비밀번호 검증 정규식
 function passwordValidateReg() {
@@ -94,11 +128,8 @@ function passwordValidateReg() {
 
   form.addEventListener('change', () => {
     const pw = form.querySelector('#userPw').value;
-    let num = pw.search(/[0-9]/g);
-    let eng = pw.search(/[a-z]/ig);
-    let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    
     const validateMessage = form.querySelector('.validateCheck');
+
     if(pw === '') {
       validateMessage.style.display = 'none';
     } else if(pw.length < 8 || pw.length > 16) {
@@ -141,7 +172,6 @@ function passwordCheckValidate() {
 
 function nicknameValidateReg() {
   const NICKNAME_REG =  /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{0,10}$/;
-
   const nicknameForm = document.querySelector('.signUp__nicknameForm');
 
   nicknameForm.addEventListener('input', () => {
@@ -163,7 +193,6 @@ function nicknameValidateReg() {
 
 }
 
-// 닉네임 중복 검증
 function nicknameDuplicationValidate() {
 	const nicknameForm = document.querySelector('.signUp__nicknameForm');
 	
@@ -190,12 +219,9 @@ function nicknameDuplicationValidate() {
 // 전화번호 검증 추가 '-'을 제외한 숫자만 입력하세요
 // ----
 
-function init() {
   userEmailInputCombine();
   emailValidateReg();
   passwordValidateReg();
   passwordCheckValidate();
   nicknameValidateReg();
-}
-
-init();
+})();

@@ -103,7 +103,8 @@
 }
 
 .signUp__emailAuthBtn {
-  display: none;
+  /* display: none; */
+  position: relative;
   justify-content: flex-end;
 }
 
@@ -113,6 +114,12 @@
 
 .signUp__emailAuthBtn .authBtn {
   width: 150px;
+}
+
+.signUp__emailAuthBtn #emailTimer {
+  position: absolute;
+  top: 15px;
+  right: 180px;
 }
 
 .signUp__agree {

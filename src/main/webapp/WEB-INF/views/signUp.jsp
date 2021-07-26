@@ -18,7 +18,7 @@
     <%@ include file="include/headerTemplate.jsp" %>
       
       <main class="iruri__signUp">
-        <c:url value="/signUpUser" var="signUpUrl" />
+        <c:url value="/signUp/submit" var="signUpUrl" />
         <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap" accept-charset="UTF-8">
           <h3 class="signUp__title">회원 가입</h3>
 
@@ -40,6 +40,7 @@
           <div class="signUp__emailAuthBtn">
             <input type="text" id="emailAuthKey">
             <input type="button" class="authBtn" value="인증하기">
+            <span id="emailTimer"></span>
           </div>
 
           <div class="signUp__passwordForm">
