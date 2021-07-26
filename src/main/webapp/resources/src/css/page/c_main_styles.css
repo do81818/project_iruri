@@ -300,7 +300,7 @@ input[type=checkbox] {
     margin-right: 18.5px;
 }
 
-.c_list_detail .c_list_img {
+.c_list_detail .c_list_img img{
     display: inline-block;
     text-align: center;
     width: 360px;
