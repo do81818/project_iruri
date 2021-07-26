@@ -6,4 +6,6 @@ public class ApiKeys {
     public static String K_CLIENT_ID = "d575d2c5d3ba998a1b5e51f9f6a24072";
     public static String N_CLIENT_ID = "C0EmkdVZxGINvoALrSGN";
     public static String N_CLIENT_SECRET = "fWpmifbWYr";
+    public static String EMAIL = "do81818@naver.com";
+    public static String PW = "dkffltldkzltm!23";
 }
