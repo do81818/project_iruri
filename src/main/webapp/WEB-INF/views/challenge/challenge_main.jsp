@@ -168,279 +168,40 @@
 
         <!--챌린지 리스트-->
         <div class="c_list">
+        <c:forEach items="${challengeList}" var="challengeList">
             <div class="c_list_detail">
                 <div class="c_list_img">
+                <img src="/ex/resources/src/img/icon/360-250.png" alt="">
                 </div>
                 <div class="c_list_title">
-                     ${classList[0].classTitle}
+                
+                     ${challengeList.classTitle}
                 </div>
 
                 <div class="c_list_date">
-                     ${classList[0].classStartDate}~${classList[0].classEndDate}
+                     ${challengeList.classStartDate}~${challengeList.classEndDate}
                 </div>
 
                 <div class="data_tags">
                     <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> ${classList[0].classLevel}
+                        <i class="iruri_level_icon"></i> ${challengeList.classLevel}
                     </div>
                     <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
+                        <i class="iruri_time_icon"></i> 주 ${challengeList.classExerciseCount}회 이상
                     </div>
                 </div>
 
                 <div class="c_list_person">
-                    참여중인 인원 ${classList[0].classJoinMember}명 (최대인원 ${classList[0].classTotalMember}명)
+                    참여중인 인원 ${challengeList.classJoinMember}명 (최대인원 ${challengeList.classTotalMember}명)
                 </div>
 
                 <div class="c_list_heart">
                     <input type="checkbox" id="heart3"><label for="heart3" class="heart_label"></label>
                 </div>
             </div>
+</c:forEach>
 
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart4"><label for="heart4" class="heart_label"></label>
-                </div>
-            </div>
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart5"><label for="heart5" class="heart_label"></label>
-                </div>
-            </div>
-
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart6"><label for="heart6" class="heart_label"></label>
-                </div>
-            </div>
-
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart7"><label for="heart7" class="heart_label"></label>
-                </div>
-            </div>
-
-
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart8"><label for="heart8" class="heart_label"></label>
-                </div>
-            </div>
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart9"><label for="heart9" class="heart_label"></label>
-                </div>
-            </div>
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart10"><label for="heart10" class="heart_label"></label>
-                </div>
-            </div>
-
-
-            <div class="c_list_detail">
-                <div class="c_list_img">
-                </div>
-                <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
-                </div>
-
-                <div class="c_list_date">
-                    2021.03.01~2021.04.01
-                </div>
-
-                <div class="data_tags">
-                    <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
-                    </div>
-                    <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 5회 이상
-                    </div>
-                </div>
-
-                <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
-                </div>
-
-                <div class="c_list_heart">
-                    <input type="checkbox" id="heart11"><label for="heart11" class="heart_label"></label>
-                </div>
-            </div>
-
+           
 
 
 
@@ -451,14 +212,23 @@
         <!--페이징-->
         <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
         <div class="page_nation">
+        <c:if test="${pageMaker.prev}">
             <a class="arrow prev" href="#"></a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
+        </c:if>
+        
+        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+            <a href="#" class="active">${num}</a>
+        </c:forEach>
+        
+        <c:if test="${pageMaker.next}">
             <a class="arrow next" href="#"></a>
+        </c:if>
         </div>
+        
+        <form id="actionForm" action="challenge/challenge_main" method="get">
+        	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        </form>
 
 
 

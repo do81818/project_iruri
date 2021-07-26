@@ -14,13 +14,27 @@
 <html lang="ko">
 <head>
 <%@ include file="../include/static.jsp"%><!-- 경로를 확인해 주세요 -->
+
+
 <title>챌린지 개설 폼</title>
 <!-- 페이지 이름을 적어주세요 -->
+ 
+
+<!-- 값 제어를 위해 jquery -->
+<script src="${RESOURCES_PATH}/src/js/challenge/jquery-3.1.1.min.js" defer></script>
+
 
 <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
+<script src="${RESOURCES_PATH}/src/js/challenge/c_calendar.js" defer></script>
+
+<!-- Air datepicker js -->
+<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.js" defer></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.ko.js" defer></script>
+<link href="${RESOURCES_PATH}/src/css/page/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-<% request.setCharacterEncoding("utf-8"); 
+
 
 
 	<div class="iruri__wrapper">
@@ -34,8 +48,8 @@
 
 
 					<form:form class="c_makeForm" method="POST"
-						action="insert_challenge">
-						<!--accept-charset="utf-8" name="c_make_form" method="GET"-->
+						action="insert_challenge" accept-charset="utf-8" >
+						
 						<h2 class="c_makeForm_title">챌린지 개설</h2>
 
 						<div class="c_name">
@@ -69,8 +83,8 @@
 
 						<div class="c_period">
 							<p>운동기간</p>
-							<input type="date" name="classStartDate"> &nbsp - &nbsp <input
-								type="date" name="classEndDate"> <br>
+							<input type="text" name="classStartDate" id="startDate"> &nbsp - &nbsp 
+							<input type="text" name="classEndDate" id="endDate"> <br>
 						</div>
 
 						<div class="c_exNum">
@@ -198,7 +212,7 @@
 				</div>
 
 			</div>
-			%>
+
 		</main>
 
 		<%@ include file="../include/footerTemplate.jsp"%>
