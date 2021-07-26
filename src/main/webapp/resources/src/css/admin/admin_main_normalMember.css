@@ -1,0 +1,33 @@
+@import url("./admin_main_basic.css");
+
+/* ---------------- 테이블 가로 크기 및 기본 폰트, 선 ------------------ */
+.management_normalMember table th:nth-of-type(1) {
+    padding-left: 45px;
+    width: 5%;
+}
+
+.management_normalMember table th:nth-of-type(2),
+.management_normalMember table th:nth-of-type(3) {
+    width: 17%;
+}
+
+.management_normalMember table th:nth-of-type(4) {
+    width: 41%;
+}
+
+/* ---------------- 신고알림 테이블 디테일 ------------------ */
+.a_buttonBox {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid var(--iruri-gray-color);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--iruri-gray-color);
+}
+
+
+/* ---------------- 전체회원 테이블 디테일 ------------------ */
+.report_totalMemberList td,
+.report_trainerMemberList td {
+    padding: 22px 0;
+}
