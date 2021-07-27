@@ -14,5 +14,5 @@ public interface IUserInfoMapper {
     
 	List<IUserInfoVO> selectAll(int userId);
     
-	int userheightdate(int userId);
+//	int userheightdate(int userId);
 }

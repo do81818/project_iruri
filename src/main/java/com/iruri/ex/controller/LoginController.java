@@ -85,11 +85,11 @@ public class LoginController {
     // 비밀번호 양식 체크
     @GetMapping("/signUp/passwordCheck")
     public int signUpPasswordCheck(@RequestParam("userPw") String userPw) {
-        int checkNum = regService.userPasswordCheck(userPw);
         
-        return 0;
+        return regService.userPasswordCheck(userPw);
     }
     
+    // 닉네임 양식 및 중복 체크
     @GetMapping("/signUp/nicknameCheck")
     public int signUpNicknameCheck(IUserVO userInput) {
         

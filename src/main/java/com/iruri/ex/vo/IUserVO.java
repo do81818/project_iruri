@@ -40,6 +40,7 @@ public class IUserVO {
     private Date userSigndate;
     private int userPoint;
     private boolean userBlackList;
+    private String userBlaskListReason;
     private int kakaoId;
     
     private List<AuthVO> authList;

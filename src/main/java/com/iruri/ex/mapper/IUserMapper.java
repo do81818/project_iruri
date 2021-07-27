@@ -24,4 +24,5 @@ public interface IUserMapper {
     IUserVO selectOne(String userEmail);
     // 파라미터로 뭘가져올지 써준다.
     
+
 }

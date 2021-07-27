@@ -61,8 +61,6 @@ public class UserRegService {
         }
         
         public int userPasswordCheck(String userPassword) {
-            String spacePattern = "\s";
-            
             Pattern numPattern = Pattern.compile("[0-9]");
             Pattern engPattern = Pattern.compile("[a-z]");
             Pattern spePattern = Pattern.compile("[`~!@@#$%^&*|₩₩₩'₩\";:₩/?]");
@@ -70,6 +68,7 @@ public class UserRegService {
             Matcher numMatch = numPattern.matcher(userPassword);
             Matcher engMatch = engPattern.matcher(userPassword);
             Matcher speMatch = spePattern.matcher(userPassword);
+            Matcher spaceMatch = Pattern.compile("\s").matcher(userPassword);
             
             int numCount = 0;
             int engCount = 0;
@@ -79,26 +78,40 @@ public class UserRegService {
                 numCount++;
             }
             while(engMatch.find()) {
-                numCount++;
+                engCount++;
             }
             while(speMatch.find()) {
-                numCount++;
+                speCount++;
             }
             
-            if(userPassword.length() == 0) {
-                return 0; // 값이 없을때
-            } else if(userPassword.length() < 8 || userPassword.length() > 16) {
-                return 1; // 문자 길이
-            } else if (Pattern.matches(spacePattern, userPassword)) {
-                return 2; // 공백 포함
-            } else if (Pattern.matches(spacePattern, userPassword)) {
-                return 3; // 혼합
+            log.info(numCount);
+            log.info(engCount);
+            log.info(speCount);
+            
+            log.info(userPassword);
+            
+            if(userPassword.length() == 0) { // 값이 없을때
+                return 0; 
+            } else if(userPassword.length() < 8 || userPassword.length() > 16) { // 문자 길이
+                return 1; 
+            } else if (spaceMatch.find()) { // 공백 포함
+                return 2; 
+            } else if ( (numCount == 0 && engCount == 0) || (engCount == 0 && speCount == 0) || (speCount == 0 && numCount == 0)) { // 문자 혼합
+                return 3; 
             }
             
-            return 4;
+            return 4; // 올바른 값
         }
         
         public int userNicknameCheck(String userNickname) {
+            String pattern = "^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{0,10}$";
+            Boolean regex = Pattern.matches(pattern, userNickname);
+            
+            if(userNickname == "") { // 공백
+                return 3;
+            } else if(regex == false) { // 문자열 초과 및 양식 오류
+                return 2;
+            }
             
             return iUserMapper.checkOverNickname(userNickname);
         }
