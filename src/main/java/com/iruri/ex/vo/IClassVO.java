@@ -51,6 +51,10 @@ public class IClassVO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classStartDate;
     
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date classStartDate;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classEndDate;
     

@@ -10,6 +10,7 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %>  <!-- 경로를 확인해 주세요 --><!-- ../include/static.jsp  -->
+
     <title>이루리 트레이너 마이페이지</title> <!-- 페이지 이름을 적어주세요 -->
     <script src=""></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
     
@@ -107,7 +108,6 @@
 							htmls +=		'</div>';
 	
 							htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
-	
 							htmls +=		'<div class="pt_icon">';
 							htmls +=			'<div class="pt_icon-blue">';
 							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + listItem.classLevel;
@@ -138,8 +138,7 @@
 		}
 	</script>
 	
-	
-	
+
 	</head>
 			
 	

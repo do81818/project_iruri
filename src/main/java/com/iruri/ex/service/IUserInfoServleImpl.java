@@ -30,7 +30,14 @@ public class IUserInfoServleImpl implements IUserInfoService {
     }
 
 
-    
+    @Override
+    public int userheightdate(int userId){
+
+        int vo = iUserinfoMapper.userheightdate(userId);
+
+        return vo;
+
+    }
    
 
 }

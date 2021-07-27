@@ -27,6 +27,7 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
     
+
     // 현재 운영중인 클래스 조회
     @Override
     public List<IClassVO> classCurrentList(int userId) {
@@ -45,6 +46,12 @@ public class IClassServiceImpl implements IClassService {
         if(vo == null) {
             return null;
         }
+
+    @Override
+    public int classcount(int userId) {
+
+        int vo = iClassMapper.classcount(userId);
+
         return vo;
     }
 

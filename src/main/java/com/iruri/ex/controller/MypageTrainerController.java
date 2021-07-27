@@ -57,6 +57,7 @@ public class MypageTrainerController {
     }
     
     
+
     // ajax(모든 클래스 리스트-현재 운영중인 클래스+ 종료된 클래스)
     @ResponseBody
     @RequestMapping("/mypage/trainerTest")

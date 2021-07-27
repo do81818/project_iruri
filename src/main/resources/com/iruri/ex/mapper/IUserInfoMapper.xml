@@ -12,6 +12,7 @@
 		<result property="userWeight" column="user_weight"/>
 		<result property="userGender" column="user_gender"/>
 		<result property="userId" column="user_id"/>
+		<result property="userWritedate" column="user_writedate"/>
 		
 <!-- 		<collection property="IuserinfoList" resultMap="authMap">
 		</collection> -->
@@ -25,7 +26,18 @@
 	<select id="selectAll" resultMap="iUserinfoMap">
 		<![CDATA[
 SELECT
-	*
+	info_id, user_birth, user_height, user_weight, user_gender, user_id
+FROM 
+	iuserinfo
+WHERE
+	user_id = #{userId}
+		]]>
+	</select>
+	
+	<select id="userheightdate" parameterType="int" resultType="int">
+		<![CDATA[
+SELECT
+	extract(month from user_writedate)
 FROM 
 	iuserinfo
 WHERE
