@@ -88,7 +88,7 @@
             <!--챌린지 검색창-->
             <form class="c_search_box" action="">
 
-                <input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)"><button class="search_icon"></button>
+                <input type="text"><button class="search_icon"></button>
 
             </form>
 
@@ -169,31 +169,31 @@
 
         <!--챌린지 리스트-->
         <div class="c_list">
-        <c:forEach items="${challengeList}" var="challengeList">
+        <c:forEach items="${challengeEndList}" var="challengeEndList">
             <div class="c_list_detail">
                 <div class="c_list_img">
                 <img src="/ex/resources/src/img/icon/360-250.png" alt="">
                 </div>
                 <div class="c_list_title">
                 
-                     ${challengeList.classTitle}
+                     ${challengeEndList.classTitle}
                 </div>
 
                 <div class="c_list_date">
-                     ${challengeList.classStartDate}~${challengeList.classEndDate}
+                     ${challengeEndList.classStartDate}~${challengeEndList.classEndDate}
                 </div>
 
                 <div class="data_tags">
                     <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> ${challengeList.classLevel}
+                        <i class="iruri_level_icon"></i> ${challengeEndList.classLevel}
                     </div>
                     <div class="data_tag_blue">
-                        <i class="iruri_time_icon"></i> 주 ${challengeList.classExerciseCount}회 이상
+                        <i class="iruri_time_icon"></i> 주 ${challengeEndList.classExerciseCount}회 이상
                     </div>
                 </div>
 
                 <div class="c_list_person">
-                    참여중인 인원 ${challengeList.classJoinMember}명 (최대인원 ${challengeList.classTotalMember}명)
+                    참여중인 인원 ${challengeEndList.classJoinMember}명 (최대인원 ${challengeEndList.classTotalMember}명)
                 </div>
 
                 <div class="c_list_heart">
@@ -214,21 +214,21 @@
         <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
         <div class="page_nation">
         <c:if test="${pageMaker.prev}">
-            <a class="prev" href="challengeList${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
+            <a class="prev" href="challengeEndList${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
         </c:if>
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
         
-            <a class="active" href="challengeList${pageMaker.makeQuery(num)}" >${num}</a>
+            <a class="active" href="challengeEndList${pageMaker.makeQuery(num)}" >${num}</a>
         </c:forEach>
         
-        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-            <a class="next" href="challengeList${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>
+        <c:if test="${pageMaker1.next && pageMaker.endPage > 0}">
+            <a class="next" href="challengeEndList${pageMaker1.makeQuery(pageMaker.endPage +1) }"></a>
         </c:if>
         </div>
         
          
-        <form id="actionForm" action="challenge/challenge_main" method="get">
+        <form id="actionForm" action="challenge/challenge_endList" method="get">
         	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
         	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
         </form>

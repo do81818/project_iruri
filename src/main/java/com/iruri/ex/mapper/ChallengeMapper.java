@@ -10,21 +10,13 @@ import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 
 @Mapper
-public interface IClassMapper {
+public interface ChallengeMapper {
     
-    // 모든 클래스
+   
+    
+    // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     List<IClassVO> selectAll(int userId);
     
-
-    // 현재 운영중인 클래스
-    List<IClassVO> selectAllCurrent(int userId);
-    
-    // 종료된 클래스
-    List<IClassVO> selectAllEnd(int userId);
-
-    int classcount(int userId);
-    
-    /*
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
     
@@ -40,5 +32,4 @@ public interface IClassMapper {
     //지난 챌린지 
     List<IClassVO> getListWithPaging_challengeEndList(Criteria criteria);
     int getTotalCount_challengeEndList(Criteria cri);
-    */
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.AdminMapper">
+
+	<resultMap type="com.iruri.ex.vo.ReportVO" id="reportMap">
+
+		<result property="boardId" column="BOARD_ID" />
+		<result property="reportContent" column="REPORT_CONTENT" />
+		<result property="reportDate" column="REPORT_DATE" />
+		<result property="reportId" column="REPORT_ID" />
+		<result property="userId" column="USER_ID" />
+
+		<!-- <collection property="authList" resultMap="authMap"> </collection> -->
+	</resultMap>
+
+	<!-- <resultMap type="com.iruri.ex.vo.AuthVO" id="authMap"> <result property="authNumber" 
+		column="auth_number"/> <result property="authId" column="auth_id"/> <result 
+		property="authContent" column="auth_content"/> <result property="userId" 
+		column="user_id"/> </resultMap> -->
+
+
+	<!-- 신고들어온 게시글(신고알림) 리스트 -->
+	<select id="getReportList" resultMap="reportMap">
+		<![CDATA[
+		select * from report
+		]]>
+	</select>
+
+
+
+</mapper>

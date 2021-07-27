@@ -20,17 +20,17 @@
 <!-- 페이지 이름을 적어주세요 -->
  
 
-<!-- 값 제어를 위해 jquery -->
-<script src="${RESOURCES_PATH}/src/js/challenge/jquery-3.1.1.min.js" defer></script>
+<!-- Air datepicker js -->
+<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.js" defer></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.ko.js" defer></script>
+
 
 
 <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
 <script src="${RESOURCES_PATH}/src/js/challenge/c_calendar.js" defer></script>
 
-<!-- Air datepicker js -->
-<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.js" defer></script>
-<!-- 달력 한글 추가를 위해 커스텀 -->
-<script src="${RESOURCES_PATH}/src/js/challenge/datepicker.ko.js" defer></script>
+
 <link href="${RESOURCES_PATH}/src/css/page/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
@@ -83,8 +83,8 @@
 
 						<div class="c_period">
 							<p>운동기간</p>
-							<input type="text" name="classStartDate" id="startDate"> &nbsp - &nbsp 
-							<input type="text" name="classEndDate" id="endDate"> <br>
+							<input type="text" name="classStartDate" id="sDate">&nbsp - &nbsp 
+							<input type="text" name="classEndDate" id="eDate"> <br>
 						</div>
 
 						<div class="c_exNum">

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.iruri.ex.service.ReportService;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -14,10 +16,14 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/mypage/admin/*")
 public class MypageAdminController {
 
+    private ReportService reportService;
+    
 	// mypageAdmin() ModelAndView 관리자 마이페이지로 이동
 	@GetMapping("main")
-	public String mypageAdmin(Locale locale, Model model) {
-
+	public String mypageAdmin(Model model) {
+	    log.info("mypageAdmin()...");
+	    model.addAttribute("reportList", reportService.getReportList());
+	    
 		return "mypage_admin/mypage_admin";
 	}
 
