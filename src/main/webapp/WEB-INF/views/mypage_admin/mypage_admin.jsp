@@ -55,54 +55,54 @@
 
 		<!---------------------- 회원관리 하위 메뉴 -------------------------->
 		<div id="admin_memberTabMenu">
-			<input type="radio" id="tap1" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/main'" checked> 
-				<label for="tap1">신고알림</label> 
-			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'">
-				<label for="tap2">전체회원</label> 
-			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'">
-				<label for="tap3">블랙리스트</label>
+			<input type="radio" id="tap1" name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/main'" checked>
+			<label for="tap1">신고알림</label> <input type="radio" id="tap2"
+				name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'">
+			<label for="tap2">전체회원</label> <input type="radio" id="tap3"
+				name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'">
+			<label for="tap3">블랙리스트</label>
 		</div>
 
 		<!---------------------- 신고알림 탭 -------------------------->
-		<div class="management_normalMember">
-			<div class="report_memberList">
-				<table class="admin_table">
-					<tr>
-						<th>No.</th>
-						<th>회원분류</th>
-						<th>닉네임</th>
-						<th>신고사유</th>
-						<th>게시글보기</th>
-					</tr>
-					<tr>
-						<td class="table_No_date">500</td>
-						<td class="table_indigo_text">일반회원</td>
-						<td><a class="table_indigo_text"
-							href="./관리자마이페이지메인_회원정보.html">닉네임</a></td>
-						<td class="table_blue_text">부적절한 게시글입니다.</td>
-						<td><a class="a_buttonBox" href="#" target="_blank">게시글로
-								이동</a></td>
-					</tr>
-					<tr>
-						<td class="table_No_date">500</td>
-						<td class="table_indigo_text">일반회원</td>
-						<td><a class="table_indigo_text" href="#">닉네임</a></td>
-						<td class="table_blue_text">부적절한 게시글입니다.</td>
-						<td><a class="a_buttonBox" href="#" target="_blank">게시글로
-								이동</a></td>
-					</tr>
-				</table>
-				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-				<div class="page_nation">
-					<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-					<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-					<a class="arrow next" href="#"></a>
-				</div>
+		<div class="report_memberList">
+			<table class="admin_table">
+				<tr>
+					<th>No.</th>
+					<th>회원분류</th>
+					<th>닉네임</th>
+					<th>신고사유</th>
+					<th>게시글보기</th>
+				</tr>
+				<tr>
+					<td class="table_No_date">"${reportList.reportId}"</td>
+					<td class="table_indigo_text">일반회원</td>
+					<td><a class="table_indigo_text" href="./관리자마이페이지메인_회원정보.html">닉네임</a></td>
+					<td class="table_blue_text">부적절한 게시글입니다.</td>
+					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
+						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
+				</tr>
+				<tr>
+					<td class="table_No_date">500</td>
+					<td class="table_indigo_text">일반회원</td>
+					<td><a class="table_indigo_text" href="#">닉네임</a></td>
+					<td class="table_blue_text">부적절한 게시글입니다.</td>
+					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
+						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
+				</tr>
+			</table>
+
+			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+			<div class="page_nation">
+				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
+				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
+				<a class="arrow next" href="#"></a>
 			</div>
 
 		</div>
 	</div>
-
 
 	<div class="iruri__wrapper">
 		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->

@@ -9,7 +9,8 @@
 	scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources"
 	scope="application" />
-<c:set var="CONTEXT_PATH_ADMIN" value="${pageContext.request.contextPath}/mypage/admin"
+<c:set var="CONTEXT_PATH_ADMIN"
+	value="${pageContext.request.contextPath}/mypage/admin"
 	scope="application" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -39,8 +40,8 @@
 		<div id="admin_managementMenu">
 			<ul>
 				<a href="${CONTEXT_PATH_ADMIN}/main">
-					<li class="admin_active">회원관리<br> <span class="under_line"
-						></span></li>
+					<li class="admin_active">회원관리<br> <span
+						class="under_line"></span></li>
 				</a>
 				<a href="${CONTEXT_PATH_ADMIN}/trainer/list">
 					<li>트레이너관리<br> <span></span></li>
@@ -54,46 +55,46 @@
 
 		<!---------------------- 회원관리 하위 메뉴 -------------------------->
 		<div id="admin_memberTabMenu">
-			<input type="radio" id="tap1" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> 
-				<label for="tap1">신고알림</label> 
-			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'">
-				<label for="tap2">전체회원</label> 
-			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'" checked>
-				<label for="tap3">블랙리스트</label>
+			<input type="radio" id="tap1" name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> <label
+				for="tap1">신고알림</label> <input type="radio" id="tap2" name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'">
+			<label for="tap2">전체회원</label> <input type="radio" id="tap3"
+				name="taps"
+				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'"
+				checked> <label for="tap3">블랙리스트</label>
 		</div>
 
 		<!---------------------- 트레이너회원 탭 -------------------------->
-		<div class="management_normalMember">
-			<div class="report_trainerMemberList">
-				<table class="admin_table">
-					<tr>
-						<th>No.</th>
-						<th>회원분류</th>
-						<th>닉네임</th>
-						<th>이메일주소</th>
-						<th></th>
-					</tr>
-					<tr class="list_impact" onclick="location.href='member/info''">
-						<td class="table_No_date">500</td>
-						<td class="table_indigo_text">일반회원</td>
-						<td class="table_indigo_text">닉네임</td>
-						<td class="table_blue_text">rirudsfjl@naver.com</td>
-						<td class="table_red_text"></td>
-					</tr>
-					<tr>
-						<td class="table_No_date">500</td>
-						<td class="table_indigo_text">일반회원</td>
-						<td class="table_indigo_text">닉네임</td>
-						<td class="table_blue_text">rirudsfjl@naver.com</td>
-						<td class="table_red_text"></td>
-					</tr>
-				</table>
-				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-				<div class="page_nation">
-					<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-					<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-					<a class="arrow next" href="#"></a>
-				</div>
+		<div class="report_totalMemberList">
+			<table class="admin_table">
+				<tr>
+					<th>No.</th>
+					<th>회원분류</th>
+					<th>닉네임</th>
+					<th>이메일주소</th>
+					<th></th>
+				</tr>
+				<tr class="list_impact" onclick="location.href='member/info'">
+					<td class="table_No_date">500</td>
+					<td class="table_indigo_text">일반회원</td>
+					<td class="table_indigo_text">닉네임</td>
+					<td class="table_blue_text">rirudsfjl@naver.com</td>
+					<td class="table_red_text"></td>
+				</tr>
+				<tr>
+					<td class="table_No_date">500</td>
+					<td class="table_indigo_text">일반회원</td>
+					<td class="table_indigo_text">닉네임</td>
+					<td class="table_blue_text">rirudsfjl@naver.com</td>
+					<td class="table_red_text"></td>
+				</tr>
+			</table>
+			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+			<div class="page_nation">
+				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
+				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
+				<a class="arrow next" href="#"></a>
 			</div>
 		</div>
 	</div>
