@@ -99,11 +99,11 @@
 .signUp__passwordForm .validateCheck,
 .signUp__passwordCheckForm .validateCheck,
 .signUp__nicknameForm .validateCheck {
-   bottom: 10px;
+  bottom: 10px;
 }
 
 .signUp__emailAuthBtn {
-  /* display: none; */
+  display: none;
   position: relative;
   justify-content: flex-end;
 }
