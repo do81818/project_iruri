@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
+import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.vo.ExerciseDateVO;
@@ -31,6 +32,8 @@ public class ChallengeController {
     IUserService iUserService;
     @Autowired
     IClassService iClassService;
+    @Autowired
+    ChallengeService challengeService;
     
     //챌린지 메인
 //    @GetMapping("/iruri/challenge_main")
@@ -43,7 +46,7 @@ public class ChallengeController {
 //    }
     
     //챌린지 메인
-    
+    /*
     @RequestMapping("/iruri/challenge_main")
     public String c_main(Principal principal, Model model) {
         log.info("challenge main()..");
@@ -55,25 +58,40 @@ public class ChallengeController {
         return "challenge/challenge_main";        
         
     }
-    
+    */
     
 
     
     //챌린지 메인 페이징처리 
     
-    @GetMapping("/iruri/challenge_main")
-    public String list(Criteria cri, Model model) {
+    @GetMapping("/iruri/challengeList")
+    public String challengeList(Criteria cri, Model model) {
         log.info("challenge_list()..");
         log.info(cri);
         
-        model.addAttribute("challengeList", iClassService.challengeList());
-        model.addAttribute("list", iClassService.getList(cri));
+        model.addAttribute("challengeList", challengeService.challengeList(cri));
         
-        int total = iClassService.getTotal(cri);
-        log.info("total" + total);
-        model.addAttribute("pageMaker", new PageVO(cri, total) );
+        int total = challengeService.getTotal_challenge(cri);
+        log.info("getTotal_challenge" + total);
+        model.addAttribute("pageMaker", new PageVO(cri, total));
         
         return "challenge/challenge_main";
+    }
+    
+    
+    //챌린지 메인 - 지난 챌린지
+    @GetMapping("/iruri/challengeEndList")
+    public String challengeEndList(Criteria cri, Model model) {
+        log.info("challengeEndList()..");
+        log.info(cri);
+        
+        model.addAttribute("challengeEndList", challengeService.challengeEndList(cri));
+        
+        int total = challengeService.getTotal_challengeEndList(cri);
+        log.info("getTotal_challengeEndList" + total);
+        model.addAttribute("pageMaker", new PageVO(cri, total));
+        
+        return "challenge/challenge_endList";
     }
   
     
@@ -96,9 +114,6 @@ public class ChallengeController {
         log.info("challenge_make_form()...");
    
 
-    
-        java.sql.Date s =  java.sql.Date.valueOf("2006-03-21");
-        java.sql.Date e =  java.sql.Date .valueOf("2007-03-21");
         // DB에서 클래스타이틀이 한글이 깨져요
         //iClassVO.setClassId(114);
         iClassVO.setClassContent("클래스생성테스트내용"); 
@@ -115,7 +130,7 @@ public class ChallengeController {
         //iClassVO.setClassTotalMember(20);
         iClassVO.setClassPrice(150000);
         iClassVO.setClassNeed("준비물테스트");
-        iClassVO.setCategoryId(2);
+        iClassVO.setCategoryId(1);
         //iClassVO.setClassLevel("easy");
         iClassVO.setUserId(vo.getUserId());
        
@@ -124,7 +139,7 @@ public class ChallengeController {
         log.info("exerciseKindVO: " + exerciseKindVO.getExerciseKind());
      
         
-        iClassService.insertChallenge(iClassVO);
+        challengeService.insertChallenge(iClassVO);
        
         
         
