@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.iruri.ex.page.Criteria;
+import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.vo.ExerciseDateVO;
@@ -41,23 +43,39 @@ public class ChallengeController {
 //    }
     
     //챌린지 메인
+    
     @RequestMapping("/iruri/challenge_main")
     public String c_main(Principal principal, Model model) {
         log.info("challenge main()..");
         
-        IUserVO vo = iUserService.selectOne(principal.getName());
+        model.addAttribute("challengeList", iClassService.challengeList());
         
-        model.addAttribute("user", vo);
-        
-        model.addAttribute("classList", iClassService.classList(vo.getUserId()));
-        
-        log.info(iClassService.classList(vo.getUserId()));
+        log.info(iClassService.challengeList());
         
         return "challenge/challenge_main";        
         
     }
     
     
+
+    
+    //챌린지 메인 페이징처리 
+    
+    @GetMapping("/iruri/challenge_main")
+    public String list(Criteria cri, Model model) {
+        log.info("challenge_list()..");
+        log.info(cri);
+        
+        model.addAttribute("challengeList", iClassService.challengeList());
+        model.addAttribute("list", iClassService.getList(cri));
+        
+        int total = iClassService.getTotal(cri);
+        log.info("total" + total);
+        model.addAttribute("pageMaker", new PageVO(cri, total) );
+        
+        return "challenge/challenge_main";
+    }
+  
     
     //챌린지 개설 작성 페이지 폼
     @GetMapping("/iruri/challenge_make_form")
@@ -76,33 +94,39 @@ public class ChallengeController {
         IUserVO vo = iUserService.selectOne(principal.getName());
         
         log.info("challenge_make_form()...");
-        
+   
+
+    
         java.sql.Date s =  java.sql.Date.valueOf("2006-03-21");
         java.sql.Date e =  java.sql.Date .valueOf("2007-03-21");
         // DB에서 클래스타이틀이 한글이 깨져요
-        iClassVO.setClassId(110);
+        //iClassVO.setClassId(114);
         iClassVO.setClassContent("클래스생성테스트내용"); 
-        iClassVO.setClassGoal("목표2");
-        iClassVO.setClassExerciseCount(0);
-        iClassVO.setClassStartDate(s);
-        iClassVO.setClassEndDate(e);
+        //iClassVO.setClassGoal("목표2");
+        //iClassVO.setClassExerciseCount(0);
+        //iClassVO.setClassStartDate(s);
+        //iClassVO.setClassEndDate(e);
         iClassVO.setClassImage("이미지경로2");
         iClassVO.setClassLike(0);
         iClassVO.setClassState("show");
         iClassVO.setClassHit(0);
         iClassVO.setClassJoinMember(0);
         iClassVO.setClassTrainerInfo("테스트트레이너인포");
-        iClassVO.setClassTotalMember(20);
+        //iClassVO.setClassTotalMember(20);
         iClassVO.setClassPrice(150000);
         iClassVO.setClassNeed("준비물테스트");
         iClassVO.setCategoryId(2);
-        iClassVO.setClassLevel("easy");
+        //iClassVO.setClassLevel("easy");
         iClassVO.setUserId(vo.getUserId());
+       
         
         log.info("iClassVO: " + iClassVO);
         log.info("exerciseKindVO: " + exerciseKindVO.getExerciseKind());
+     
         
         iClassService.insertChallenge(iClassVO);
+       
+        
         
         return "redirect:iruri/insert_challenge";
     }

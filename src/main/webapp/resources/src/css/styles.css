@@ -24,6 +24,7 @@
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
 @import "page/mypage_user_pointlist.css";
+@import "page/datepicker.min.css";
 
 :root {
   /* font-size */

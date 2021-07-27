@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.IUserMapper;
-import com.iruri.ex.vo.IUserUser;
 import com.iruri.ex.vo.IUserVO;
 
 import lombok.extern.log4j.Log4j;
@@ -24,11 +23,11 @@ public class IUserDetailsService implements UserDetailsService {
             
             log.warn("Load User By UserName : " + userEmail);
             
-            IUserVO vo = iUserMapper.getIUser(userEmail);
+            IUserVO currentUser = iUserMapper.getIUser(userEmail);
             
-            log.warn("queried by IUserVO mapper:" + vo);
+            log.warn("queried by IUserVO mapper:" + currentUser);
             
-            return vo == null ? null : new IUserUser(vo);
+            return currentUser == null ? null : new IUserDetails(currentUser);
         }
         
 }

@@ -159,4 +159,5 @@ Servers/
 /bin/
 /.settings/
 
+config.properties
 ApiKeys.java
