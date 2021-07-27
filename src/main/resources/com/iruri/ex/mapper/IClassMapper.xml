@@ -49,10 +49,36 @@
 		FROM 
 			iclass
 		WHERE
-			user_id = #{userId}
+			user_id = #{userId} 
 		]]>
 	</select>
 	
+
+	<!--현재 운영중인 클래스 정보 뽑아오기 -->
+	<select id="selectAllCurrent" resultMap="iClassMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM 
+			iclass
+		WHERE
+			user_id = #{userId} and CLASS_ENDDATE >= sysdate
+		]]>
+	</select>
+
+	<!--종료된 클래스 정보 뽑아오기 -->
+	<select id="selectAllEnd" resultMap="iClassMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM 
+			iclass
+		WHERE
+			user_id = #{userId} and CLASS_ENDDATE < sysdate
+		]]>
+	</select>
+	
+
 	<select id="classcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
