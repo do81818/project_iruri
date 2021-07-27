@@ -197,7 +197,7 @@ input[type=checkbox] {
 /*검색할때 안에 글씨쓰는곳*/
 
 .c_search_box input[type=text] {
-    font-size: 20px;
+    font-size: 16.5px;
     color: var(--iruri-indigo-color);
     width: 390px;
     height: 25 px;
@@ -205,6 +205,10 @@ input[type=checkbox] {
     font-family: 'NanumBarunGothic';
     outline: none;
     border: none;
+    position: relative;
+    right: 20px;
+    bottom: 3.5px;
+    
 }
 
 

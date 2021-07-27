@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iruri.ex.mapper.ChallengeMapper;
 import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
@@ -14,10 +15,12 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-public class IClassServiceImpl implements IClassService {
+public class ChallengeServiceImpl implements ChallengeService {
     
     @Autowired
     private IClassMapper iClassMapper;
+    @Autowired
+    private ChallengeMapper challengeMapper;
     
     @Override
     public List<IClassVO> classList(int userId) {
@@ -42,13 +45,12 @@ public class IClassServiceImpl implements IClassService {
    
    
   
-    /*
     //챌린지 개설 폼 값 입력
     @Override
     public void insertChallenge(IClassVO iClassVO) {
         log.info("insertChallenge");
         
-        iClassMapper.insertChallenge(iClassVO);
+        challengeMapper.insertChallenge(iClassVO);
         
     }
 
@@ -58,13 +60,13 @@ public class IClassServiceImpl implements IClassService {
     public List<IClassVO> challengeList(Criteria criteria) {
         log.info("getList()..");
       
-        return iClassMapper.getListWithPaging_challenge(criteria);
+        return challengeMapper.getListWithPaging_challenge(criteria);
     }
 
     @Override
     public int getTotal_challenge(Criteria cri) {
         log.info("getTotal_Challenge()..");
-        return iClassMapper.getTotalCount_challenge(cri);
+        return challengeMapper.getTotalCount_challenge(cri);
     }
 
    
@@ -72,16 +74,17 @@ public class IClassServiceImpl implements IClassService {
     @Override
     public List<IClassVO> challengeEndList(Criteria criteria) {
         log.info("get challengeEndList()..");
-        return iClassMapper.getListWithPaging_challengeEndList(criteria);
+        return challengeMapper.getListWithPaging_challengeEndList(criteria);
     }
 
     @Override
     public int getTotal_challengeEndList(Criteria cri) {
         log.info("getTotal_challengeEndList()..");
-        return iClassMapper.getTotalCount_challengeEndList(cri);
+        return challengeMapper.getTotalCount_challengeEndList(cri);
     }
 
-  */
+    
+  
 
 
 
