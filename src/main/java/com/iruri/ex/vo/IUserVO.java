@@ -1,6 +1,7 @@
 package com.iruri.ex.vo;
 
 import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class IUserVO {
     private String userNickname;
     private String userName;
     private String userPhone;
-    private Timestamp userSigndate;
+    private Date userSigndate;
     private int userPoint;
     private boolean userBlackList;
     private int kakaoId;

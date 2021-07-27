@@ -24,10 +24,24 @@
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
+		<collection property="exerciseDateList" resultMap="exerciseDateMap">
+		</collection>
+		<collection property="exerciseKindList" resultMap="exerciseKindMap">
+		</collection>
 	</resultMap>
 
+
+	<resultMap type="com.iruri.ex.vo.ExerciseDateVO" id="exerciseDateMap">
+		<result property="exerciseDate" column="EXERCISE_DATE"/>
+		<result property="classId" column="CLASS_ID"/>
+	</resultMap>
 	
+	<resultMap type="com.iruri.ex.vo.ExerciseKindVO" id="exerciseKindMap">
+		<result property="exerciseKind" column="EXERCISE_KIND"/>
+		<result property="classId" column="CLASS_ID"/>
+	</resultMap>
 	
+	<!-- 클래스 정보 뽑아오기 -->
 	<select id="selectAll" resultMap="iClassMap">
 		<![CDATA[
 		SELECT
@@ -35,8 +49,59 @@
 		FROM 
 			iclass
 		WHERE
-			user_id = #{userId}
+			user_id = #{userId} 
 		]]>
 	</select>
+	
+	<!--현재 운영중인 클래스 정보 뽑아오기 -->
+	<select id="selectAllCurrent" resultMap="iClassMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM 
+			iclass
+		WHERE
+			user_id = #{userId} and CLASS_ENDDATE >= sysdate
+		]]>
+	</select>
+
+	<!--종료된 클래스 정보 뽑아오기 -->
+	<select id="selectAllEnd" resultMap="iClassMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM 
+			iclass
+		WHERE
+			user_id = #{userId} and CLASS_ENDDATE < sysdate
+		]]>
+	</select>
+	
+	
+	
+	<!-- 챌린지 개설 시 폼 값 입력 -->
+	<insert id="insertChallenge">
+	<![CDATA[
+		INSERT ALL
+    into iclass(CLASS_ID, CLASS_TITLE, CLASS_CONTENT, CLASS_GOAL, CLASS_EXERCISECOUNT, CLASS_STARTDATE, 
+    CLASS_ENDDATE, CLASS_IMAGE, CLASS_LIKE, CLASS_STATE, CLASS_HIT, CLASS_JOINMEMBER, CLASS_TRAINERINFO, 
+    CLASS_TOTALMEMBER, CLASS_PRICE, CLASS_NEED, CATEGORY_ID, USER_ID, CLASS_LEVEL) 
+    values (#{classId}, #{classTitle}, #{classContent}, #{classGoal}, #{classExerciseCount}, #{classStartDate}, 
+    		#{classEndDate},#{classImage}, #{classLike}, #{classState}, #{classHit}, #{classJoinMember}, #{classTrainerInfo}, 
+    		#{classTotalMember}, #{classPrice}, #{classNeed}, #{categoryId}, #{userId}, #{classLevel})
+          
+    INTO EXERCISE_KIND(exercise_kind, CLASS_ID)
+    VALUES ('요가' ,#{classId})
+    INTO EXERCISE_KIND(exercise_kind, CLASS_ID)
+    VALUES ('필라테스',#{classId})
+    
+    INTO EXERCISE_date(exercise_date, CLASS_ID)
+    VALUES ('화',#{classId})
+    INTO EXERCISE_date(exercise_date, CLASS_ID)
+    VALUES ('목',#{classId}) 
+    
+	SELECT *  FROM DUAL
+	]]>
+	</insert>
 
 </mapper>
