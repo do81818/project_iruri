@@ -29,4 +29,6 @@ public class ReportVO {
     private int reportId;
     private int userId;
     
+    private String userNickName;
+    private String userAuthContent;
 }

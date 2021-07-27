@@ -4,16 +4,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.AdminMapper">
 
-	<resultMap type="com.iruri.ex.vo.ReportVO" id="reportMap">
-
-		<result property="boardId" column="BOARD_ID" />
-		<result property="reportContent" column="REPORT_CONTENT" />
-		<result property="reportDate" column="REPORT_DATE" />
-		<result property="reportId" column="REPORT_ID" />
-		<result property="userId" column="USER_ID" />
-
-		<!-- <collection property="authList" resultMap="authMap"> </collection> -->
-	</resultMap>
+	<!-- <resultMap type="com.iruri.ex.vo.ReportVO" id="reportMap"> <result 
+		property="boardId" column="BOARD_ID" /> <result property="reportContent" 
+		column="REPORT_CONTENT" /> <result property="reportDate" column="REPORT_DATE" 
+		/> <result property="reportId" column="REPORT_ID" /> <result property="userId" 
+		column="USER_ID" /> <collection property="authList" resultMap="authMap"> 
+		</collection> </resultMap> -->
 
 	<!-- <resultMap type="com.iruri.ex.vo.AuthVO" id="authMap"> <result property="authNumber" 
 		column="auth_number"/> <result property="authId" column="auth_id"/> <result 
@@ -22,9 +18,18 @@
 
 
 	<!-- 신고들어온 게시글(신고알림) 리스트 -->
-	<select id="getReportList" resultMap="reportMap">
+	<select id="getReportList" resultType="com.iruri.ex.vo.ReportVO">
 		<![CDATA[
-		select * from report
+		select r.*, c.user_nickname, c.auth_content 
+		from report r,
+		    (select b.board_id, u.user_id, u.user_nickname, u.auth_content 
+			from board b, 
+				(select distinct iuser.user_id as user_id, iuser.user_nickname as user_nickname, 
+		        	     authority.auth_content as auth_content
+		     	from authority, iuser 
+		     	where authority.user_id = iuser.user_id) u
+			where b.user_id = u.user_id order by b.board_id desc) c
+		where r.board_id = c.board_id order by report_id desc
 		]]>
 	</select>
 

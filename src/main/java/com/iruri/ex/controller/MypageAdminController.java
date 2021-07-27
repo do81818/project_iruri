@@ -2,6 +2,7 @@ package com.iruri.ex.controller;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/mypage/admin/*")
 public class MypageAdminController {
 
+    @Autowired
     private ReportService reportService;
     
 	// mypageAdmin() ModelAndView 관리자 마이페이지로 이동
