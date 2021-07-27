@@ -32,11 +32,11 @@
         <button class ="m_information_change">정보수정</button>
         
       </div>
-        <div id="m_useremail">일반회원<br>eeeee@naver.com</div>
+        <div id="m_useremail">${user.authList[0].authContent}<br>${user.userEmail}</div>
         </div>
       <div id = "m_userboard_box">
         <div id="m_userboard"><a href="">작성글</a></div>
-        <div id ="m_userboard_number">10</div>
+        <div id ="m_userboard_number">${boardcount}</div>
       </div>
       <div id = "m_userpoint_box">
         <div id="m_userpoint"><a href="">보유포인트</a></div>
@@ -48,7 +48,7 @@
       </div>
       <div id = "m_userclass_box">
         <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-        <div id="m_userclass_number">2</div>
+        <div id="m_userclass_number">${iclass}</div>
       </div>
     </div>
          <p class="border1"></p>
@@ -63,10 +63,10 @@
                 <li class="m_gender">키 </li>
                 <li class="m_gender">몸무게 </li>
               
-                <li class="m_usergender">${userinfoList[0].userGender}</li>
-                <li class="m_usergender">${userinfoList[0].userBirth}</li>
-                <li class="m_usergender">${userinfoList[0].userHeight}</li>
-                <li class="m_usergender">${userinfoList[0].userWeight}</li>
+                <li class="m_usergender">${userinfo[0].userGender}</li>
+                <li class="m_usergender">${userinfo[0].userBirth}</li>
+                <li class="m_usergender">${userinfo[0].userHeight}cm</li>
+                <li class="m_usergender">${userinfo[0].userWeight}kg</li>
               </ul>
             </div>
           </div>
@@ -76,11 +76,12 @@
               <li id="m_yearheight"><button id="addData1">올해체중변화</button></li>
                 <!-- <a href="#">올해 체중변화</a></li>  -->
             </ul>
-            <canvas id="myChart" width="350" height="160"></canvas>
+            <canvas id="myChart" width="280" height="140"></canvas>
           </div>
 
           <div class="m_bmi_box">
-            <div id=m_bmi>비만도/BMI지수</div>
+            <div id=m_bmi>
+            </div>
             <div id="m_bminumber">25</div>
             <div id="m_bmicontent">정상체중</div>
             <div  id="m_bmiimage">여기 사람몸뚱아리 이미지</div>
@@ -125,7 +126,7 @@
               <h2 class="alertWindow_title">정보수정</h2>
               <form action="#">
                 <p>비밀번호</p>
-                <input class="inputbox_size1" type="text"  />
+                <input class="inputbox_size1" type="text" />
                 
                 <p>비밀번호 확인</p>
                 <input class="inputbox_size1" type="text" />
@@ -133,9 +134,8 @@
                 <p>닉네임</p>
                 <input class="inputbox_size2" type="text">
                 <p>전화번호</p>
-                <input class="inputbox_size2" type="text">
-        
-                <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
+                <input class="inputbox_size2" type="text"  >
+                <button class="alertWindow_submit" type="submit" >비밀번호 변경</button>
               </form>
             </div>
           </div>
@@ -176,4 +176,113 @@
     
     </div>    
   </body>
+  
+  
+      <!--  몸무게 변화 차트 -->
+  <script type="text/javascript">
+//차트 설정 1번
+var config1 = {
+  type: 'line',
+  data: {
+    labels: ['1일', '5일', '10일','15일','20일','30일'],
+    datasets: [{
+      label: 'Weight changed',
+      data: [30,50,51,52,60,45,50,70],
+      backgroundColor: [
+        'rgba(239,239,239)',
+        
+      ],
+      borderColor: [
+        'rgba(24,90,219)',
+        
+      ],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+  }
+}
+//차트 설정 2번
+var config2 = {
+  type: 'line',
+  data: {
+    labels: ['1월', '2월', '3월', '4월', '5월', '6월','7월','8월','9월','10월','11월','12월'],
+    datasets: [{
+      label: 'Weight changed',
+      data: [
+/*           if(${writedate}=1){
+          ${writedate}
+        }  */ 
+        30,50,51,52,60,45,50,70],
+      backgroundColor: [
+        'rgba(239,239,239)',
+        
+      ],
+      borderColor: [
+        'rgba(24,90,219)',
+        
+      ],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+  }
+}
+//차트 요소 선택
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, config1);
+//클릭했을때 변경
+document.getElementById('addData').onclick = function(){
+  
+  config1.data.labels = ['1일', '5일', '10일','15일','20일','30일'];
+  //데이터셋 수 만큼 반복
+  var dataset = config1.data.datasets;
+  // for(var i=0; i<dataset.length; i++){
+  //  console.log(dataset);
+  //  //데이터 갯수 만큼 반복
+  //  var data = dataset[i].data;
+  //  for(var j=0 ; j < data.length ; j++){
+  //    data[j] = Math.floor(Math.random() * 50);
+  //  }
+  // }
+  
+  console.log("이번달체중변화")
+  myChart.update(); //차트 업데이트
+}
+//클릭했을때 변경
+document.getElementById('addData1').onclick = function(){
+  
+  config1.data.labels = config2.data.labels;
+  //데이터셋 수 만큼 반복
+  var dataset = config2.data.datasets;
+  // for(var i=0; i<dataset.length; i++){
+  //  console.log(dataset);
+  //  //데이터 갯수 만큼 반복
+  //  var data = dataset[i].data;
+  //  for(var j=0 ; j < data.length ; j++){
+  //    data[j] = Math.floor(Math.random() * 50);
+  //  }
+  // }
+  
+  config1.data.datasets = dataset;
+  console.log("올해체중변화")
+  myChart.update(); //차트 업데이트
+}
+  </script>   
 </html>

@@ -87,7 +87,7 @@ body {
 
 /*챌린지명, 운동종류..*/
 
-form div p {
+.c_makeForm div p {
     color: var(--iruri-blue-color);
     font-size: 16px;
     width: 135px;
@@ -99,7 +99,7 @@ form div p {
 
 /*인풋박스*/
 
-form div input:not(.c_goal) {
+.c_makeForm div input:not(.c_goal) {
     height: 44px;
     border-radius: 5px;
     margin-bottom: 24px;
@@ -128,62 +128,62 @@ form div input:not(.c_goal) {
 
 /*체크박스*/
 
-.cb_label {
+.c_makeForm .cb_label {
     line-height: 44px;
     margin-right: 25px;
 }
 
-input[type=checkbox] {
+.c_makeForm input[type=checkbox] {
     display: none;
 }
 
-input[type=checkbox]+label {
+.c_makeForm input[type=checkbox]+label {
     display: inline-block;
     cursor: pointer;
     padding-left: 30px;
     background: url("/ex/resources/src/img/icon/check_no.png") left/22px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
+.c_makeForm input[type=checkbox]:checked+label {
     background-image: url("/ex/resources/src/img/icon/check_yes.png");
 }
 
 
 /*라디오버튼 */
 
-.rd_label {
+.c_makeForm .rd_label {
     line-height: 44px;
     margin-right: 25px;
 }
 
-input[type=radio] {
+.c_makeForm input[type=radio] {
     display: none;
 }
 
-input[type=radio]+label {
+.c_makeForm input[type=radio]+label {
     display: inline-block;
     cursor: pointer;
     padding-left: 30px;
     background: url("/ex/resources/src/img/icon/check_no.png") left/22px no-repeat;
 }
 
-input[type=radio]:checked+label {
+.c_makeForm input[type=radio]:checked+label {
     background-image: url("/ex/resources/src/img/icon/check_yes.png");
 }
 
 
 /*파일올리기 버튼*/
 
-.file_upload {
+.c_makeForm .file_upload {
     margin-right: 5px;
     margin-left: -30px;
 }
 
-input[type=file] {
+.c_makeForm input[type=file] {
     display: none;
 }
 
-input[type=file]+label {
+.c_makeForm input[type=file]+label {
     display: inline;
     cursor: pointer;
     padding: 20px 80px;
@@ -191,18 +191,18 @@ input[type=file]+label {
     background-size: 70%;
 }
 
-input[type=file]:checked+label {
+.c_makeForm input[type=file]:checked+label {
     background-image: url("/ex/resources/src/img/icon/img_upload.png");
 }
 
 
 /*인풋박스 사이즈들*/
 
-.inputbox_size1 {
+.c_makeForm .inputbox_size1 {
     width: 525px;
 }
 
-.inputbox_size2 {
+.c_makeForm .inputbox_size2 {
     width: 263px;
 }
 
@@ -231,6 +231,7 @@ input[type=date] {
     width: 660px;
     margin: 0 auto;
     margin-bottom: 77px;
+    display: inline-block;
 }
 
 .c_img_detail {
@@ -238,11 +239,12 @@ input[type=date] {
     text-align: center;
     width: 123px;
     height: 123px;
-    border: 1px solid;
-    border-radius: 30px;
-    border: none;
     outline: none;
-    background-color: var(--iruri-gray-color);
+    cursor: pointer;
+}
+
+.c_img_detail>img {
+    border-radius: 30px;
 }
 
 

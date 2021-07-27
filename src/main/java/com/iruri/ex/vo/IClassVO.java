@@ -1,7 +1,11 @@
 package com.iruri.ex.vo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,8 +47,10 @@ public class IClassVO {
     private String classContent;
     private String classGoal;
     private int classExerciseCount;
-    private Timestamp classStartDate;
-    private Timestamp classEndDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date classStartDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date classEndDate;
     private String classImage;
     private int classLike;
     private String classState;
@@ -57,5 +63,6 @@ public class IClassVO {
     private int categoryId;
     private int userId;
     private String classLevel;
+
     
 }

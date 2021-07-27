@@ -13,9 +13,9 @@
     <%@ include file="../include/static.jsp" %>
     <title>챌린지 메인</title> <!-- 페이지 이름을 적어주세요 -->
        
-    <script src="${RESOURCES_PATH}/src/js/c_check.js" defer></script>
-    <script src="${RESOURCES_PATH}/src/js/c_modal.js" defer></script>
-    <script src="${RESOURCES_PATH}/src/js/c_select.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -172,16 +172,16 @@
                 <div class="c_list_img">
                 </div>
                 <div class="c_list_title">
-                    스쿼트, 런지, 플랭크<br> 30일 챌린지
+                     ${classList[0].classTitle}
                 </div>
 
                 <div class="c_list_date">
-                    2021.03.01~2021.04.01
+                     ${classList[0].classStartDate}~${classList[0].classEndDate}
                 </div>
 
                 <div class="data_tags">
                     <div class="data_tag_blue">
-                        <i class="iruri_level_icon"></i> easy
+                        <i class="iruri_level_icon"></i> ${classList[0].classLevel}
                     </div>
                     <div class="data_tag_blue">
                         <i class="iruri_time_icon"></i> 주 5회 이상
@@ -189,7 +189,7 @@
                 </div>
 
                 <div class="c_list_person">
-                    참여중인 인원 00명 (최대인원 20명)
+                    참여중인 인원 ${classList[0].classJoinMember}명 (최대인원 ${classList[0].classTotalMember}명)
                 </div>
 
                 <div class="c_list_heart">

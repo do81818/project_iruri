@@ -25,5 +25,4 @@ public interface IUserMapper {
     // 파라미터로 뭘가져올지 써준다.
     
 
-    
 }

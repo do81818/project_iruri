@@ -24,15 +24,15 @@
   <div class="container content">
       <div class="m_information_box">
         <div id = "m_userinformation_box">
-          <div id="m_nickname">루리
+          <div id="m_nickname"><p>${user.userNickname}</p>
           <button class ="m_information_change">정보수정</button>
           
         </div>
-          <div id="m_useremail">일반회원<br>eeeee@naver.com</div>
+          <div id="m_useremail">${user.authList[0].authContent}<br>${user.userEmail}</div>
           </div>
         <div id = "m_userboard_box">
           <div id="m_userboard"><a href=".">작성글</a></div>
-          <div id ="m_userboard_number">10</div>
+          <div id ="m_userboard_number">${boardcount}</div>
         </div>
         <div id = "m_userpoint_box">
           <div id="m_userpoint"><a href=".">보유포인트</a></div>
@@ -44,7 +44,7 @@
         </div>
         <div id = "m_userclass_box">
           <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-          <div id="m_userclass_number">2</div>
+          <div id="m_userclass_number">${iclass}</div>
         </div>
       </div>
        
@@ -55,61 +55,70 @@
          <div class="m_board_box">
              <div id="m_boardlist_box">
                     <div id="m_now_boardlist">게시글</div>
-                    <div id="m_now_boardlistnb">3</div>
+                    <div id="m_now_boardlistnb">${myboardcount}</div>
                 
             </div>
             <div id="m_confirmlist_box">
                 <div id="m_now_confirmlist">인증글</div>
-                 <div id="m_now_confirmlistnb">5</div>
+                 <div id="m_now_confirmlistnb">${confirmcount}</div>
             </div>
             <div id="m_commentlist_box">
                 <div id="m_now_commentlist">댓글</div>
-                <div id="m_now_commentlistnb">2</div>
+                <div id="m_now_commentlistnb">${commentcount}</div>
             </div>
          </div>
         
          <!-- 게시판 리스트 -->
          <!-- 인증글 -->
-         <div class="m_userboardlist">
+			<c:forEach var="vo" items="${confirmlist}">
+                  <div class="m_userboardlist">
            <div id="m_confirm_list_type">인증글</div>
-           <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/gray.png"></div>
+           <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
            <div id="m_board_list_content">
-            <div id="m_board_list_title">인증글제목입니다</div>
-            <div id="m_board_list_content">인증글의내용입니다. 아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
-            <div id="m_board_list_date">2021.07.15</div>
+          <div id="m_board_list_title">  <c:out value="${vo.boardTitle}" /></div>
+            <div id="m_board_list_content">  <c:out value="${vo.boardContent}" /></div>
+            <div id="m_board_list_date">  <c:out value="${vo.boardDate}" /></div>
             
          </div>
         </div>
-        <p class="border1"></p>
+        <p class="border1"></p>  
+         </c:forEach>
+
 
         <!-- 게시글 -->
-
-        <div class="m_userboardlist">
+			<c:forEach var="boardvo" items="${myboardlist}">
+                  <div class="m_userboardlist">
           <div id="m_board_list_type">게시글</div>
-          <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/gray.png"></div>
+          <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
           <div id="m_board_list_content">
-           <div id="m_board_list_title">인증글제목입니다</div>
-           <div id="m_board_list_content">인증글의내용입니다. 아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
-           <div id="m_board_list_date">2021.07.15</div>
+           <div id="m_board_list_title"><c:out value="${boardvo.boardTitle}" /></div>
+           <div id="m_board_list_content"><c:out value="${boardvo.boardContent}" /></div>
+           <div id="m_board_list_date"><c:out value="${boardvo.boardDate}" /></div>
         </div>
        </div>
-       <p class="border1"></p>
+        <p class="border1"></p>  
+         </c:forEach>
+		
+	
 
     <!-- 댓글 -->
-
-    <div class="m_userboardlist">
+			<c:forEach var="commentvo" items="${commentlist}">
+ <div class="m_userboardlist">
       <div id="m_comment_list_type">댓글</div>
       <div id="m_board_list_content">
-       <div id="m_board_list_content">댓글의내용입니다. 아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
-       <div id="m_board_list_date">2021.07.15</div>
+       <div id="m_board_list_content"><c:out value="${commentvo.boardContent}" /></div>
+       <div id="m_board_list_date"><c:out value="${commentvo.boardDate}" /></div>
     </div>
    </div>
    <p class="border1"></p>
+        <p class="border1"></p>  
+         </c:forEach>
+    </div>
 
- <!-- 인증글 -->
+<!-- 인증글
  <div class="m_userboardlist">
   <div id="m_confirm_list_type">인증글</div>
-  <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/gray.png"></div>
+  <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
   <div id="m_board_list_content">
    <div id="m_board_list_title">인증글제목입니다</div>
    <div id="m_board_list_content">인증글의내용입니다. 아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
@@ -119,11 +128,11 @@
 </div>
 <p class="border1"></p>
 
-<!-- 게시글 -->
+게시글
 
 <div class="m_userboardlist">
  <div id="m_board_list_type">게시글</div>
- <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/gray.png"></div>
+ <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
  <div id="m_board_list_content">
   <div id="m_board_list_title">인증글제목입니다</div>
   <div id="m_board_list_content">인증글의내용입니다. 아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
@@ -132,7 +141,7 @@
 </div>
 <p class="border1"></p>
 
-<!-- 댓글 -->
+댓글
 
 <div class="m_userboardlist">
 <div id="m_comment_list_type">댓글</div>
@@ -142,7 +151,7 @@
 </div>
 </div>
 <p class="border1"></p>
-
+ --> 
 
            <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
     <div class="page_nation">
