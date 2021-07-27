@@ -32,7 +32,10 @@
         <button class ="m_information_change">정보수정</button>
         
       </div>
-        <div id="m_useremail">${user.authList[0].authContent}<br>${user.userEmail}</div>
+        <div id="m_useremail">
+        <c:if test="${user.authList[0].authContent eq 'ROLE_USER'}">
+			<div>일반회원</div>
+		</c:if><br>${user.userEmail}</div>
         </div>
       <div id = "m_userboard_box">
         <div id="m_userboard"><a href="">작성글</a></div>

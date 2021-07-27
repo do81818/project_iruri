@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iruri.ex.service.IUserInfoService;
 import com.iruri.ex.service.IUserService;
+import com.iruri.ex.service.PointService;
 import com.iruri.ex.service.BoardService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserInfoService;
@@ -36,11 +37,13 @@ public class MypageUserController {
     IClassService iClassService;
 	@Autowired
 	BoardService boardService;
+	@Autowired
+	PointService pointService;
 
 		
 	// 마이페이지의 메인
 	@GetMapping("/mypage")
-    public String test(Principal principal, IUserVO iuservo,Model model) {
+    public String main(Principal principal, IUserVO iuservo,Model model) {
         log.info("test()..");
 
         // 로그인한 유저의 정보 받아오기
@@ -77,7 +80,7 @@ public class MypageUserController {
 	// 마이페이지의 보드리스트 페이지
     // 메인 페이지 이동
 	   @RequestMapping("/mypage/boardlist")
-	   public String main(Principal principal,Model model) {
+	   public String boardmain(Principal principal,Model model) {
 	       log.info("main() ... ");
 	       
 	       
@@ -128,5 +131,51 @@ public class MypageUserController {
 	        log.info(commentlistVO);
 	       
 	      return "/mypage_user/mypage_user_boardlist";
+	   }
+	   
+	   
+	   // 마이페이지 포인트 리스트
+	   @RequestMapping("/mypage/pointlist")
+	   public String pointmain(Principal principal,Model model) {
+	       log.info("main() ... ");
+	       
+	    // 로그인한 유저의 정보 받아오기
+	        IUserVO vo = iUserService.selectOne(principal.getName());
+	        model.addAttribute("user",vo) ;
+	        
+	        // 유저의 클래스 갯수 받아오기 (수정해야함)
+	        // 내가 한거
+	        int classcountvo = iClassService.classcount(vo.getUserId());
+	        model.addAttribute("iclass",classcountvo);
+	        log.info(classcountvo);
+	        
+
+			// 유저의 작성글 갯수 받아오기
+	        int boardcountvo = boardService.boardcount(vo.getUserId());
+	        model.addAttribute("boardcount",boardcountvo);
+	        log.info(boardcountvo);
+	        
+
+	        // 유저의 현재 포인트 
+	        int savepointvo = pointService.savepoint(vo.getUserId());
+	        model.addAttribute("savepoint",savepointvo);
+	        log.info(savepointvo);
+	        
+	        // 유저의 적립예정 포인트
+	        int appointedpointvo = pointService.appointedpoint(vo.getUserId());
+	        model.addAttribute("appointedpoint",appointedpointvo);
+	        log.info(appointedpointvo);
+	        
+	        // 유저의 사용 포인트 
+	        int usepointvo = pointService.usepoint(vo.getUserId());
+	        model.addAttribute("usepoint",usepointvo);
+	        log.info(usepointvo);
+	        
+
+	        
+	        
+	        
+	       return "/mypage_user/mypage_user_pointlist";
+	       
 	   }
 }

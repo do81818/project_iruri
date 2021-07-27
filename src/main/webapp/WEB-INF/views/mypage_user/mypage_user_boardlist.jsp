@@ -28,7 +28,11 @@
           <button class ="m_information_change">정보수정</button>
           
         </div>
-          <div id="m_useremail">${user.authList[0].authContent}<br>${user.userEmail}</div>
+          <div id="m_useremail">       
+          <c:if test="${user.authList[0].authContent eq 'ROLE_USER'}">
+			<div>일반회원</div>
+		</c:if>
+		<br>${user.userEmail}</div>
           </div>
         <div id = "m_userboard_box">
           <div id="m_userboard"><a href=".">작성글</a></div>
@@ -69,53 +73,57 @@
          </div>
         
          <!-- 게시판 리스트 -->
-         <!-- 인증글 -->
-			<c:forEach var="vo" items="${confirmlist}">
-                  <div class="m_userboardlist">
+<%-- ${sumList1[status.index].데이터명}
+${sumList2[status.index].데이터명}
+${sumList3[status.index].데이터명} --%>
+
+	<c:forEach var="confirm" items="${commentlist}" varStatus="status">
+	
+
+		<c:if test="${confirm.categoryId == 5}">
+		<div class="m_userboardlist">
            <div id="m_confirm_list_type">인증글</div>
-           <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
+           <div id="m_board_list_img"><img id="img" src="../img/icon/270-270.png"></div>
            <div id="m_board_list_content">
-          <div id="m_board_list_title">  <c:out value="${vo.boardTitle}" /></div>
-            <div id="m_board_list_content">  <c:out value="${vo.boardContent}" /></div>
-            <div id="m_board_list_date">  <c:out value="${vo.boardDate}" /></div>
+          <div id="m_board_list_title">  <c:out value="${confirm.boardTitle}" /></div>
+            <div id="m_board_list_content">  <c:out value="${confirm.boardContent}" /></div>
+            <div id="m_board_list_date">  <c:out value="${confirm.boardDate}" /></div>
             
          </div>
         </div>
-        <p class="border1"></p>  
-         </c:forEach>
+        <p class="border1"></p> 
+		</c:if>
+                  
 
-
-        <!-- 게시글 -->
-			<c:forEach var="boardvo" items="${myboardlist}">
+		<c:if test="${confirm.categoryId == 7}">
                   <div class="m_userboardlist">
           <div id="m_board_list_type">게시글</div>
-          <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
+          <div id="m_board_list_img"><img id="img" src="../img/icon/270-270.png"></div>
           <div id="m_board_list_content">
-           <div id="m_board_list_title"><c:out value="${boardvo.boardTitle}" /></div>
-           <div id="m_board_list_content"><c:out value="${boardvo.boardContent}" /></div>
-           <div id="m_board_list_date"><c:out value="${boardvo.boardDate}" /></div>
+           <div id="m_board_list_title"><c:out value="${confirm.boardTitle}" /></div>
+           <div id="m_board_list_content"><c:out value="${confirm.boardContent}" /></div>
+           <div id="m_board_list_date"><c:out value="${confirm.boardDate}" /></div>
         </div>
        </div>
         <p class="border1"></p>  
-         </c:forEach>
-		
-	
+		</c:if>
 
-    <!-- 댓글 -->
-			<c:forEach var="commentvo" items="${commentlist}">
- <div class="m_userboardlist">
+
+<c:if test="${confirm.categoryId == 6 or confirm.categoryId == 8}">
+ 		<div class="m_userboardlist">
       <div id="m_comment_list_type">댓글</div>
       <div id="m_board_list_content">
-       <div id="m_board_list_content"><c:out value="${commentvo.boardContent}" /></div>
-       <div id="m_board_list_date"><c:out value="${commentvo.boardDate}" /></div>
+       <div id="m_board_list_content"><c:out value="${confirm.boardContent}" /></div>
+       <div id="m_board_list_date"><c:out value="${confirm.boardDate}" /></div>
     </div>
    </div>
    <p class="border1"></p>
-        <p class="border1"></p>  
-         </c:forEach>
-    </div>
+		</c:if>
+	</c:forEach>
+
 
 <!-- 인증글
+http://localhost:8282/ex/resources/src/img/icon/270-270.png
  <div class="m_userboardlist">
   <div id="m_confirm_list_type">인증글</div>
   <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>

@@ -23,6 +23,7 @@
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
+@import "page/mypage_user_pointlist.css";
 
 :root {
   /* font-size */

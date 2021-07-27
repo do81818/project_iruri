@@ -15,7 +15,7 @@
   flex: 5;
 } 
 .m_information_box>#m_userboard_box{
-  flex: 4;
+  flex: 3;
 } 
 .m_information_box>#m_userpoint_box{
   flex: 4;
@@ -28,7 +28,7 @@
 } 
   /* userboard_box */
   #m_userboard_box>#m_userboard{
-    padding-left: 80px;
+    padding-left: 70px;
     font-family: 'Cafe24SsurroundAir';
     font-size: 16px;
     color: var(--iruri-gray-color); 
@@ -37,8 +37,10 @@
     font-family: 'Cafe24SsurroundAir';
     font-size: 50px;
     color: var(--iruri-light-blue-color);
-    padding-left: 85px;
+    padding-left: 25px;
     padding-top: 40px;
+    position: relative;
+    left: 14px;
   }
   /* userpoint_box */
   #m_userpoint_box>#m_userpoint{

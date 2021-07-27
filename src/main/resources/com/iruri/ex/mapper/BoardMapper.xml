@@ -107,12 +107,12 @@
 							<select id="commentList"  resultMap="boardMap">
 		<![CDATA[
 		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID
+			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID,CATEGORY_ID
 		FROM
 			board
 		WHERE
-			user_id = #{userId} and (category_Id = 6 or category_id = 8)
-						order by BOARD_DATE asc
+			user_id = #{userId} 
+		order by BOARD_DATE asc
 		
 			
 		]]> 
