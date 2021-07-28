@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import com.iruri.ex.mapper.AdminMapper;
 import com.iruri.ex.vo.ReportVO;
 
-import lombok.AllArgsConstructor;
-
 @Service
-@AllArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
     @Autowired

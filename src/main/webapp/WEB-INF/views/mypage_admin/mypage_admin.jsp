@@ -76,22 +76,15 @@
 					<th>신고사유</th>
 					<th>게시글보기</th>
 				</tr>
+				<c:forEach items="${reportList}" var="reportList">
 				<tr>
 					<td class="table_No_date">"${reportList.reportId}"</td>
-					<td class="table_indigo_text">일반회원</td>
-					<td><a class="table_indigo_text" href="./관리자마이페이지메인_회원정보.html">닉네임</a></td>
-					<td class="table_blue_text">부적절한 게시글입니다.</td>
-					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
-						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
+					<td class="table_indigo_text">"${reportList.userAuthContent}"</td>
+					<td><a class="table_indigo_text" href="./관리자마이페이지메인_회원정보.html">"${reportList.userNickName}"</a></td>
+					<td class="table_blue_text">"${reportList.reportContent}"</td>
+					<td><a class="a_buttonBox" href="#" target="_blank">작성글보기</a></td>
 				</tr>
-				<tr>
-					<td class="table_No_date">500</td>
-					<td class="table_indigo_text">일반회원</td>
-					<td><a class="table_indigo_text" href="#">닉네임</a></td>
-					<td class="table_blue_text">부적절한 게시글입니다.</td>
-					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
-						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
-				</tr>
+				</c:forEach>
 			</table>
 
 			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
