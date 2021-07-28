@@ -197,7 +197,7 @@
                 </div>
 
                 <div class="c_list_heart">
-                    <input type="checkbox" id="heart3"><label for="heart3" class="heart_label"></label>
+                    <input type="checkbox" id="${challengeEndList.classId}"><label for="${challengeEndList.classId}" class="heart_label"></label>
                 </div>
             </div>
 </c:forEach>

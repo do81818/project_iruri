@@ -116,7 +116,7 @@
 	<!-- 챌린지 메인 페이징 -->
 	<select id="getTotalCount_challenge" resultType="int">
 	<![CDATA[
-		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE >= sysdate
+		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE < sysdate
 	]]>
 	</select>
 
@@ -125,7 +125,7 @@
 	<![CDATA[
 SELECT * FROM (
     SELECT ROWNUM AS RNUM, A.* FROM (
-        SELECT * FROM iclass where category_id = 1 and class_id > 0 and CLASS_ENDDATE >= sysdate order by class_id desc
+        SELECT * FROM iclass where category_id = 1 and class_id > 0 and CLASS_ENDDATE < sysdate order by class_id desc
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>

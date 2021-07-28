@@ -2,14 +2,17 @@ package com.iruri.ex.controller;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
@@ -75,9 +78,34 @@ public class ChallengeController {
         log.info("getTotal_challenge" + total);
         model.addAttribute("pageMaker", new PageVO(cri, total));
         
-        return "challenge/challenge_main";
+        return "challenge/challenge_main2";
     }
     
+    
+    //ajax 챌린지 메인 페이징 
+    @GetMapping("/rest/after")
+    public ResponseEntity<HashMap<String, Object>> restAfter(Criteria cri){
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int total = challengeService.getTotal_challenge(cri);
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("challengeList", challengeService.challengeList(cri));
+        
+        return ResponseEntity.ok(result);
+    }
+    
+    // ajax(모든 클래스 리스트-현재 운영중인 클래스+ 종료된 클래스)
+    @ResponseBody
+    @RequestMapping("/iruri/challengeAllList")
+    public List<IClassVO> challengeAllList(Criteria cri){
+        
+      
+      List<IClassVO> classVOList =  challengeService.challengeList(cri);
+      
+      return classVOList;
+    }  
+    
+
     
     //챌린지 메인 - 지난 챌린지
     @GetMapping("/iruri/challengeEndList")
