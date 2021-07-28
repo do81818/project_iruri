@@ -12,6 +12,7 @@
 <c:set var="CONTEXT_PATH_ADMIN"
 	value="${pageContext.request.contextPath}/mypage/admin"
 	scope="application" />
+	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +23,43 @@
 <link rel="stylesheet"
 	href="${RESOURCES_PATH}/src/css/admin/admin_main_normalMember.css">
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
+
+<!-- ------------------------------------------------------------------------------------------- -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
+<!-- ------------------------------------------------------------------------------------------- -->
+
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
+
+<script>
+	/* $(document).ready(function(){ */
+		window.onload = function(){
+		var actionForm = $("#actionForm");
+        $(".pageNumLink").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".prev").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".next").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+	};
+</script>
+
 </head>
 <body>
 	<div class="iruri__wrapper">
@@ -39,16 +76,12 @@
 		</div>
 		<div id="admin_managementMenu">
 			<ul>
-				<a href="${CONTEXT_PATH_ADMIN}/main">
-					<li class="admin_active">회원관리<br> <span
-						class="under_line"></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/trainer/list">
-					<li>트레이너관리<br> <span></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/paylist">
-					<li>수익관리<br> <span></span></li>
-				</a>
+				<li><a href="${CONTEXT_PATH_ADMIN}/main"> <span
+						class="admin_active">회원관리</span><br> <span class="under_line"></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/trainer/list"><span>트레이너관리</span><br>
+						<span></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/paylist"><span>수익관리</span><br>
+						<span></span></a></li>
 			</ul>
 		</div>
 
@@ -74,32 +107,60 @@
 					<th>회원분류</th>
 					<th>닉네임</th>
 					<th>신고사유</th>
-					<th>게시글보기</th>
+					<th>게시글</th>
 				</tr>
 				<c:forEach items="${reportList}" var="reportList">
-				<tr>
-					<td class="table_No_date">"${reportList.reportId}"</td>
-					<td class="table_indigo_text">"${reportList.userAuthContent}"</td>
-					<td><a class="table_indigo_text" href="./관리자마이페이지메인_회원정보.html">"${reportList.userNickName}"</a></td>
-					<td class="table_blue_text">"${reportList.reportContent}"</td>
-					<td><a class="a_buttonBox" href="#" target="_blank">작성글보기</a></td>
-				</tr>
+					<tr>
+						<td class="table_No_date"><c:out
+								value="${reportList.reportId}" /></td>
+						<td class="table_indigo_text"><c:set var="reportUserRoll"
+								value="${reportList.reportUserRoll}" /> <c:choose>
+								<c:when test="${reportUserRoll eq 'ROLE_USER'}">
+						일반회원
+						</c:when>
+								<c:when test="${reportUserRoll eq 'ROLE_PAYUSER'}">
+						유료회원
+						</c:when>
+							</c:choose></td>
+						<td><a class="table_indigo_text"
+							href="./관리자마이페이지메인_회원정보.html"> <c:out
+									value="${reportList.reportUserNickName}" /></a></td>
+						<td class="table_blue_text"><c:out
+								value="${reportList.reportContent}" /></td>
+						<td class="table_No_date"><a class="a_buttonBox" href="#"
+							target="_blank">게시글보기</a></td>
+					</tr>
 				</c:forEach>
 			</table>
 
 			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 			<div class="page_nation">
-				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-				<a class="arrow next" href="#"></a>
+				<c:if test="${pageMaker.prev}">
+					<a class="arrow prev" href="${pageMaker.startPage - 1}"></a>
+				</c:if>
+				<c:forEach var="num" begin="${pageMaker.startPage}"
+				end="${pageMaker.endPage }">
+				<a class="pageNumLink ${pageMaker.cri.pageNum == num ? "
+					active":"" }" href="${num}">${num }</a>
+				</c:forEach>
+				<c:if test="${pageMaker.next}">
+					<a class="arrow next" href="${pageMaker.endPage + 1}"></a>
+				</c:if>
 			</div>
 
+			<form id="actionForm" action="${CONTEXT_PATH_ADMIN}/main"
+				method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			</form>
 		</div>
 	</div>
+
 
 	<div class="iruri__wrapper">
 		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->
 
 	</div>
 </body>
+
 </html>

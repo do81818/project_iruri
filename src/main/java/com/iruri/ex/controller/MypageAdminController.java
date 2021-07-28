@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.iruri.ex.page.Criteria;
+import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.ReportService;
 
 import lombok.extern.log4j.Log4j;
@@ -20,13 +23,17 @@ public class MypageAdminController {
     @Autowired
     private ReportService reportService;
     
+    
 	// mypageAdmin() ModelAndView 관리자 마이페이지로 이동
 	@GetMapping("main")
-	public String mypageAdmin(Model model) {
+	public ModelAndView mypageAdmin(ModelAndView mav, Criteria cri) {
 	    log.info("mypageAdmin()...");
-	    model.addAttribute("reportList", reportService.getReportList());
+	    mav.setViewName("mypage_admin/mypage_admin");
+	    mav.addObject("reportList", reportService.getReportList(cri));
+	    int total = reportService.countReportId();
+	    mav.addObject("pageMaker", new PageVO(cri, total));
 	    
-		return "mypage_admin/mypage_admin";
+		return mav;
 	}
 
 	// showMemberList_Admin() ModelAndView 관리자 유저 목록 보기

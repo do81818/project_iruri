@@ -39,16 +39,12 @@
 		</div>
 		<div id="admin_managementMenu">
 			<ul>
-				<a href="${CONTEXT_PATH_ADMIN}/main">
-					<li class="admin_active">회원관리<br> <span
-						class="under_line"></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/trainer/list">
-					<li>트레이너관리<br> <span></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/paylist">
-					<li>수익관리<br> <span></span></li>
-				</a>
+				<li><a href="${CONTEXT_PATH_ADMIN}/main"> <span
+						class="admin_active">회원관리</span><br> <span class="under_line"></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/trainer/list"><span>트레이너관리</span><br>
+						<span></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/paylist"><span>수익관리</span><br>
+						<span></span></a></li>
 			</ul>
 		</div>
 

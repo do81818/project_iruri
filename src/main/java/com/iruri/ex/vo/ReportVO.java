@@ -3,9 +3,8 @@ package com.iruri.ex.vo;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /*
@@ -16,11 +15,9 @@ import lombok.ToString;
     USER_ID         NUMBER              No  
 */
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class ReportVO {
     
     private int boardId;
@@ -29,6 +26,6 @@ public class ReportVO {
     private int reportId;
     private int userId;
     
-    private String userNickName;
-    private String userAuthContent;
+    private String reportUserNickName;
+    private String reportUserRoll;
 }
