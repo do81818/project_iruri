@@ -1,6 +1,7 @@
 const autoLoginLabel = document.querySelector('label[for="auto-login"]');
 const rememberEmailLabel = document.querySelector('label[for="remember-email"]');
 
+// 버튼
 (function() {  
   rememberEmailLabel.addEventListener('click', function() {
     const rememberEmailIcon = rememberEmailLabel.querySelector('i');

@@ -11,17 +11,18 @@
     <%@ include file="include/static.jsp" %>
     <title>이루리 메인</title>
     <script src="${RESOURCES_PATH}/src/js/signUpPage.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_radio_check.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
-    
     <%@ include file="include/headerTemplate.jsp" %>
       
       <main class="iruri__signUp">
         <c:url value="/signUp/submit" var="signUpUrl" />
         <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap" accept-charset="UTF-8">
           <h3 class="signUp__title">회원 가입</h3>
-
           <div class="signUp__emailForm">
             <label for="userEmail">email</label>
             <input type="text" id="userEmail1" autocomplete="off" />
@@ -51,7 +52,7 @@
 
           <div class="signUp__passwordCheckForm">
             <label for="userPasswordCheck">비밀번호 확인</label>
-            <input type="password" id="userPasswordCheck" autocomplete="off"/>
+            <input type="password" id="userPasswordCheck" name="userPwCheck" autocomplete="off"/>
             <div class="validateCheck"></div>
           </div>
 
@@ -67,33 +68,21 @@
             <div class="validateCheck"></div>
           </div>
 
+          <div class="signUp__terms">
+            <h4>이용약관</h4>
+            <textarea disabled></textarea>
+
+            <div class="terms_agree">
+              <input type="checkbox" id="terms_agree" name="agree"/>
+              <label for="terms_agree">
+                <i class="iruri-check-no-icon iruri-check-no-icon--signup"></i>
+                <span>동의합니다</span>
+              </label>
+            </div>
+          </div>
+
           <div>
-            <div class="signUp__agree">
-              <div>
-                <input type="checkbox" id="sns-agree" />
-                <label for="sns-agree">
-                  <i></i>
-                  <span>SMS 광고 수신 동의</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="signUp__terms">
-              <h4>이용약관</h4>
-              <textarea disabled></textarea>
-
-              <div class="terms_agree">
-                <input type="checkbox" id="terms_agree"/>
-                <label for="terms_agree">
-                  <i></i>
-                  <span>동의합니다.</span>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <input type="submit" value="회원가입" />
-            </div>
+            <input class="submitBtn" type="button" value="회원가입" />
           </div>
         </form:form>
         <a href="${CONTEXT_PATH}/" class="no__signUp">가입 취소</a>
@@ -101,6 +90,14 @@
       
       <%@ include file="include/footerTemplate.jsp" %>
       
+    </div>
+    
+    <div class="c_make_modal">
+      <div class="c_make_modal_start">
+          <div class="c_modal_close"><img class="signUp_modal_close" src="/ex/resources/src/img/icon/close.png" alt="" onclick=""></div>
+          <h2 class="c_make_modal_title">필수 내용을 입력해주세요!</h2>
+      </div>
+      <div class="modal_layer"></div>
     </div>
   </body>
 </html>
