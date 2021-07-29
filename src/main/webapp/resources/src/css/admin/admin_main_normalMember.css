@@ -13,7 +13,7 @@
 
 .report_memberList table th:nth-of-type(1),
 .report_totalMemberList table th:nth-of-type(1) {
-    width: 5%;
+    width: 13%;
 }
 
 .report_memberList table th:nth-of-type(2),
@@ -24,14 +24,15 @@
 }
 .report_memberList table th:nth-of-type(4),
 .report_totalMemberList table th:nth-of-type(4) {
-    width: 43%;
+    width: 40%;
 }
 .report_memberList table th:nth-of-type(5),
 .report_totalMemberList table th:nth-of-type(5) {
-    width: 22%;
+    width: 17%;
 }
 
 /* ---------------- 신고알림 테이블 디테일 ------------------ */
+
 .a_buttonBox {
     display: inline-block;
     width: 80px;
