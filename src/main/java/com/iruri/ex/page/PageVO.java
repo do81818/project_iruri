@@ -51,4 +51,5 @@ public class PageVO {
         
         return uriComponentsBuilder.toUriString(); // ?pageNum=3&amount=10 리턴
     }
+    
 }
