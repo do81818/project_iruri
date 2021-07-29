@@ -113,12 +113,12 @@ public class UserRegService {
         }
 
         public int userPhoneCheck(String userPhone) {
-            String pattern = "[-_.`~!@@#$%^&*|₩₩₩'₩\\\";:₩/?]*";
-            Boolean regex = Pattern.matches(pattern, userPhone);
+            Pattern pattern = Pattern.compile("[-_.`~!@@#$%^&*|₩₩₩'₩\\\";:₩/?]");
+            Matcher regex = pattern.matcher(userPhone);
             
             if(userPhone == "") {
                 return 2;
-            } else if(regex == true) {
+            } else if(regex.find()) {
                 return 1;                
             } else {
                 return 0;                

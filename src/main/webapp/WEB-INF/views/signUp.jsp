@@ -11,7 +11,9 @@
     <%@ include file="include/static.jsp" %>
     <title>이루리 메인</title>
     <script src="${RESOURCES_PATH}/src/js/signUpPage.js" defer></script>
-    
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_radio_check.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -73,14 +75,14 @@
             <div class="terms_agree">
               <input type="checkbox" id="terms_agree" name="agree"/>
               <label for="terms_agree">
-                <i class="iruri-check-no-icon"></i>
-                <span>동의합니다.</span>
+                <i class="iruri-check-no-icon iruri-check-no-icon--signup"></i>
+                <span>동의합니다</span>
               </label>
             </div>
           </div>
 
           <div>
-            <input class="submitBtn" type="submit" value="회원가입" />
+            <input class="submitBtn" type="button" value="회원가입" />
           </div>
         </form:form>
         <a href="${CONTEXT_PATH}/" class="no__signUp">가입 취소</a>
@@ -88,6 +90,14 @@
       
       <%@ include file="include/footerTemplate.jsp" %>
       
+    </div>
+    
+    <div class="c_make_modal">
+      <div class="c_make_modal_start">
+          <div class="c_modal_close"><img class="signUp_modal_close" src="/ex/resources/src/img/icon/close.png" alt="" onclick=""></div>
+          <h2 class="c_make_modal_title">필수 내용을 입력해주세요!</h2>
+      </div>
+      <div class="modal_layer"></div>
     </div>
   </body>
 </html>
