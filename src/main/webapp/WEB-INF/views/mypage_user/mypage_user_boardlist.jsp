@@ -40,7 +40,7 @@
         </div>
         <div id = "m_userpoint_box">
           <div id="m_userpoint"><a href=".">보유포인트</a></div>
-          <div id ="m_userpoint_number">4,500</div>
+          <div id ="m_userpoint_number">${totalpoint}</div>
         </div>
         <div id = "m_userchanllenge_box">
           <div id="m_userchanllenge"><a href=".">참여중인챌린지</a></div>

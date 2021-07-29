@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.PointVO;
 
 public interface PointService {
     
@@ -15,6 +16,10 @@ public interface PointService {
     
     // 사용된 포인트
     int usepoint(int userId);
+    
+    int totalpoint(int userId);
+    
+    List<PointVO> pointList(int userId);
 
     
 

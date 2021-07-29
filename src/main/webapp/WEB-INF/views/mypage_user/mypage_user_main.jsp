@@ -43,7 +43,7 @@
       </div>
       <div id = "m_userpoint_box">
         <div id="m_userpoint"><a href="">보유포인트</a></div>
-        <div id ="m_userpoint_number">4,500</div>
+        <div id ="m_userpoint_number">${totalpoint}</div>
       </div>
       <div id = "m_userchanllenge_box">
         <div id="m_userchanllenge"><a href="">참여중인챌린지</a></div>
@@ -127,17 +127,17 @@
             <div class="alertWindow_close"><img src='http://localhost:8282/ex/resources/src/img/icon/close.png' width="20px" height="20px" > </div>
             <div class="alertWindow_insert">
               <h2 class="alertWindow_title">정보수정</h2>
-              <form action="#">
+              <form action="update" method="GET">
                 <p>비밀번호</p>
-                <input class="inputbox_size1" type="text" />
+                <input class="inputbox_size1" name="userPw" type="text" />
                 
                 <p>비밀번호 확인</p>
                 <input class="inputbox_size1" type="text" />
                 
                 <p>닉네임</p>
-                <input class="inputbox_size2" type="text">
+                <input class="inputbox_size2" name="userNickname" type="text" >
                 <p>전화번호</p>
-                <input class="inputbox_size2" type="text"  >
+                <input class="inputbox_size2" name="userPhone" type="text">
                 <button class="alertWindow_submit" type="submit" >비밀번호 변경</button>
               </form>
             </div>
@@ -156,17 +156,17 @@
           <div class="alertWindow_close"><img src="http://localhost:8282/ex/resources/src/img/icon/close.png" width="20px" height="20px" > </div>
           <div class="alertWindow_insert">
             <h2 class="alertWindow_title">신체정보수정</h2>
-            <form action="#">
+            <form action="infoupdate" method="GET">
               <p>성별</p>
-              <input class="inputbox_size1" type="text"  />
+              <input class="inputbox_size1" name="userGender" type="text"  />
               
               <p>나이</p>
-              <input class="inputbox_size1" type="text" />
+              <input class="inputbox_size1" name="userBirth" type="text" />
               
               <p>키</p>
-              <input class="inputbox_size2" type="text">
+              <input class="inputbox_size2" name="userHeight" type="text">
               <p>몸무게</p>
-              <input class="inputbox_size2" type="text">
+              <input class="inputbox_size2" name="userWeight" type="text">
       
               <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
             </form>
