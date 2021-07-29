@@ -11,6 +11,9 @@
     <%@ include file="include/static.jsp" %>
     <title>이루리 로그인</title>
     <script src="${RESOURCES_PATH}/src/js/loginPage.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -70,7 +73,7 @@
           </div>
       
           <div class="login-find">
-            <a href="">비밀번호 찾기</a> |
+            <a href="javascript: void(0)" id="find-password">비밀번호 찾기</a> |
             <a href="${CONTEXT_PATH}/signUp"> 회원가입</a>
           </div>
         </div>
@@ -79,5 +82,30 @@
     <%@ include file="include/footerTemplate.jsp" %>
 
     </div>
+    
+    <div class="c_make_modal">
+
+            <div class="c_make_modal_start">
+                <div class="c_modal_close"><img src="/ex/resources/src/img/icon/close.png" alt="" onclick="img_cancle_click(this)"></div>
+                <h2 class="c_make_modal_title">비밀번호 찾기</h2>
+                
+                <div class="password_find_form">
+                  <div class="password_find_formBox">
+                    <label>
+                      <span>email 주소 입력</span>                  
+                      <input type="text" name="findEmail"/>
+                    </label>
+                    
+                    <button id="sendAuthKey">인증번호 전송</button>
+                  </div>
+                
+                </div>
+                
+                <div class="password_find_formBox ">
+                  <button class="pass_find_submit_button" disabled>비밀번호 변경</button>
+                </div>
+            </div>
+            <div class="modal_layer"></div>
+        </div>
   </body>
 </html>

@@ -69,22 +69,32 @@ public class LoginController {
         int checkNum = regService.mailSend(userInput);
         
         HttpSession session = request.getSession(true);
+        session.removeAttribute("checkNum");
         session.setAttribute("checkNum", checkNum);
         session.setMaxInactiveInterval(3*60);
     }
     
     // 인증번호 입력 후 클릭시 세션에 저장된 인증번호 값이랑 비교
     @GetMapping("/signUp/checkAuthNumber")
-    public int signUpCheckAuthNumber(@RequestParam("authNumber") int userInput, HttpServletRequest request) {
+    public int signUpCheckAuthNumber(@RequestParam("authNumber") String userInput, HttpServletRequest request) {
+        
         
         HttpSession session = request.getSession(true);
-        int authNumber = (int)session.getAttribute("checkNum");
+        if(session.getAttribute("checkNum") == null) {
+            return -1;
+        }
         
-        if(userInput == authNumber) {
+        String authNumber = String.valueOf(session.getAttribute("checkNum"));
+        
+        if(userInput.equals(authNumber)) {
             session.removeAttribute("checkNum");
             session.setMaxInactiveInterval(30*60);            
             session.setAttribute("authCheck", true);
             return 1;
+        }
+        
+        if(userInput == "") {
+            return 0;
         }
         
         return 0;
@@ -100,7 +110,7 @@ public class LoginController {
     // 닉네임 양식 및 중복 체크
     @GetMapping("/signUp/nicknameCheck")
     public int signUpNicknameCheck(@RequestParam("userNickname") String userNickname) {
-
+        
         return regService.userNicknameCheck(userNickname);
     }
     
@@ -120,5 +130,4 @@ public class LoginController {
         
         return iuserService.signUpUser(iUserVO, authCheck, userPwCheck, agree);
     }
-    // 비밀번호 입력할때 비밀번호 확인이랑 값 같으면 비밀번호 확인 경고문자 지우기
 }

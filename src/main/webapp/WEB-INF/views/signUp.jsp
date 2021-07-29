@@ -24,7 +24,7 @@
         <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap" accept-charset="UTF-8">
           <h3 class="signUp__title">회원 가입</h3>
           <div class="signUp__emailForm">
-            <label for="userEmail">email</label>
+            <label for="userEmail1">email</label>
             <input type="text" id="userEmail1" autocomplete="off" />
             <span>@</span>
             <input type="text" id="userEmail2" autocomplete="off" />

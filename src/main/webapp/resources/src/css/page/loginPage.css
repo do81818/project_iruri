@@ -162,3 +162,66 @@
   color: var(--iruri-dark-gray-color);
 }
 
+.iruri__wrapper + .c_make_modal_start {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.password_find_formBox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.password_find_formBox label {
+  display: flex;
+  flex-direction: column;
+  width: 325px;
+  margin-right: 10px;
+}
+
+.password_find_formBox_new label {
+  width: 446px;
+  margin: 0px;
+}
+
+.password_find_formBox span {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--iruri-blue-color);
+}
+
+.password_find_formBox input {
+  height: 44px;
+  border: 1px solid var(--iruri-light-gray-color);
+  border-radius: 5px;
+  padding: 20px;
+  color: var(--iruri-indigo-color);
+  outline: none;
+}
+
+.password_find_formBox .pass_find_submit_button,
+.password_find_formBox button {
+  color: var(--iruri-yellow-color);
+  background-color: var(--iruri-blue-color);
+}
+
+.password_find_formBox button {
+  border-radius: 25px;
+  width: 110px;
+  height: 44px;
+  font-size: 14px;
+}
+
+.password_find_formBox .pass_find_submit_button {
+  border-radius: 25px;
+  width: 200px;
+  height: 51px;
+  margin-top: 45px;
+}
+
+.c_make_modal .password_find_formBox button:disabled {
+  color: white;
+  background-color: var(--iruri-light-gray-color);
+}

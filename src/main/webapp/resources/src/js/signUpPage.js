@@ -286,6 +286,9 @@
 						 window.location = 'http://localhost:8282/ex/loginPage';
 					} else {
 						$(".c_make_modal").show();
+						document.querySelector('.signUp_modal_close').addEventListener('click', () => {
+							$('.c_make_modal').hide();
+						});
 					}
 				}
 			});
@@ -294,17 +297,11 @@
 	signUpAjaxFunc();
 
 	(function() {
-	const signUpAregeeLabel = document.querySelector('label[for="terms_agree"]');
-  signUpAregeeLabel.addEventListener('click', (e) => {
-
-    const signUpArgeeIcon = signUpAregeeLabel.querySelector('i');
-    signUpArgeeIcon.classList.toggle('iruri-check-no-icon');
-    signUpArgeeIcon.classList.toggle('iruri-check-yes-icon');
-  	});
-
-	document.querySelector('.signUp_modal_close').addEventListener('click', () => {
-		$('.c_make_modal').hide();
-	});
+		const signUpAregeeLabel = document.querySelector('label[for="terms_agree"]');
+	  	signUpAregeeLabel.addEventListener('click', (e) => {
+	    	const signUpArgeeIcon = signUpAregeeLabel.querySelector('i');
+		    signUpArgeeIcon.classList.toggle('iruri-check-no-icon');
+		    signUpArgeeIcon.classList.toggle('iruri-check-yes-icon');
+	  	});
 	})();
-
 })();
