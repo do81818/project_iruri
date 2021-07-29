@@ -11,6 +11,7 @@ import com.iruri.ex.mapper.PointMapper;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.PointVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -43,6 +44,21 @@ public class PointServiceImpl implements PointService {
     	int vo = pointMapper.usepoint(userId);
     	return vo;
     }
+    
+    @Override
+    public int totalpoint(int userId) {
+    	int vo = pointMapper.totalpoint(userId);
+    	return vo;
+    }
+    
+    @Override
+    public List<PointVO> pointList(int userId){
+    	List<PointVO> vo = pointMapper.pointList(userId);
+    	if(vo == null) {
+    		return null;
+    	}
+    	return vo;
+    			}
     
     
     

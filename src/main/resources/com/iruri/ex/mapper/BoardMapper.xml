@@ -74,36 +74,6 @@
 	</select>
 	
 	
-					<select id="boardconfirmList"  resultMap="boardMap">
-		<![CDATA[
-		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID
-		FROM
-			board
-		WHERE
-			user_id = #{userId} and category_id = 5
-						order by BOARD_DATE asc
-		
-			
-		]]> 
-	</select>
-	
-	
-						<select id="myboardList"  resultMap="boardMap">
-		<![CDATA[
-		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID
-		FROM
-			board
-		WHERE
-			user_id = #{userId} and category_id = 7
-			order by BOARD_DATE asc
-		
-			
-		]]> 
-	</select>
-	
-	
 							<select id="commentList"  resultMap="boardMap">
 		<![CDATA[
 		SELECT

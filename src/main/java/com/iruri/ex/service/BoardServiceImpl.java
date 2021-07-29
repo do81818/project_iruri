@@ -58,24 +58,15 @@ public class BoardServiceImpl implements BoardService {
         return vo;
     }
 
-    // 내가 쓴 인증글 list
-    public List<BoardVO> boardconfirmList(int userId){
-    	List<BoardVO> vo = boardMapper.boardconfirmList(userId);
-    	if(vo == null) {
-    		return null;
-    	}
-    	return vo;
-    }
-    
-    // 내가 쓴 게시글 list
-    public List<BoardVO> myboardList(int userId){
-    	List<BoardVO> vo = boardMapper.myboardList(userId);
-    	if(vo == null) {
-    		return null;
-    	}
-    	return vo;
-    }
-    
+	/*
+	 * // 내가 쓴 인증글 list public List<BoardVO> boardconfirmList(int userId){
+	 * List<BoardVO> vo = boardMapper.boardconfirmList(userId); if(vo == null) {
+	 * return null; } return vo; }
+	 * 
+	 * // 내가 쓴 게시글 list public List<BoardVO> myboardList(int userId){ List<BoardVO>
+	 * vo = boardMapper.myboardList(userId); if(vo == null) { return null; } return
+	 * vo; }
+	 */
     
     // 내가 쓴 댓글 list
     public List<BoardVO> commentList(int userId){
