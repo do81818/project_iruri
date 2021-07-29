@@ -1,12 +1,16 @@
 package com.iruri.ex.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
@@ -25,16 +29,37 @@ public class MypageAdminController {
     
     
 	// mypageAdmin() ModelAndView 관리자 마이페이지로 이동
-	@GetMapping("main")
-	public ModelAndView mypageAdmin(ModelAndView mav, Criteria cri) {
+    @GetMapping("main")
+	public ModelAndView mypageAdmin(ModelAndView mav) {
 	    log.info("mypageAdmin()...");
 	    mav.setViewName("mypage_admin/mypage_admin");
-	    mav.addObject("reportList", reportService.getReportList(cri));
-	    int total = reportService.countReportId();
-	    mav.addObject("pageMaker", new PageVO(cri, total));
 	    
 		return mav;
 	}
+    
+    @ResponseBody
+    @GetMapping("ajax/reportList")
+    public ResponseEntity<HashMap<String, Object>> restAfter( @RequestParam("pageNum") int pageNum) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        Criteria cri = new Criteria(pageNum,10); 
+        int total = reportService.countReportId();
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("list", reportService.getReportList(cri));
+
+        return ResponseEntity.ok(result);
+    }
+	
+//	@GetMapping("main")
+//    public ModelAndView mypageAdmin(ModelAndView mav, Criteria cri) {
+//        log.info("mypageAdmin()...");
+//        mav.setViewName("mypage_admin/mypage_admin");
+//        mav.addObject("reportList", reportService.getReportList(cri));
+//        int total = reportService.countReportId();
+//        mav.addObject("pageMaker", new PageVO(cri, total));
+//        
+//        return mav;
+//    }
 
 	// showMemberList_Admin() ModelAndView 관리자 유저 목록 보기
 	@GetMapping("member/list")
