@@ -84,12 +84,6 @@ public class UserRegService {
                 speCount++;
             }
             
-            log.info(numCount);
-            log.info(engCount);
-            log.info(speCount);
-            
-            log.info(userPassword);
-            
             if(userPassword.length() == 0) { // 값이 없을때
                 return 0; 
             } else if(userPassword.length() < 8 || userPassword.length() > 16) { // 문자 길이
@@ -111,8 +105,24 @@ public class UserRegService {
                 return 3;
             } else if(regex == false) { // 문자열 초과 및 양식 오류
                 return 2;
+            } else if(iUserMapper.checkOverNickname(userNickname) == 1) { // 중복체크
+                return 1;
+            } else {
+                return 0;
+            }            
+        }
+
+        public int userPhoneCheck(String userPhone) {
+            Pattern pattern = Pattern.compile("[-_.`~!@@#$%^&*|₩₩₩'₩\\\";:₩/?]");
+            Matcher regex = pattern.matcher(userPhone);
+            
+            if(userPhone == "") {
+                return 2;
+            } else if(regex.find()) {
+                return 1;                
+            } else {
+                return 0;                
             }
             
-            return iUserMapper.checkOverNickname(userNickname);
         }
 }
