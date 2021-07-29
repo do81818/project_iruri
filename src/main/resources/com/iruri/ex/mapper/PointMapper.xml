@@ -55,7 +55,31 @@
 			
 		]]> 
 	</select>
+
+
+			<select id="totalpoint" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT DISTINCT 
+		((select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'save') - (select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'use')) as total_point
+			FROM ipoint 
+			WHERE user_id = #{userId}
+		
+			
+		]]> 
+	</select>
 	
+	
+	<select id="pointList" resultMap="pointMap">
+	<![CDATA[
+			SELECT *
+			FROM IPOINT
+			WHERE user_id = #{userId}
+			order by POINT_SAVEDATE asc
+			
+	
+	]]>
+	
+	</select>
 
 
 </mapper>

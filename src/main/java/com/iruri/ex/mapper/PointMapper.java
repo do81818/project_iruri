@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.PointVO;
 
 @Mapper
 public interface PointMapper {
@@ -20,6 +21,10 @@ public interface PointMapper {
     
     // 사용된 포인트
     int usepoint(int userId);
+    
+    int totalpoint(int userId);
+    
+    List<PointVO> pointList(int userId);
     
    
 }

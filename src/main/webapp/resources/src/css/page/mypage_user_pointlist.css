@@ -74,7 +74,7 @@
     font-family: 'Cafe24SsurroundAir';
     font-size: 46px;
     color: var(--iruri-light-blue-color);
-    padding-left:20px;
+    padding-left:30px;
     padding-top: 40px;
   }
   /* userchallenge */
@@ -114,7 +114,8 @@
 
    /* 포인트리스트 박스 */
 .m_point_box{
-  margin: 30px;
+  margin-left:30px;
+  margin-right:30px;
   height: 77px;
   border-radius: 30px;
   padding: 10px 80px;
@@ -156,7 +157,7 @@ font-size: 25px;
 color:var(--iruri-yellow-color);
 position: relative;
 top: -20px;
-left:110px;
+left:100px;
 }
 
 #m_pre_pointlist{
@@ -269,6 +270,13 @@ border: 0.5px solid var(--iruri-blue-color);
 color: var(--iruri-blue-color);
 width: 120px;
 height: 120px;
+}
+
+#m_point_useprice{
+	  font-size: 20px;
+color:var(--iruri-gray-color);
+padding-left: 639px;
+padding-top: 40px;
 }
 
 
