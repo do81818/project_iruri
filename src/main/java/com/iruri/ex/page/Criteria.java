@@ -1,5 +1,8 @@
 package com.iruri.ex.page;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

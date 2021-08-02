@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
+import com.iruri.ex.page.SearchCriteria;
+import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
@@ -40,52 +43,6 @@ public class ChallengeController {
     ChallengeService challengeService;
 
    
-    // 챌린지 메인 페이징처리
-    /*
-    @GetMapping("/iruri/challengeList")
-    public String challengeList(Criteria cri, Model model) {
-        
-        
-
-        
-          model.addAttribute("challengeList", challengeService.challengeList(cri));
-          log.info("challenge_list()..");
-          
-          int total = challengeService.getTotal_challenge();
-          log.info("getTotal_challenge:" + total);
-          
-          model.addAttribute("pageMaker", new PageVO(cri, total));
-          log.info("pageMaker" + cri);
-         
-
-        return "challenge/challenge_main2";
-    }
-    */
-
-    // ajax 챌린지 메인 페이징
-    /*
-    @ResponseBody
-    //@RequestMapping("/rest/after")
-    @GetMapping("/rest/after")
-    public ResponseEntity<HashMap<String, Object>> restAfter(Criteria cri) {
-        HashMap<String, Object> result = new HashMap<>();
-
-       
-        int total = challengeService.getTotal_challenge(cri);
-        log.info("ajax_getTotal_challenge:" + total);
-        
-        result.put("list", challengeService.challengeList(cri));
-        log.info("ajax_challengeList()..");
-        
-        
-        result.put("pageMaker", new PageVO(cri, total));
-        log.info("ajax_pageMaker" + cri);
-        
-  
-
-        return ResponseEntity.ok(result);
-    }
-    */
     
     /*----------챌린지 메인-----------*/
     // 챌린지 메인
@@ -143,9 +100,7 @@ public class ChallengeController {
        
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
-        
-        
-        //지난 챌린지
+
         int total = challengeService.getTotal_challengeEndList(cri);
         log.info("ajax_getTotal_challenge:" + total);
         
@@ -154,6 +109,7 @@ public class ChallengeController {
         
         result.put("list", challengeService.challengeEndList(cri));
         log.info("ajax_challengeList()..");
+   
         
         
         return ResponseEntity.ok(result);
@@ -162,17 +118,7 @@ public class ChallengeController {
     
     
     // 챌린지 메인 - 관심 챌린지
-    /*
-    @GetMapping("/iruri/challengeLikeList")
-    public String challengeLikeList(Principal principal, Model model) {
-        
-        IUserVO vo = iUserService.selectOne(principal.getName());
-        
-        model.addAttribute("user", vo);
-       
-        return "challenge/challenge_LikeList";
-    }
-    */
+   \
     
     @GetMapping("/iruri/challengeLikeList")
     public ModelAndView challengeLikeList(ModelAndView mav) {
@@ -183,32 +129,31 @@ public class ChallengeController {
         return mav;
     }
 
-    //챌린지 메인 - 관심 챌린지 페이징 처리(ajax)
+   //챌린지 메인 - 관심 챌린지 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeLikeList")
-    public ResponseEntity<HashMap<String, Object>> challengeLikeList(@RequestParam("pageNum") int pageNum, Principal principal) {
-       
-        IUserVO vo = iUserService.selectOne(principal.getName());
-        HashMap<String, Object> result = new HashMap<>();
+    public ResponseEntity<HashMap<String, Object>> testtest(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("testtest");
+        
         Criteria cri = new Criteria(pageNum, 9);
         
-        int total = challengeService.getTotal_challengeLikeList(cri, vo.getUserId());
-        log.info("ajax_getTotal_challenge:" + total);
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        log.info("유저아이디: " + userId);
+        
+        int total = challengeService.getTotal_challengeLikeList(cri, userId);
+        log.info("토탈: " + total);
+        
+        List<IClassVO> list = challengeService.challengeLikeList(cri, userId);
+        result.put("list", list);
+        log.info("리스트: " + list);
         
         result.put("pageMaker", new PageVO(cri, total));
-        log.info("ajax_pageMaker" + cri);
-        
-        result.put("list", challengeService.challengeLikeList(cri, vo.getUserId()));
-        log.info("ajax_challengeList()..");
-        
-        
+
         return ResponseEntity.ok(result);
     }
     
-  
-       
-
-
     
     
     // 챌린지 개설 작성 페이지 폼

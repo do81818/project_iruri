@@ -143,7 +143,7 @@
 					<div class="c_search_box">
 					<%-- <form class="c_search_box"  action=""> --%>
 
-						<input type="text" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
+						<input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
 						<button type="submit" class="search_icon"></button>
 
 					
@@ -238,9 +238,13 @@
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+			
 				</form>
 				
 <script> 
+
+
+
 		function getlist(page) {
 			
 
@@ -257,6 +261,7 @@
 			        data: {
 			        	
 			           pageNum : page,
+		
 			    
 			       
 			            
