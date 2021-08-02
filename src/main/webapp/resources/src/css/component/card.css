@@ -116,20 +116,19 @@
   font-size: 16px;
   font-family: var(--Cafe24Ssurround);
   color: var(--iruri-blue-color);
-  
-  position: relative;  
-  bottom: 10px;
+
+  position: relative;
   left: 5px;
+  bottom: 3px;
 }
 
 .iruri-arrow-yellow-icon {
   display: inline-block;
   background-image: url(/ex/resources/src/img/icon/icon_page_arrow_right.png);
   background-size: cover;
-  width: 23px;
-  height: 23px;
+  width: 15px;
+  height: 15px;
 
   position: relative;
-  bottom: 3.5px;
-  right: 3px;
+  right: -2.5px;
 }

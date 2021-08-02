@@ -172,6 +172,7 @@
   justify-content: center;
   align-items: flex-end;
   margin-top: 20px;
+  position: relative;
 }
 
 .password_find_formBox label {
@@ -224,4 +225,13 @@
 .c_make_modal .password_find_formBox button:disabled {
   color: white;
   background-color: var(--iruri-light-gray-color);
+}
+
+.emailValidate,
+.authNumberValidate,
+.newPwValidate {
+  position:relative;
+  left: 95px;
+  margin-top: 10px;
+  color: var(--iruri-red-color);
 }

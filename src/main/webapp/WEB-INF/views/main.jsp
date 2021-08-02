@@ -55,25 +55,25 @@
       
           <div class="challenge__wrap">
             <ul class="challenge__slides">
-            
-              <li class="cardConteiner">
+              <c:forEach var="classList" items="${classList}">
+                <li class="cardConteiner">
                 <div class="card__image">
                   <img src="https://via.placeholder.com/356x270" alt="이미지" />
                 </div>
                 <ul class="card__info">
                   <li class="info__title">
-                    <h3>러닝 전 5분 스트레칭 러닝 전 5분 스트레칭 러닝 전 5분 스트레칭 러닝 전 5분 스트레칭</h3>
+                    <h3>${classList.classTitle}</h3>
                   </li>
                   <li class="info__data">
-                    <span class="data__term">2021.03.01~2021.04.01</span>
+                    <span class="data__term">${classList.classStartDate}~${classList.classEndDate}</span>
                     <div class="data__tags">
                       <div class="data__tag-blue">
                         <i class="iruri-level-icon"></i>
-                        <span>easy</span>
+                        <span>${classList.classLevel}</span>
                       </div>
                       <div class="data__tag-blue">
                         <i class="iruri-time-icon"></i>
-                        <span>50분</span>
+                        <span>${classList.classTime}분</span>
                       </div>
                     </div>
                   </li>
@@ -85,7 +85,7 @@
                   </li>
                 </ul>
               </li>
-              
+              </c:forEach>
             </ul>
           </div>
         </article>
@@ -138,7 +138,7 @@
                   </li>
                 </ul>
               </li>
-              
+            
             </ul>
           </div>
         </article>
@@ -157,6 +157,94 @@
           <div class="exerciseVideo__wrap">
             <ul class="exerciseVideo__slides">
             
+              <li class="cardConteiner">
+                <div class="card__image">
+                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
+                </div>
+                <ul class="card__info">
+                  <li class="info__title">
+                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                  </li>
+                  <li class="info__data">
+                    <div class="data__tags">
+                      <div class="data__tag-red">전신</div>
+                    </div>
+                  </li>
+                  <li class="info__btn">
+                    <a class="info__btn__join">
+                      <span>참여하기</span>
+                      <i class="iruri-arrow-yellow-icon"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="cardConteiner">
+                <div class="card__image">
+                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
+                </div>
+                <ul class="card__info">
+                  <li class="info__title">
+                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                  </li>
+                  <li class="info__data">
+                    <div class="data__tags">
+                      <div class="data__tag-red">전신</div>
+                    </div>
+                  </li>
+                  <li class="info__btn">
+                    <a class="info__btn__join">
+                      <span>참여하기</span>
+                      <i class="iruri-arrow-yellow-icon"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="cardConteiner">
+                <div class="card__image">
+                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
+                </div>
+                <ul class="card__info">
+                  <li class="info__title">
+                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                  </li>
+                  <li class="info__data">
+                    <div class="data__tags">
+                      <div class="data__tag-red">전신</div>
+                    </div>
+                  </li>
+                  <li class="info__btn">
+                    <a class="info__btn__join">
+                      <span>참여하기</span>
+                      <i class="iruri-arrow-yellow-icon"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="cardConteiner">
+                <div class="card__image">
+                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
+                </div>
+                <ul class="card__info">
+                  <li class="info__title">
+                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                  </li>
+                  <li class="info__data">
+                    <div class="data__tags">
+                      <div class="data__tag-red">전신</div>
+                    </div>
+                  </li>
+                  <li class="info__btn">
+                    <a class="info__btn__join">
+                      <span>참여하기</span>
+                      <i class="iruri-arrow-yellow-icon"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
               <li class="cardConteiner">
                 <div class="card__image">
                   <img src="https://via.placeholder.com/356x270" alt="이미지" />

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.security.UserRegService;
 import com.iruri.ex.service.GoogleService;
 import com.iruri.ex.service.IUserService;
@@ -35,7 +36,12 @@ public class LoginController {
     UserRegService regService;
     
     @GetMapping("/loginPage")
-    public ModelAndView loginPage(ModelAndView mav) {
+    public ModelAndView loginPage(ModelAndView mav, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("kakaoId");
+        session.removeAttribute("naverId");
+        session.removeAttribute("googleId");
+        
         mav.setViewName("/loginPage");
         mav.addObject("kakaoUrl", kakaoService.getAuthorizationUrl());
         mav.addObject("naverUrl", naverService.getAuthorizationUrl());
@@ -125,9 +131,21 @@ public class LoginController {
     @PostMapping("/signUp/submit")
     public int signUpUser(IUserVO iUserVO, String userPwCheck, String agree, HttpServletRequest request)  {
         
-        HttpSession session2 = request.getSession(true);
-        Boolean authCheck = (Boolean)session2.getAttribute("authCheck");
+        log.info("iUserVO: " + iUserVO);
+        
+        HttpSession session = request.getSession(true);
+        Boolean authCheck = (Boolean)session.getAttribute("authCheck");
         
         return iuserService.signUpUser(iUserVO, authCheck, userPwCheck, agree);
+    }
+    
+    // 비밀번호 찾기
+    @GetMapping("/signUp/pwUpdate")
+    public int signUpPwUpdate(IUserVO vo, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession();
+        Boolean authCheck = (Boolean)session.getAttribute("authCheck");
+        
+        return iuserService.signUpPwUpdate(vo.getUserEmail(), vo.getUserPw(), authCheck);
     }
 }

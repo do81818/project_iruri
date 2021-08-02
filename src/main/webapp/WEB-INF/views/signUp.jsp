@@ -22,6 +22,10 @@
       <main class="iruri__signUp">
         <c:url value="/signUp/submit" var="signUpUrl" />
         <form:form name="iUserSignUp" action="${signUpUrl}" method="POST" class="signUp__wrap" accept-charset="UTF-8">
+          <input type="hidden" name="kakaoId" value="${sessionScope.kakaoId}">
+          <input type="hidden" name="naverId" value="${sessionScope.naverId}">
+          <input type="hidden" name="googleId" value="${sessionScope.googleId}">
+        
           <h3 class="signUp__title">회원 가입</h3>
           <div class="signUp__emailForm">
             <label for="userEmail1">email</label>

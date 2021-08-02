@@ -20,6 +20,7 @@ public interface IClassService {
 
     int classcount(int userId);
 
+    List<IClassVO> mainPageChallengeList();
     
     
     /*

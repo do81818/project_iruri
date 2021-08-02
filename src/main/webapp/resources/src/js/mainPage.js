@@ -12,7 +12,7 @@
 	
 	//slide 배열
 		for(var i = 0; i < slide.length; i++){
-			slide[i].style.left = (slideWidth * i + slideMargin*i) + 'px';
+			slide[i].style.left = (slideWidth * i + slideMargin * i) + 'px';
 		}
 	
 	//slide 이동 함수
@@ -39,7 +39,7 @@
 })();
 
 
-(function challengeSlideFunc() {
+(function ptClassSlideFunc() {
 
   const slides = document.querySelector('.ptClass__slides');
 				slide = document.querySelectorAll('.ptClass__slides .cardConteiner'),

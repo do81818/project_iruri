@@ -98,7 +98,7 @@
                     
                     <button id="sendAuthKey">인증번호 전송</button>
                   </div>
-                
+                  <div class="emailValidate"></div>
                 </div>
                 
                 <div class="password_find_formBox ">

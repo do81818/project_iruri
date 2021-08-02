@@ -1,4 +1,5 @@
 (function() {
+	
 	// 이메일
 	const emailForm = document.querySelector('.signUp__emailForm');
 	const emailInput1 = document.getElementById('userEmail1');
@@ -15,6 +16,10 @@
 	// 전화번호
 	const phone = document.querySelector('#userPhone');
 	const agree = document.querySelector('#terms_agree');
+	
+	const kakaoId = $('input[name="kakaoId"]');
+	const naverId = $('input[name="naverId"]');
+	const googleId = $('input[name="googleId"]');
 	
 	
 	// 이메일 합치기
@@ -264,6 +269,8 @@
 		submitBtn.addEventListener('click', function(e) {
 			e.preventDefault();
 
+			console.log(kakaoId.value);
+
 			const header = $('meta[name="_csrf_header"]').attr('th:content');
 			const token = $('meta[name="_csrf"]').attr('th:content');
 			$.ajax({
@@ -273,6 +280,9 @@
 					xhr.setRequestHeader(header, token);
 				},
 				data: {
+					kakaoId: kakaoId.value,
+					naverId: naverId.value,
+					googleId: googleId.value,
 					userEmail: email.value,
 					userPw: password.value,
 					userPwCheck: confirmPassword.value,

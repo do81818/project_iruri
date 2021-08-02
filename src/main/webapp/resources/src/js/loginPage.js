@@ -53,11 +53,11 @@ const rememberEmailLabel = document.querySelector('label[for="remember-email"]')
     fetch('signUp/emailCheck?userEmail=' + email)
     .then(res => res.text())
     .then(number => {
+		const emailValidate = document.querySelector('.emailValidate');
     	if(number === '-1') {
-			alert('이메일 주소 양식에 맞게 작성해주세요');
+			emailValidate.innerText = '이메일 주소 양식에 맞게 작성해주세요'; 
       	} else {
       		fetch('signUp/sendAuthNumber?userEmail=' + email);
-      		alert('해당 이메일로 인증번호가 전송되었습니다');
       		$('#sendAuthKey').attr('disabled', true);
       		
       		const htmls = '<div class="password_find_formBox">'
@@ -67,7 +67,8 @@ const rememberEmailLabel = document.querySelector('label[for="remember-email"]')
 			                 + '</label>'
 			                  
 			                 + '<button id="confirmAuthKey">인증번호 확인</button>'
-	                	 + '</div>';
+	                	 + '</div>'
+										 + '<div class="authNumberValidate"></div>';
 
       		$('.password_find_form').append(htmls);
       		
@@ -76,41 +77,75 @@ const rememberEmailLabel = document.querySelector('label[for="remember-email"]')
 		  	fetch('signUp/checkAuthNumber?authNumber=' + authKey)
 		  	.then(data => data.text())
 		  	.then(number => {
-		  		console.log(typeof number);
-		  		console.log(number);
+					const authNumberValidate = document.querySelector('.authNumberValidate');
 		  		if(number === '0' || number === '-1') {
-		  			alert('인증번호가 맞지 않습니다.');
+		  			authNumberValidate.innerText = '인증번호가 맞지 않습니다.';
 		  		} else {
-		  			alert('인증번호가 확인되었습니다.');
 		  			$('#confirmAuthKey').attr('disabled', true);
 		  			
 		  			const htmls = '<div class="password_find_formBox password_find_formBox_new">'
 		                    + '<label>'
 		                    +  '<span>새 비밀번호 입력</span>'                  
-		                    +  '<input class="newPassword" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용"/>'
+		                    +  '<input class="newPassword" type="password" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용"/>'
 		                    + '</label>'
 		                    + '</div>'
-		                  
+												+ '<div class="newPwValidate"></div>'
+
 		                    + '<div class="password_find_formBox password_find_formBox_new">'
 		                    +  '<label>'
 		                    +    '<span>새 비밀번호 확인</span>'                  
-		                    +    '<input class="newPasswordCheck" type="text"/>'
+		                    +    '<input class="newPasswordCheck" type="password"/>'
 		                    +  '</label>'
 		                    + '</div>';
 		                  
 		  			$('.password_find_form').append(htmls);
 		  			
-		  			$('.newPassword').on("change input", function() {
-		  				const pw = $(this).val();
-		  			})
-		  			
-		  			
+		  			$('.newPassword').on("change", function() {
+		  				const pw = $('.newPassword').val();
+		  				fetch('signUp/passwordCheck?userPw=' + pw)
+		  				.then(data => data.text())
+		  				.then(number => {
+								const newPwValidate = document.querySelector('.newPwValidate');
+		  					if(number === '4') {
+		  						newPwValidate.innerText = '올바른 비밀번호 양식입니다.';
+		  					} else {
+		  						newPwValidate.innerText = '올바른 비밀번호 양식이 아닙니다.';
+		  					}
+		  				});
+		  			});
+
+						$('.newPasswordCheck').on('change', function() {
+							const pw = $('.newPassword').val();
+							const pwCheck = $('.newPasswordCheck').val();
+
+							if(pw === pwCheck) {
+								$('.pass_find_submit_button').attr('disabled', false);
+							}
+						})
+
+						$('.pass_find_submit_button').on('click', function() {
+							const email = $('input[name="findEmail"]').val();
+							const pw = $('.newPassword').val();
+							$.ajax({
+								url: 'http://localhost:8282/ex/signUp/pwUpdate',
+								type: 'GET',
+								data: {
+									userEmail: email,
+									userPw: pw
+								},
+								success: function(result) {
+									if(result === -1) {
+										console.log('비밀번호 수정 실패');
+									} else {
+										$('.c_make_modal').fadeOut();
+									}
+								}
+							});
+						})
 		  		}
 		  	});
 		  });
       	}
     })
   });
-  
-  
 })();

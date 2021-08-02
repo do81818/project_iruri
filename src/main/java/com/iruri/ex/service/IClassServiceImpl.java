@@ -55,6 +55,12 @@ public class IClassServiceImpl implements IClassService {
         int vo = iClassMapper.classcount(userId);
         return vo;
     }
+    
+    @Override
+    public List<IClassVO> mainPageChallengeList() {
+        
+        return iClassMapper.mainPageChallengeList();
+    }
 
     //챌린지 메인 리스트
     /*

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   font-family: var(--Cafe24SsurroundAir);
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
   padding: 10px;
 }

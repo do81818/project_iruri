@@ -80,7 +80,15 @@ public class IUserServleImpl implements IUserService {
         return vo;
     }
 
-    
+    public int signUpPwUpdate(String userEmail, String userPw, Boolean authCheck) {
+        
+        if(authCheck != true) {
+            return -1;
+        } else {
+            iUserMapper.updatePw(userEmail, userPw);
+            return 0;
+        }
+    }
     
     
     
