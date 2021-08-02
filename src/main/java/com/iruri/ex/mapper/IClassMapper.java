@@ -22,6 +22,8 @@ public interface IClassMapper {
     // 종료된 클래스
     List<IClassVO> selectAllEnd(int userId);
     
+    List<IClassVO> mainPageChallengeList();
+    
     /*
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);

@@ -28,6 +28,7 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
 
+
     // 현재 운영중인 클래스 조회
     @Override
     public List<IClassVO> classCurrentList(int userId) {
@@ -49,7 +50,18 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
 
+    @Override
+    public int classcount(int userId) {
 
+        int vo = iClassMapper.classcount(userId);
+        return vo;
+    }
+    
+    @Override
+    public List<IClassVO> mainPageChallengeList() {
+        
+        return iClassMapper.mainPageChallengeList();
+    }
 
     //챌린지 메인 리스트
     /*

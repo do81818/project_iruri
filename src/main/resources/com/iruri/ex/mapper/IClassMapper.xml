@@ -24,7 +24,8 @@
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>		
+		<result property="rnum" column="rnum"/>
+		<result property="classTime" column="CLASS_TIME"/>
 		<collection property="exerciseDateList" resultMap="exerciseDateMap">
 		</collection>
 		<collection property="exerciseKindList" resultMap="exerciseKindMap">
@@ -90,10 +91,32 @@
 		]]>
 	</select>
 	
-
+	<select id="classcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+		WHERE
+			user_id = #{userId} 
+		]]> 
+	</select>
 	
-	
-
+	<!-- 참여 가능한 상위 챌린지 5개  -->
+	<select id="mainPageChallengeList" resultMap="iClassMap">
+		<![CDATA[
+SELECT *
+FROM
+(
+    SELECT cl.*, ca.category_name
+    FROM iclass cl, category ca
+    WHERE cl.category_id = ca.category_id
+    ORDER BY cl.class_like DESC
+)
+WHERE 
+rownum <= 5 and category_id = 1 and class_enddate >= sysdate
+		]]> 
+	</select>
 	
 	
 	

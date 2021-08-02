@@ -10,9 +10,7 @@
 	scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources"
 	scope="application" />
-	<c:set var="CONTEXT_PATH_CHALLENGE"
-	value="${pageContext.request.contextPath}/iruri"
-	scope="application" />
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -53,20 +51,6 @@
             actionForm.find("input[name='pageNum']").val(targetPage);
             actionForm.submit();
         });
-	});
-	</script>	
-	
-	<script>
-	//챌린지 검색
-	$(document).ready(function(){
-		var actionForm = $("#actionForm");
-	$(".search_icon").on("click", function(e){
-		e.preventDefault();
-		let val = $("input[name='keyword']").val();
-		actionForm.find("input[name='keyword']").val(val);
-		actionForm.find("input[name='pageNum']").val(1);
-		actionForm.submit();
-	});
 	});
 	</script>
 
@@ -129,9 +113,9 @@
             		
 		                <input type="radio" id="c_tap1" name="c_taps" onclick="location.href='/ex/iruri/challengeList'">
 		                <label for="c_tap1">전체챌린지</label>
-		                <input type="radio" id="c_tap2" name="c_taps" onclick="location.href='/ex/iruri/challengeLikeList'">
+		                <input type="radio" id="c_tap2" name="c_taps" onclick="location.href='/ex/iruri/challengeLikeList'"  checked>
 		                <label for="c_tap2">관심챌린지</label>
-		                <input type="radio" id="c_tap3" name="c_taps" onclick="location.href='/ex/iruri/challengeEndList'" checked>
+		                <input type="radio" id="c_tap3" name="c_taps" onclick="location.href='/ex/iruri/challengeEndList'">
 		                <label for="c_tap3">지난챌린지</label>
 						</p>
             		
@@ -140,14 +124,13 @@
 
 				<div class="c_search">
 					<!--챌린지 검색창-->
-					<div class="c_search_box">
-					<%-- <form class="c_search_box"  action=""> --%>
+					<form class="c_search_box"  action="">
 
-						<input type="text" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
-						<button type="submit" class="search_icon"></button>
+						<input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)">
+						<button class="search_icon"></button>
 
-					
-					</div>
+					</form>
+
 					<!--정렬(셀렉트박스)-->
 					<div id="select_wrap">
 						<div id="select" class="select">인기순</div>
@@ -233,20 +216,18 @@
 				<!--페이징-->
 				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 				<div class="page_nation"></div>
-				
-				<form id="actionForm" action="/ex/iruri/challengeEndList" method="get">
+				<form id="actionForm" action="/ex/iruri/challengeLikeList" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 				</form>
 				
-<script> 
+<script>
 		function getlist(page) {
 			
 
 			    $.ajax({
 			        //url : '${pageContext.request.contextPath}/rest/after.json',
-			        url: 'http://localhost:8282/ex/ajax/challengeEndList.json',
+			        url: 'http://localhost:8282/ex/ajax/challengeLikeList.json',
 			        //url : 'http://localhost:8282/ex/iruri/challengeList',
 			        type: 'GET',
 			        cache: false,
@@ -271,16 +252,17 @@
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
-			
 
 						if (list.length < 1) {
-							htmls = '현재 등록된 챌린지가 없습니다.';
+							htmls += '<div class="c_list_not">';
+							htmls += '현재 등록된 챌린지가 없습니다.';
+							htmls += '</div>';
+							
 						} else {
 							//const challengeList = document.querySelector('.c_list');
 							//const page = document.querySelector('.page_nation');
 
 							$(list).each(function() {
-							
 
 												//챌린지 리스트
 												htmls += '<div class="c_list_detail">';
@@ -408,9 +390,6 @@
 	
 
 </script>
-
-
-
 
 		</main>
 

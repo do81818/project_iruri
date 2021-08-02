@@ -20,6 +20,7 @@ public interface IClassService {
 
 
 
+    List<IClassVO> mainPageChallengeList();
     
     
     /*
