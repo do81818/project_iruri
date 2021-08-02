@@ -34,6 +34,7 @@ public class LikeListVO {
     private int userId;
     private int classId;
     private int boardId;
+    private int rnum;
 
 
     

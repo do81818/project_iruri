@@ -1,7 +1,8 @@
 package com.iruri.ex.service;
 
-import java.util.List; 
+import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.LikeListVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -86,9 +88,10 @@ public class ChallengeServiceImpl implements ChallengeService {
    
     //관심 챌린지
     @Override
-    public List<IClassVO> challengeLikeList(Criteria criteria, int userId) {
+    public List<IClassVO> challengeLikeList(Criteria cri, int userId) {
+       
         log.info("get challengeLikeList()..");
-        return challengeMapper.getListWithPaging_challengeLikeList(criteria, userId);
+        return challengeMapper.getListWithPaging_challengeLikeList(cri, userId);
     }
 
     @Override

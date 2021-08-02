@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.LikeListVO;
 
 @Mapper
 public interface ChallengeMapper {
@@ -39,8 +40,8 @@ public interface ChallengeMapper {
     int getTotalCount_challengeEndList(Criteria cri);
     
     //관심 챌린지 
-    List<IClassVO> getListWithPaging_challengeLikeList(Criteria criteria, @Param("userId") int userId);
-    int getTotalCount_challengeLikeList(Criteria cri, int userId);
+    List<IClassVO> getListWithPaging_challengeLikeList(@Param("cri") Criteria cri, @Param("userId") int userId);
+    int getTotalCount_challengeLikeList(Criteria cri, @Param("userId") int userId);
     
   
 }

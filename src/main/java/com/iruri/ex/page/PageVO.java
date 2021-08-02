@@ -49,7 +49,7 @@ public class PageVO {
                 //.queryParam("pageNum", page)
                 .queryParam("pageNum", page) // pageNum=3
                 .queryParam("amount", cri.getAmount()) // pageNum=3&amount=10 (URL에서 3페이지 눌렀을때)
-                .queryParam("keyword", cri.getKeyword())
+                .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
                 .build(); // ?pageNum=3&amount=10
         
         return uriComponentsBuilder.toUriString(); // ?pageNum=3&amount=10 리턴
