@@ -1,0 +1,412 @@
+@import url('./admin_main_basic.css');
+
+
+#admin_managementMenu {
+    background-color: white;
+    border-top: 1px solid var(--iruri-blue-color);
+    border-bottom: 1px solid var(--iruri-blue-color);
+    border-radius: 0;
+}
+
+#admin_managementMenu a {
+    color: var(--iruri-indigo-color);
+}
+
+/* -------------- 관리자 회원정보 제목부분 -------------- */
+.admin_memberInfo_title, .admin_trainerInfo_title {
+    text-align: center;
+    margin-top: 90px;
+    margin-bottom: 42px;
+}
+
+.admin_trainerInfo_title {
+    padding-bottom: 42px;
+    border-bottom: 1px solid var(--iruri-blue-color);
+}
+.admin_memberInfo_title img {
+    width: 20px;
+    position: relative;
+    left: -45%;
+    top: 3px;
+}
+
+.admin_memberInfo_title h3,
+.admin_trainerInfo_title h3 {
+    display: inline;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--iruri-indigo-color);
+}
+
+.admin_trainerInfo_title img{
+    width: 20px;
+    position: relative;
+    left: -43%;
+    top: 3px;
+}
+
+
+/* ----------------------- 기본정보 --------------------- */
+.admin_memberInfo_basic {
+    margin: 30px 0;
+    width: 100%;
+}
+
+.admin_memberInfo_basic,
+tr,
+td {
+    border: none;
+    border-collapse: collapse;
+    border-bottom: 1px solid var(--iruri-gray-color);
+    text-align: top;
+}
+
+.admin_memberInfo_basic tr td:nth-of-type(1) {
+    color: var(--iruri-blue-color);
+    font-size: 18px;
+    text-align: left;
+    width: 28%;
+    padding: 24px 68px;
+}
+
+.admin_memberInfo_basic tr td:nth-of-type(2) {
+    color: var(--iruri-indigo-color);
+    font-size: 18px;
+    text-align: left;
+    width: 72%;
+    padding: 24px 40px 24px 0;
+}
+
+.admin_memberInfo_basic tr td:nth-of-type(2) input {
+    color: var(--iruri-indigo-color);
+    font-size: 18px;
+    background: none;
+    border: none;
+    outline: none;
+    display: inline;
+    width: 100px;
+}
+
+.admin_memberInfo_basic tr td:nth-of-type(2) span {
+    font-size: 14px;
+}
+
+.admin_memberInfo_basic tr td:nth-of-type(2) button {
+    height: 36px;
+    padding: 0 13px;
+    font-size: 12px;
+    color: var(--iruri-blue-color);
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 18px;
+    background-color: white;
+    margin-left: 20px;
+}
+
+/* 블랙리스트 */
+#memberInfo_balackList {
+    display: block;
+}
+
+#memberInfo_balackList[type="checkbox"] {
+    display: none;
+}
+
+#memberInfo_balackList[type="checkbox"]+label {
+    background-image: url("../images/icon/check_no.png");
+    background-size: 18px auto;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+    position: relative;
+}
+
+#memberInfo_balackList[type=checkbox]:checked+label {
+    background-image: url('../images/icon/check_yes.png');
+}
+
+#memberInfo_balackList[type=checkbox]:disabled+label {
+    background-image: url('../images/icon/check_no.png');
+}
+
+.memberInfo_balackListForm>div {
+    margin-top: 15px;
+    width: inherit;
+    text-align: right;
+    padding: 20px 25px;
+    border: 1px solid var(--iruri-light-gray-color);
+    border-radius: 30px;
+}
+
+.memberInfo_balackListForm>div>textarea {
+    width: 100%;
+    height: 100px;
+    font-size: 16px;
+    line-height: 25px;
+    border: none;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+    text-overflow: clip;
+    color: var(--iruri-indigo-color);
+}
+.memberInfo_balackListForm>div>textarea::placeholder {
+    color: var(--iruri-gray-color);
+}
+.memberInfo_balackListForm>div>textarea:focus::placeholder {
+    color: transparent;
+}
+
+.table_gray_text {
+    font-size: 14px;
+}
+.memberInfo_balackListForm>div>button {
+    color: var(--iruri-blue-color);
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 10px;
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 20px;
+}
+
+
+/* ---------------- 포인트 적립/사용 ------------------- */
+.admin_memberInfo_pointTitle {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 40px;
+    line-height: 44px;
+}
+
+.admin_memberInfo_pointTitle h3 {
+    flex: 1;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    font-weight: 100;
+    color: var(--iruri-indigo-color);
+}
+
+.admin_memberInfo_pointTitle p {
+    flex: 4;
+    font-size: 18px;
+    color: var(--iruri-dark-gray-color);
+}
+.admin_memberInfo_pointTitle p>span {
+    font-size: 20px;
+    color: var(--iruri-blue-color);
+    margin-left: 10px;
+}
+
+.admin_memberInfo_pointTitle form {
+    flex:4;
+    text-align: right;
+}
+
+.admin_memberInfo_pointTitle form input[type="radio"] {
+    display: none;
+}
+
+.admin_memberInfo_pointTitle input[type="radio"]+label {
+    font-size: 18px ;
+    color: var(--iruri-dark-gray-color);
+    background-image: url("../images/icon/check_no.png");
+    background-size: 18px auto;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+    position: relative;
+    margin-right: 20px;
+}
+
+/* .admin_memberInfo_pointTitle input:focus {
+    border: 1px solid var(--iruri-blue-color);
+    box-shadow: 0 0 8px rgba(2, 163, 255, 0.3);
+} */
+
+.admin_memberInfo_pointTitle form input[type="radio"]:checked +label{
+    background-image: url("../images/icon/check_yes.png");
+}
+
+.admin_memberInfo_pointTitle form input[type="radio"]:disabled +label{
+    background-image: url("../images/icon/check_yes.png");
+}
+
+.admin_memberInfo_pointTitle form input[type="number"] {
+    height: 44px;
+    width: 40%;
+    padding: 0 20px;
+    text-align: right;
+    font-size: 16px;
+    color: var(--iruri-dark-gray-color);
+    border-radius: 5px;
+    border: 1px solid var(--iruri-light-gray-color);
+    outline: none;
+    margin-right: 10px;
+}
+
+.admin_memberInfo_pointTitle form input[type="number"]::-webkit-outer-spin-button,
+.admin_memberInfo_pointTitle form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+
+.admin_memberInfo_pointTitle form button {
+    font-size: 14px;
+    color: var(--iruri-yellow-color);
+    height: 44px;
+    padding: 0 20px;
+    border: none;
+    outline: none;
+    background-color: var(--iruri-blue-color);
+    border-radius: 22px;
+}
+
+/* ---------------- 테이블 가로 크기 및 기본 폰트, 선 ------------------ */
+/* 회원정보 */
+.memberInfo_pointTable th,
+.memberInfo_pointTable td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.memberInfo_pointTable th:nth-of-type(1),
+.memberInfo_pointTable th:nth-of-type(2),
+.memberInfo_pointTable th:nth-of-type(4) {
+    width: 15%;
+}
+
+.memberInfo_pointTable th:nth-of-type(3) {
+    width: 55%;
+}
+
+.memberInfo_pointTable td:nth-of-type(3) {
+    text-align: left;
+}
+
+
+/* 운동정보 */
+.memberInfo_exerciseTable,
+.memberInfo_exerciseTable tr,
+.memberInfo_exerciseTable th,
+.memberInfo_exerciseTable td {
+    padding: 20px 20px;
+}
+.memberInfo_exerciseTable th {
+    width:10%;
+}
+.memberInfo_exerciseTable th:nth-last-of-type(1){
+    width: 70%;
+}
+.memberInfo_exerciseTable td:nth-last-of-type(1){
+    text-align: left;
+    padding-left: 8%;
+}
+
+.list2, .list3 {
+    display: none;
+}
+
+
+/* -------------------- 트레이너 수익관리 ------------------ */
+.admin_trainerInfo_moneyTitle {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    margin-top: 60px;
+}
+.admin_trainerInfo_moneyTitle>div h3 {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    font-weight: 100;
+    color: var(--iruri-indigo-color);
+    margin-bottom: 30px;
+}
+
+.admin_trainerInfo_moneyTitle>div p {
+    display: inline-block;
+    font-family: 'Cafe24Ssurround';
+    color: var(--iruri-blue-color);
+    font-weight: 100;
+    font-size: 24px;
+    margin: 0 30px;
+    margin-bottom: 20px;
+}
+
+.admin_trainerInfo_moneyTitle>div img {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+}
+
+.admin_trainerInfo_moneyTitle>form {
+ padding-top: 50px;   
+}
+
+
+.admin_trainerInfo_moneyTitle>form p {
+    display: inline-block;
+    font-size: 18px;
+    color: var(--iruri-dark-gray-color);
+}
+
+.admin_trainerInfo_moneyTitle>form span {
+    width: 200px;
+    text-align: right;
+    padding-left: 15px;
+    padding-right: 5px;
+    font-size: 30px;
+    color: var(--iruri-gray-color);
+    border: none;
+    outline: none;
+    position: relative;
+    top: 2px;
+}
+
+.admin_trainerInfo_moneyTitle>form button {
+    height: 36px;  
+    line-height: 36px; 
+    border-radius: 18px;
+    font-size: 14px;
+    color: var(--iruri-yellow-color);
+    padding: 0 15px;
+    background-color: var(--iruri-blue-color);
+    margin-left: 10px;
+    position: relative;
+    top: -5px;
+}
+
+
+
+
+
+
+
+.trainerInfo_moneyTable th,
+.trainerInfo_moneyTable td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.trainerInfo_moneyTable th:nth-of-type(1),
+.trainerInfo_moneyTable th:nth-of-type(4) {
+    width: 15%;
+}
+
+.trainerInfo_moneyTable th:nth-of-type(2) {
+    width: 12%;
+}
+
+.trainerInfo_moneyTable th:nth-of-type(3) {
+    width: 58%;
+}
+
+.trainerInfo_moneyTable td:nth-of-type(3) {
+    text-align: left;
+    padding-left: 50px;
+}
+
+

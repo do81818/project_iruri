@@ -11,5 +11,5 @@ public interface IUserInfoService {
      // userinfo list 만들기   
     List<IUserInfoVO> userinfoList(int userId);
         
-    int userheightdate(int userId);
+//    int userheightdate(int userId);
 }

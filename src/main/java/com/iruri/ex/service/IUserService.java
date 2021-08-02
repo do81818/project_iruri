@@ -4,7 +4,7 @@ import com.iruri.ex.vo.IUserVO;
 
 public interface IUserService {
     
-    void signUpUser(IUserVO iUserVO);
+    int signUpUser(IUserVO iUserVO, Boolean authCheck, String userPwCheck, String agree);
     IUserVO findKakaoUser(String socialEmail);
     IUserVO findNaverUser(String socialEmail);
     IUserVO findGoogleUser(String socialEmail);

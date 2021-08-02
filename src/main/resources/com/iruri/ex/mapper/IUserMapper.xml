@@ -15,6 +15,7 @@
 		<result property="userSigndate" column="user_signdate"/>
 		<result property="userPoint" column="user_point"/>
 		<result property="userBlackList" column="user_blacklist"/>
+		<result property="userBlaskListReason" column="user_blacklist_reason"/>
 		<collection property="authList" resultMap="authMap">
 		</collection>
 	</resultMap>
@@ -132,5 +133,6 @@ WHERE
 	u.user_id = a.user_id AND u.user_email = #{userEmail}
 		]]>
 	</select>
+
 
 </mapper>

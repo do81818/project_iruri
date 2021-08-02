@@ -1,0 +1,45 @@
+@import url("./admin_main_basic.css");
+/* ---------------- 테이블 가로 크기 및 기본 폰트, 선 ------------------ */
+
+.report_memberList th,
+.report_totalMemberList th {
+	padding: 20px;
+}
+
+.report_totalMemberList td {
+	padding-top: 22px;
+	padding-bottom: 22px;
+}
+
+.report_memberList table th:nth-of-type(1),
+.report_totalMemberList table th:nth-of-type(1) {
+    width: 13%;
+}
+
+.report_memberList table th:nth-of-type(2),
+.report_memberList table th:nth-of-type(3),
+.report_totalMemberList table th:nth-of-type(2),
+.report_totalMemberList table th:nth-of-type(3) {
+    width: 15%;
+}
+.report_memberList table th:nth-of-type(4),
+.report_totalMemberList table th:nth-of-type(4) {
+    width: 40%;
+}
+.report_memberList table th:nth-of-type(5),
+.report_totalMemberList table th:nth-of-type(5) {
+    width: 17%;
+}
+
+/* ---------------- 신고알림 테이블 디테일 ------------------ */
+
+.a_buttonBox {
+    display: inline-block;
+    width: 80px;
+    padding: 8px 0;
+    border: 1px solid var(--iruri-gray-color);
+    border-radius: 20px;
+    font-size: 13px;
+    margin: 0 3px;
+    color: var(--iruri-gray-color);
+}

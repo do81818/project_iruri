@@ -99,11 +99,11 @@
 .signUp__passwordForm .validateCheck,
 .signUp__passwordCheckForm .validateCheck,
 .signUp__nicknameForm .validateCheck {
-   bottom: 10px;
+  bottom: 10px;
 }
 
 .signUp__emailAuthBtn {
-  /* display: none; */
+  display: none;
   position: relative;
   justify-content: flex-end;
 }
@@ -165,7 +165,7 @@
   text-align: center;
 }
 
-.signUp__wrap input[type="submit"] {
+.signUp__wrap .submitBtn {
   width: 320px;
   height: 55px;
   font-size: 16px;
@@ -179,6 +179,11 @@
 
 .no__signUp {
   font-size: 16px;
-  color: var(--iruri-gray-color);
+  color: var(--iruri-gray-color) !important;
   margin-bottom: 32px;
+}
+
+.terms_agree .iruri-check-no-icon--signup {
+  position: relative;
+  top: 2.5px;
 }

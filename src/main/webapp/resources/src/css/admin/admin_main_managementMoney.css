@@ -1,0 +1,297 @@
+@import url('./admin_main_basic.css');
+
+
+/* ---------------- 테이블 가로 크기 및 기본 폰트, 선 ------------------ */
+.admin_table th,
+.admin_table td {
+    padding: 20px 10px;
+}
+
+/* 전체 수익 */
+.__all th:nth-of-type(1) {
+    width: 15%;
+}
+
+.__all th:nth-of-type(2) {
+    width: 32%;
+}
+
+.__all th:nth-of-type(3),
+.__all th:nth-of-type(4),
+.__all th:nth-of-type(5),
+.__all th:nth-of-type(6) {
+    width: 13%;
+}
+
+.__all td:nth-of-type(4),
+.__all td:nth-of-type(5),
+.__all td:nth-of-type(6) {
+    text-align: right;
+    padding-right: 30px;
+}
+
+/* 트레이너 별 수익 */
+.__trainer th {
+    /* padding-left: 45px; */
+    width: 10%;
+}
+
+.__trainer th:nth-of-type(2) {
+    width: 8%;
+}
+
+.__trainer th:nth-of-type(3) {
+    width: 32%;
+}
+
+
+
+/* ---------------- 전체수익 ------------------ */
+
+/* .list2 {
+    display: none;
+} */
+
+/* --- 조회구분 --- */
+
+.admin_sales_All h3 {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    font-weight: 100;
+    color: var(--iruri-blue-color);
+    display: inline;
+    margin-right: 40px;
+}
+
+
+.admin_sales_dayAndMonth {
+    padding: 0 35px 30px 35px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.admin_sales_dayAndMonth h2 {
+    flex: 100%;
+}
+
+.admin_sales_dayAndMonth h2 {
+    font-family: 'Cafe24Ssurround';
+    font-size: 24px;
+    color: var(--iruri-indigo-color);
+    margin-bottom: 30px;
+}
+
+.admin_today_sales {
+    flex: 50%;
+}
+
+.admin_monthly_sales {
+    flex: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin_today_sales p {
+    margin-top: 50px;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-indigo-color);
+}
+
+.admin_today_sales p>span {
+    font-size: 25px;
+}
+
+.admin_monthly_sales>div {
+    width: 75%;
+    height: 154px;
+    background-color: #ccc;
+}
+
+.admin_sales_inquiry {
+    padding: 30px;
+    border-top: 1px solid var(--iruri-blue-color);
+}
+
+.inquiry_types td {
+    position: relative;
+    padding-bottom: 30px;
+}
+
+.inquiry_types label {
+    margin-right: 30px;
+    position: relative;
+    top: -5px;
+}
+
+.inquiry_types input[type="radio"] {
+    display: none;
+}
+
+.inquiry_types input[type="radio"]+label>span {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("/ex/resources/src/img/icon/check_no.png");
+    background-size: 18px auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    top: 6px;
+    margin-right: 5px;
+}
+
+.inquiry_types input[type="radio"]:checked+label>span {
+    background: url("/ex/resources/src/img/icon/check_yes.png");
+    background-size: 18px auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+
+/* ----조회기간 ---- */
+
+.inquiry_period p {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.inquiry_period select {
+    padding: 8px 10px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--iruri-indigo-color);
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.inquiry_startdate_year,
+.inquiry_enddate_year {
+    width: 120px;
+    background: url('/ex/resources/src/img/icon/arrow_select.png');
+    background-size: 10px auto;
+    background-repeat: no-repeat;
+    background-position: 95px center;
+}
+
+.inquiry_startdate_month,
+.inquiry_startdate_day,
+.inquiry_enddate_month,
+.inquiry_enddate_day {
+    width: 80px;
+    background: url('/ex/resources/src/img/icon/arrow_select.png');
+    background-size: 10px auto;
+    background-repeat: no-repeat;
+    background-position: 55px center;
+}
+
+.inquiry_period span {
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.inquiry_period button {
+    height: 36px;
+    padding: 0 13px;
+    color: var(--iruri-yellow-color);
+    background-color: var(--iruri-blue-color);
+    border: none;
+    outline: none;
+    border-radius: 18px;
+}
+
+.inquiry_quick_button button {
+    height: 36px;
+    margin-top: 10px;
+    margin-right: 5px;
+    padding: 0 13px;
+    color: var(--iruri-gray-color);
+    background-color: white;
+    border: 1px solid var(--iruri-gray-color);
+    outline: none;
+    border-radius: 18px;
+
+}
+
+
+/* ---------------------- 트레이너 테이블 -------------------- */
+.admin_sales_table p {
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--iruri-gray-color);
+}
+
+.admin_sales_trainerChoice>form {
+    width: 240px;
+    height: 44px;
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 20px;
+    display: flex;
+    padding: 10px 20px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.admin_sales_trainerChoice>form>input {
+    display: flex;
+    color: var(--iruri-indigo-color);
+    font-size: 16px;
+    width: 170px;
+    margin-right: 10px;
+    outline: none;
+    border: none;
+}
+
+.admin_sales_trainerChoice>form>button {
+    display: flex;
+    align-content: right;
+    vertical-align: middle;
+    margin-top: 2px;
+    width: 18px;
+    height: 18px;
+    background: transparent url("/ex/resources/src/img/icon/search.png");
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.admin_sales_trainerChoice {
+    padding: 0 35px 30px 35px;
+    border-bottom: 1px solid var(--iruri-blue-color);
+}
+.admin_sales_trainerChoice li {
+    padding: 5px;
+    font-size: 18px;
+    color: var(--iruri-dark-gray-color);
+}
+.admin_sales_trainerChoice li>span>img {
+    width: 12px;
+}
+.admin_sales_trainerChoice li>span {
+    margin-right: 10px;
+}
+
+.admin_sales_dayAndMonth h2 {
+	margin-top: 30px;
+}
+
+.list2 {
+    display: none;
+}

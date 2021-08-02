@@ -32,11 +32,14 @@
         <button class ="m_information_change">정보수정</button>
         
       </div>
-        <div id="m_useremail">${user.authList[0].authContent}<br>${user.userEmail}</div>eeeee@naver.com</div>
+        <div id="m_useremail">
+        <c:if test="${user.authList[0].authContent eq 'ROLE_USER'}">
+			<div>일반회원</div>
+		</c:if><br>${user.userEmail}</div>
         </div>
       <div id = "m_userboard_box">
         <div id="m_userboard"><a href="">작성글</a></div>
-        <div id ="m_userboard_number">10</div>
+        <div id ="m_userboard_number">${boardcount}</div>
       </div>
       <div id = "m_userpoint_box">
         <div id="m_userpoint"><a href="">보유포인트</a></div>
@@ -80,8 +83,7 @@
           </div>
 
           <div class="m_bmi_box">
-            <div id=m_bmi><%-- 비만도/BMI지수 <%if((${writedate}).equals("5")){
-            ${writedate}%> --%>
+            <div id=m_bmi>
             </div>
             <div id="m_bminumber">25</div>
             <div id="m_bmicontent">정상체중</div>
@@ -219,9 +221,9 @@ var config2 = {
     datasets: [{
       label: 'Weight changed',
       data: [
-        /* if(${userinfo[0].userwritedate}==1){
-          ${userinfo[0].userWeight}
-        } */
+/*           if(${writedate}=1){
+          ${writedate}
+        }  */ 
         30,50,51,52,60,45,50,70],
       backgroundColor: [
         'rgba(239,239,239)',

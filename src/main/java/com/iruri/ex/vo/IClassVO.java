@@ -47,10 +47,13 @@ public class IClassVO {
     private String classContent;
     private String classGoal;
     private int classExerciseCount;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classStartDate;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classEndDate;
+    
     private String classImage;
     private int classLike;
     private String classState;
@@ -68,5 +71,6 @@ public class IClassVO {
     
     private List<ExerciseDateVO> ExerciseDateList;
     private List<ExerciseKindVO> ExerciseKindList;
+    private List<LikeListVO> LikeListList;
     
 }

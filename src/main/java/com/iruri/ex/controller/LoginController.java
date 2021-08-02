@@ -1,8 +1,6 @@
 package com.iruri.ex.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +45,12 @@ public class LoginController {
     }
      
     @GetMapping("/signUp")
-    public ModelAndView signUp(ModelAndView mav) {
+    public ModelAndView signUp(ModelAndView mav, HttpServletRequest request) {
         mav.setViewName("/signUp");
+        
+        HttpSession session = request.getSession(true);
+        session.setAttribute("checkNum", false);
+        session.setAttribute("authCheck", false);
         
         return mav;
     }
@@ -63,19 +65,25 @@ public class LoginController {
     
     // 이메일 인증 번호 발송
     @GetMapping("/signUp/sendAuthNumber")
-    public void signUpAuthentication(@RequestParam("userEmail") String userInput, HttpSession session) {
+    public void signUpAuthentication(@RequestParam("userEmail") String userInput, HttpServletRequest request) {
         int checkNum = regService.mailSend(userInput);
         
+        HttpSession session = request.getSession(true);
         session.setAttribute("checkNum", checkNum);
-        session.setMaxInactiveInterval(3*60); // 세션 시간을 3분으로 제한해서 다른 서비스에 영향이 생길 수 있음
+        session.setMaxInactiveInterval(3*60);
     }
     
-    // 입력 후 클릭시 세션에 저장된 값이랑 비교
+    // 인증번호 입력 후 클릭시 세션에 저장된 인증번호 값이랑 비교
     @GetMapping("/signUp/checkAuthNumber")
-    public int signUpCheckAuthNumber(@RequestParam("authNumber") int userInput, HttpSession session) {
+    public int signUpCheckAuthNumber(@RequestParam("authNumber") int userInput, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession(true);
         int authNumber = (int)session.getAttribute("checkNum");
-
+        
         if(userInput == authNumber) {
+            session.removeAttribute("checkNum");
+            session.setMaxInactiveInterval(30*60);            
+            session.setAttribute("authCheck", true);
             return 1;
         }
         
@@ -85,22 +93,32 @@ public class LoginController {
     // 비밀번호 양식 체크
     @GetMapping("/signUp/passwordCheck")
     public int signUpPasswordCheck(@RequestParam("userPw") String userPw) {
-        int checkNum = regService.userPasswordCheck(userPw);
         
-        return 0;
+        return regService.userPasswordCheck(userPw);
     }
     
+    // 닉네임 양식 및 중복 체크
     @GetMapping("/signUp/nicknameCheck")
-    public int signUpNicknameCheck(IUserVO userInput) {
-        
-        return regService.userNicknameCheck(userInput.getUserNickname());
+    public int signUpNicknameCheck(@RequestParam("userNickname") String userNickname) {
+
+        return regService.userNicknameCheck(userNickname);
     }
     
+    // 전화번호 양식 체크
+    @GetMapping("/signUp/phoneCheck")
+    public int signUpPhoneCheck(@RequestParam("userPhone") String userPhone) {
+        
+        return regService.userPhoneCheck(userPhone);
+    }
+    
+    // 회원가입 값 검증
     @PostMapping("/signUp/submit")
-    public void signUpUser(IUserVO iUserVO, HttpServletResponse response) throws IOException {
-        iuserService.signUpUser(iUserVO);
+    public int signUpUser(IUserVO iUserVO, String userPwCheck, String agree, HttpServletRequest request)  {
         
-        response.sendRedirect("/ex/loginPage");
+        HttpSession session2 = request.getSession(true);
+        Boolean authCheck = (Boolean)session2.getAttribute("authCheck");
+        
+        return iuserService.signUpUser(iUserVO, authCheck, userPwCheck, agree);
     }
-    
+    // 비밀번호 입력할때 비밀번호 확인이랑 값 같으면 비밀번호 확인 경고문자 지우기
 }
