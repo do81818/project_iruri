@@ -22,15 +22,10 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Autowired
     private ChallengeMapper challengeMapper;
     
-    @Override
-    public List<IClassVO> classList(int userId) {
-        List<IClassVO> vo = iClassMapper.selectAll(userId);
-        if(vo == null) {
-            return null;
-        }
-        return vo;
-    }
-
+	
+	  @Override public List<IClassVO> classList(int userId) { List<IClassVO> vo =
+	  iClassMapper.selectAll(userId); if(vo == null) { return null; } return vo; }
+	 
     //챌린지 메인 리스트
     /*
     @Override

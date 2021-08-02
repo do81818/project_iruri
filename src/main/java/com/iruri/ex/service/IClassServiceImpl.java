@@ -63,7 +63,6 @@ public class IClassServiceImpl implements IClassService {
         return iClassMapper.mainPageChallengeList();
     }
 
-
     //챌린지 메인 리스트
     /*
     @Override

@@ -51,7 +51,7 @@
       </div>
       <div id = "m_userclass_box">
         <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-        <div id="m_userclass_number">${iclass}</div>
+        <div id="m_userclass_number"></div>
       </div>
     </div>
          <p class="border1"></p>

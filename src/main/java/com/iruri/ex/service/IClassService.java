@@ -18,7 +18,7 @@ public interface IClassService {
     // 종료된 클래스 
     List<IClassVO> classEndList(int userId);
 
-    int classcount(int userId);
+
 
     List<IClassVO> mainPageChallengeList();
     

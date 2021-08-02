@@ -119,9 +119,6 @@ rownum <= 5 and category_id = 1 and class_enddate >= sysdate
 	</select>
 	
 	
-
-	
-	
 	
 
 	

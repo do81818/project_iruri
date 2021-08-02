@@ -5,117 +5,13 @@
     position: relative;
   }
   
-  .m_information_box{
-    margin: 30px;
-    padding: 30px 33px;
-    font-family: 'Cafe24SsurroundAir';
-    display: flex;
-  }  
-  .m_information_box>#m_userinformation_box{
-    flex: 5;
-  } 
-  .m_information_box>#m_userboard_box{
-    flex: 4;
-  } 
-  .m_information_box>#m_userpoint_box{
-    flex: 4;
-  } 
-  .m_information_box>#m_userchanllenge_box{
-    flex: 3;
-  } 
-  .m_information_box>#um_serclass_box{
-    flex: 3;
-  } 
-  /* userinformation_box */
-  .m_information_box>#m_userinformation_box>#m_nickname{
-    font-family: 'Cafe24Ssurround';
-    font-size:28px;
-    color:var(--iruri-blue-color);
-  }
-  button.m_information_change{
-    /* -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    text-decoration: none; */
-    font-size: 12px;
-    color: var(--iruri-blue-color);
-    padding:7px 13px;
-    border: 1px solid var(--iruri-blue-color);
-    background-color: white;
-    border-radius: 14px;
-    font-family: 'Cafe24SsurroundAir';
-  }
-  .m_information_box>#m_userinformation_box>#m_useremail{
-    padding-top: 40px;
-  }
-  
-   /* userboard_box */
-  #m_userboard_box>#m_userboard{
-    padding-left: 80px;
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 16px;
-    color: var(--iruri-gray-color); 
-  }
-  #m_userboard_box>#m_userboard_number{
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 50px;
-    color: var(--iruri-light-blue-color);
-    padding-left: 69px;
-    padding-top: 40px;
-  }
-  /* userpoint_box */
-  #m_userpoint_box>#m_userpoint{
-    padding-left: 60px;
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 16px;
-    color: var(--iruri-gray-color); 
-  }
-  #m_userpoint_box>#m_userpoint_number{
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 46px;
-    color: var(--iruri-light-blue-color);
-    padding-left:30px;
-    padding-top: 40px;
-  }
-  /* userchallenge */
-  #m_userchanllenge_box>#m_userchanllenge{
-    padding-left: 35px;
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 15px;
-    color: var(--iruri-gray-color);
-  }
-  #m_userchanllenge_box>#m_userchanllenge_number{
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 50px;
-    color: var(--iruri-light-blue-color);
-    padding-left:70px;
-    padding-top: 40px;
-  }
-  
-  /* userclass */
-  #m_userclass_box>#m_userclass{
-    padding-left:  60px;
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 16px;
-    color: var(--iruri-gray-color);
-  }
-  #m_userclass_box>#m_userclass_number{
-    font-family: 'Cafe24SsurroundAir';
-    font-size: 50px;
-    color: var(--iruri-light-blue-color);
-    padding-left:100px;
-    padding-top: 40px;
-  }s
-  
-  .border1{
-    border:1px solid var(--iruri-blue-color)
-  }
+
+
 
 
    /* 포인트리스트 박스 */
 .m_point_box{
-  margin-left:30px;
-  margin-right:30px;
+  margin: 30px;
   height: 77px;
   border-radius: 30px;
   padding: 10px 80px;
@@ -127,12 +23,12 @@
 
 
 .m_point_box>#m_now_pointlist_box{
-  flex: 35%;
+  flex: 40%;
   padding-top: 20px;
   /* padding-right: 10px; */
 }
 .m_point_box>#m_pre_pointlist_box{
-  flex: 40%;
+  flex: 45%;
   padding-top: 20px;
   
 }
@@ -153,11 +49,12 @@ color:var(--iruri-gray-color);
 
 #m_now_pointlistnb{
 font-family: 'Cafe24SsurroundAir';
-font-size: 25px;
+font-size: 26px;
 color:var(--iruri-yellow-color);
 position: relative;
-top: -20px;
-left:100px;
+top: -23px;
+left: 100px;
+
 }
 
 #m_pre_pointlist{
@@ -169,11 +66,11 @@ left:100px;
   
 #m_pre_pointlistnb{
   font-family: 'Cafe24SsurroundAir';
-  font-size: 25px;
+font-size: 26px;
   color:var(--iruri-yellow-color);
   position: relative;
-  top: -20px;
-left:140px;
+top: -23px;
+left: 130px;
 
   }
 
@@ -186,11 +83,11 @@ left:140px;
       
 #m_use_pointlistnb{
       font-family: 'Cafe24SsurroundAir';
-      font-size: 25px;
+font-size: 26px;
       color:var(--iruri-yellow-color);
       position: relative;
-  	top: -20px;
-left:105px;
+      top: -23px;
+      left: 100px;
       
 }
 
@@ -241,10 +138,7 @@ padding-top: 40px;
 }
 
 
-.border1{
-  border:0.5px solid var(--iruri-light-gray-color);
 
-}
 
 /* 적립예정 */
 #m_point_type_pre{

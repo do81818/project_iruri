@@ -12,6 +12,7 @@
 		<result property="pointValue" column="POINT_VALUE"/>
 		<result property="pointContent" column="POINT_CONTENT"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="rnum" column="rnum"/>	
 		
 	</resultMap>
 	
@@ -69,17 +70,26 @@
 	</select>
 	
 	
-	<select id="pointList" resultMap="pointMap">
-	<![CDATA[
-			SELECT *
-			FROM IPOINT
-			WHERE user_id = #{userId}
-			order by POINT_SAVEDATE asc
+	
+	
+		<select id="pointList" parameterType="hashmap" resultMap="pointMap">
+		<![CDATA[
+  	SELECT *  FROM (
+    	SELECT ROWNUM AS RNUM, A.* FROM (
+        	SELECT * FROM IPOINT where user_id = #{userId} order by POINT_SAVEDATE asc
+             ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+         ) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
 			
-	
-	]]>
-	
+		]]> 
 	</select>
+	
+		<select id="total" resultType="int">
+	<![CDATA[
+		select count(*) from board where user_id = #{userId}
+	]]>
+	</select>
+	
+
 
 
 </mapper>

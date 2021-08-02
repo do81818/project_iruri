@@ -4,10 +4,13 @@ package com.iruri.ex.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BoardMapper {
@@ -32,6 +35,6 @@ public interface BoardMapper {
 	 */
 
 	// 내가 작성한 댓글 list
-	List<BoardVO> commentList(int userId);
-
+	List<BoardVO> commentList(@Param("userId") int userId, @Param("criteria") Criteria criteria);
+	int total(int userId);
 }
