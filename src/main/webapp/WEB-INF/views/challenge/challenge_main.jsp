@@ -7,6 +7,9 @@
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application" />
+<c:set var="CONTEXT_PATH_CHALLENGE"
+	value="${pageContext.request.contextPath}/iruri"
+	scope="application" />
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -16,6 +19,7 @@
     <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_radio_check.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -74,13 +78,14 @@
 
 
 
-        <div class="c_main_tab">
-            <p class="c_like_last">
-            	<a href="http://localhost:8282/ex/iruri/challengeList">전체챌린지</a>
+       			<div class="c_main_tab">
+            		<p class="c_like_last">
+		                     		<a href="#">전체챌린지</a>
                 <a href="#">관심챌린지</a>
-                <a href="http://localhost:8282/ex/iruri/challengeEndList">지난챌린지</a>
-            </p>
-        </div>
+                <a href="#">지난챌린지</a>
+						</p>
+            		
+        		</div>
 
 
 
@@ -171,11 +176,12 @@
         <div class="c_list">
         <c:forEach items="${challengeList}" var="challengeList">
             <div class="c_list_detail">
+            
                 <div class="c_list_img">
                 <img src="/ex/resources/src/img/icon/360-250.png" alt="">
                 </div>
                 <div class="c_list_title">
-                
+
                      ${challengeList.classTitle}
                 </div>
 
