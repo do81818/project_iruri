@@ -49,12 +49,7 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
 
-    @Override
-    public int classcount(int userId) {
 
-        int vo = iClassMapper.classcount(userId);
-        return vo;
-    }
 
     //챌린지 메인 리스트
     /*

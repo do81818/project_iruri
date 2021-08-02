@@ -4,7 +4,9 @@ package com.iruri.ex.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
@@ -24,7 +26,7 @@ public interface PointMapper {
     
     int totalpoint(int userId);
     
-    List<PointVO> pointList(int userId);
-    
+    List<PointVO> pointList(@Param("userId") int userId, @Param("criteria") Criteria criteria);
+	int total(int userId);
    
 }

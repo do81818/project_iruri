@@ -49,7 +49,7 @@
           </div>
           <div id = "m_userclass_box">
             <div id="m_userclass"><a href="../html/classlist.html">참여중인클래스</a></div>
-            <div id="m_userclass_number">${iclass}</div>
+            <div id="m_userclass_number"></div>
           </div>
         </div>
          
@@ -120,6 +120,30 @@
 				
 				</c:if>
 				</c:forEach>
+				
+				
+				        <!--페이징-->
+        <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+        <div class="page_nation">
+        <c:if test="${pageMaker.prev}">
+            <a class="prev" href="pointlist${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
+        </c:if>
+        
+        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+        
+            <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+        </c:forEach>
+        
+        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+            <a class="next" href="pointlist${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>
+        </c:if>
+        </div>
+        
+        <form id="actionForm" action="mypage_user/mypage_user_pointlist" method="get">
+        	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        </form> 
+        
 				
                  
 

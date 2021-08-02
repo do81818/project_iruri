@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.BoardMapper;
 import com.iruri.ex.mapper.IClassMapper;
+import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
@@ -69,13 +70,19 @@ public class BoardServiceImpl implements BoardService {
 	 */
     
     // 내가 쓴 댓글 list
-    public List<BoardVO> commentList(int userId){
-    	List<BoardVO> vo = boardMapper.commentList(userId);
-    	if(vo == null) {
-    		return null;
-    	}
-    	return vo;
+    @Override
+    public List<BoardVO> commentList(int userId,Criteria criteria){
+    	return boardMapper.commentList(userId, criteria);
+
     }
+	
+	  @Override public int total(int userId) { 
+		  log.info("total().."); 
+	  return boardMapper.total(userId); 
+	  }
+	 
+    
+    
     
 
 
