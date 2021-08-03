@@ -63,6 +63,12 @@
   margin: 20px 0;
 }
 
+.authBtn {
+  width: 18%;
+  padding: 10px 5px;
+  margin-top: 0px;
+}
+
 .signUp__phoneForm input {
   margin-bottom: 10px;
 }
@@ -76,7 +82,8 @@
 .signUp__passwordForm input:focus,
 .signUp__passwordCheckForm input:focus,
 .signUp__nicknameForm input:focus,
-.signUp__phoneForm input:focus {
+.signUp__phoneForm input:focus,
+#emailAuthKey:focus {
   border: 1px solid var(--iruri-blue-color);
   border-radius: 5px;
   box-shadow: 0 0 8px rgba(2, 163, 255, 0.3);
@@ -109,11 +116,8 @@
 }
 
 .signUp__emailAuthBtn #emailAuthKey {
-  width: 600px;
-}
-
-.signUp__emailAuthBtn .authBtn {
-  width: 150px;
+  width: 468px;
+  margin-left: 140px;
 }
 
 .signUp__emailAuthBtn #emailTimer {
@@ -186,4 +190,9 @@
 .terms_agree .iruri-check-no-icon--signup {
   position: relative;
   top: 2.5px;
+}
+
+#emailTimer {
+  color: var(--iruri-red-color);
+  font-weight: bold;
 }

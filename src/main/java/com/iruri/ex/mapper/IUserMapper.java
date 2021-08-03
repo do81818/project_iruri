@@ -1,6 +1,7 @@
 package com.iruri.ex.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.vo.IUserVO;
 
@@ -20,6 +21,8 @@ public interface IUserMapper {
     int checkOverNickname(String userNickname);
     // 이메일 중복 체크
     int checkOverEmail(String userEmail);
+    // 비밀번호 찾기
+    void updatePw(@Param("userEmail") String userEmail, @Param("userPw") String userPw);
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     IUserVO selectOne(String userEmail);
     // 파라미터로 뭘가져올지 써준다.

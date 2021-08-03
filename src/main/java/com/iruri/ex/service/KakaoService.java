@@ -1,5 +1,8 @@
 package com.iruri.ex.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -66,8 +69,6 @@ public class KakaoService {
          ResponseEntity<String> response = restTemplate.postForEntity(K_TOKEN_URI, kakaoTokenRequest, String.class);
 
          // response 에서 .getBody() 와 .getHeaders() 로 HTTP 메시지를 나눠서 확인할 수 있다.
-         log.info("getKakaoTokenInfo response.getBody(): " + response.getBody());
-         log.info("getKakaoTokenInfo response.getHeaders(): " + response.getHeaders());
          
          // gson 라이브러리를 이용해서 Http 통신 결과가 200 OK 일때
          // response.getBody() 의 JSON 데이터를 KakaoAuth.class 에 담는다.
@@ -93,8 +94,6 @@ public class KakaoService {
          
          ResponseEntity<String> response = restTemplate.postForEntity(K_PROFILE_URI, request, String.class);
          
-         log.info("getKakaoProfile response.getBody(): " + response.getBody());
-         
          Gson gson = new Gson();
          if(response.getStatusCode() == HttpStatus.OK) {
              return gson.fromJson(response.getBody(), KakaoProfile.class);
@@ -103,20 +102,31 @@ public class KakaoService {
          return null;
      }
      
-     public void setContextHolder(String code) {
-         log.info("setContextHolder: " + code);
+     public int setContextHolder(String code, HttpServletRequest request) {
          
          KakaoAuth kakaoAuth = getKakaoTokenInfo(code);
          KakaoProfile profile = getKakaoProfile(kakaoAuth.getAccess_token());
          
          // 1. 사용자 로그인
          IUserVO originUser = iUserService.findKakaoUser(profile.getKakao_account().getEmail());
+         
+         if(originUser == null) {
+             HttpSession session = request.getSession();
+             session.setAttribute("kakaoId", profile.getKakao_account().getEmail());
+             
+             return 0;
+         }
+         
          // 2. 사용자 정보를 받아 UserDetailsService 에 전달해서 UserDetails 객체 생성
          UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());
+         
          // 3. 해당 객체를 Authentication 에 전달하여 인증함
          Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+         
          // 4. 인증된 정보를 Security Context에 전달하여 "인증된 유저" 로 정의함
          SecurityContextHolder.getContext().setAuthentication(authentication);
+         
+         return 1;
      }
 
 }

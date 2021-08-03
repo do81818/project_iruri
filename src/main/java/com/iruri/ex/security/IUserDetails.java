@@ -22,16 +22,12 @@ import lombok.ToString;
 public class IUserDetails extends User {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
-    private IUserVO currentUser;
     
-    public IUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
+    private IUserVO currentUser;
     
     public IUserDetails(IUserVO currentUser) {
         super(currentUser.getUserEmail(), currentUser.getUserPw(), getAuth(currentUser));
         this.currentUser = currentUser;
-        
     }
 
     public static Collection<? extends GrantedAuthority> getAuth(IUserVO currentUser) {
@@ -41,6 +37,7 @@ public class IUserDetails extends User {
         for(AuthVO auth : currentUser.getAuthList()) {
             authorities.add(new SimpleGrantedAuthority(auth.getAuthContent()));
         }
+        
         return authorities;
     }
 }

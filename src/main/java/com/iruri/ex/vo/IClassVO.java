@@ -64,12 +64,15 @@ public class IClassVO {
     private int classPrice;
     private String classNeed;
     private int categoryId;
-    private int userId;
+    private IUserVO iUserVO; // userId
     private String classLevel;
     private int rnum;
+    private int classTime;
 
     
-    private List<ExerciseDateVO> ExerciseDateList;
-    private List<ExerciseKindVO> ExerciseKindList;
+    private List<ExerciseDateVO> exerciseDateList;
+    private List<ExerciseKindVO> exerciseKindList;
+    private List<LikeListVO> likeListList;
+
     
 }

@@ -1,7 +1,8 @@
 package com.iruri.ex.service;
 
-import java.util.List; 
+import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.LikeListVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,8 +25,13 @@ public class ChallengeServiceImpl implements ChallengeService {
     private ChallengeMapper challengeMapper;
     
 	
-	  @Override public List<IClassVO> classList(int userId) { List<IClassVO> vo =
-	  iClassMapper.selectAll(userId); if(vo == null) { return null; } return vo; }
+	  @Override public List<IClassVO> classList(int userId) { 
+	      List<IClassVO> vo = iClassMapper.selectAll(userId); 
+	      if(vo == null) { 
+	          return null; 
+	      } 
+	      return vo; 
+	  }
 	 
     //챌린지 메인 리스트
     /*
@@ -49,8 +56,8 @@ public class ChallengeServiceImpl implements ChallengeService {
         
     }
 
-  
-    //챌린지 메인 페이징
+    /*----------챌린지 메인-----------*/
+    //전체 챌린지
     @Override
     public List<IClassVO> challengeList(Criteria criteria) {
         log.info("getList()..");
@@ -78,8 +85,37 @@ public class ChallengeServiceImpl implements ChallengeService {
         return challengeMapper.getTotalCount_challengeEndList(cri);
     }
 
-    
-  
+   
+    //관심 챌린지
+    @Override
+    public List<IClassVO> challengeLikeList(Criteria cri, int userId) {
+       
+        log.info("get challengeLikeList()..");
+        return challengeMapper.getListWithPaging_challengeLikeList(cri, userId);
+    }
+
+    @Override
+    public int getTotal_challengeLikeList(Criteria cri, int userId) {
+        log.info("getTotal_challengeLikeList()..");
+        return challengeMapper.getTotalCount_challengeLikeList(cri, userId);
+    }
+
+    //챌린지 상세 페이지
+    @Override
+    public IClassVO getChallengeInfo(int classId) {
+        log.info("getChallengeInfo()..");
+        return challengeMapper.readChallengeInfo(classId);
+    }
+
+    //챌린지 참여인원
+    @Override
+    public void upJoinMember(int classId) {
+        
+        challengeMapper.upJoinMember(classId);
+        
+    }
+
+
 
 
 
