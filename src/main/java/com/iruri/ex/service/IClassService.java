@@ -21,6 +21,8 @@ public interface IClassService {
     int classcount(int userId);
 
     List<IClassVO> mainPageChallengeList();
+    List<IClassVO> mainPagePtClassLIst();
+    List<IClassVO> mainPageExerciseVideoList();
     
     
     /*

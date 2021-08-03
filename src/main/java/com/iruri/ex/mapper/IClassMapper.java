@@ -25,6 +25,8 @@ public interface IClassMapper {
     int classcount(int userId);
     
     List<IClassVO> mainPageChallengeList();
+    List<IClassVO> mainPagePtClassLIst();
+    List<IClassVO> mainPageExerciseVideoList();
     
     /*
     //챌린지 개설 폼
