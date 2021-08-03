@@ -1,4 +1,5 @@
 (function() {
+	
 	// 이메일
 	const emailForm = document.querySelector('.signUp__emailForm');
 	const emailInput1 = document.getElementById('userEmail1');
@@ -15,6 +16,10 @@
 	// 전화번호
 	const phone = document.querySelector('#userPhone');
 	const agree = document.querySelector('#terms_agree');
+	
+	const kakaoId = document.querySelector('input[name="kakaoId"]');
+	const naverId = document.querySelector('input[name="naverId"]');
+	const googleId = document.querySelector('input[name="googleId"]');
 	
 	
 	// 이메일 합치기
@@ -262,8 +267,12 @@
 		});
 
 		submitBtn.addEventListener('click', function(e) {
-			e.preventDefault();
+			e.preventDefault()
 
+			console.log(kakaoId.value);
+			console.log(naverId.value);
+			console.log(googleId.value);
+			
 			const header = $('meta[name="_csrf_header"]').attr('th:content');
 			const token = $('meta[name="_csrf"]').attr('th:content');
 			$.ajax({
@@ -273,6 +282,9 @@
 					xhr.setRequestHeader(header, token);
 				},
 				data: {
+					kakaoId: kakaoId.value,
+					naverId: naverId.value,
+					googleId: googleId.value,
 					userEmail: email.value,
 					userPw: password.value,
 					userPwCheck: confirmPassword.value,
@@ -286,6 +298,9 @@
 						 window.location = 'http://localhost:8282/ex/loginPage';
 					} else {
 						$(".c_make_modal").show();
+						document.querySelector('.signUp_modal_close').addEventListener('click', () => {
+							$('.c_make_modal').hide();
+						});
 					}
 				}
 			});
@@ -294,17 +309,11 @@
 	signUpAjaxFunc();
 
 	(function() {
-	const signUpAregeeLabel = document.querySelector('label[for="terms_agree"]');
-  signUpAregeeLabel.addEventListener('click', (e) => {
-
-    const signUpArgeeIcon = signUpAregeeLabel.querySelector('i');
-    signUpArgeeIcon.classList.toggle('iruri-check-no-icon');
-    signUpArgeeIcon.classList.toggle('iruri-check-yes-icon');
-  	});
-
-	document.querySelector('.signUp_modal_close').addEventListener('click', () => {
-		$('.c_make_modal').hide();
-	});
+		const signUpAregeeLabel = document.querySelector('label[for="terms_agree"]');
+	  	signUpAregeeLabel.addEventListener('click', (e) => {
+	    	const signUpArgeeIcon = signUpAregeeLabel.querySelector('i');
+		    signUpArgeeIcon.classList.toggle('iruri-check-no-icon');
+		    signUpArgeeIcon.classList.toggle('iruri-check-yes-icon');
+	  	});
 	})();
-
 })();

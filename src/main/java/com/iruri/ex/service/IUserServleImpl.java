@@ -23,7 +23,6 @@ public class IUserServleImpl implements IUserService {
     private UserRegService regService;
     
     public int signUpUser(IUserVO iUserVO, Boolean authCheck, String userPwCheck, String agree) {
-        log.info("signUpUser4 () .. ");
         
         final int SIGNUP_FAILURE = 1;
         
@@ -81,7 +80,15 @@ public class IUserServleImpl implements IUserService {
         return vo;
     }
 
-    
+    public int signUpPwUpdate(String userEmail, String userPw, Boolean authCheck) {
+        
+        if(authCheck != true) {
+            return -1;
+        } else {
+            iUserMapper.updatePw(userEmail, userPw);
+            return 0;
+        }
+    }
     
     
     
