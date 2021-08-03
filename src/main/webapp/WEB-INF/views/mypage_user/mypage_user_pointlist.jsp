@@ -45,7 +45,7 @@
           </div>
           <div id = "m_userchanllenge_box">
             <div id="m_userchanllenge"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/challenge.list.html">참여중인챌린지</a></div>
-            <div id="m_userchanllenge_number">2</div>
+            <div id="m_userchanllenge_number">${userchallengecount}</div>
           </div>
           <div id = "m_userclass_box">
             <div id="m_userclass"><a href="../html/classlist.html">참여중인클래스</a></div>

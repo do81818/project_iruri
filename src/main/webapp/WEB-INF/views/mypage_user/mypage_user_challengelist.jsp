@@ -75,7 +75,7 @@
         </div>
         <div id = "m_userchanllenge_box">
           <div id="m_userchanllenge"><a href=".">참여중인챌린지</a></div>
-          <div id="m_userchanllenge_number">2</div>
+          <div id="m_userchanllenge_number">${userchallengecount}</div>
         </div>
         <div id = "m_userclass_box">
           <div id="m_userclass"><a href=".">참여중인클래스</a></div>
@@ -111,25 +111,31 @@
 
                       <!--신청챌린지 이미지 2개-->
         <div class="m_c_recommend">
-          <img class="m_left" src="/ex/resources/src/img/icon/arrow_blue_left.png">
-          <img class="m_right" src="/ex/resources/src/img/icon/arrow_blue_right.png">
-          <div class="m_c_recommend_img">
+          <img class="m_left" role="button" src="/ex/resources/src/img/icon/arrow_blue_left.png">
+          <img class="m_right" role="button"src="/ex/resources/src/img/icon/arrow_blue_right.png">
+          
+          
+          <c:forEach var="userchallengelist" items="${userchallengelist}" varStatus="status">
+                    <div class="m_c_recommend_img">
               <div class="m_c_recommend_title">
-                  스쿼트, 런지, 플랭크<br> 30일 챌린지
+                   ${userchallengelist.classTitle}<br>
               </div>
 
               <span class="m_c_recommend_date">
-                  2021.03.01~2021.04.01
+                 ${userchallengelist.classStartDate}~ ${userchallengelist.classEndDate}
               </span>
 
 
               <div class="m_c_heart">
-                  <input type="checkbox" id="heart1"><label for="heart1" class="m_heart_label"></label>
+                  <input type="checkbox" id="heart${userchallengelist.classId}"><label for="heart${userchallengelist.classId}" class="m_heart_label"></label>
               </div>
           </div>
+          
+          </c:forEach>
 
 
-          <div class="m_c_recommend_img">
+
+<!--           <div class="m_c_recommend_img">
               <div class="m_c_recommend_title">
                   러닝 전 5분 스트레칭
               </div>
@@ -144,20 +150,24 @@
                   <input type="checkbox" id="heart2"><label for="heart2" class="m_heart_label"></label>
               </div>
 
-          </div>
+          </div> -->
       </div>
 
 
 <!-- 챌린지 취소 버튼 (모달) -->
       <button class="m_cl_cancel_challenge_bt">챌린지취소</button>
       
+      
+      
+      
+      
+      <!-- 관심 챌린지 -->
       <div class="m_c_main_tab">
         <p class="m_c_like_last">
             <a href="">관심챌린지</a>
         </p>
     </div>
 
-    <!-- 관심챌린지 -->
     <div class="m_c_list">
       <div class="m_c_list_detail">
           <div class="m_c_list_img">

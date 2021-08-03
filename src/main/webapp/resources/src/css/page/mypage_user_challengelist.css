@@ -195,13 +195,13 @@ input[type=checkbox] {
 display: none;
 }
 
-input[type=checkbox]+label {
+.m_c_heart input[type=checkbox]+label {
 display: inline-block;
 cursor: pointer;
 background: url('/ex/resources/src/img/icon/heart_gray.png') center/48px 43px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
+.m_c_heart input[type=checkbox]:checked+label {
 background-image: url('/ex/resources/src/img/icon/heart_red.png');
 }
 
@@ -431,13 +431,13 @@ input[type=checkbox] {
 display: none;
 }
 
-input[type=checkbox]+label {
+.m_c_list_heart input[type=checkbox]+label {
 display: inline-block;
 cursor: pointer;
 background: url('/ex/resources/src/img/icon/heart_gray.png') center/43px 43px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
+.m_c_list_heart input[type=checkbox]:checked+label {
 background-image: url('/ex/resources/src/img/icon/heart_red.png');
 }
 
@@ -453,7 +453,7 @@ width: 15px;
 }
 
 .m_iruri_time_icon {
-background: url('./ex/resources/src/img/icon/ex_time.png') no-repeat;
+background: url('/ex/resources/src/img/icon/ex_time.png') no-repeat;
 display: inline-block;
 background-size: cover;
 height: 15px;
