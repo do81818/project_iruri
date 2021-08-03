@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application" />
 <!DOCTYPE html>
@@ -55,25 +57,25 @@
       
           <div class="challenge__wrap">
             <ul class="challenge__slides">
-              <c:forEach var="classList" items="${classList}">
+              <c:forEach var="challengeList" items="${challengeList}">
                 <li class="cardConteiner">
                 <div class="card__image">
                   <img src="https://via.placeholder.com/356x270" alt="이미지" />
                 </div>
                 <ul class="card__info">
                   <li class="info__title">
-                    <h3>${classList.classTitle}</h3>
+                    <h3>${challengeList.classTitle}</h3>
                   </li>
                   <li class="info__data">
-                    <span class="data__term">${classList.classStartDate}~${classList.classEndDate}</span>
+                    <span class="data__term"><fmt:formatDate value="${challengeList.classStartDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${challengeList.classEndDate}" pattern="yyyy.MM.dd"/></span>
                     <div class="data__tags">
                       <div class="data__tag-blue">
                         <i class="iruri-level-icon"></i>
-                        <span>${classList.classLevel}</span>
+                        <span>${challengeList.classLevel}</span>
                       </div>
                       <div class="data__tag-blue">
                         <i class="iruri-time-icon"></i>
-                        <span>${classList.classTime}분</span>
+                        <span>${challengeList.classTime}분</span>
                       </div>
                     </div>
                   </li>
@@ -104,45 +106,48 @@
           <div class="ptClass__wrap">
             <ul class="ptClass__slides">
             
+              <c:forEach var="ptClassList" items="${ptClassList}">
               <li class="cardConteiner">
                 <div class="card__image">
                   <img src="https://via.placeholder.com/356x270" alt="이미지" />
                 </div>
                 <ul class="card__info">
                   <li class="info__title">
-                    <h4 class="info__title-trainer">트레이너 지오</h4>
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                    <h4 class="info__title-trainer">트레이너 ${ptClassList.IUserVO.userNickname}</h4>
+                    <h3>${ptClassList.classTitle}</h3>
                   </li>
                   <li class="info__data">
-                    <span class="data__term">2021.03.01~2021.04.01</span>
+                    <span class="data__term"><fmt:formatDate value="${ptClassList.classStartDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${ptClassList.classEndDate}" pattern="yyyy.MM.dd"/></span>
                     <div class="data__tags">
                       <div class="data__tag-blue">
                         <i class="iruri-level-icon"></i>
-                        <span>easy</span>
+                        <span>${ptClassList.classLevel}</span>
                       </div>
                       <div class="data__tag-blue">
                         <i class="iruri-time-icon"></i>
-                        <span>50분</span>
+                        <span>${ptClassList.classTime}분</span>
                       </div>
                     </div>
                     <div class="data__tags">
-                      <div class="data__tag-red">댄스</div>
-                      <div class="data__tag-red">피트니스</div>
+                      
+                      <c:forEach var="ptExerciseKindList" items="${ptClassList.exerciseKindList}">
+                      <div class="data__tag-red">${ptExerciseKindList.exerciseKind}</div>
+                      </c:forEach>
                     </div>
                   </li>
                   <li class="info__btn">
                     <a class="info__btn__join">
                       <span>참여하기</span>
-                      <i class="iruri-arrow-yellow-icon"></i>
+                         <i class="iruri-arrow-yellow-icon"></i>
                     </a>
                   </li>
                 </ul>
               </li>
-            
+              </c:forEach>
             </ul>
           </div>
         </article>
-      
+        
         <article class="mainPage__exerciseVideo">
           <div class="exerciseVideo__info">
             <div class="exerciseVideo__title">
@@ -157,17 +162,20 @@
           <div class="exerciseVideo__wrap">
             <ul class="exerciseVideo__slides">
             
+              <c:forEach var="exerciseVideoList" items="${exerciseVideoList}">
               <li class="cardConteiner">
                 <div class="card__image">
                   <img src="https://via.placeholder.com/356x270" alt="이미지" />
                 </div>
                 <ul class="card__info">
                   <li class="info__title">
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
+                    <h3>${exerciseVideoList.classTitle}</h3>
                   </li>
                   <li class="info__data">
                     <div class="data__tags">
-                      <div class="data__tag-red">전신</div>
+                      <c:forEach var="exerciseKindList" items="${exerciseVideoList.exerciseKindList}">
+                      <div class="data__tag-red">${exerciseKindList.exerciseKind}</div>
+                      </c:forEach>
                     </div>
                   </li>
                   <li class="info__btn">
@@ -178,94 +186,7 @@
                   </li>
                 </ul>
               </li>
-              
-              <li class="cardConteiner">
-                <div class="card__image">
-                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
-                </div>
-                <ul class="card__info">
-                  <li class="info__title">
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
-                  </li>
-                  <li class="info__data">
-                    <div class="data__tags">
-                      <div class="data__tag-red">전신</div>
-                    </div>
-                  </li>
-                  <li class="info__btn">
-                    <a class="info__btn__join">
-                      <span>참여하기</span>
-                      <i class="iruri-arrow-yellow-icon"></i>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              
-              <li class="cardConteiner">
-                <div class="card__image">
-                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
-                </div>
-                <ul class="card__info">
-                  <li class="info__title">
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
-                  </li>
-                  <li class="info__data">
-                    <div class="data__tags">
-                      <div class="data__tag-red">전신</div>
-                    </div>
-                  </li>
-                  <li class="info__btn">
-                    <a class="info__btn__join">
-                      <span>참여하기</span>
-                      <i class="iruri-arrow-yellow-icon"></i>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              
-              <li class="cardConteiner">
-                <div class="card__image">
-                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
-                </div>
-                <ul class="card__info">
-                  <li class="info__title">
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
-                  </li>
-                  <li class="info__data">
-                    <div class="data__tags">
-                      <div class="data__tag-red">전신</div>
-                    </div>
-                  </li>
-                  <li class="info__btn">
-                    <a class="info__btn__join">
-                      <span>참여하기</span>
-                      <i class="iruri-arrow-yellow-icon"></i>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              
-              <li class="cardConteiner">
-                <div class="card__image">
-                  <img src="https://via.placeholder.com/356x270" alt="이미지" />
-                </div>
-                <ul class="card__info">
-                  <li class="info__title">
-                    <h3>몸치도 할 수 있는 복싱댄스!!</h3>
-                  </li>
-                  <li class="info__data">
-                    <div class="data__tags">
-                      <div class="data__tag-red">전신</div>
-                    </div>
-                  </li>
-                  <li class="info__btn">
-                    <a class="info__btn__join">
-                      <span>참여하기</span>
-                      <i class="iruri-arrow-yellow-icon"></i>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+              </c:forEach>
       
             </ul>
           </div>

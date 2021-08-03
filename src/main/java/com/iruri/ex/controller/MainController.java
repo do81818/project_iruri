@@ -36,9 +36,15 @@ public class MainController {
 	public String main(Model modal) {
 	    log.info("main() ... ");
 	    
-	    List<IClassVO> classList = iClassService.mainPageChallengeList();
-	    modal.addAttribute("classList", classList);
-	    log.info(classList);
+	    List<IClassVO> challengeList = iClassService.mainPageChallengeList();
+	    List<IClassVO> ptClassList = iClassService.mainPagePtClassLIst();
+	    List<IClassVO> exerciseVideoList = iClassService.mainPageExerciseVideoList();
+	    
+	    log.info(exerciseVideoList);
+	    
+	    modal.addAttribute("challengeList", challengeList);
+	    modal.addAttribute("ptClassList", ptClassList);
+	    modal.addAttribute("exerciseVideoList", exerciseVideoList);
 	    
 		return "/main";
 	}

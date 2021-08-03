@@ -62,6 +62,18 @@ public class IClassServiceImpl implements IClassService {
         
         return iClassMapper.mainPageChallengeList();
     }
+    
+    @Override
+    public List<IClassVO> mainPagePtClassLIst() {
+        
+        return iClassMapper.mainPagePtClassLIst();
+    }
+    
+    @Override
+    public List<IClassVO> mainPageExerciseVideoList() {
+        
+        return iClassMapper.mainPageExerciseVideoList();
+    }
 
     //챌린지 메인 리스트
     /*
