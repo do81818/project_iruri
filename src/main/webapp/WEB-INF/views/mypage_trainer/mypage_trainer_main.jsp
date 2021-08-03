@@ -10,27 +10,30 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %>  <!-- 경로를 확인해 주세요 --><!-- ../include/static.jsp  -->
-
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+ 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>이루리 트레이너 마이페이지</title> <!-- 페이지 이름을 적어주세요 -->
     <script src=""></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-    
+   
 	<script type="text/javascript">
-		window.onload = function end(){
+		function end(){
 			$.ajax({
 				url : 'http://localhost:8282/ex/mypage/trainerclassend',
 				type : 'GET',
 				cache : false,
 				dataType : 'json',
-				success : function(vo){
+				success : function(list){
 					
 					var htmls = ''; 
+					var htmls2 = '';
 					
-					if(vo.length < 1) {
+					if(list.length < 1) {
 						htmls = '현재 등록된 클래스가 없습니다.';
 					} else {
 						const PTList = document.querySelector('.class_list');
-						
-						vo.forEach(function(listItem) {
+						const page = document.querySelector('.paging');
+						list.forEach(function(listItem) {
+
 							console.log(listItem.classStartDate);
 							
 							htmls +=	'<div class="pt_card">';
@@ -46,7 +49,6 @@
 							htmls +=		'</div>';
 	
 							htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
-	
 							htmls +=		'<div class="pt_icon">';
 							htmls +=			'<div class="pt_icon-blue">';
 							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + listItem.classLevel;
@@ -66,18 +68,39 @@
 							htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
 							htmls +=		'수정</button>';
 							htmls += 	'</div>';
+							
+							
+							
 						});
 						
-						PTList.innerHTML = htmls; 
+						htmls2 += '<div class="page_nation">';
+						htmls2 += 	'<c:if test="${pageMaker.prev}">'
+						htmls2 +=   	'<a class="prev" href="#"></a>';
+						htmls2 +=	'</c:if>';
+				        
+						htmls2 +=	'<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">';
+						htmls2 +=   	'<a href="#" class="active">${num}</a>';
+						htmls2 +=	'</c:forEach>';
+				        
+						htmls2 +=	'<c:if test="${pageMaker.next}">';
+						htmls2 +=   	'<a class="next" href="#"></a>';
+						htmls2 +=	'</c:if>';
+						htmls2 += '</div>';
+				        
+						htmls2 += '<form id="actionForm" action="mypage_trainer/mypage_trainer_main" method="get">';
+						htmls2 +=	'<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">';
+						htmls2 +=	'<input type="hidden" name="amount" value="${pageMaker.cri.amount}">';
+						htmls2 += '</form>';
 						
+						PTList.innerHTML = htmls;
+						page.innerHTML = htmls2;
 					}
-					
-				}
-			});
+			}
+		});
 		}
 	</script>
 	<script type="text/javascript">
-		window.onload = function current(){
+		window.onload = function (){
 			$.ajax({
 				url : 'http://localhost:8282/ex/mypage/trainercurrent',
 				type : 'GET',
@@ -136,6 +159,94 @@
 				}
 			});
 		}
+	</script>
+	<script>
+	function current(){
+		$.ajax({
+			url : 'http://localhost:8282/ex/mypage/trainercurrent',
+			type : 'GET',
+			cache : false,
+			dataType : 'json',
+			data:{
+				pageNum: page,
+			},
+			beforeSend : function(xhr){
+				   xhr.setRequestHeader(header, token);}
+			,success : function(vo){
+				var list = result['list'];
+				var pagination = result['pageMaker'];
+				var htmls = ''; 
+				var htmls2 = '';
+				
+				if(vo.length < 1) {
+					htmls = '현재 등록된 클래스가 없습니다.';
+				} else {
+				
+					vo.forEach(function(listItem) {
+						
+						htmls +=	'<div class="pt_card">';
+						htmls += 		'<div class="pt_image_and_mark">';
+						htmls +=			'<img src="../image/360-250.png" class="pt_image">';
+						htmls +=			'<div class="pt_mark">1:1</div>';
+						htmls += 		'</div>';
+
+						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
+
+						htmls +=		'<div class="pt_title">';
+						htmls +=		 listItem.classTitle;
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
+						htmls +=		'<div class="pt_icon">';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + listItem.classLevel;
+						htmls +=			'</div>';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
+						htmls +=			'</div>';
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_icon">';
+						htmls +=			'<div class="pt_icon-red">댄스</div>';
+						htmls +=			'<div class="pt_icon-red">피트니스</div>';
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_price">₩' + listItem.classPrice + '</div>';
+						
+						htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
+						htmls +=		'수정</button>';
+						htmls += 	'</div>';
+					});
+					
+					if (pagination['prev']) {
+                        
+						htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +'"></a>';
+         				} 
+         				// 번호를 표시하는 부분
+         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+         					if (page !== idx) {
+         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					} else {
+         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					}
+         				}
+         				if (pagination['next']) {
+                            htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+        						
+        				}			
+         			}	// if(list.length < 1) else 끝
+                     
+                        $("..class_list").html(htmls);
+         				$(".paging").html(htmls2);
+                     }
+                               
+                             
+			 $(document).ready(function() {
+	                getlist(1);
+	            });
+               
+            }
+	}
 	</script>
 	
 
@@ -211,8 +322,9 @@
 				<!-- 클래스 목록  -->
 				<div class="class_list"></div>
 				
+				<div class="paging"></div>
 				<!-- 페이징 -->
-				<div class="page_nation">
+				<!-- <div class="page_nation">
 					<a class="arrow prev" href="#"></a> 
 					<a href="#" class="active">1</a>
 					<a href="#">2</a> 
@@ -220,8 +332,7 @@
 					<a href="#">4</a> 
 					<a href="#">5</a>
 					<a class="arrow next" href="#"></a>
-				</div>
-
+				</div> -->
 
 
 			</div>

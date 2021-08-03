@@ -30,8 +30,9 @@ public interface IClassMapper {
     //챌린지 메인 리스트
     List<IClassVO> ChallengeSelectAll();
 
+    //클래스 메인 페이징처리
+    int getTotalCount(int userId, Criteria cri); 
     
-    //챌린지 메인 페이징처리
-    public List<IClassVO> getListWithPaging(Criteria criteria);
-    public int getTotalCount(Criteria cri);
+    List<IClassVO> getListWithPaging(int userId, Criteria cri);
+ 
 }

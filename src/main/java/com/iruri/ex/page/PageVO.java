@@ -22,7 +22,7 @@ public class PageVO {
         this.cri = cri;
         this.total = total;
         
-        this.endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
+        this.endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 5;
         this.startPage = this.endPage - 4; //5페이지 기준
         
         //total을 통한 endPage의 재 계산
@@ -40,7 +40,7 @@ public class PageVO {
         //realEnd가 끝번호(endPage)보다 큰 경우에만 존재
         this.next = this.endPage < realEnd;
     }
-    
+    // ajax페이징에서는 사용하지 않는다.
     //util
     public String makeQuery(int page) {
         UriComponents uriComponentsBuilder = UriComponentsBuilder.newInstance()

@@ -129,22 +129,23 @@
 	]]>
 	</insert>
 	
-	<!-- 챌린지 메인 페이징 -->
-	<select id="getTotalCount" resultType="int">
-	<![CDATA[
-		select count(*) from iclass where category_id = 2
-	]]>
-	</select>
-
-
-	<select id="getListWithPaging" resultMap="iClassMap">
-	<![CDATA[
-	SELECT * FROM (
-    SELECT ROWNUM AS RNUM, A.* FROM (
-        SELECT * FROM iclass where category_id = 2 order by class_id desc
-             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
-         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
-	]]>
-	</select>
-
+	<!--  페이징 -->
+    <select id="getTotalCount" resultType="int">
+    <![CDATA[
+        select count(*) from iclass WHERE
+			user_id = #{userId} 
+    ]]>
+    </select>
+    
+    <select id="getListWithPaging" resultMap="iClassMap">
+    <![CDATA[
+    SELECT * FROM (
+   		SELECT ROWNUM AS RNUM, A.* FROM (
+        	SELECT * FROM iclass 
+             ) A WHERE ROWNUM <= #{pageNum} * #{amount}  
+         ) WHERE RNUM > (#{pageNum}-1) * #{amount} and
+			user_id = #{userId} and CLASS_ENDDATE >= sysdate
+    ]]>
+    </select>
+    
 </mapper>
