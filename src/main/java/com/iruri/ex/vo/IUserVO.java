@@ -1,6 +1,5 @@
 package com.iruri.ex.vo;
 
-import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.List;
 

@@ -235,14 +235,15 @@ function insertPasswordCheck(obj) {
 }
 
 
+
 // 최종 체크
 function insertFinalCheck() {
 
-	const str_name = document.querySelector('input[name=inputName]').value;
+	const str_name = document.querySelector('input[name=userName]').value;
 	const str_email = document.getElementById('trainerMemberInsert_email').value +
 		"@" + document.getElementById('trainerMemberInsert_emailType').value;
-	const str_phoneNumber = document.querySelector('input[name=inputPhoneNumber]').value;
-	const str_password = document.querySelector('input[name=inputPassword]').value;
+	const str_phoneNumber = document.querySelector('input[name=userPhone]').value;
+	const str_password = document.querySelector('input[name=userPw]').value;
 
 	const fin_namePattern = /[가-힣]+$/;
 	const fin_emailPattern = /^[0-9a-zA-Z]|[-_]*@[0-9a-zA-Z]*.[a-zA-Z]{2,3}$/i;
@@ -275,7 +276,7 @@ function insertFinalCheck() {
 	}
 
 	if (check1 + check2 + check3 + check4 == 4) {
-
+		document.trainerInsertForm.submit();
 		return true;
 	} else {
 		return false;

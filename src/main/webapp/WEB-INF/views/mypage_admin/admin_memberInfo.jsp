@@ -50,7 +50,7 @@
 		<table class="admin_memberInfo_basic">
 			<tr>
 				<td>회원번호</td>
-				<td>1</td>
+				<td>${info.userId }</td>
 			</tr>
 			<tr>
 				<td>회원분류</td>
