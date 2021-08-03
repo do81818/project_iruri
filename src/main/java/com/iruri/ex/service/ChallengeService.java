@@ -14,7 +14,6 @@ public interface ChallengeService {
     // 3. 서비스에서 함수 만들기 selectOne(principal 객체의 이메일을 받는다.)
     List<IClassVO> classList(int userId);
     
-    IClassVO getChallengeInfo(int classId);
 
     //챌린지 메인 리스트
     //List<IClassVO> challengeList();
@@ -36,7 +35,14 @@ public interface ChallengeService {
     //관심 챌린지 리스트
     List<IClassVO> challengeLikeList(Criteria cri, int userId);
     int getTotal_challengeLikeList(Criteria cri, int userId);
-  
+    
+    /*----------챌린지 상세페이지-----------*/
+    //챌린지 상세페이지 정보
+    IClassVO getChallengeInfo(int classId);
+    
+    //챌린지 참여인원
+    public void upJoinMember(int classId);
+ 
  
 
 }

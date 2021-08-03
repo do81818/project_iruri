@@ -40,13 +40,13 @@
 						<!--오른쪽 위 정보-->
 						<div class="c_detail_info1">
 							<div class="c_mini_subject">챌린지</div>
-							<div class="c_subject">스쿼트, 런지, 플랭크 30일 챌린지</div>
+							<div class="c_subject">${challengeInfo.classTitle}</div>
 							<div class="c_heart_count">
-								<i class="iruri_heart_icon"></i> 001
+								<i class="iruri_heart_icon"></i> ${challengeInfo.classLike}
 							</div>
 
 							<div class="c_detail_goal">
-								하체부종, 힙업, 종아리알, 하체비만<br> 다리 관리의 모든 것
+								${challengeInfo.classGoal}
 							</div>
 						</div>
 
@@ -66,11 +66,11 @@
 							<div class="info_ul">
 								<ul>
 									
-									<li class="c_mini_info2">EASY</li>
-									<li class="c_mini_info2">2021.03.01~2021.04.01</li>
-									<li class="c_mini_info2">주 3일</li>
-									<li class="c_mini_info2">00 / 20</li>
-									<li class="c_mini_info2">루리</li>
+									<li class="c_mini_info2">${challengeInfo.classLevel}</li>
+		                            <li class="c_mini_info2">${challengeInfo.classStartDate}~${challengeInfo.classEndDate}</li>
+		                            <li class="c_mini_info2">주 ${challengeInfo.classExerciseCount}일</li>
+		                            <li class="c_mini_info2">${challengeInfo.classJoinMember} / ${challengeInfo.classTotalMember}</li>
+		                            <li class="c_mini_info2">루리</li>
 								</ul>
 							</div>
 
@@ -103,18 +103,7 @@
 			<div class="c_detail_maininfo" id="info">
 				<div class="c_main_info">
 
-					아침에 눈을 뜨면 개운한 느낌 보다는 늘 피곤한 상태로 맞이하는 경우가 많아요~ 그렇게 하루가 흘러가면 그 피로함이
-					밤까지 쌓여서 만성 피로가 될 수 있어요! <br>
-					<br> 모닝 필라테스 수업은 잠을 자는 동안 굳어있는 척추와 관절들을 부드러운 움직임으로 깨워주고, 천천히
-					호흡과 몸의 움직임을 이어주기 때문에 아침을 좋은 컨디션으로 시작할 수 있는 활력을 넣어줍니다. <br>
-					<br> 아침에 눈을 뜨면 개운한 느낌 보다는 늘 피곤한 상태로 맞이하는 경우가 많아요~ 그렇게 하루가 흘러가면
-					그 피로함이 밤까지 쌓여서 만성 피로가 될 수 있어요! <br>
-					<br> 모닝 필라테스 수업은 잠을 자는 동안 굳어있는 척추와 관절들을 부드러운 움직임으로 깨워주고, 천천히
-					호흡과 몸의 움직임을 이어주기 때문에 아침을 좋은 컨디션으로 시작할 수 있는 활력을 넣어줍니다. 아침에 눈을 뜨면 개운한
-					느낌 보다는 늘 피곤한 상태로 맞이하는 경우가 많아요~ 그렇게 하루가 흘러가면 그 피로함이 밤까지 쌓여서 만성 피로가 될
-					수 있어요! <br>
-					<br> 모닝 필라테스 수업은 잠을 자는 동안 굳어있는 척추와 관절들을 부드러운 움직임으로 깨워주고, 천천히
-					호흡과 몸의 움직임을 이어주기 때문에 아침을 좋은 컨디션으로 시작할 수 있는 활력을 넣어줍니다.
+					${challengeInfo.classContent}
 
 				</div>
 			</div>
