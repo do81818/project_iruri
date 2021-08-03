@@ -56,18 +56,9 @@
   box-sizing: border-box;
 }
 
-/* 푸터 하단 고정 */
 html {
   position: relative;
   min-height: 100vh;
-}
-
-.iruri__footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  margin-bottom: -480px;
 }
 
 @font-face {
@@ -102,7 +93,8 @@ html {
 .iruri-heart-red-icon,
 .iruri-selectBox-arrow-icon {
   display: inline-block;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
   width: 16px;
   height: 16px;
 }

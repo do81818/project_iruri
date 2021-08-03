@@ -18,4 +18,12 @@ public class PtClassController {
         return mav;
     }
     
+    @GetMapping("/iruri/ptClassDetails")
+    public ModelAndView pt_details(ModelAndView mav) {
+        
+        mav.setViewName("ptclass/ptclass_details");
+        
+        return mav;
+    }
+    
 }

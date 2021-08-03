@@ -280,316 +280,34 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
           <div class="ptClassList">
             <div class="c_list_detail">
               <div class="c_list_img">
+                <div class="ptListPerson">1:1</div>
                 <img src="/ex/resources/src/img/icon/360-250.png" />
               </div>
 
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
+              <div class="ptListSubTitle">트레이너 지오</div>
+              <div class="c_list_title ptListTitle">스쿼트, 런지, 플랭크 <br />30일 챌린지30일 챌린지30일 챌린지</div>
 
               <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
 
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
+              <div class="data__tags">
+                <div class="data__tag-blue">
+                  <i class="iruri-time-icon"></i>
                   <span>EASY</span>
                 </div>
 
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
+                <div class="data__tag-blue">
+                  <i class="iruri-level-icon"></i>
                   <span>월수금/50분</span>
                 </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
+              </div>
+              <div class="data__tags">
+                <div class="data__tag-red">댄스</div>
+                <div class="data__tag-red">피트니스</div>
               </div>
 
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
-              </div>
-            </div>
-
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
-
-              <span>트레이너 지오</span>
-              <div class="c_list_title">스쿼트, 런지, 플랭크 30일 챌린지</div>
-
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
-
-              <div class="data_tags">
-                <div class="data_tag_blue">
-                  <i class="iruri_time_icon"></i>
-                  <span>EASY</span>
-                </div>
-
-                <div class="data_tag_blue">
-                  <i class="iruri_level_icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-
-                <div class="data_tags">
-                  <div class="data_tag-red">댄스</div>
-                  <div class="data_tag-red">피트니스</div>
-                </div>
-              </div>
-
-              <div class="c_list_person">\ 59,000</div>
-
-              <div class="c_list_heart">
-                <input type="checkbox" id="heart3" />
-                <label for="heart3" class="heart_label"></label>
+              <div class="ptListBuyData">
+                <div class="ptListPrice">\ 59,000</div>
+                <i class="iruri-heart-gray-icon"></i>
               </div>
             </div>
           </div>
