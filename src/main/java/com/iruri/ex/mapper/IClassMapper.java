@@ -1,4 +1,3 @@
-
 package com.iruri.ex.mapper;
 
 import java.util.List;
@@ -21,7 +20,9 @@ public interface IClassMapper {
     
     // 종료된 클래스
     List<IClassVO> selectAllEnd(int userId);
-
+    
+    List<IClassVO> mainPageChallengeList();
+    
     int classcount(int userId);
     
     //챌린지 개설 폼
@@ -30,9 +31,22 @@ public interface IClassMapper {
     //챌린지 메인 리스트
     List<IClassVO> ChallengeSelectAll();
 
+
     //클래스 메인 페이징처리
     int getTotalCount(int userId, Criteria cri); 
     
     List<IClassVO> getListWithPaging(int userId, Criteria cri);
  
+
+    //지난 챌린지 리스트
+    List<IClassVO> selectAllEnd_challenge();
+    
+    //챌린지 메인 페이징처리
+    List<IClassVO> getListWithPaging_challenge(Criteria criteria);
+    int getTotalCount_challenge(Criteria cri);
+    
+    //지난 챌린지 
+    List<IClassVO> getListWithPaging_challengeEndList(Criteria criteria);
+    int getTotalCount_challengeEndList(Criteria cri);
+    
 }

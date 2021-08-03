@@ -16,6 +16,7 @@
 		<result property="boardGroupId" column="BOARD_GROUPID"/>
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="rnum" column="rnum"/>	
 		
 	</resultMap>
 	
@@ -73,49 +74,25 @@
 		]]> 
 	</select>
 	
-	
-					<select id="boardconfirmList"  resultMap="boardMap">
+	<select id="commentList" parameterType="hashmap" resultMap="boardMap">
 		<![CDATA[
-		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID
-		FROM
-			board
-		WHERE
-			user_id = #{userId} and category_id = 5
-						order by BOARD_DATE asc
-		
+  	SELECT *  FROM (
+    	SELECT ROWNUM AS RNUM, A.* FROM (
+        	SELECT * FROM board where user_id = #{userId} order by board_date asc
+             ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+         ) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
 			
 		]]> 
 	</select>
 	
-	
-						<select id="myboardList"  resultMap="boardMap">
-		<![CDATA[
-		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID
-		FROM
-			board
-		WHERE
-			user_id = #{userId} and category_id = 7
-			order by BOARD_DATE asc
-		
-			
-		]]> 
+		<select id="total" resultType="int">
+	<![CDATA[
+		select count(*) from board where user_id = #{userId}
+	]]>
 	</select>
 	
 	
-							<select id="commentList"  resultMap="boardMap">
-		<![CDATA[
-		SELECT
-			BOARD_TITLE,BOARD_CONTENT,BOARD_FILE,BOARD_DATE,BOARD_ID,CATEGORY_ID
-		FROM
-			board
-		WHERE
-			user_id = #{userId} 
-		order by BOARD_DATE asc
-		
-			
-		]]> 
-	</select>
+
+
 
 </mapper>

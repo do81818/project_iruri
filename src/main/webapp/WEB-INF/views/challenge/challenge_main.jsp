@@ -7,6 +7,9 @@
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application" />
+<c:set var="CONTEXT_PATH_CHALLENGE"
+	value="${pageContext.request.contextPath}/iruri"
+	scope="application" />
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -16,6 +19,7 @@
     <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
+    <script src="${RESOURCES_PATH}/src/js/challenge/c_radio_check.js" defer></script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -74,12 +78,14 @@
 
 
 
-        <div class="c_main_tab">
-            <p class="c_like_last">
+       			<div class="c_main_tab">
+            		<p class="c_like_last">
+		                     		<a href="#">전체챌린지</a>
                 <a href="#">관심챌린지</a>
                 <a href="#">지난챌린지</a>
-            </p>
-        </div>
+						</p>
+            		
+        		</div>
 
 
 
@@ -87,7 +93,7 @@
             <!--챌린지 검색창-->
             <form class="c_search_box" action="">
 
-                <input type="text"><button class="search_icon"></button>
+                <input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)"><button class="search_icon"></button>
 
             </form>
 
@@ -170,11 +176,12 @@
         <div class="c_list">
         <c:forEach items="${challengeList}" var="challengeList">
             <div class="c_list_detail">
+            
                 <div class="c_list_img">
                 <img src="/ex/resources/src/img/icon/360-250.png" alt="">
                 </div>
                 <div class="c_list_title">
-                
+
                      ${challengeList.classTitle}
                 </div>
 
@@ -213,30 +220,33 @@
         <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
         <div class="page_nation">
         <c:if test="${pageMaker.prev}">
-            <a class="arrow prev" href="#"></a>
+            <a class="prev" href="challengeList${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
         </c:if>
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-            <a href="#" class="active">${num}</a>
+        
+            <a class="active" href="challengeList${pageMaker.makeQuery(num)}" >${num}</a>
         </c:forEach>
         
-        <c:if test="${pageMaker.next}">
-            <a class="arrow next" href="#"></a>
+        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+            <a class="next" href="challengeList${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>
         </c:if>
         </div>
         
+         
         <form id="actionForm" action="challenge/challenge_main" method="get">
         	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
         	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
         </form>
-
-
-
     </div>
       </main>
       
     <%@ include file="../include/footerTemplate.jsp" %>
     
-    </div>    
+    </div> 
+    
+ 
   </body>
+  
+  
 </html>

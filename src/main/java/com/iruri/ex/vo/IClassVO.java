@@ -67,8 +67,11 @@ public class IClassVO {
     private int userId;
     private String classLevel;
     private int rnum;
+    private int classTime;
+
     
     private List<ExerciseDateVO> ExerciseDateList;
     private List<ExerciseKindVO> ExerciseKindList;
+    private List<LikeListVO> LikeListList;
     
 }

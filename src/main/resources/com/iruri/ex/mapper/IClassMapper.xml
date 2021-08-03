@@ -24,7 +24,8 @@
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>		
+		<result property="rnum" column="rnum"/>
+		<result property="classTime" column="CLASS_TIME"/>
 		<collection property="exerciseDateList" resultMap="exerciseDateMap">
 		</collection>
 		<collection property="exerciseKindList" resultMap="exerciseKindMap">
@@ -42,7 +43,7 @@
 		<result property="classId" column="CLASS_ID"/>
 	</resultMap>
 	
-	<!-- 클래스 정보 뽑아오기 -->
+	<!-- 로그인 한 유저 클래스 정보 뽑아오기 -->
 	<select id="selectAll" resultMap="iClassMap">
 		<![CDATA[
 		SELECT
@@ -98,11 +99,10 @@
 			iclass
 		WHERE
 			user_id = #{userId} 
-		
-			
 		]]> 
 	</select>
 	
+
 	<!-- 챌린지 개설 시 폼 값 입력 -->
 	<insert id="insertChallenge">
 	<![CDATA[
@@ -148,4 +148,23 @@
     ]]>
     </select>
     
+
+	<!-- 참여 가능한 상위 챌린지 5개  -->
+	<select id="mainPageChallengeList" resultMap="iClassMap">
+		<![CDATA[
+SELECT *
+FROM
+(
+    SELECT cl.*, ca.category_name
+    FROM iclass cl, category ca
+    WHERE cl.category_id = ca.category_id
+    ORDER BY cl.class_like DESC
+)
+WHERE 
+rownum <= 5 and category_id = 1 and class_enddate >= sysdate
+		]]> 
+	</select>
+	
+	
+	
 </mapper>

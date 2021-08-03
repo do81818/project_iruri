@@ -12,6 +12,37 @@
      <%@ include file="../include/static.jsp" %> 
     <title>마이페이지 보드리스트</title> 
       <script src="${RESOURCES_PATH}/src/js/mypage_user_main.js" defer></script>
+      <script>
+   $(document).ready(function(){
+      /* window.onload = function(){ */
+      var actionForm = $("#actionForm");
+        $(".pageNumLink").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".prev").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".next").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+   });
+   
+   
+   </script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -40,7 +71,7 @@
         </div>
         <div id = "m_userpoint_box">
           <div id="m_userpoint"><a href=".">보유포인트</a></div>
-          <div id ="m_userpoint_number">4,500</div>
+          <div id ="m_userpoint_number">${totalpoint}</div>
         </div>
         <div id = "m_userchanllenge_box">
           <div id="m_userchanllenge"><a href=".">참여중인챌린지</a></div>
@@ -48,7 +79,7 @@
         </div>
         <div id = "m_userclass_box">
           <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-          <div id="m_userclass_number">${iclass}</div>
+          <div id="m_userclass_number"></div>
         </div>
       </div>
        
@@ -161,16 +192,28 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
 <p class="border1"></p>
  --> 
 
-           <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-    <div class="page_nation">
-      <a class="arrow prev" href="#"></a>
-      <a href="#" class="active">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a class="arrow next" href="#"></a>
-    </div>
+        <!--페이징-->
+        <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+        <div class="page_nation">
+        <c:if test="${pageMaker.prev}">
+            <a class="prev" href="boardlist${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
+        </c:if>
+        
+        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+        
+            <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
+        </c:forEach>
+        
+        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+            <a class="next" href="boardlist${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>
+        </c:if>
+        </div>
+        
+        <form id="actionForm" action="mypage_user/mypage_user_boardlist" method="get">
+        	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        </form> 
+        
 
     </div>
  

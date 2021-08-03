@@ -9,9 +9,8 @@
 
 /* 배너 */
 .mainPage__banner {
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
-  width: 100%;
   max-height: 680px;
 }
 
@@ -22,7 +21,7 @@
 }
 
 .challenge__info {
-  max-width: 1200px;
+  width: 1250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,7 +67,7 @@
 }
 
 .challenge__wrap {
-  max-width: 1200px;
+  width: 1250px;
   height: 575px;
   margin: 0 auto;
   position: relative;
@@ -81,6 +80,7 @@
   height: 540px;
   transition: left 0.5s ease-in-out;
   left: 0;
+  margin-left: 25px;
 }
 
 .challenge__slides .cardConteiner {
@@ -96,7 +96,7 @@
 }
 
 .ptClass__info {
-  max-width: 1200px;
+  width: 1250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,7 +142,7 @@
 }
 
 .ptClass__wrap {
-  max-width: 1200px;
+  width: 1250px;
   height: 600px;
   margin: 0 auto;
   position: relative;
@@ -156,6 +156,7 @@
   height: 567.5px;
   transition: left 0.5s ease-in-out;
   left: 0;
+  margin-left: 25px;
 }
 
 .ptClass__slides .cardConteiner {
@@ -170,7 +171,7 @@
 }
 
 .exerciseVideo__info {
-  max-width: 1200px;
+  width: 1250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -216,7 +217,7 @@
 }
 
 .exerciseVideo__wrap {
-  max-width: 1250px;
+  width: 1250px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -229,6 +230,7 @@
   height: 525px;
   transition: left 0.5s ease-in-out;
   left: 0;
+  margin-left: 25px;
 }
 
 .exerciseVideo__slides .cardConteiner {
