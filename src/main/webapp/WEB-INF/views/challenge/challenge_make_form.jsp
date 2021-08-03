@@ -203,7 +203,8 @@
 							<p></p>
 							<button class="c_make_button_cancle" type="reset">챌린지등록
 								취소</button>
-							<button class="c_make_button_submit" type="submit">챌린지등록</button>
+							<button class="c_make_button_submit" type="submit">
+							<a href="challengeList">챌린지등록</a></button>
 						</div>
 
 

@@ -271,7 +271,9 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
+												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
 												htmls += this.classTitle;
+												htmls += '</a>';
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_date">'

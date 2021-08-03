@@ -210,11 +210,11 @@
 
 					<!--정렬(셀렉트박스)-->
 					<div id="select_wrap">
-						<div id="select" class="select">인기순</div>
+						<div id="select" class="select">시작일순</div>
 						<ul id="ul" class="select_ul">
 
-							<li data-value="value 1">인기순</li>
-							<li data-value="value 2">시작일순</li>
+							<li data-value="value 1">시작일순</li>
+							<li data-value="value 2">인기순</li>
 							<li data-value="value 3">평점순</li>
 						</ul>
 					</div>
@@ -346,7 +346,9 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
+												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
 												htmls += this.classTitle;
+												htmls += '</a>';
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_date">'

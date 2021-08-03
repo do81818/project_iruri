@@ -56,20 +56,7 @@
 	});
 	</script>	
 	
-	<script>
-	//챌린지 검색
-	$(document).ready(function(){
-		var actionForm = $("#actionForm");
-	$(".search_icon").on("click", function(e){
-		e.preventDefault();
-		let val = $("input[name='keyword']").val();
-		actionForm.find("input[name='keyword']").val(val);
-		actionForm.find("input[name='pageNum']").val(1);
-		actionForm.submit();
-	});
-	});
-	</script>
-
+	
 
 
 
@@ -100,7 +87,7 @@
 
 
 						<div class="c_heart">
-							<input type="checkbox" id="heart1"><label for="heart1"
+							<input type="checkbox" id="heart10000"><label for="heart10000"
 								class="heart_label"></label>
 						</div>
 					</div>
@@ -115,7 +102,7 @@
 
 
 						<div class="c_heart">
-							<input type="checkbox" id="heart2"><label for="heart2"
+							<input type="checkbox" id="heart20000"><label for="heart20000"
 								class="heart_label"></label>
 						</div>
 
@@ -143,7 +130,8 @@
 					<div class="c_search_box">
 					<%-- <form class="c_search_box"  action=""> --%>
 
-						<input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
+						<input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" 
+						value="${pageMaker.cri.keyword}">
 						<button type="submit" class="search_icon"></button>
 
 					
@@ -326,8 +314,8 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_heart">';
-												htmls += '<input type="checkbox" id="heart3">';
-												htmls += '<label for="heart3" class="heart_label"></label>';
+												htmls += '<input type="checkbox" id="heart'+this.classId+'">';
+												htmls += '<label for="heart'+this.classId+'" class="heart_label"></label>';
 												htmls += '</div>';
 
 												htmls += '</div>';
@@ -414,6 +402,21 @@
 
 </script>
 
+<script>
+	//챌린지 검색
+
+	$(document).ready(function(){
+		var actionForm = $("#actionForm");
+	$(".search_icon").on("click", function(e){
+		e.preventDefault();
+		let val = $("input[name='keyword']").val();
+		actionForm.find("input[name='keyword']").val(val);
+		actionForm.find("input[name='pageNum']").val(1);
+		actionForm.submit();
+	});
+	});
+
+	</script>
 
 
 
