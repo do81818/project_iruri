@@ -27,6 +27,8 @@
 @import "page/datepicker.min.css";
 @import "page/mypage_user_challengelist.css";
 @import "page/ptClass.css";
+@import "page/ptClassDetails.css";
+@import "page/ptClassMakeForm.css";
 
 :root {
   /* font-size */

@@ -7,28 +7,28 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp"%>
-    <title>이루리 PT클래스 - 메인</title>
+    <title>이루리 PT클래스 - 상세보기</title>
   </head>
   <body>
     <div class="iruri__wrapper">
       <%@ include file="../include/headerTemplate.jsp"%>
 
       <main>
-        <div class="ptClassWrap">
+        <div class="ptClassDetailWrap">
           <article class="ptDetail__info">
             <div class="ptDetail__img">
               <div class="ptDetail__person">1:1</div>
             </div>
             <div class="ptDetail__infoData">
               <div class="infoData__subTitle">클래스</div>
-              <h4 class="infoData__title">스쿼트, 런지, 플랭크 30일 챌린지 클래스</h4>
+              <h4 class="infoData__title">스쿼트, 런지, 플랭크 30일 챌린지 클래스 챌린지 클래스</h4>
               <h5 class="infoData__trainer">공공 트레이너</h5>
               <div class="infoData__count">
                 <i class="iruri_heart_icon"></i>
                 <span>006</span>
               </div>
 
-              <div class="infoData__goal"></div>
+              <div class="infoData__goal">나나난</div>
 
               <dl class="infoData__detailData">
                 <div>
@@ -78,54 +78,62 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
           </ul>
 
           <div class="ptDetail__infoDescription" id="trainerInfo">
+            <h6>클래스소개</h6>
+            <p>아침에 눈을 뜨면 지난밤이 궁금해</p>
+
             <h6>트레이너소개</h6>
             <p>아침에 눈을 뜨면 지난밤이 궁금해</p>
           </div>
 
           <div class="ptDetail__certify" id="certify">
-            <div class="ptDetail_certify__total">총 77 개</div>
-            <div class="ptDetail_certify__images">
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
+            <div class="ptDetail__certifyContents">
+              <div class="ptDetail_certify__total">총 77 개</div>
+              <div class="ptDetail_certify__images">
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
+
+                <div class="images__image">
+                  <img src="/ex/resources/src/img/icon/270-270.png" />
+                </div>
               </div>
 
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
+              <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+              <div class="page_nation_certify">
+                <a class="arrow prev" href="#"></a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a class="arrow next" href="#"></a>
               </div>
 
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-
-              <div class="images__image">
-                <img src="/ex/resources/src/img/icon/270-270.png" />
-              </div>
-            </div>
-
-            <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-            <div class="page_nation_certify">
-              <a class="arrow prev" href="#"></a> <a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-              <a class="arrow next" href="#"></a>
-            </div>
-
-            <div class="c_certify_button_div">
-              <button class="c_certify_button">인증하기</button>
+              <button class="ptDetail_certify__btn">인증하기</button>
             </div>
           </div>
 

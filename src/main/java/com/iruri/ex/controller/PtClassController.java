@@ -26,4 +26,12 @@ public class PtClassController {
         return mav;
     }
     
+    @GetMapping("/iruri/ptClassMakeForm")
+    public ModelAndView pt_make_form(ModelAndView mav) {
+
+        mav.setViewName("/ptclass/ptClass_make_form");
+
+        return mav;
+    }
+    
 }
