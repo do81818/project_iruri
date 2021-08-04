@@ -4,9 +4,9 @@ package com.iruri.ex.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
-import com.iruri.ex.vo.AuthVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.PointVO;
 import com.iruri.ex.vo.ReportVO;
@@ -49,19 +49,19 @@ public interface AdminMapper {
 	int countTrainerBlackList();
 	
 	// 트레이너 등록
-	int trainerRegistInsert(IUserVO vo);
+	void trainerRegistInsert(IUserVO vo);
 	
 	// 트레이너 권한수정
-	AuthVO trainerAuthUpdate();
+	void trainerAuthUpdate();
 	
 	// 일반/유료회원 정보 보기
 	TableJoinVO getUserBasicInfo(int userId);
 	
 	// 일반/유료회원 포인트리스트 보기
-	List<PointVO> getUserBasicInfoPoint(int userId, Criteria cri);
+	List<PointVO> getUserBasicInfoPoint(@Param("userId") int userId, @Param("pageNum") int pageNum, @Param("amount") int amount);
 	
 	// 일반/유료회원 포인트리스트 갯수
-	int countUserBasicInfoPoint();
+	int countUserBasicInfoPoint(@Param("userId")int userId);
 	
 	// 일반/유료회원 현재 보유포인트
 	int getUserBasicInfoPointTotal(int userId);
@@ -69,4 +69,6 @@ public interface AdminMapper {
 	// 일반/유료회원정보 운동정보보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
 	
+	// 일반/유료회원 운동정보 갯수
+	int countUserExInfoAll();
 }

@@ -1,5 +1,6 @@
 package com.iruri.ex.controller;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -150,39 +151,34 @@ public class MypageAdminController {
 	@GetMapping("trainer/regist")
 	public ModelAndView trainerRegist_Admin(ModelAndView mav) {
 
-		log.info("trainerRegist_Admin()...");
+		log.info("traineAdmin().rRegist_..");
 		mav.setViewName("mypage_admin/admin_managementTrainerInsert");
 		return mav;
 	}
-	// insertNewTrainer_Admin() ResponseEntity 관리자 트레이너 등록하기
-//	@ResponseBody
-//	@PostMapping("trainer/regist/insert")
-//	public ResponseEntity<IUserVO> insertNewTrainer_Admin(@RequestParam("inputName") String inputName,
-//			@RequestParam("email1") String email1, @RequestParam("email2") String email2, 
-//			@RequestParam("inputPhoneNumber") String inputPhoneNumber, @RequestParam("inputPassword") String inputPassword) {
-//		
-//		log.info("insertNewTrainer_Admin()...");
-//		
-//		String userName = inputName;
-//		String userEmail = email1 +"@"+ email2;
-//		String userPhone = inputPhoneNumber;
-//		String userPw = inputPassword;
-//		
-//		IUserVO vo = new IUserVO();
-//		vo.setUserName(userName);
-//		vo.setUserEmail(userEmail);
-//		vo.setUserPhone(userPhone);
-//		vo.setUserPw(userPw);
-//		log.info(vo);
-//		
-//		return 
-//		
-//		
-//		
-//		
-//		mav.setViewName("mypage_admin/admin_managementTrainer_insert");
-//		return mav;
-//	}
+	
+	//insertNewTrainer_Admin() ResponseEntity 관리자 트레이너 등록하기
+	
+	@PostMapping("trainer/regist/insert")
+	public String insertNewTrainer_Admin(@RequestParam("userName") String userName,@RequestParam("email1") String email1,@RequestParam("email2") String email2,
+			@RequestParam("userPhone") String userPhone, @RequestParam("userPw") String userPw) {
+		
+		log.info("insertNewTrainer_Admin()...");
+		
+		String userEmail = email1+ "@"+ email2;
+		
+		IUserVO vo = new IUserVO();
+		vo.setUserName(userName);
+		vo.setUserEmail(userEmail);
+		vo.setUserPhone(userPhone);
+		vo.setUserPw(userPw);
+		log.info(vo);
+		
+		adminService.trainerRegistInsert(vo);
+		adminService.trainerAuthUpdate(); 
+		log.info(vo);
+		
+		return "redirect:/mypage/admin/trainer/list";
+	}
 	
 	
 	// showMemberDetail_Admin() ModelAndView 관리자 유저기본정보 상세보기
@@ -191,22 +187,32 @@ public class MypageAdminController {
 		log.info("showMemberDetail_Admin()...");
 		mav.setViewName("mypage_admin/admin_memberInfo");
 		mav.addObject("info", adminService.getUserBasicInfo(userId));
+		int totalPoint = adminService.getUserBasicInfoPointTotal(userId);
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		mav.addObject("point",formatter.format(totalPoint));
 		log.info(mav);
 		return mav;
 	}
 
+	//  유저기본정보 상세보기 _ 포인트리스트
 	@ResponseBody
 	@GetMapping("ajax/member/info")
 	public ResponseEntity<HashMap<String, Object>> restMemberDetail(@RequestParam("userId") int userId, @RequestParam("pageNum") int pageNum) {
-
+	    log.info(userId);
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
-		int total = adminService.countUserBasicInfoPoint();
+		log.info("1"+userId);
+		int total = adminService.countUserBasicInfoPoint(userId);
+		log.info("2"+userId);
 		result.put("pageMaker", new PageVO(cri, total));
 		result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
 		log.info(result);
 		return ResponseEntity.ok(result);
 	}
+	
+	
+	
+	
 	
 	
 	

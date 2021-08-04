@@ -9,10 +9,10 @@
 	scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources"
 	scope="application" />
-<c:set var="CONTEXT_PATH_ADMIN"	value="${pageContext.request.contextPath}/mypage/admin"
+<c:set var="CONTEXT_PATH_ADMIN"
+	value="${pageContext.request.contextPath}/mypage/admin"
 	scope="application" />
-	
-	
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,6 +23,8 @@
 <link rel="stylesheet"
 	href="${RESOURCES_PATH}/src/css/admin/admin_main_memberInfo.css">
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" defer></script>
+
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
 </head>
 <body>
@@ -40,48 +42,73 @@
 
 		<div id="admin_managementMenu">
 			<ul>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/info">기본정보<br>
-					<span class="under_line"></span></a></li>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo">운동정보<br>
-					<span></span></a></li>
+				<li><a
+					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}">기본정보<br>
+						<span class="under_line"></span></a></li>
+				<li><a
+					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}">운동정보<br>
+						<span></span></a></li>
 			</ul>
 		</div>
 		<!------------------------ 기본정보 --------------------------->
 		<table class="admin_memberInfo_basic">
 			<tr>
 				<td>회원번호</td>
-				<td>${info.userId }</td>
+				<td>${info.iuserVo.userId }</td>
 			</tr>
 			<tr>
 				<td>회원분류</td>
-				<td>일반회원</td>
+				<td><c:choose>
+						<c:when test="${info.authVo.authId eq '1' }">일반회원</c:when>
+						<c:when test="${info.authVo.authId eq '2' }">유료회원</c:when>
+					</c:choose></td>
 			</tr>
 			<tr>
 				<td>닉네임</td>
-				<td>루리</td>
+				<td>${info.iuserVo.userNickname }</td>
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td>iruri012345@iruri.com</td>
+				<td>${info.iuserVo.userEmail }</td>
 			</tr>
 			<tr>
 				<td>연락처</td>
-				<td>01012345678</td>
+				<td>${info.iuserVo.userPhone }</td>
 			</tr>
 			<tr>
 				<td>가입일</td>
-				<td>2021.07.06</td>
+				<td>${info.iuserVo.userSigndate }</td>
 			</tr>
 			<tr>
 				<td>블랙리스트여부</td>
 				<td>
 					<form class="memberInfo_balackListForm">
-						<input id="memberInfo_balackList" type="checkbox"> <label
-							for="memberInfo_balackList"> <sapn></sapn>블랙리스트
-						</label>
+						<c:choose>
+							<c:when test="${info.iuserVo.userBlackList == true }">
+								<input id="memberInfo_balackList" type="checkbox" checked>
+								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								</label>
+							</c:when>
+							<c:otherwise>
+								<input id="memberInfo_balackList" type="checkbox">
+								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								</label>
+							</c:otherwise>
+						</c:choose>
+
 						<div>
-							<textarea id="memberInfo_balackList_reason"
-								onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
+							<c:choose>
+								<c:when test="${info.iuserVo.userBlaskListReason eq null }">
+									<textarea id="memberInfo_balackList_reason"
+										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
+								</c:when>
+								<c:otherwise>
+									<textarea id="memberInfo_balackList_reason"
+										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
+										value="${info.iuserVo.userBlaskListReason}"></textarea>
+								</c:otherwise>
+							</c:choose>
+
 							<span id="nowByte" class="table_blue_text">0</span> <span
 								class="table_gray_text"> / 3000byte</span>
 							<button>입력</button>
@@ -96,7 +123,7 @@
 			<div class="admin_memberInfo_pointTitle">
 				<h3>포인트</h3>
 				<p>
-					현재보유포인트<span>3,000</span>
+					현재보유포인트<span>${point}</span>
 				</p>
 				<form>
 					<input type="radio" id="memberInfo_point_rd1"
@@ -110,38 +137,110 @@
 
 			</div>
 			<table class="memberInfo_pointTable admin_table">
-				<tr>
-					<th>날짜</th>
-					<th>상태</th>
-					<th>적립/사용내용</th>
-					<th>포인트</th>
-				</tr>
-				<tr>
-					<td class="table_No_date">0000.00.00</td>
-					<td class="table_blue_text">적립</td>
-					<td class="table_indigo_text">클래스 구매</td>
-					<td class="table_blue_text">+100</td>
-
-				</tr>
-				<tr>
-					<td class="table_No_date">0000.00.00</td>
-					<td class="table_red_text">사용</td>
-					<td class="table_indigo_text">클래스 구매</td>
-					<td class="table_red_text">-100</td>
-
-				</tr>
+			
+			<!-- ajax로 포인트리스트 구현 -->
 
 			</table>
 			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 			<div class="page_nation">
-				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-				<a class="arrow next" href="#"></a>
+				<!-- ajax 페이지 구현 -->
 			</div>
 
 
 		</div>
 	</div>
+
+	<script>
+	function getlist(page) {
+	
+	    
+	    $.ajax({
+            url : '${CONTEXT_PATH_ADMIN}/ajax/member/info',
+            type : 'GET',
+            cache : false,
+            dataType : 'json',
+            data : {
+                 pageNum : page,
+                 userId: ${info.iuserVo.userId},
+             },
+            success : function(result) {
+                console.log(result);
+                var list = result['pointlist'];
+                var pagination = result['pageMaker'];
+                var htmls = "";
+                var htmls2 = "";
+
+                
+               htmls += "<tr><th>날짜</th><th>상태</th><th>적립/사용내용</th><th>포인트</th></tr>";
+	
+               /* --------------------- 포인트 리스트 -------------------- */
+				if (list.length < 1) {
+                             htmls += '<tr>';
+                             htmls += '<td colspan="4" class="table_No_date">'
+                                     + '포인트 내역이 없습니다.' + '</td>';
+                             htmls += '</tr>'
+                         } else {
+                             $(list).each(
+	                                 function() {
+	                                     
+                              			htmls += '<tr>'
+		                 					+ '<td class="table_No_date">'
+		                 					+ moment(this.pointChangedate).format('YYYY.MM.DD')
+		                 					+ '</td>';
+		                 					if(this.pointState == 'save') {
+		                 						htmls += '<td class="table_blue_text">적립</td>';    
+		                 					} else if(this.pointState == 'use'){
+		                 					   htmls += '<td class="table_red_text">사용</td>';
+		                 					}
+	                 					htmls += '</td>'
+		                 					+ '<td class="table_indigo_text">'
+		                 					+ this.pointContent
+		                 					+ '</td>';
+		                 					if(this.pointState == 'save') {
+		                 						htmls += '<td class="table_blue_text">+' + priceToString(this.pointValue) + '</td>';    
+		                 					} else if(this.pointState == 'use'){
+		                 					   htmls += '<td class="table_red_text">-' + priceToString(this.pointValue) + '</td>';
+		                 					}
+	                 					htmls += '</tr>'
+	                                 });
+                             
+                             
+                             /* ------------------ 페이징 부분 --------------------- */
+                             if (pagination['prev']) {
+                                 htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
+             				} 
+
+             				// 번호를 표시하는 부분
+             				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+             					if (page !== idx) {
+             					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					} else {
+             					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					}
+             				}
+
+             				if (pagination['next']) {
+                                htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+            						
+            				}			
+             			}	// if(list.length < 1) else 끝
+                         
+                            $(".admin_table").html(htmls);
+             				$(".page_nation").html(htmls2);
+                         }	
+                         
+
+                     });
+                                 
+                                 
+                }
+	
+	$(document).ready(function() {
+	    console.log( "ready!" );
+        getlist(1);
+    });
+	
+	</script>
 
 	<div class="iruri__wrapper">
 		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->

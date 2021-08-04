@@ -167,9 +167,7 @@
                              
             }
 
-            $(document).ready(function() {
-                getlist(1);
-            });
+            
         </script>
         
 

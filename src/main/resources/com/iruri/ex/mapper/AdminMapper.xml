@@ -42,7 +42,15 @@
 		<result property="pointContent" column="point_content" />
 		<result property="userId" column="user_id" />
 	</resultMap>
-	
+    
+	<resultMap type="com.iruri.ex.vo.IClassVO" id="classMap">
+		<result property="classId" column="class_id" />
+		<result property="classTitle" column="class_title" />
+		<result property="classState" column="class_state" />
+		<result property="classPrice" column="class_pirce" />
+		<result property="userId" column="user_id" />
+	</resultMap>
+
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
 		id="iuserAuthJoinMap">
 		<result property="avgGrade" column="grade" />
@@ -300,27 +308,25 @@
 		USER_BLACKLIST
 		) VALUES (
 		(select max(user_id)+1 from iuser),
-		#{userEmail}, #{userPw}, #{userNickname}, #{userName}, #{userPhone},
+		#{userEmail}, #{userPw}, #{userName}, #{userName}, #{userPhone},
 		default, default, default
-		);
+		)
 	</insert>
 
 	<!-- 트레이너 등록 후 권한 변경 -->
 	<update id="trainerAuthUpdate">
 		UPDATE authority SET auth_id = '3', auth_content =
 		'ROLE_TRAINER'
-		where user_id= (select max(user_id) from authority);
+		where user_id= (select max(user_id) from authority)
 	</update>
 
 
-
-
 	<!-- 일반회원정보 보기 -->
-	<select id="getUserBasicInfo" resultType="com.iruri.ex.vo.TableJoinVO">
+	<select id="getUserBasicInfo" parameterType="int" resultMap="iuserAuthJoinMap">
 		<![CDATA[
-		select distinct u.user_id, a.auth_content, u.user_nickname, u.user_email, u.user_phone, u.user_signdate, u.user_blacklist, u.user_blacklist_reason
-	    from iuser u, (select user_id, auth_content from authority where auth_id = 1 or auth_id = 2) a
-		where u.user_id = a.user_id and u.user_blacklist = 0 AND u.user_id = #{userId}
+			select u.*, a.*
+			from iuser u join authority a
+			on u.user_id = a.user_id where a.user_id = #{userId}
 		]]>
 	</select>
 
@@ -339,15 +345,15 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-	
+
 	<!-- 일반회원정보 포인트리스트 갯수보기 -->
-	<select id="countUserBasicInfoPoint" resultMap="pointMap">
+	<select id="countUserBasicInfoPoint" resultType="int">
 		<![CDATA[
-		select count(point_id) from ipoint where not point_state = 'appointed' and user_id = 10
+		select count(point_id) from ipoint where not point_state = 'appointed' and user_id = #{userId}
 		]]>
 	</select>
-	
-	<!-- 일반/유료회원 현재보유포인트  -->
+
+	<!-- 일반/유료회원 현재보유포인트 -->
 	<select id="getUserBasicInfoPointTotal" resultType="int">
 		<![CDATA[
 		select DISTINCT 
@@ -356,9 +362,9 @@
 		from ipoint where user_id=#{user_id}
 		]]>
 	</select>
-	
-	
-	<!-- 일반회원정보 운동정보보기 -->
+
+
+	<!-- 일반회원정보 운동정보 리스트 -->
 	<select id="getUserExInfoAll" resultMap="pointMap">
 		<![CDATA[
 		select *
@@ -366,9 +372,9 @@
 			select rownum rn, li.*
 			from (
 				from (
-					select iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+					select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
 					from iclass, category, (select class_id from buy
-		            where user_id = 30 and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
 				where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
 				) li
 			where rownum <= #{pageNum} * #{amount}
@@ -376,9 +382,20 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-	
-	
-	
+
+
+	<!-- 일반회원정보 운동정보 갯수 -->
+	<select id="countUserExInfoAll" resultType="int">
+		<![CDATA[
+		select count(li.class_id)
+		from (
+		select iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+		from iclass, category, (select class_id from buy
+		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+		where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+		) li
+		]]>
+	</select>
 
 
 

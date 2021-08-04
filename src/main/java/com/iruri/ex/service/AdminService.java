@@ -45,10 +45,10 @@ public interface AdminService {
 	int countTrainerBlackList();
 
 	// 트레이너 등록
-	int trainerRegistInsert(IUserVO vo);
+	void trainerRegistInsert(IUserVO vo);
 
 	// 트레이너 권한수정
-	AuthVO trainerAuthUpdate();
+	void trainerAuthUpdate();
 
 	// 일반/유료회원 정보 보기
 	TableJoinVO getUserBasicInfo(int userId);
@@ -57,12 +57,12 @@ public interface AdminService {
 	List<PointVO> getUserBasicInfoPoint(int userId, Criteria cri);
 
 	// 일반/유료회원 포인트리스트 갯수
-	int countUserBasicInfoPoint();
+	int countUserBasicInfoPoint(int userId);
 
 	// 일반/유료회원 현재 보유포인트
 	int getUserBasicInfoPointTotal(int userId);
 
-	// 일반/유료회원정보 운동정보보기 _all
+	// 일반/유료회원정보 운동정보 리스트보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
 
 }

@@ -80,27 +80,24 @@
 						<tr>
 							<td class="trainerMemberInsertLabel">email</td>
 							<td><input id="trainerMemberInsert_email" type="text"
-								style="width: 30%;" onkeyup="insertEmailCheck('email')">
+								style="width: 30%;" onkeyup="insertEmailCheck('email')" name="email1">
 								<span style="width: 5.5%;">@</span> <input
 								id="trainerMemberInsert_emailType" type="text"
 								style="width: 30%;" onkeyup="insertEmailCheck('emailType')">
 								<select style="width: 30%;" class="__box"
 								onchange="javascript:insertEmail()"
-								id="trainerMemberSelect_email">
+								id="trainerMemberSelect_email" name="email2">
 									<option value="0">직접입력</option>
 									<option value="naver.com">naver.com</option>
 									<option value="daum.net">daum.net</option>
 									<option value="gmail.com">gmail.com</option>
 								</select>
-								<%-- <% var email = 'document.getElementById("trainerMemberInsert_email").value' +'e' + 
-								document.getElementById("trainerMemberInsert_email").value' %> --%>
-								<!-- <input type="hidden" name="userEmail" value="$("#trainerMemberInsert_email").value"> -->
 								<div class="admin_notice" id='trainerMemberInsert_email_result'>올바른
 									형식으로 입력하세요.</div></td>
 						</tr>
 						<tr>
 							<td class="trainerMemberInsertLabel">전화번호</td>
-							<td><input type="text" style="width: 100%"DF1KL[
+							<td><input type="text" style="width: 100%"
 								placeholder="'-'을 제외한 숫자만 입력" name='userPhone'
 								onkeyup="insertPhoneNumberCheck(this)" maxlength="11">
 								<div class="admin_notice"
