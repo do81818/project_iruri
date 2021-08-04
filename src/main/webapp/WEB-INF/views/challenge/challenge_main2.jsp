@@ -22,73 +22,6 @@
 <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
 
 
-<!-- <script type="text/javascript">
-        window.onload = function() {
-
-            $.ajax({
-                url: 'http://localhost:8282/ex/iruri/challengeAllList',
-                type: 'GET',
-                cache: false,
-                dataType: 'json',
-                success: function(list) {
-
-                	var htmls = '';
-
-                	  if (list.length < 1) {
-                          htmls = '현재 등록된 챌린지가 없습니다.';
-                      } else {
-                        
-                        const challengeList = document.querySelector('.c_list');
-
-                    list.forEach(function(listItem) {
-                        console.log(listItem.classStartDate);
-                        htmls += '<div class="c_list_detail">';
-                        htmls +=    '<div class="c_list_img">';
-                        htmls +=        '<img src="/ex/resources/src/img/icon/360-250.png">';
-                        htmls +=    '</div>';
-
-                        htmls +=    '<div class="c_list_title">';
-                        htmls +=        listItem.classTitle;
-                        htmls +=    '</div>';
-
-                        htmls +=    '<div class="c_list_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
-                        
-                        htmls +=    '<div class="data_tags">';
-                        htmls +=        '<div class="data_tag_blue">';
-                        htmls +=            '<i class="iruri_time_icon"></i>';
-                        htmls +=                listItem.classLevel;
-                        htmls +=         '</div>';
-
-                        htmls +=        '<div class="data_tag_blue">';
-                        htmls +=            '<i class="iruri_time_icon"></i>주';
-                        htmls +=                listItem.classExerciseCount + '회 이상';
-                        htmls +=        '</div>';
-                        htmls +=     '</div>';
-
-                        htmls +=        '<div class="c_list_person">';
-                        htmls +=                '참여중인 인원' + listItem.classJoinMember + '명';
-                        htmls +=                '(최대인원' + listItem.classTotalMember + '명)';
-                        htmls +=        '</div>';
-
-                        htmls +=    '<div class="c_list_heart">';
-                        htmls += 	'<input type="checkbox" id="heart3">';
-                        htmls += 	'<label for="heart3" class="heart_label">';
-                        htmls += 	'</label>';
-                        htmls += '</div>';
-
-                        htmls += '</div>';
-
-                        
-                    });
-
-                    challengeList.innerHTML = htmls;
-                    page.innerHTML = htmls2;
-                    }
-			
-			}
-		});
-	}
-    </script> -->
 <script>
 	$(document).ready(function(){
 		/* window.onload = function(){ */
@@ -118,18 +51,22 @@
         });
 	});
 	
-	
-	//챌린지 검색
-	$(".search_icon").on("click", function(e){
-		e.preventDefault();
-		let val = $("input[name='keyword']").val();
-		moveForm.find("input[name='keyword']").val(val);
-		moveForm.find("input[name='pageNum']").val(1);
-		moveForm.submit();
-	});
 	</script>
 
+<script>
+	//챌린지 검색
 
+	$(document).ready(function() {
+		var actionForm = $("#actionForm");
+		$(".search_icon").on("click", function(e) {
+			e.preventDefault();
+			let val = $("input[name='keyword']").val();
+			actionForm.find("input[name='keyword']").val(val);
+			actionForm.find("input[name='pageNum']").val(1);
+			actionForm.submit();
+		});
+	});
+</script>
 
 
 
@@ -199,14 +136,14 @@
 
 				<div class="c_search">
 					<!--챌린지 검색창-->
-					<div class = "c_search_div">
-					<form class="c_search_box"  action="">
+					<form class="c_search_box" method="GET" action="/ajax/challengeEndList">
 
-						<input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
-						<button class="search_icon"></button>
+						<input type="text" class="keyword" autocomplete="off" id="keyword"
+							name="keyword" placeholder="검색어를 입력하세요.(챌린지 제목으로 검색됩니다.)" />
+						<button type="submit" class="search_icon" onclick="getlist(1)"></button>
 
 					</form>
-					</div>
+
 
 					<!--정렬(셀렉트박스)-->
 					<div id="select_wrap">
@@ -215,7 +152,7 @@
 
 							<li data-value="value 1">시작일순</li>
 							<li data-value="value 2">인기순</li>
-							<li data-value="value 3">평점순</li>
+							
 						</ul>
 					</div>
 
@@ -293,33 +230,24 @@
 				<!--페이징-->
 				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 				<div class="page_nation"></div>
-				<form id="actionForm" action="/ex/iruri/challengeList" method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-				</form>
+			
 				
 <script>
 		function getlist(page) {
 			
+			var search = $("#keyword").val();
 
 			    $.ajax({
-			        //url : '${pageContext.request.contextPath}/rest/after.json',
 			        url: 'http://localhost:8282/ex/ajax/challengeList.json',
-			        //url : 'http://localhost:8282/ex/iruri/challengeList',
 			        type: 'GET',
 			        cache: false,
-			        //contentType: false,
-			        //processData: false,
 			       	dateType:'json',
 			   
 			        data: {
 			        	
 			           pageNum : page,
-			    
-			       
-			            
-			
+			           keyword: search
+
 			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
 			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
 			            // url 상으론 /rest/after?pageNum=2 이런식
@@ -334,8 +262,7 @@
 						if (list.length < 1) {
 							htmls = '현재 등록된 챌린지가 없습니다.';
 						} else {
-							//const challengeList = document.querySelector('.c_list');
-							//const page = document.querySelector('.page_nation');
+	
 
 							$(list).each(function() {
 
@@ -428,42 +355,7 @@
 	            });
 							
 							
-							/* 
-							htmls2 += '<c:if test="${pageMaker.prev}">';
-							htmls2 += '<a class="prev" href="challengeList${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>';
-							htmls2 += '</c:if>';
 
-							htmls2 += '<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">';
-							htmls2 += '<a href="challengeList${pageMaker.makeQuery(num)}" class="active">${num}</a>';
-							htmls2 += '</c:forEach>';
-
-							htmls2 += '<c:if test="${pageMaker.next && pageMaker.endPage > 0}">';
-							htmls2 += '<a class="next" href="challengeList${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>';
-							htmls2 += '</c:if>';
-
-
-							htmls2 += '<form id="actionForm" action="iruri/challengeList" method="get">';
-							htmls2 += '<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">';
-							htmls2 += '<input type="hidden" name="amount" value="${pageMaker.cri.amount}">';
-							htmls2 += '</form>';
-							
-							
-				
-						
-							challengeList.innerHTML = htmls;
-							page.innerHTML = htmls2;
-			    
-						}
-						
-						
-
-						
-					}
-				});
-				
-	} 
-	*/
-	
 	
 
 </script>

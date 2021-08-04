@@ -55,7 +55,7 @@
 						<div class="c_name">
 						
 							<p>챌린지명</p>
-							<input type="text" class="inputbox_size1" name="classTitle">
+							<input type="text" class="inputbox_size1" name="classTitle" autocomplete="off">
 
 						</div>
 
@@ -83,8 +83,8 @@
 
 						<div class="c_period">
 							<p>운동기간</p>
-							<input type="text" name="classStartDate" id="sDate">&nbsp - &nbsp 
-							<input type="text" name="classEndDate" id="eDate"> <br>
+							<input type="text" name="classStartDate" id="sDate" autocomplete="off">&nbsp - &nbsp 
+							<input type="text" name="classEndDate" id="eDate" autocomplete="off"> <br>
 						</div>
 
 						<div class="c_exNum">
@@ -104,7 +104,7 @@
 						<div class="c_person">
 							<p>총모집인원</p>
 							<input type="text" id="c_text" class="inputbox_size2"
-								name="classTotalMember">&nbsp명&nbsp 
+								name="classTotalMember" autocomplete="off">&nbsp명&nbsp 
 								
 							<input type="checkbox" id="cb6" name="classTotalMember" value="9999999"
 								onclick="c_person_limit(this.form)"><label for="cb6"
@@ -115,7 +115,7 @@
 						<div class="c_goal">
 							<p>목표</p>
 							<textarea cols="30" rows="50" class="goal_textarea"
-								name="classGoal"></textarea>
+								name="classGoal" autocomplete="off"></textarea>
 						</div>
 
 

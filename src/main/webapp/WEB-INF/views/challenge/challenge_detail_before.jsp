@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application" />
@@ -77,16 +80,29 @@
                
     					<c:set var = "classJoinMember" value = "${challengeInfo.classJoinMember}"/>
     					<c:set var = "classTotalMember" value = "${challengeInfo.classTotalMember}"/>
-                    	
+    					<c:set var = "classEndDate" value = "${challengeInfo.classEndDate}"/>
+    					<jsp:useBean id="now" class="java.util.Date" />
+						<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+
+                    	 
                     	<c:choose>
+                    	<c:when test ="${classEndDate lt today}">
+	                        <div class="c_date_end">지난 챌린지 입니다.</div>
+	                    	</c:when>
+	                    	
                     		<c:when test ="${classJoinMember lt classTotalMember}">
 	                        <button class="c_join_button">챌린지 참여하기</button>
 	                    	</c:when>
 	                    	
-	                    	<c:when test ="${classJoinMember gt classTotalMember}">
-	                        <div class="c_join_end">마감된 챌린지 입니다.</div>
+	                    	<c:when test ="${classJoinMember ge classTotalMember}">
+	                        <div class="c_join_end">인원 마감된 챌린지 입니다.</div>
 	                        </c:when>
+	                        
+	                        
+	                       
                         </c:choose>
+                        
+                        
             
                     </div>
 
@@ -95,7 +111,7 @@
                     <div id="c_parti_modal">
                         <div class="c_parti_modal_start">
                             <div class="c_parti_modal_content">
-                                <form action="#" class="c_parti_modal_form">
+                                <form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">
                                     <ul>
                                         <li>챌린지에 참여 하시겠습니까?</li>
                                         <li>챌린지 시작일 전 까지만 취소가 가능합니다.</li>
