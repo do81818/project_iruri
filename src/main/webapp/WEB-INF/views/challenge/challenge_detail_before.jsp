@@ -77,7 +77,13 @@
                     </div>
 
                     <div class="c_join_button_div">
-               
+						<!-- 비로그인 메뉴 -->
+	   					 <sec:authorize access="isAnonymous()">
+	   					 <div class="c_join_end">로그인 후 이용 가능합니다</div>
+	           		     </sec:authorize>
+           		     
+           		     	<!-- 로그인 메뉴 -->
+    					<sec:authorize access="isAuthenticated()">
     					<c:set var = "classJoinMember" value = "${challengeInfo.classJoinMember}"/>
     					<c:set var = "classTotalMember" value = "${challengeInfo.classTotalMember}"/>
     					<c:set var = "classEndDate" value = "${challengeInfo.classEndDate}"/>
@@ -101,7 +107,7 @@
 	                        
 	                       
                         </c:choose>
-                        
+                        </sec:authorize>
                         
             
                     </div>

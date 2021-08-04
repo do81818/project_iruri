@@ -57,23 +57,13 @@
                             //챌린지 검색
 					
                             $(document).ready(function() {
-                                //var actionForm = $("#actionForm");
                                 $(".search_icon").on("click", function(e) {
-                                    e.preventDefault();
-                                    //let val = $("input[name='keyword']").val();
-                                    //actionForm.find("input[name='keyword']").val(val);
-                                    //actionForm.find("input[name='pageNum']").val(1);
-                                    //actionForm.submit();
+                                    e.preventDefault(); 
                                 });
                             });
-                        </script>
-                        
-                        
-
-
-
-
+                        </script> 
                 </head>
+
 
                 <body>
                     <div class="iruri__wrapper">
@@ -139,8 +129,6 @@
                                     <div class="c_search">
                                         <!--챌린지 검색창-->
 
-                                        <%-- <div class="c_search_box"> --%>
-
                                             <form class="c_search_box" method="GET" action="/ajax/challengeEndList">
 
                                                 <input type="text" class="keyword" autocomplete="off" id="keyword" name="keyword" placeholder="검색어를 입력하세요.(챌린지 제목으로 검색됩니다.)" />
@@ -154,8 +142,8 @@
                                                 <div id="select" class="select">시작일순</div>
                                                 <ul id="ul" class="select_ul">
 
-                                                    <li class="select_start" data-value="value 1" onclick="getlist(1)">시작일순</li>
-                                                    <li class="select_pop" data-value="value 2" onclick="getlist(1)">인기순</li>
+                                                    <li data-value="value 1" onclick="getlist(1)">시작일순</li>
+                                                    <li data-value="value 2" onclick="getlist(1)">인기순</li>
 
                                                 </ul>
                                             </div>
@@ -234,6 +222,7 @@
 
                                             var search = $("#keyword").val();
                                             
+                                            
 											// 1. ajax로 챌린지 리스트를 배열의 형태로 가져온다.
 											// 2. 1번을 어딘가에 보관한다.
 											// 3. 2번을 가지고 정렬한다.
@@ -256,19 +245,22 @@
                                                 },
                                                 success: function(result) {
                                                     console.log(result);
-                                                    var test = document.querySelector('#select').innerText;
+                                                    var sortText = document.querySelector('#select').innerText;
                                                     var list = result['list'];
                                                     var pagination = result['pageMaker'];
                                                     var htmls = "";
                                                     var htmls2 = "";
-
+                                                    
+                                                    
 
 
                                                     if (list.length < 1) {
-                                                        htmls = '현재 등록된 챌린지가 없습니다.';
+                                                    	htmls += '<div class="c_list_not">';
+                            							htmls += '현재 등록된 챌린지가 없습니다.';
+                            							htmls += '</div>';
                                                     } else {
 
-														if(test === '인기순') {
+														if(sortText === '인기순') {
 															list = list.sort(function(a, b) {return b.classLike - a.classLike});															
 														}
                                                     	
@@ -282,7 +274,7 @@
                                                             htmls += '</div>';
 
                                                             htmls += '<div class="c_list_title">';
-                                                            htmls += '<a href="c_detail_before?classId='+this.classId+'">';
+                                                            htmls += '<a href="c_detail_before?classId='+ this.classId +'"target="_blank">';
             												htmls += this.classTitle;
             												htmls += '</a>';
                                                             htmls += '</div>';

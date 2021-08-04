@@ -58,13 +58,8 @@
 	//챌린지 검색
 
 	$(document).ready(function() {
-		//var actionForm = $("#actionForm");
 		$(".search_icon").on("click", function(e) {
 			e.preventDefault();
-			//let val = $("input[name='keyword']").val();
-			//actionForm.find("input[name='keyword']").val(val);
-			//actionForm.find("input[name='pageNum']").val(1);
-			//actionForm.submit();
 		});
 	});
 </script>
@@ -151,8 +146,8 @@
 						<div id="select" class="select">시작일순</div>
 						<ul id="ul" class="select_ul">
 
-							<li data-value="value 1">시작일순</li>
-							<li data-value="value 2">인기순</li>
+							<li data-value="value 1" onclick="getlist(1)">시작일순</li>
+                            <li data-value="value 2" onclick="getlist(1)">인기순</li>
 							
 						</ul>
 					</div>
@@ -229,15 +224,9 @@
 
 
 				<!--페이징-->
-				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-				 
 				<div class="page_nation"></div>
-				<!--
-				<form id="actionForm" action="/ex/iruri/challengeLikeList" method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-				</form>
-				 -->
+			
+			
 <script>
 		function getlist(page) {
 			
@@ -260,6 +249,7 @@
 			        },
 					success : function(result) {
 						console.log(result);
+						var sortText = document.querySelector('#select').innerText;
 				    	var list = result['list'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
@@ -272,6 +262,10 @@
 							
 						} else {
 
+							if(sortText === '인기순') {
+								list = list.sort(function(a, b) {return b.classLike - a.classLike});															
+							}
+							
 							$(list).each(function() {
 
 												//챌린지 리스트

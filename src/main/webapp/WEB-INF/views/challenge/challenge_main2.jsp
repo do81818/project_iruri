@@ -57,20 +57,14 @@
 	//챌린지 검색
 
 	$(document).ready(function() {
-		var actionForm = $("#actionForm");
 		$(".search_icon").on("click", function(e) {
 			e.preventDefault();
-			let val = $("input[name='keyword']").val();
-			actionForm.find("input[name='keyword']").val(val);
-			actionForm.find("input[name='pageNum']").val(1);
-			actionForm.submit();
 		});
 	});
 </script>
-
-
-
 </head>
+
+
 <body>
 	<div class="iruri__wrapper">
 
@@ -136,6 +130,7 @@
 
 				<div class="c_search">
 					<!--챌린지 검색창-->
+					
 					<form class="c_search_box" method="GET" action="/ajax/challengeEndList">
 
 						<input type="text" class="keyword" autocomplete="off" id="keyword"
@@ -150,8 +145,8 @@
 						<div id="select" class="select">시작일순</div>
 						<ul id="ul" class="select_ul">
 
-							<li data-value="value 1">시작일순</li>
-							<li data-value="value 2">인기순</li>
+							<li data-value="value 1" onclick="getlist(1)">시작일순</li>
+                            <li data-value="value 2" onclick="getlist(1)">인기순</li>
 							
 						</ul>
 					</div>
@@ -254,6 +249,7 @@
 			        },
 					success : function(result) {
 						console.log(result);
+						var sortText = document.querySelector('#select').innerText;
 				    	var list = result['list'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
@@ -263,7 +259,10 @@
 							htmls = '현재 등록된 챌린지가 없습니다.';
 						} else {
 	
-
+							if(sortText === '인기순') {
+								list = list.sort(function(a, b) {return b.classLike - a.classLike});															
+							}
+							
 							$(list).each(function() {
 
 												//챌린지 리스트 
@@ -273,7 +272,7 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
-												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
+												htmls += '<a href="c_detail_before?classId='+ this.classId +'"target="_blank">';
 												htmls += this.classTitle;
 												htmls += '</a>';
 												htmls += '</div>';
@@ -340,8 +339,7 @@
 	                     
 	                        $(".c_list").html(htmls);
 	         				$(".page_nation").html(htmls2);
-	         				//challengeList.innerHTML = htmls;
-							//page.innerHTML = htmls2;
+	         				
 	                     }
 	                     
 	                 });
@@ -349,7 +347,7 @@
 	                             
 	            }
 		
-		
+	
 	            $(document).ready(function() {
 	                getlist(1);
 	            });
