@@ -15,7 +15,7 @@
       <script>
    $(document).ready(function(){
       /* window.onload = function(){ */
-      var actionForm = $("#actionForm");
+      var actionForm = $("#mactionForm");
         $(".pageNumLink").on("click", function(e) {
             e.preventDefault();
             var targetPage = $(this).attr("href");
@@ -88,16 +88,16 @@
                  <div class="m_chanllenge_box">
                     <div id="m_now_chanllengelist_box">
                            <div id="m_now_chanllengelist">신청챌린지</div>
-                           <div id="m_now_chanllengelistnb">2</div>
+                           <div id="m_now_chanllengelistnb">${userchallengecount}</div>
                        
                    </div>
                    <div id="m_pre_chanllengelist_box">
                        <div id="m_pre_chanllengelist">관심챌린지</div>
-                        <div id="m_pre_chanllengelistnb">5</div>
+                        <div id="m_pre_chanllengelistnb">${likecount}</div>
                    </div>
                    <div id="m_use_chanllengelist_box">
                        <div id="m_use_chanllengelist">지난챌린지</div>
-                       <div id="m_use_chanllengelistnb">3</div>
+                       <div id="m_use_chanllengelistnb">${endcount}</div>
                    </div>
                 </div>
 
@@ -117,6 +117,7 @@
           
           <c:forEach var="userchallengelist" items="${userchallengelist}" varStatus="status">
                     <div class="m_c_recommend_img">
+                    <button class="m_cl_cancel_challenge_bt">챌린지취소</button> 
               <div class="m_c_recommend_title">
                    ${userchallengelist.classTitle}<br>
               </div>
@@ -155,7 +156,7 @@
 
 
 <!-- 챌린지 취소 버튼 (모달) -->
-      <button class="m_cl_cancel_challenge_bt">챌린지취소</button>
+      
       
       
       
@@ -168,40 +169,46 @@
         </p>
     </div>
 
-    <div class="m_c_list">
+<%--     <div class="m_c_list">
+   <c:forEach var="userlikelist" items="${userlikelist}" varStatus="status">
       <div class="m_c_list_detail">
-          <div class="m_c_list_img">
+          <img class="m_c_list_img" src="/ex/resources/src/img/icon/360-250.png">
  
         </div>
           
           <div class="m_c_list_title">
-              스쿼트, 런지, 플랭크<br> 30일 챌린지
+              ${userlikelist.classTitle}
           </div>
 
           <div class="m_c_list_date">
-              2021.03.01~2021.04.01
+              ${userlikelist.classStartDate}~${userlikelist.classEndDate}
           </div>
 
           <div class="m_data_tags">
               <div class="m_data_tag_blue">
-                  <i class="m_iruri_level_icon"></i> easy
+                  <i class="m_iruri_level_icon"></i> ${userlikelist.classLevel}
               </div>
               <div class="m_data_tag_blue">
-                  <i class="m_iruri_time_icon"></i> 주 5회 이상
+                  <i class="m_iruri_time_icon"></i>  주${userlikelist.classExerciseCount}일
               </div>
               
           </div>
 
           <div class="m_c_list_price">
-            참여중인 인원 00명 (최대인원 20명)
+            참여중인 인원 ${userlikelist.classJoinMember}명 (최대인원 ${userlikelist.classTotalMember}명)
           </div>
 
           <div class="m_c_list_heart">
-              <input type="checkbox" id="heart3"><label for="heart3" class="m_heart_label"></label>
+              <input type="checkbox" id="heart${userlikelist.classId}"><label for="heart${userlikelist.classId}" class="m_heart_label"></label>
           </div>
     </div>
 
-    <div class="m_c_list_detail">
+
+</c:forEach>
+
+
+
+<!--     <div class="m_c_list_detail">
       <div class="m_c_list_img">
 
     </div>
@@ -264,8 +271,8 @@
         <input type="checkbox" id="heart5"><label for="heart5" class="m_heart_label"></label>
     </div>
 </div>
-
-    <div class="m_page_nation">
+ -->
+ <div class="m_page_nation">
         <a class="m_arrow_prev" href="#"></a>
         <a href="#" class="m_active">1</a>
         <a href="#">2</a>
@@ -274,50 +281,56 @@
         <a href="#">5</a>
         <a class="m_arrow_next" href="#"></a>
     </div>
-  </div>
+  </div> --%>
 
-
+   
 
 
    <!-- 지난챌린지 -->
    
-   <div class="m_c_main_tab">
+<%--    <div class="m_c_main_tab">
     <p class="m_c_like_last">
         <a href="">지난챌린지</a>
     </p>
 </div>
    
 <div class="m_c_list">
+<c:forEach var="userendlist" items="${userendlist}">
+
+
   <div class="m_c_list_detail">
     <div class="m_c_list_img">
 
   </div>
     
     <div class="m_c_list_title">
-        스쿼트, 런지, 플랭크<br> 30일 챌린지
+        ${userendlist.classTitle}
     </div>
 
     <div class="m_c_list_date">
-        2021.03.01~2021.04.01
+        ${userendlist.classStartDate}~${userendlist.classEndDate}
     </div>
 
     <div class="m_data_tags">
         <div class="m_data_tag_blue">
-            <i class="m_iruri_level_icon"></i> easy
+            <i class="m_iruri_level_icon"></i> ${userendlist.classLevel}
         </div>
         <div class="m_data_tag_blue">
-            <i class="m_iruri_time_icon"></i> 주 5회 이상
+            <i class="m_iruri_time_icon"></i> 주 ${userendlist.classExerciseCount} 일
         </div>
         
     </div>
 
     <div class="m_c_list_price">
-      참여중인 인원 00명 (최대인원 20명)
+      참여중인 인원 ${userendlist.classJoinMember}명 (최대인원 ${userendlist.classTotalMember}명)
     </div>
 
   </div>
+  
+</c:forEach>
 
-  <div class="m_c_list_detail">
+
+<!--   <div class="m_c_list_detail">
     <div class="m_c_list_img">
 
   </div>
@@ -374,7 +387,7 @@
   </div>
 
 </div>
-
+ -->
   <div class="m_page_nation">
       <a class="m_arrow_prev" href="#"></a>
       <a href="#" class="m_active">1</a>
@@ -384,13 +397,21 @@
       <a href="#">5</a>
       <a class="m_arrow_next" href="#"></a>
   </div>
-</div>
 
+</div> --%>
+	
+	
+	
+	 <div class="m_c_list"></div>
+	 
+    <div class="m_page_nation">   </div>
+      <form id="mactionForm"  action="/ex/mypage/challengelist" method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	 </form>
 
-       
-        
-
-    </div>
+ 
+    
  
 	
 	    <!-- 팝업창  -->
@@ -437,13 +458,142 @@
                 <h2 class="alertWindow_title">챌린지 취소</h2>
                 <form action="#">
                   <p class="alertWindow_content">정말로 챌린지를<br> 취소하시겠습니까?<br>챌린지는시작전에 다시신청 가능합니다.</p>
-                  <button class="alertWindow_submit_class" type="submit">클래스취소</button>
+                  <button class="alertWindow_submit_class" type="submit">챌린지취소</button>
                 </form>
               </div>
             </div>
       </div>
     </div>
+	
+	
+	<script>
+			function likelist(page){
+				
+				$.ajax({
+					url: 'http://localhost:8282/ex/ajax/challengelist.json',
+					type:'GET',
+					cache: false,
+					dateType:'json',
+					
+					data: {
+						pageNum : page,
+						
+						
+						
+						
+						
+					},
+					success: function(result){
+						console.log(result);
+						var list = result['list'];
+						var pagination = result['pageMaker'];
+						var htmls = "";
+						var htmls2 = "";
+						
+						if(list.lengt <1 ){
+							htmls += '<div class="m_c_list_not">';
+							htmls += '하트를 누른 챌린지가 없습니다.';
+							htmls += '</div>';
+							
+						}else{
+							$(list).each(function(){
+								htmls += '<div class="m_c_list_detail">';
+								htmls += '<div class="m_c_list_img">';
+								htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+								htmls += '</div>';
+								
+								htmls += '<div class="m_c_list_title">';
+								htmls += '<a href="c_detail_before?classId='+this.classId+'">';
+								htmls += this.classTitle;
+								htmls += '</a>';
+								htmls += '</div>';
+								
+								htmls += '<div class=" m_c_list_date">'
+										+ this.classStartDate
+										+ '~'
+										+ this.classEndDate
+										+ '</div>';
+								
+										
+								htmls += '<div class="m_data_tags">';
+								htmls += '<div class="m_data_tag_blue">';
+								htmls += '<i class="m_iruri_time_icon"></i>';
+								htmls += this.classLevel;
+								htmls += '</div>';
+								
+								htmls += '<div class="m_data_tag_blue">';
+								htmls += '<i class="m_iruri_level_icon"></i>주';
+								htmls += this.classExerciseCount
+										+ '회 이상';
+								htmls += '</div>';
+								htmls += '</div>';
+								
+								
+								htmls += '<div class="m_c_list_price">';
+								htmls += '참여중인 인원'
+										+ this.classJoinMember
+										+ '명';
+								htmls += '(최대인원'
+										+ this.classTotalMember
+										+ '명)';
+								htmls += '</div>';
+								
+								
+								htmls += '<div class="m_c_list_heart">';
+								htmls += '<input type="checkbox" id="heart'+this.classId+'">';
+								htmls += '<label for="heart'+this.classId+'" class="heart_label"></label>';
+								htmls += '</div>';
 
+								htmls += '</div>';
+										
+								
+								
+							});
+							
+							
+					         if (pagination['prev']) {
+	                             htmls2 += '<a class="arrow prev" href="javascript:list('+ (pagination['startPage']-1) +'"></a>';
+	         				} 
+	         				// 번호를 표시하는 부분
+	         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+	         					if (page !== idx) {
+	         					   htmls2 += '<a class="pageNumLink" href="javascript:likelist('+ idx + ')">' + (idx) + "</a>";
+	         					} else {
+	         					   htmls2 += '<a class="pageNumLink active" href="javascript:likelist('+ idx + ')">' + (idx) + "</a>";
+	         					}
+	         				}
+	         				
+	         				if (pagination['next']) {
+	                            htmls2 += '<a class="arrow next" href="javascript:list('+ (pagination['endPage']+1) +')"></a>';
+	        						
+	        				}
+							
+						}		
+							$(".m_c_list").html(htmls);
+							$(".m_page_nation").html(htmls2);
+					
+							
+						}
+			
+				
+				});
+	                             
+			
+			}
+	            $(document).ready(function() {
+	                likelist(1);
+	            });
+	
+
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
       </main>
       
    <%@ include file="../include/footerTemplate.jsp" %> 
