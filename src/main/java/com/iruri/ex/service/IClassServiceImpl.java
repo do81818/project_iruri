@@ -41,11 +41,6 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
 
-    @Override
-    public int classcount(int userId) {
-        int vo = iClassMapper.classcount(userId);
-        return vo;
-    }
     
     @Override
     public List<IClassVO> mainPageChallengeList() {
