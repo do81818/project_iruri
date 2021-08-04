@@ -126,6 +126,13 @@
 	<![CDATA[
 		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE >= sysdate
 	]]>
+	
+	<if test="keyword != null">
+			<![CDATA[
+                  and CLASS_TITLE like '%'||#{keyword}||'%'
+            ]]>
+        </if>
+        
 	</select>
 
 
@@ -135,25 +142,35 @@
     SELECT ROWNUM AS RNUM, A.* FROM (
         SELECT * FROM iclass where category_id = 1 and class_id > 0 and CLASS_ENDDATE >= sysdate order by class_id desc
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
-         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
+              ]]>
+    	<if test="keyword != null">
+    	
+    			and CLASS_TITLE like '%'||#{keyword}||'%'
+    		
+    	</if>
+    <![CDATA[
+           ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>
+      
 	</select>
 	
 	
-   <!--지난 챌린지 -->
+	   <!--지난 챌린지 -->
    <select id="getTotalCount_challengeEndList"  resultType="int">
 	<![CDATA[
 		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE < sysdate
 	]]>
 	
 		<if test="keyword != null">
-                   where CLASS_TITLE like '%'|| #{keyword} ||'%'
+			<![CDATA[
+                  and CLASS_TITLE like '%'||#{keyword}||'%'
+            ]]>
         </if>
         
 	</select>
 
 
-	<select id="getListWithPaging_challengeEndList" parameterType="HashMap" resultMap="iClassMap">
+	<select id="getListWithPaging_challengeEndList" resultMap="iClassMap">
 	<![CDATA[
 	SELECT * FROM (
     SELECT ROWNUM AS RNUM, A.* FROM (
@@ -161,26 +178,34 @@
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
      ]]>
     	<if test="keyword != null">
-    		and CLASS_TITLE like '%'|| #{keyword} ||'%'
+    	
+    			and CLASS_TITLE like '%'||#{keyword}||'%'
+    		
     	</if>
     <![CDATA[
-         ) WHERE RNUM > (#{pageNum}-1) * #{amount} 
+           ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>
 	</select>
-	
+
 	
 	<!--관심 챌린지 -->
    	<select id="getTotalCount_challengeLikeList" resultType="int">
 	<![CDATA[
-		select count(*) from likelist where user_id = #{userId} 
+		select count(*) from likelist l, iclass i where l.CLASS_ID = i.CLASS_ID and i.USER_ID = #{userId}  
 	]]>
+	<if test="keyword != null">
+			<![CDATA[
+				and i.CLASS_TITLE like '%'||#{keyword}||'%'
+            ]]>
+        </if>
+        
 	</select>
 
 
 	<select id="getListWithPaging_challengeLikeList" parameterType="HashMap" resultMap="iClassMap">
 	 <![CDATA[
 	
-		SELECT *
+SELECT *
 FROM
 (
     SELECT ROWNUM rn, c.*
@@ -189,18 +214,23 @@ FROM
         SELECT B.*, A.likelist_id, A.board_id
         FROM iclass B,
         (
-            SELECT *
-            FROM likelist A
+			SELECT *
+            FROM likelist
             WHERE user_id = #{userId}
         ) A
-        WHERE A.class_id=B.class_id and A.user_id = #{userId} and B.category_id = 1 and CLASS_ENDDATE >= sysdate
+        WHERE A.class_id = B.class_id and A.user_id = #{userId} and B.category_id = 1 and CLASS_ENDDATE >= sysdate
         ORDER BY B.class_startdate DESC
     ) C
-    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
-)
-WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
-
-	]]> 
+    WHERE rownum <= #{pageNum} * #{amount} 
+     ]]>
+    	<if test="keyword != null">
+    		<![CDATA[
+    			and C.CLASS_TITLE like '%'||#{keyword}||'%'
+    		]]>
+    	</if>
+    <![CDATA[
+    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+	]]>
 
 	</select>
 	
@@ -223,38 +253,28 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 	]]>
 	</select>
 	
-	
-	<!-- 챌린지 검색기능(제목으로만) -->
-	<select id="searchTotalCount_challengeList" resultType="int">
+	<!-- 챌린지 인기순 -->
+	 <select id="getTotalCount_challengePopList" resultType="int">
 	<![CDATA[
-		select count(*) from iclass where category_id = 1 
+		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE >= sysdate order by class_like desc
 	]]>
-		<if test="keyword != null">
-                    and title like '%'||#{keyword}||'%' 
-        </if>
-		
-	
 	</select>
-	
-	<select id="searchWithPaging_challengeList" resultMap="iClassMap">
+
+
+	<select id="getListWithPaging_challengePopList" resultMap="iClassMap">
 	<![CDATA[
 	SELECT * FROM (
     SELECT ROWNUM AS RNUM, A.* FROM (
-        SELECT * FROM iclass where category_id = 1 and class_id > 0 order by class_enddate desc
-             ) A WHERE ROWNUM <= #{pageNum} * #{amount} 
-    ]]>
-    	<if test="keyword != null">
-    		and title like '%'||#{keyword}||'%'
-    	</if>
-    <![CDATA[
-         ) WHERE RNUM > (#{pageNum}-1) * #{amount} 
+        SELECT * FROM iclass where category_id = 1 and class_id > 0 and CLASS_ENDDATE >= sysdate order by class_like desc
+             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>
 	</select>
 	
 	<!-- 챌린지 상세정보 불러오기 -->
 	<select id="readChallengeInfo" resultMap="iClassMap">
 		<![CDATA[
-		SELECT * FROM ICLASS WHERE CATEGORY_ID = 1 and class_id > 0 AND CLASS_ENDDATE >= sysdate and CLASS_ID = #{classId}
+		SELECT * FROM ICLASS WHERE CATEGORY_ID = 1 and class_id > 0  and CLASS_ID = #{classId}
 	]]>
 	</select>
 	
@@ -264,6 +284,8 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		update ICLASS set CLASS_JOINMEMBER = CLASS_JOINMEMBER+1 where CATEGORY_ID = 1 and class_id > 0 and class_joinmember <= class_totalmember and CLASS_ID = #{classId}
 	]]>
 	</update>
-   
+	
+	<!-- 챌린지 참여 후(유저 참여챌린지 업데이트) -->
+   	
 
 </mapper>

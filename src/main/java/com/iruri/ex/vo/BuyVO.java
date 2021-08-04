@@ -1,6 +1,9 @@
 package com.iruri.ex.vo;
 
+
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,9 +32,11 @@ public class BuyVO {
 	private int buyId;
 	private int buyRealpay;
 	private int buyPoint;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date buyDate;
-	private int userId;
+	private IUserVO iUserVO; 
 	private int payId;
 	private int classId;
+	private int rnum;
 	
 }
