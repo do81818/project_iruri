@@ -35,12 +35,25 @@ public List<IClassVO> userchallengelist(int userId){
 }
 
 @Override
-public List<IClassVO> userlikelist(int userId){
-	return userchallengeMapper.userlikelist(userId);
+public List<IClassVO> userlikelist(Criteria cri, int userId){
+	return userchallengeMapper.userlikelist(cri,userId);
+}
+
+@Override
+public List<IClassVO> userendlist(int userId){
+	return userchallengeMapper.userendlist(userId);
 }
   
 
+@Override
+public int likecount(int userId) {
+	return userchallengeMapper.likecount(userId);
+}
 
+@Override
+public int endcount(int userId) {
+	return userchallengeMapper.endcount(userId);
+}
 
 
  

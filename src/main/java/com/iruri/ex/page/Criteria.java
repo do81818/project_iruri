@@ -20,10 +20,13 @@ public class Criteria {
         //1페이지에 9개의 데이터
     }
     
+    
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;
     }
+    
+
 
     public Criteria(int pageNum, int amount, String keyword) {
         this.pageNum = pageNum;
@@ -34,3 +37,5 @@ public class Criteria {
     
     
 }
+
+
