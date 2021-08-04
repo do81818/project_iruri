@@ -1,9 +1,10 @@
 package com.iruri.ex.controller;
 
-import java.security.Principal;
+import java.security.Principal; 
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
-import com.iruri.ex.page.SearchCriteria;
 import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
@@ -84,14 +84,15 @@ public class ChallengeController {
     
 
     // 챌린지 메인 - 지난 챌린지
+
     @GetMapping("/iruri/challengeEndList")
     public ModelAndView challengeEndList(ModelAndView mav) {
         
         mav.setViewName("challenge/challenge_endList");
-        // mav.addObject(null, mav);
         
         return mav;
     }
+    
 
     //챌린지 메인 - 지난 챌린지 페이징 처리(ajax)
     @ResponseBody
@@ -109,7 +110,8 @@ public class ChallengeController {
         
         result.put("list", challengeService.challengeEndList(cri));
         log.info("ajax_challengeList()..");
-   
+        
+      
         
         
         return ResponseEntity.ok(result);
@@ -192,7 +194,7 @@ public class ChallengeController {
 
         challengeService.insertChallenge(iClassVO);
 
-        return "redirect:iruri/insert_challenge";
+        return "redirect:challengeList";
     }
 
    
@@ -202,19 +204,25 @@ public class ChallengeController {
     public String c_detail_before(IClassVO iClassVO, Model model) {
         log.info("challenge_detail_before_view()..");
 
-        model.addAttribute("challengeDetailBefore", challengeService.getChallengeInfo(iClassVO.getClassId()));
-
+        model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
+ 
         return "challenge/challenge_detail_before";
     }
 
     // 챌린지 상세 - 참여 후
     @GetMapping("/iruri/challenge_detail_after")
-    public ModelAndView c_detail_after(ModelAndView mav) {
+    public String c_detail_after(IClassVO iClassVO, Model model) {
 
-        mav.setViewName("/challenge/challenge_detail_after");
-        // mav.addObject(null, mav);
+        log.info("challenge_detail_after()..");
+        
+        //참여인원 update
+        challengeService.upJoinMember(iClassVO.getClassId());
 
-        return mav;
+        model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
+        
+        
+
+        return "challenge/challenge_detail_after";
     }
 
 }

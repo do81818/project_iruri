@@ -25,8 +25,13 @@ public class ChallengeServiceImpl implements ChallengeService {
     private ChallengeMapper challengeMapper;
     
 	
-	  @Override public List<IClassVO> classList(int userId) { List<IClassVO> vo =
-	  iClassMapper.selectAll(userId); if(vo == null) { return null; } return vo; }
+	  @Override public List<IClassVO> classList(int userId) { 
+	      List<IClassVO> vo = iClassMapper.selectAll(userId); 
+	      if(vo == null) { 
+	          return null; 
+	      } 
+	      return vo; 
+	  }
 	 
     //챌린지 메인 리스트
     /*
@@ -93,6 +98,21 @@ public class ChallengeServiceImpl implements ChallengeService {
     public int getTotal_challengeLikeList(Criteria cri, int userId) {
         log.info("getTotal_challengeLikeList()..");
         return challengeMapper.getTotalCount_challengeLikeList(cri, userId);
+    }
+
+    //챌린지 상세 페이지
+    @Override
+    public IClassVO getChallengeInfo(int classId) {
+        log.info("getChallengeInfo()..");
+        return challengeMapper.readChallengeInfo(classId);
+    }
+
+    //챌린지 참여인원
+    @Override
+    public void upJoinMember(int classId) {
+        
+        challengeMapper.upJoinMember(classId);
+        
     }
 
 

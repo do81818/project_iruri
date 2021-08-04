@@ -13,8 +13,11 @@ public interface IClassService {
     // 종료된 클래스 
     List<IClassVO> classEndList(int userId);
 
+    public int classcount(int userId);
 
     List<IClassVO> mainPageChallengeList();
+    List<IClassVO> mainPagePtClassLIst();
+    List<IClassVO> mainPageExerciseVideoList();
     
     int classcount(int userId);
     

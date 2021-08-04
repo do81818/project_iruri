@@ -19,7 +19,7 @@ public interface ChallengeMapper {
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     List<IClassVO> selectAll(int userId);
     
-    IClassVO readChallengeInfo(int classId);
+    
     
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
@@ -43,5 +43,11 @@ public interface ChallengeMapper {
     List<IClassVO> getListWithPaging_challengeLikeList(@Param("cri") Criteria cri, @Param("userId") int userId);
     int getTotalCount_challengeLikeList(Criteria cri, @Param("userId") int userId);
     
+    /*----------챌린지 상세페이지-----------*/
+    //챌린지 상세페이지 정보
+    IClassVO readChallengeInfo(int classId);
+    
+    //챌린지 참여 인원
+    void upJoinMember(int classId);
   
 }

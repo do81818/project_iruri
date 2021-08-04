@@ -17,9 +17,9 @@
 	const phone = document.querySelector('#userPhone');
 	const agree = document.querySelector('#terms_agree');
 	
-	const kakaoId = $('input[name="kakaoId"]');
-	const naverId = $('input[name="naverId"]');
-	const googleId = $('input[name="googleId"]');
+	const kakaoId = document.querySelector('input[name="kakaoId"]');
+	const naverId = document.querySelector('input[name="naverId"]');
+	const googleId = document.querySelector('input[name="googleId"]');
 	
 	
 	// 이메일 합치기
@@ -267,10 +267,12 @@
 		});
 
 		submitBtn.addEventListener('click', function(e) {
-			e.preventDefault();
+			e.preventDefault()
 
 			console.log(kakaoId.value);
-
+			console.log(naverId.value);
+			console.log(googleId.value);
+			
 			const header = $('meta[name="_csrf_header"]').attr('th:content');
 			const token = $('meta[name="_csrf"]').attr('th:content');
 			$.ajax({

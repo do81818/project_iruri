@@ -21,7 +21,11 @@ public interface IClassMapper {
     // 종료된 클래스
     List<IClassVO> selectAllEnd(int userId);
     
+    int classcount(int userId);
+    
     List<IClassVO> mainPageChallengeList();
+    List<IClassVO> mainPagePtClassLIst();
+    List<IClassVO> mainPageExerciseVideoList();
     
     int classcount(int userId);
     
