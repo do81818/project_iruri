@@ -40,7 +40,7 @@ public class UserRegService {
             int checkNum = random.nextInt(8888) + 1111;
             
             String setForm = "do81818@naver.com";
-            String toMail = "do81818@naver.com"; // 원래대로라면 Ajax를 통해 클라이언트에서 넘겨받은 유저 이메일 입력
+            String toMail = "do81818@naver.com";
             String title = "이루리 회원가입 인증 이메일 입니다.";
             String content = "<p>인증 번호는 " + checkNum + " 입니다</p>";
             
@@ -64,11 +64,12 @@ public class UserRegService {
             Pattern numPattern = Pattern.compile("[0-9]");
             Pattern engPattern = Pattern.compile("[a-z]");
             Pattern spePattern = Pattern.compile("[`~!@@#$%^&*|₩₩₩'₩\";:₩/?]");
+            Pattern spacePattern = Pattern.compile("\s");
             
             Matcher numMatch = numPattern.matcher(userPassword);
             Matcher engMatch = engPattern.matcher(userPassword);
             Matcher speMatch = spePattern.matcher(userPassword);
-            Matcher spaceMatch = Pattern.compile("\s").matcher(userPassword);
+            Matcher spaceMatch = spacePattern.matcher(userPassword);
             
             int numCount = 0;
             int engCount = 0;
@@ -83,12 +84,6 @@ public class UserRegService {
             while(speMatch.find()) {
                 speCount++;
             }
-            
-            log.info(numCount);
-            log.info(engCount);
-            log.info(speCount);
-            
-            log.info(userPassword);
             
             if(userPassword.length() == 0) { // 값이 없을때
                 return 0; 
@@ -111,8 +106,24 @@ public class UserRegService {
                 return 3;
             } else if(regex == false) { // 문자열 초과 및 양식 오류
                 return 2;
+            } else if(iUserMapper.checkOverNickname(userNickname) == 1) { // 중복체크
+                return 1;
+            } else {
+                return 0;
+            }            
+        }
+
+        public int userPhoneCheck(String userPhone) {
+            Pattern pattern = Pattern.compile("[-_.`~!@@#$%^&*|₩₩₩'₩\\\";:₩/?|ㄱ-ㅎ|가-힣|a-z|A-Z]");
+            Matcher regex = pattern.matcher(userPhone);
+            
+            if(userPhone == "") {
+                return 2;
+            } else if(regex.find()) {
+                return 1;                
+            } else {
+                return 0;                
             }
             
-            return iUserMapper.checkOverNickname(userNickname);
         }
 }

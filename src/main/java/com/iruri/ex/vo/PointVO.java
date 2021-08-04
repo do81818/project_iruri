@@ -40,6 +40,7 @@ public class PointVO {
     private int pointValue;
     private String pointContent;
     private int userId;
+    private int rnum;
 
 
 

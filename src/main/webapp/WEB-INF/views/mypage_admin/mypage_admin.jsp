@@ -12,6 +12,7 @@
 <c:set var="CONTEXT_PATH_ADMIN"
 	value="${pageContext.request.contextPath}/mypage/admin"
 	scope="application" />
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +23,37 @@
 <link rel="stylesheet"
 	href="${RESOURCES_PATH}/src/css/admin/admin_main_normalMember.css">
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
+
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
+<script>
+	$(document).ready(function(){
+		/* window.onload = function(){ */
+		var actionForm = $("#actionForm");
+        $(".pageNumLink").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".prev").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".next").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+	});
+</script>
 </head>
 <body>
 	<div class="iruri__wrapper">
@@ -39,16 +70,12 @@
 		</div>
 		<div id="admin_managementMenu">
 			<ul>
-				<a href="${CONTEXT_PATH_ADMIN}/main">
-					<li class="admin_active">회원관리<br> <span
-						class="under_line"></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/trainer/list">
-					<li>트레이너관리<br> <span></span></li>
-				</a>
-				<a href="${CONTEXT_PATH_ADMIN}/paylist">
-					<li>수익관리<br> <span></span></li>
-				</a>
+				<li><a href="${CONTEXT_PATH_ADMIN}/main"> <span
+						class="admin_active">회원관리</span><br> <span class="under_line"></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/trainer/list"><span>트레이너관리</span><br>
+						<span></span></a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/paylist"><span>수익관리</span><br>
+						<span></span></a></li>
 			</ul>
 		</div>
 
@@ -69,44 +96,123 @@
 		<!---------------------- 신고알림 탭 -------------------------->
 		<div class="report_memberList">
 			<table class="admin_table">
-				<tr>
-					<th>No.</th>
-					<th>회원분류</th>
-					<th>닉네임</th>
-					<th>신고사유</th>
-					<th>게시글보기</th>
-				</tr>
-				<tr>
-					<td class="table_No_date">"${reportList.reportId}"</td>
-					<td class="table_indigo_text">일반회원</td>
-					<td><a class="table_indigo_text" href="./관리자마이페이지메인_회원정보.html">닉네임</a></td>
-					<td class="table_blue_text">부적절한 게시글입니다.</td>
-					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
-						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
-				</tr>
-				<tr>
-					<td class="table_No_date">500</td>
-					<td class="table_indigo_text">일반회원</td>
-					<td><a class="table_indigo_text" href="#">닉네임</a></td>
-					<td class="table_blue_text">부적절한 게시글입니다.</td>
-					<td><a class="a_buttonBox" href="#" target="_blank">댓글보기</a> <a
-						class="a_buttonBox" href="#" target="_blank">게시글보기</a></td>
-				</tr>
+				
+				<!-- ajax로 신고알림 리스트 구현 -->
+
 			</table>
 
 			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 			<div class="page_nation">
-				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-				<a class="arrow next" href="#"></a>
+				<!-- ajax 페이징 구현 -->
 			</div>
-
+			<form id="actionForm" action="${CONTEXT_PATH_ADMIN}/main"
+				method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			</form>
 		</div>
 	</div>
+
+	<script>
+            function getlist(page) {
+                $.ajax({
+                     url : '${CONTEXT_PATH_ADMIN}/ajax/reportList.json',
+                     type : 'GET',
+                     cache : false,
+                     dataType : 'json',
+                     data : {
+                          pageNum : page,
+                      },
+                     success : function(result) {
+                         console.log(result);
+                         var list = result['list'];
+                         var pagination = result['pageMaker'];
+                         var htmls = "";
+                         var htmls2 = "";
+
+                         
+                        htmls += "<tr><th>No.</th><th>회원분류</th><th>닉네임</th><th>신고사유</th><th>게시글</th></tr>";
+                         
+                         /* --------------------- 신고알림리스트 부분 --------------------- */
+
+                         if (list.length < 1) {
+                             htmls += '<tr>';
+                             htmls += '<td colspan="3" class="table_No_date">'
+                                     + '등록된 신고알림이 없습니다.' + '</td>';
+                             htmls += '</tr>'
+                         } else {
+                             $(list).each(
+	                                 function() {
+	                                     htmls += '<tr>';
+	                                     htmls += '<td class="table_No_date">'
+	                                             + this.reportId
+	                                             + '</td>';
+	
+	                                     if (this.reportUserRoll == "ROLE_USER") {
+	                                         htmls += '<td class="table_indigo_text">'
+	                                                 + '일반회원'
+	                                                 + '</td>';
+	                                     } else if (this.reportUserRoll == "ROLE_PAYUSER") {
+	                                         htmls += '<td class="table_indigo_text">'
+	                                                 + '유료회원'
+	                                                 + '</td>';
+	                                     }
+	                                     htmls += '<td class="table_indigo_text">'
+	                                         	+ '<a href="#" target="_blank">'
+	                                             + this.reportUserNickName
+	                                             + '</td>';
+	                                     htmls += '<td class="table_blue_text">'
+	                                             + this.reportContent
+	                                             + '</td>';
+	                                     htmls += '<td class="table_No_date">'
+	                                             + '<a class="a_buttonBox" href="#" target="_blank">'
+	                                             + '게시글보기'
+	                                             + '</a>'
+	                                             + '</td>';
+	                                 });
+                         
+                         
+                         /* ------------------ 페이징 부분 --------------------- */
+                         if (pagination['prev']) {
+                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +'"></a>';
+         				} 
+
+         				// 번호를 표시하는 부분
+         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+         					if (page !== idx) {
+         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					} else {
+         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					}
+         				}
+
+         				if (pagination['next']) {
+                            htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+        						
+        				}			
+         			}	// if(list.length < 1) else 끝
+                     
+                        $(".admin_table").html(htmls);
+         				$(".page_nation").html(htmls2);
+                     }
+                     
+
+                 });
+                             
+                             
+            }
+
+            $(document).ready(function() {
+                getlist(1);
+            });
+        </script>
+        
+
 
 	<div class="iruri__wrapper">
 		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->
 
 	</div>
 </body>
+
 </html>

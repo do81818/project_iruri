@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.iruri.ex.mapper.BoardMapper;
 import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.mapper.PointMapper;
+import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.PointVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -44,8 +46,22 @@ public class PointServiceImpl implements PointService {
     	return vo;
     }
     
+    @Override
+    public int totalpoint(int userId) {
+    	int vo = pointMapper.totalpoint(userId);
+    	return vo;
+    }
     
+    @Override
+    public List<PointVO> pointList(int userId,Criteria criteria){
+    	return pointMapper.pointList(userId, criteria);
+    			}
     
+	
+	  @Override public int total(int userId) { 
+		  log.info("total().."); 
+	  return pointMapper.total(userId); 
+	  }
 
     
 

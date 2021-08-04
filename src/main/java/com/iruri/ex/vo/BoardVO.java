@@ -47,6 +47,7 @@ public class BoardVO {
     private int boardGroupId;
     private int categoryId;
     private int userId;
+    private int rnum;
 
 
     

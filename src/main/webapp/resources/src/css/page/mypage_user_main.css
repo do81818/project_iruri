@@ -71,7 +71,7 @@
     font-family: 'Cafe24SsurroundAir';
     font-size: 50px;
     color: var(--iruri-light-blue-color);
-    padding-left:20px;
+    padding-left:30px;
     padding-top: 40px;
   }
   /* userchallenge */
@@ -85,7 +85,7 @@
     font-family: 'Cafe24SsurroundAir';
     font-size: 50px;
     color: var(--iruri-light-blue-color);
-    padding-left:78px;
+    padding-left:65px;
     padding-top: 40px;
   }
   
@@ -105,7 +105,7 @@
   }
   
   .border1{
-    border:0.5px solid var(--iruri-light-gray-color)
+    border:0.5px solid var(--iruri-light-gray-color);
   }
 
 /* -----------신체정보-------------- */
@@ -164,7 +164,7 @@ button#addData{
   font-family: 'Cafe24SsurroundAir';
   font-size: 12px;
   color: var(--iruri-indigo-color);
-  padding-left: 3px;
+  padding-left: 50px;
 
 }
 button#addData1{
@@ -174,7 +174,7 @@ button#addData1{
   font-family: 'Cafe24SsurroundAir';
   font-size: 12px;
   color: var(--iruri-indigo-color);
-  padding-left: 10px;
+  padding-left: 35px;
 
 
 }
@@ -355,6 +355,7 @@ table.calendar tr th{
 canvas#myChart{
   position: relative;
   top: 5px;
+ left: 40px;
 
 }
 

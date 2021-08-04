@@ -41,7 +41,9 @@ public class IUserVO {
     private int userPoint;
     private boolean userBlackList;
     private String userBlaskListReason;
-    private int kakaoId;
+    private String kakaoId;
+    private String naverId;
+    private String googleId;
     
     private List<AuthVO> authList;
 }

@@ -20,11 +20,14 @@
 @import "page/c_detail_before_styles.css";
 @import "page/c_detail_after_styles.css";
 @import "page/mypage_trainer.css";
+@import "page/mypage_trainer_profit.css";
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
 @import "page/mypage_user_pointlist.css";
 @import "page/datepicker.min.css";
+@import "page/mypage_user_challengelist.css";
+@import "page/ptClass.css";
 
 :root {
   /* font-size */
@@ -95,7 +98,10 @@ html {
 .iruri-level-icon,
 .iruri-time-icon,
 .iruri-check-no-icon,
-.iruri-check-yes-icon {
+.iruri-check-yes-icon,
+.iruri-heart-gray-icon,
+.iruri-heart-red-icon,
+.iruri-selectBox-arrow-icon {
   display: inline-block;
   background-size: cover;
   width: 16px;
@@ -140,3 +146,14 @@ html {
   background-image: url("../img/icon/check_yes.png");
 }
 
+.iruri-heart-gray-icon {
+  background-image: url("../img/icon/heart_gray.png");
+}
+
+.iruri-heart-red-icon {
+  background-image: url("../img/icon/heart_red.png");
+}
+
+.iruri-selectBox-arrow-icon {
+  background-image: url("../img/icon/arrow_select.png");
+}

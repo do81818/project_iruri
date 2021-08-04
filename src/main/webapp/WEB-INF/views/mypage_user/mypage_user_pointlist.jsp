@@ -41,15 +41,15 @@
           </div>
           <div id = "m_userpoint_box">
             <div id="m_userpoint"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/pointlist.html">보유포인트</a></div>
-            <div id ="m_userpoint_number"></div>
+            <div id ="m_userpoint_number">${totalpoint}</div>
           </div>
           <div id = "m_userchanllenge_box">
             <div id="m_userchanllenge"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/challenge.list.html">참여중인챌린지</a></div>
-            <div id="m_userchanllenge_number">2</div>
+            <div id="m_userchanllenge_number">${userchallengecount}</div>
           </div>
           <div id = "m_userclass_box">
             <div id="m_userclass"><a href="../html/classlist.html">참여중인클래스</a></div>
-            <div id="m_userclass_number">${iclass}</div>
+            <div id="m_userclass_number"></div>
           </div>
         </div>
          
@@ -72,97 +72,79 @@
                 </div>
 
 
-
-
-                <!-- point 리스트 부분 -->
-                <!--  적립된포인트 -->
+				
+				<c:forEach var="point" items="${pointlist}" varStatus = "status">
+				<c:if test="${point.pointState eq 'save'}">
+				 <!--  적립된포인트 -->
                 <div class="m_userpoint_list">
                     <div id="m_point_type_save">적립</div>
                     <div id="m_point_content_box">
-                        <div id="m_point_date">2021.07.15</div>
-                        <div id="m_point_content">0000인증글 작성</div>
+                        <div id="m_point_date">${point.pointSavedate}</div>
+                        <div id="m_point_content">${point.pointContent}</div>
                     </div>
-                    <div id="m_point_price">+1000</div>
+                    <div id="m_point_price">${point.pointValue}</div>
                      
                  </div>
                  <p class="border1"></p>
-
-
-                 <!--  적립예정포인트 -->
+				
+				</c:if>
+				
+				<c:if test="${point.pointState eq 'appointed'}">
+				 <!--  적립예정포인트 -->
                  <div class="m_userpoint_list">
                     <div id="m_point_type_pre">적립예정</div>
                     <div id="m_point_content_box">
-                        <div id="m_point_date">2021.07.15</div>
-                        <div id="m_point_content">0000인증글 작성</div>
+                        <div id="m_point_date">${point.pointSavedate}</div>
+                        <div id="m_point_content">${point.pointContent}</div>
                     </div>
-                    <div id="m_point_price">+1000</div>
+                    <div id="m_point_price">${point.pointValue}</div>
                      
                  </div>
                  <p class="border1"></p>
-
-
-               <!--  사용된포인트 -->
-               <div class="m_userpoint_list">
+				</c:if>
+				
+				
+				<c:if test="${point.pointState eq 'use'}">
+				<div class="m_userpoint_list">
                 <div id="m_point_type_use">사용</div>
                 <div id="m_point_content_box">
-                    <div id="m_point_date">2021.07.15</div>
-                    <div id="m_point_content">0000인증글 작성</div>
+                    <div id="m_point_date">${point.pointSavedate}</div>
+                    <div id="m_point_content">${point.pointContent}</div>
                 </div>
-                <div id="m_point_price">+1000</div>
+                <div id="m_point_useprice">-${point.pointValue}</div>
                  
              </div>
              <p class="border1"></p>
-
-                 <!--  적립예정포인트 -->
-                 <div class="m_userpoint_list">
-                    <div id="m_point_type_pre">적립예정</div>
-                    <div id="m_point_content_box">
-                        <div id="m_point_date">2021.07.15</div>
-                        <div id="m_point_content">0000인증글 작성</div>
-                    </div>
-                    <div id="m_point_price">+1000</div>
-                     
-                 </div>
-                 <p class="border1"></p>
-
-
-                <!--  적립된포인트 -->
-                <div class="m_userpoint_list">
-                    <div id="m_point_type_save">적립</div>
-                    <div id="m_point_content_box">
-                        <div id="m_point_date">2021.07.15</div>
-                        <div id="m_point_content">0000인증글 작성</div>
-                    </div>
-                    <div id="m_point_price">+1000</div>
-                     
-                 </div>
-                 <p class="border1"></p>
-
-               <!--  사용된포인트 -->
-               <div class="m_userpoint_list">
-                <div id="m_point_type_use">사용</div>
-                <div id="m_point_content_box">
-                    <div id="m_point_date">2021.07.15</div>
-                    <div id="m_point_content">0000인증글 작성</div>
-                </div>
-                <div id="m_point_price">+1000</div>
-                 
-             </div>
-             <p class="border1"></p>
-
-
-
-                            <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-    <div class="page_nation">
-        <a class="arrow prev" href="#"></a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a class="arrow next" href="#"></a>
-      </div>
-
+				
+				
+				
+				</c:if>
+				</c:forEach>
+				
+				
+				        <!--페이징-->
+        <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+        <div class="page_nation">
+        <c:if test="${pageMaker.prev}">
+            <a class="prev" href="pointlist${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>
+        </c:if>
+        
+        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+        
+            <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+        </c:forEach>
+        
+        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+            <a class="next" href="pointlist${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>
+        </c:if>
+        </div>
+        
+        <form id="actionForm" action="mypage_user/mypage_user_pointlist" method="get">
+        	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        </form> 
+        
+				
                  
 
       

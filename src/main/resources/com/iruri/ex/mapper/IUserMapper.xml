@@ -3,7 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.IUserMapper">
-
 	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
 
 		<result property="userId" column="user_id"/>
@@ -36,7 +35,10 @@ INSERT INTO iuser
     user_email,
     user_pw,
     user_nickname,
-    user_phone
+    user_phone,
+    kakao_id,
+    naver_id,
+    google_id
 )
 VALUES
 (
@@ -44,7 +46,10 @@ VALUES
     #{userEmail},
     #{userPw}, 
     #{userNickname}, 
-    #{userPhone}
+    #{userPhone},
+    #{kakaoId},
+    #{naverId},
+    #{googleId}
 )    
 		]]>
 	</insert>
@@ -120,6 +125,18 @@ WHERE
 	user_email = #{userEmail}
 		]]>
 	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<update id="updatePw">
+		<![CDATA[
+UPDATE
+	iuser
+SET
+	user_pw = #{userPw}
+WHERE
+	user_email = #{userEmail}
+		]]> 
+	</update>
 
 	<!-- 7. 필요한 데이터를 추출할 sql문을 작성한다. -->
 	<!--  ![CDATA] 는 아래 코드를 xml문이 아닌 sql문으로 인식하게 하는 것이다.-->

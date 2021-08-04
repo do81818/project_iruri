@@ -1,0 +1,512 @@
+/* ------------------------------------------------ */
+/* 콘텐츠 */
+/* 회원정보 */
+.container content {
+  position: relative;
+}
+
+
+
+
+
+ /* 챌린지리스트 박스 */
+.m_chanllenge_box{
+margin: 30px;
+height: 77px;
+border-radius: 30px;
+padding: 10px 80px;
+padding-right:400px;
+background-color:var(--iruri-blue-color);
+display: flex;
+
+}
+
+
+.m_chanllenge_box>#m_now_chanllengelist_box{
+flex: 30%;
+padding-top: 15px;
+/* padding-right: 10px; */
+}
+
+.m_chanllenge_box>#m_pre_chanllengelist_box{
+flex: 35%;
+padding-top: 15px;
+
+}
+.m_chanllenge_box>#m_use_chanllengelist_box{
+flex: 35%;
+padding-top: 15px;
+
+}
+
+
+#m_now_chanllengelist{
+font-family: 'Cafe24SsurroundAir';
+font-size: 18px;
+color:var(--iruri-gray-color);
+
+
+}
+
+#m_now_chanllengelistnb{
+font-family: 'Cafe24SsurroundAir';
+font-size: 30px;
+color:var(--iruri-yellow-color);
+position: relative;
+top: -20px;
+text-align: center;
+margin-left: 40px;
+
+
+}
+
+#m_pre_chanllengelist{
+font-family: 'Cafe24SsurroundAir';
+font-size: 18px;
+color:var(--iruri-gray-color);
+
+}
+
+#m_pre_chanllengelistnb{
+font-family: 'Cafe24SsurroundAir';
+font-size: 30px;
+color:var(--iruri-yellow-color);
+position: relative;
+top: -20px;
+text-align: center;
+margin-left: 40px;
+
+}
+
+#m_use_chanllengelist{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 18px;
+    color:var(--iruri-gray-color);
+    
+}
+    
+#m_use_chanllengelistnb{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 30px;
+    color:var(--iruri-yellow-color);
+    position: relative;
+    top: -20px;
+    text-align: center;
+    margin-left: 40px;
+    
+}
+
+
+
+/*챌린지 메인 카테고리 글씨*/
+
+.m_c_category {
+line-height: 134px;
+clear: both;
+height: 134px;
+text-align: center;
+font-family: 'Cafe24Ssurround', sans-serif;
+font-size: 28px;
+color: var(--iruri-blue-color);
+}
+
+
+/*추천챌린지 글씨*/
+
+.m_c_text {
+font-family: 'Cafe24Ssurround', sans-serif;
+font-size: 20px;
+color: var(--iruri-blue-color);
+clear: both;
+width: 1200px;
+/* margin: 0 auto; */
+margin-top: 70px;
+margin-left: 80px;
+margin-bottom: 20px;
+text-align: left;
+}
+
+
+/*추천챌린지 이미지*/
+
+.m_c_recommend {
+display: inline-block;
+clear: both;
+/* width: 1200px; */
+margin: 0 auto;
+}
+
+.m_c_recommend .m_left{
+width: 40px;
+height: 40px;
+float: left;
+margin-right: 40px;
+margin-top: 170px;
+}
+.m_c_recommend .m_right{
+width: 40px;
+height: 40px;
+float: right;
+margin-top: 170px;
+}
+
+.m_c_recommend_img {
+width: 490px;
+height: 400px;
+background-color: var(--iruri-indigo-color);
+margin-bottom: 34px;
+padding: 20px;
+float: left;
+margin-right: 30px;
+border-radius: 30px;
+}
+
+.m_c_recommend_title {
+height: 73px;
+margin-bottom: 15px;
+font-family: 'Cafe24Ssurround', sans-serif;
+color: var(--iruri-green-color);
+font-size: 32px;
+float: left;
+position: relative;
+top: 220px;
+}
+
+.m_c_recommend_date {
+font-size: 20px;
+color: var(--iruri-light-gray-color);
+float: left;
+position: relative;
+top: 220px;
+}
+
+
+/*추천 챌린지 하트*/
+
+.m_c_heart .m_heart_label {
+width: 48px;
+height: 43px;
+position: relative;
+top: 200px;
+float: right;
+}
+
+input[type=checkbox] {
+display: none;
+}
+
+.m_c_heart input[type=checkbox]+label {
+display: inline-block;
+cursor: pointer;
+background: url('/ex/resources/src/img/icon/heart_gray.png') center/48px 43px no-repeat;
+}
+
+.m_c_heart input[type=checkbox]:checked+label {
+background-image: url('/ex/resources/src/img/icon/heart_red.png');
+}
+
+
+/*관심챌린지, 지난챌린지 글씨*/
+
+.m_c_main_tab {
+margin-bottom: 23px;
+text-align: left;
+margin-left: 45px;
+}
+
+.m_c_like_last a {
+font-family: 'Cafe24Ssurround', sans-serif;
+font-size: 20px;
+color: var(--iruri-blue-color);
+display: inline-block;
+margin: 0 20px;
+text-decoration: none;
+}
+
+
+/*챌린지 검색창*/
+
+.m_c_search {
+margin: 0 auto;
+height: 40px;
+margin-bottom: 53px;
+clear: both;
+text-align: center;
+}
+
+
+/*인풋박스 (검색창)*/
+
+.m_c_search_box {
+display: inline-block;
+border-radius: 24px;
+border: 1px solid var(--iruri-light-gray-color);
+padding: 14px 20px;
+width: 487px;
+height: 48px;
+box-sizing: border-box;
+padding-left: 40px;
+margin-right: 20px;
+}
+
+
+/*검색할때 안에 글씨쓰는곳*/
+
+.m_c_search_box input[type=text] {
+font-size: 20px;
+color: var(--iruri-indigo-color);
+width: 390px;
+height: 25 px;
+resize: none;
+font-family: 'NanumBarunGothic';
+outline: none;
+border: none;
+}
+
+
+/*돋보기 아이콘*/
+
+.m_search_icon {
+display: inline-block;
+cursor: pointer;
+width: 19px;
+height: 19px;
+background: url('../icon/search.png') no-repeat;
+background-size: cover;
+border: none;
+}
+
+
+/*챌린지 정렬(셀렉트박스)*/
+
+
+/* .c_sort {
+width: 126px;
+height: 48px;
+font-size: 16px;
+color: var(--iruri-blue-color);
+border: 1px solid var(--iruri-blue-color);
+} */
+
+
+/*챌린지 취소 버튼*/
+
+.m_cl_cancel_challenge_bt{
+width: 140px;
+height: 48px;
+border-radius: 24px;
+background-color:var(--iruri-blue-color);
+  color: var(--iruri-yellow-color);
+font-size: 16px;
+line-height: 48px;
+border: none;
+outline: none;
+cursor: pointer;
+margin-left: 90px;
+margin-bottom:120px;
+}
+
+
+/*챌린지 리스트*/
+
+.m_c_list {
+width: 1200px;
+margin: 0 auto;
+}
+
+.m_c_list_detail {
+display: inline-block;
+width: 360px;
+margin-bottom: 10px;
+margin-left: 18px;
+/* margin-right: 18px; */
+}
+
+.m_c_list_detail .m_c_list_img {
+display: inline-block;
+text-align: center;
+width: 340px;
+height: 250px;
+border-radius: 30px;
+background-color: var(--iruri-gray-color);
+margin-bottom: 28px;
+margin-left: 40px;
+}
+
+
+.m_c_list_mark{
+  padding: 5px 6px;
+  font-size: 16px;
+  color: white;
+  background-color: var(--iruri-red-color);
+  font-weight: bold;
+  border-radius:10px;
+  display: inline;
+  float: left;
+  margin-left: 15px;
+  margin-top: 15px;
+
+
+}
+.m_c_trainer_name{
+ font-size: 15px;
+ color: var(--iruri-red-color); 
+ margin-left: 47px;
+ font-family: 'Cafe24Ssurround', sans-serif;
+ margin-bottom: 5px;
+
+}
+
+.m_c_list_title {
+height: 66px;
+font-family: 'Cafe24Ssurround', sans-serif;
+font-size: 26px;
+line-height: 37px;
+color: var(--iruri-blue-color);
+margin-bottom: 28px;
+margin-left: 45px;
+}
+
+.m_c_list_date {
+font-size: 18px;
+color: var(--iruri-gray-color);
+margin-bottom: 18px;
+margin-left: 45px;
+}
+
+.m_data_tags {
+margin-right: 2px;
+margin-bottom: 5px;
+text-transform: uppercase;
+margin-left: 45px;
+}
+
+.m_data_tag_blue {
+display: inline-block;
+font-size: 13px;
+color: white;
+height: 25px;
+line-height: 25px;
+padding: 2px 10px;
+border-radius: 10px;
+background-color: var(--iruri-light-blue-color);
+margin-left: 1px;
+margin-bottom: 3px;
+}
+
+.m_data_tag_red_content {
+  display: inline-block;
+  font-size: 13px;
+  color: white;
+  height: 25px;
+  line-height: 25px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background-color: var(--iruri-red-color);
+  margin-left: 1px;
+  margin-bottom: 5px;
+}
+
+
+.m_c_list_price {
+  font-size: 15px;
+  color: var(--iruri-gray-color);
+  margin-bottom: 18px;
+  margin-left: 45px;
+  
+}
+
+
+/*챌린지 리스트 하트*/
+
+.m_c_list_heart .m_heart_label {
+width: 43px;
+height: 43px;
+position: relative;
+bottom: 40px;
+float: right;
+}
+
+input[type=checkbox] {
+display: none;
+}
+
+.m_c_list_heart input[type=checkbox]+label {
+display: inline-block;
+cursor: pointer;
+background: url('/ex/resources/src/img/icon/heart_gray.png') center/43px 43px no-repeat;
+}
+
+.m_c_list_heart input[type=checkbox]:checked+label {
+background-image: url('/ex/resources/src/img/icon/heart_red.png');
+}
+
+
+/*아이콘*/
+
+.m_iruri_level_icon {
+background: url('/ex/resources/src/img/icon/ex_level.png') no-repeat;
+display: inline-block;
+background-size: cover;
+height: 15px;
+width: 15px;
+}
+
+.m_iruri_time_icon {
+background: url('/ex/resources/src/img/icon/ex_time.png') no-repeat;
+display: inline-block;
+background-size: cover;
+height: 15px;
+width: 16px;
+}
+
+
+
+/*페이징*/
+
+.m_page_nation {
+display: flex;
+width: 100%;
+margin-top: 80px;
+margin-bottom: 110px;
+justify-content: center;
+}
+
+.m_page_nation a {
+display: block;
+margin: 0 10px;
+float: left;
+width: 36px;
+height: 36px;
+line-height: 36px;
+text-align: center;
+font-size: 16px;
+color: var(--iruri-gray-color);
+text-decoration: none;
+}
+
+.m_page_nation .m_arrow_prev {
+position: relative;
+top: 9px;
+background: transparent url('/ex/resources/src/img/icon/arrow_red_left.png') no-repeat center center;
+width: 14px;
+height: 14px;
+background-size: cover;
+margin-right: 7px;
+}
+
+.m_page_nation .m_arrow_next {
+position: relative;
+top: 9px;
+background: transparent url('/ex/resources/src/img/icon/arrow_red_right.png') no-repeat center center;
+width: 14px;
+height: 14px;
+background-size: cover;
+margin-left: 7px;
+}
+
+.m_page_nation a.m_active {
+background-color: var(--iruri-red-color);
+color: var(--iruri-yellow-color);
+border-radius: 18px;
+}
