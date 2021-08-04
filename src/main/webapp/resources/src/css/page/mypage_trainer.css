@@ -607,3 +607,15 @@
   
 }
 
+  .classbar a:link {
+   color: var(--iruri-gray-color);
+   }
+  
+  .classbar a:visited {
+   color: var(--iruri-light-blue-color);
+   }
+ 
+  .classbar a:active {
+   color: var(--iruri-light-blue-color);
+   }
+

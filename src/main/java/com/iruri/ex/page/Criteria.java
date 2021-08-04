@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @Getter
 public class Criteria {
-    private int pageNum; //페이지 넘버
+    private int pageNum; // 페이지 넘버
     private int amount; //한 페이지 당 몇개의 데이터를 보여 줄건지
     private String keyword; //챌린지 메인 검색
     
