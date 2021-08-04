@@ -91,13 +91,22 @@ public class ChallengeServiceImpl implements ChallengeService {
     public List<IClassVO> challengeLikeList(Criteria cri, int userId) {
        
         log.info("get challengeLikeList()..");
-        return challengeMapper.getListWithPaging_challengeLikeList(cri, userId);
+        
+        //자꾸 parameter not found 떠서 하나하나 다 넣음.
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        String keyword = cri.getKeyword();
+        
+        return challengeMapper.getListWithPaging_challengeLikeList(pageNum, amount, keyword, userId);
     }
 
     @Override
     public int getTotal_challengeLikeList(Criteria cri, int userId) {
         log.info("getTotal_challengeLikeList()..");
-        return challengeMapper.getTotalCount_challengeLikeList(cri, userId);
+        
+        String keyword = cri.getKeyword();
+        
+        return challengeMapper.getTotalCount_challengeLikeList(keyword, userId);
     }
 
     //챌린지 상세 페이지

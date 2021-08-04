@@ -3,7 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.IUserMapper">
-
 	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
 
 		<result property="userId" column="user_id"/>

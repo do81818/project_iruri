@@ -17,11 +17,6 @@
 
 /* ---------------- 전체회원 테이블 디테일 ------------------ */
 
-.trainerMemberBlacklist,
-.insert_trainerMember {
-    display: none;
-}
-
 .totalTrainerMemberList td,
 .trainerMemberBlacklist td {
     padding: 22px 0;
