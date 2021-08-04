@@ -54,7 +54,15 @@
 	});
 	</script>
 
+<script>
+	//챌린지 검색
 
+	$(document).ready(function() {
+		$(".search_icon").on("click", function(e) {
+			e.preventDefault();
+		});
+	});
+</script>
 
 
 
@@ -124,21 +132,23 @@
 
 				<div class="c_search">
 					<!--챌린지 검색창-->
-					<form class="c_search_box"  action="">
+					<form class="c_search_box" method="GET" action="/ajax/challengeLikeList">
 
-						<input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)">
-						<button class="search_icon"></button>
+						<input type="text" class="keyword" autocomplete="off" id="keyword"
+							name="keyword" placeholder="검색어를 입력하세요.(챌린지 제목으로 검색됩니다.)" />
+						<button type="submit" class="search_icon" onclick="getlist(1)"></button>
 
 					</form>
 
+
 					<!--정렬(셀렉트박스)-->
 					<div id="select_wrap">
-						<div id="select" class="select">인기순</div>
+						<div id="select" class="select">시작일순</div>
 						<ul id="ul" class="select_ul">
 
-							<li data-value="value 1">인기순</li>
-							<li data-value="value 2">시작일순</li>
-							<li data-value="value 3">평점순</li>
+							<li data-value="value 1" onclick="getlist(1)">시작일순</li>
+                            <li data-value="value 2" onclick="getlist(1)">인기순</li>
+							
 						</ul>
 					</div>
 
@@ -214,40 +224,32 @@
 
 
 				<!--페이징-->
-				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 				<div class="page_nation"></div>
-				<form id="actionForm" action="/ex/iruri/challengeLikeList" method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-				</form>
-				
+			
+			
 <script>
 		function getlist(page) {
 			
+			var search = $("#keyword").val();
+			console.log(search);
 
 			    $.ajax({
-			        //url : '${pageContext.request.contextPath}/rest/after.json',
-			        url: 'http://localhost:8282/ex/ajax/challengeLikeList.json',
-			        //url : 'http://localhost:8282/ex/iruri/challengeList',
+			        url: 'http://localhost:8282/ex/ajax/challengeLikeList',
 			        type: 'GET',
 			        cache: false,
-			        //contentType: false,
-			        //processData: false,
 			       	dateType:'json',
 			   
 			        data: {
 			        	
 			           pageNum : page,
-			    
-			       
-			            
-			
+			           keyword: search,
 			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
 			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
 			            // url 상으론 /rest/after?pageNum=2 이런식
 			        },
 					success : function(result) {
 						console.log(result);
+						var sortText = document.querySelector('#select').innerText;
 				    	var list = result['list'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
@@ -259,9 +261,11 @@
 							htmls += '</div>';
 							
 						} else {
-							//const challengeList = document.querySelector('.c_list');
-							//const page = document.querySelector('.page_nation');
 
+							if(sortText === '인기순') {
+								list = list.sort(function(a, b) {return b.classLike - a.classLike});															
+							}
+							
 							$(list).each(function() {
 
 												//챌린지 리스트
@@ -338,8 +342,6 @@
 	                     
 	                        $(".c_list").html(htmls);
 	         				$(".page_nation").html(htmls2);
-	         				//challengeList.innerHTML = htmls;
-							//page.innerHTML = htmls2;
 	                     }
 	                     
 	                 });
@@ -352,44 +354,6 @@
 	                getlist(1);
 	            });
 							
-							
-							/* 
-							htmls2 += '<c:if test="${pageMaker.prev}">';
-							htmls2 += '<a class="prev" href="challengeList${pageMaker.makeQuery(pageMaker.startPage - 1) }"></a>';
-							htmls2 += '</c:if>';
-
-							htmls2 += '<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">';
-							htmls2 += '<a href="challengeList${pageMaker.makeQuery(num)}" class="active">${num}</a>';
-							htmls2 += '</c:forEach>';
-
-							htmls2 += '<c:if test="${pageMaker.next && pageMaker.endPage > 0}">';
-							htmls2 += '<a class="next" href="challengeList${pageMaker.makeQuery(pageMaker.endPage +1) }"></a>';
-							htmls2 += '</c:if>';
-
-
-							htmls2 += '<form id="actionForm" action="iruri/challengeList" method="get">';
-							htmls2 += '<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">';
-							htmls2 += '<input type="hidden" name="amount" value="${pageMaker.cri.amount}">';
-							htmls2 += '</form>';
-							
-							
-				
-						
-							challengeList.innerHTML = htmls;
-							page.innerHTML = htmls2;
-			    
-						}
-						
-						
-
-						
-					}
-				});
-				
-	} 
-	*/
-	
-	
 
 </script>
 
