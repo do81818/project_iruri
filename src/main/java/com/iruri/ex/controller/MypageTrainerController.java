@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
@@ -50,78 +52,11 @@ public class MypageTrainerController {
          * model.addAttribute("classList", classList);
          */
 
-        /* log.info(iClassService.classList(vo.getUserId())); */
-        /* log.info(vo.getAuthList().get(0).getAuthContent()); */
-
         return "mypage_trainer/mypage_trainer_main";
     }
 
-    // ajax
-    // 현재 운영중인 클랴스
-    /*
-     * @ResponseBody
-     * 
-     * @RequestMapping("/mypage/trainercurrent") public List<IClassVO>
-     * mypagecurrnet(@CurrentUser IUserVO vo) {
-     * 
-     * List<IClassVO> classVOList2 = iClassService.classCurrentList(vo.getUserId());
-     * 
-     * return classVOList2; }
-     */
-    // ajax
-    // 종료된 클랴스
-    @ResponseBody
-    @GetMapping("/mypage/trainerclassend")
-    public List<IClassVO> mypageend(@CurrentUser IUserVO vo) {
-
-        List<IClassVO> classVOList3 = iClassService.classEndList(vo.getUserId());
-
-        return classVOList3;
-    }
-
-    // ajax
-    // 현재 운영중인 클랴스
-    @ResponseBody
-    @GetMapping("/mypage/trainercurrent")
-    public ResponseEntity<HashMap<String, Object>> mypageCurrent(@CurrentUser IUserVO vo, Criteria cri) {
-        HashMap<String, Object> result = new HashMap<>();
-        // List<IClassVO> classVOList2 = iClassService.classCurrentList(vo.getUserId());
-        int total = iClassService.getTotal(vo.getUserId(), cri);
-        result.put("pageMaker", new PageVO(cri, total));
-        result.put("list", iClassService.getList(vo.getUserId(), cri));
-
-        return ResponseEntity.ok(result);
-
-    }
-
-    /*
-     * @GetMapping("/mypage/trainer") public String list(Criteria cri, Model model)
-     * { log.info("challenge_list().."); log.info(cri);
-     * 
-     * model.addAttribute("challengeList", iClassService.classCurrentList(cri));
-     * 
-     * 
-     * int total = iClassService.getTotal(cri); log.info("total" + total);
-     * model.addAttribute("pageMaker", new PageVO(cri, total) );
-     * 
-     * return "mypage_trainer/mypage_trainer_main"; }
-     */
-
-    // ModelAndView 버전
-    /*
-     * @RequestMapping("/mypage/trainer") public ModelAndView mypageT(Principal
-     * principal, ModelAndView mav) { log.info("main() ... ");
-     * 
-     * 
-     * IUserVO vo = iUserService.selectOne(principal.getName());
-     * 
-     * mav.setViewName("mypage_trainer/mypage_trainer_main"); mav.addObject("user",
-     * vo);
-     * 
-     * 
-     * return mav; }
-     */
-
+ 
+    // 수익
     @RequestMapping("/mypage/trainer/profit")
     public String mypageProfit(Principal principal, Model model) {
         log.info("profit() ... ");
@@ -130,9 +65,65 @@ public class MypageTrainerController {
         IUserVO vo = iUserService.selectOne(principal.getName()); 
         model.addAttribute("user", vo);
         
-        
 
         return "mypage_trainer/mypage_trainer_profit";
     }
+    
+    
+    //트레이너 마이페이지 메인-페이징 처리(ajax)
+    @ResponseBody
+    @GetMapping("/ajax/mypage/trainerCurrent")
+    public ResponseEntity<HashMap<String, Object>> mypageTrainerMainAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("mypageTrainerMainAjax");
+        
+        Criteria cri = new Criteria(pageNum, 6);
+        
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        log.info("유저아이디: " + userId);
+        
+        int total = iClassService.getTotal_mypageTrainerClassList(cri, userId);
+        log.info("토탈: " + total);
+        
+        List<IClassVO> list = iClassService.mypageTrainerClassList(cri, userId);
+        
+        result.put("list", list);
+        
+        log.info("리스트: " + list);
+        
+        result.put("pageMaker", new PageVO(cri, total));
+
+        return ResponseEntity.ok(result);
+    }
+    
+    // 종료된 클랴스
+    @ResponseBody
+    @GetMapping("/ajax/mypage/trainerEnd")
+    public ResponseEntity<HashMap<String, Object>> mypageTrainerMainAjaxEnd(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("mypageTrainerMainAjax");
+        
+        Criteria cri = new Criteria(pageNum, 6);
+        
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        log.info("유저아이디: " + userId);
+        
+        int total = iClassService.getTotal_mypageTrainerClassListEnd(cri, userId);
+        log.info("토탈: " + total);
+        
+        List<IClassVO> list = iClassService.mypageTrainerClassListEnd(cri, userId);
+        
+        result.put("list", list);
+        
+        log.info("리스트: " + list);
+        
+        result.put("pageMaker", new PageVO(cri, total));
+
+        return ResponseEntity.ok(result);
+    }
+    
+
 
 }

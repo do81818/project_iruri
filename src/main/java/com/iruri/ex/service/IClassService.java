@@ -39,4 +39,11 @@ public interface IClassService {
     List<IClassVO> challengeEndList(Criteria criteria);
     int getTotal_challengeEndList(Criteria cri);
     
+    // 현재 진행중인 클래스(+페이징)
+    int getTotal_mypageTrainerClassList(Criteria cri, int userId);
+    List<IClassVO> mypageTrainerClassList(Criteria cri, int userId);
+    
+    // 종료된 클래스(+페이징)
+    int getTotal_mypageTrainerClassListEnd(Criteria cri, int userId);
+    List<IClassVO> mypageTrainerClassListEnd(Criteria cri, int userId);
 }

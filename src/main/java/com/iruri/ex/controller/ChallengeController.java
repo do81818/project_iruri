@@ -187,7 +187,7 @@ public class ChallengeController {
         iClassVO.setClassPrice(150000);
         iClassVO.setClassNeed("준비물테스트");
         iClassVO.setCategoryId(1);
-        iClassVO.setUserId(vo.getUserId());
+        //iClassVO.setUserId(vo.getUserId());
 
         log.info("iClassVO: " + iClassVO);
         log.info("exerciseKindVO: " + exerciseKindVO.getExerciseKind());

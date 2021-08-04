@@ -238,10 +238,6 @@
 			        data: {
 			        	
 			           pageNum : page,
-			    
-			       
-			            
-			
 			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
 			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
 			            // url 상으론 /rest/after?pageNum=2 이런식

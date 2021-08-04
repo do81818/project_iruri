@@ -123,8 +123,36 @@ public class IClassServiceImpl implements IClassService {
         log.info("getTotal_challengeEndList()..");
         return iClassMapper.getTotalCount_challengeEndList(cri);
     }
+    
+    // 현재 진행중인 클래스(+페이징)
+    @Override
+    public List<IClassVO> mypageTrainerClassList(Criteria cri, int userId) {
+       
+        log.info("get mypageTrainerClassList()..");
+        return iClassMapper.getListWithPaging_mypageTrainerClassList(cri, userId);
+    }
 
+    @Override
+    public int getTotal_mypageTrainerClassList(Criteria cri, int userId) {
+        log.info("getTotal_mypageTrainerClassList()..");
+        return iClassMapper.getTotalCount_mypageTrainerClassList(cri, userId);
+    }
+    
   
+    // 종료된 클래스(+페이징)
+    @Override
+    public List<IClassVO> mypageTrainerClassListEnd(Criteria cri, int userId) {
+       
+        log.info("get mypageTrainerClassListEnd()..");
+        return iClassMapper.getListWithPaging_mypageTrainerClassListEnd(cri, userId);
+    }
+
+    @Override
+    public int getTotal_mypageTrainerClassListEnd(Criteria cri, int userId) {
+        log.info("getTotal_mypageTrainerClassListEnd()..");
+        return iClassMapper.getTotalCount_mypageTrainerClassListEnd(cri, userId);
+    }
+
 
 
 
