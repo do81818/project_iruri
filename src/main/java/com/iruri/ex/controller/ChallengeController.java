@@ -60,12 +60,13 @@ public class ChallengeController {
     //챌린지 메인 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeList")
-    public ResponseEntity<HashMap<String, Object>> challengeList(@RequestParam("pageNum") int pageNum) {
+    public ResponseEntity<HashMap<String, Object>> challengeList(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword) {
        
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
        
-          
+        cri.setKeyword(keyword);
+        
         //전체챌린지
         int total = challengeService.getTotal_challenge(cri);
         log.info("ajax_getTotal_challenge:" + total);
@@ -84,7 +85,6 @@ public class ChallengeController {
     
 
     // 챌린지 메인 - 지난 챌린지
-
     @GetMapping("/iruri/challengeEndList")
     public ModelAndView challengeEndList(ModelAndView mav) {
         
@@ -97,13 +97,18 @@ public class ChallengeController {
     //챌린지 메인 - 지난 챌린지 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeEndList")
-    public ResponseEntity<HashMap<String, Object>> challengeEndList(@RequestParam("pageNum") int pageNum) {
-       
+    public ResponseEntity<HashMap<String, Object>> challengeEndList(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword) {
+        log.info("challengeEndList() keyword: " + keyword);
+        
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
+        
+        cri.setKeyword(keyword);
 
         int total = challengeService.getTotal_challengeEndList(cri);
         log.info("ajax_getTotal_challenge:" + total);
+        
+
         
         result.put("pageMaker", new PageVO(cri, total));
         log.info("ajax_pageMaker" + cri);
@@ -111,22 +116,17 @@ public class ChallengeController {
         result.put("list", challengeService.challengeEndList(cri));
         log.info("ajax_challengeList()..");
         
-      
-        
-        
+
         return ResponseEntity.ok(result);
     }
     
     
-    
+
     // 챌린지 메인 - 관심 챌린지
-   
-    
     @GetMapping("/iruri/challengeLikeList")
     public ModelAndView challengeLikeList(ModelAndView mav) {
-        
+       
         mav.setViewName("challenge/challenge_LikeList");
-        // mav.addObject(null, mav);
         
         return mav;
     }
@@ -134,15 +134,13 @@ public class ChallengeController {
    //챌린지 메인 - 관심 챌린지 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeLikeList")
-    public ResponseEntity<HashMap<String, Object>> testtest(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
-        log.info("testtest");
-        
-        Criteria cri = new Criteria(pageNum, 9);
-        
+    public ResponseEntity<HashMap<String, Object>> testtest(@CurrentUser IUserVO vo, Criteria cri) {
+      
         HashMap<String, Object> result = new HashMap<>();
         
         int userId = vo.getUserId();
         log.info("유저아이디: " + userId);
+        log.info("cri: " + cri);
         
         int total = challengeService.getTotal_challengeLikeList(cri, userId);
         log.info("토탈: " + total);
@@ -158,6 +156,8 @@ public class ChallengeController {
     
     
     
+    
+    /*-------------챌린지 개설 폼-------------*/
     // 챌린지 개설 작성 페이지 폼
     @GetMapping("/iruri/challenge_make_form")
     public ModelAndView c_make_form(ModelAndView mav) {
@@ -171,7 +171,7 @@ public class ChallengeController {
 
     // 챌린지 개설 폼 작성 후 입력 (챌린지 등록)
     @PostMapping("/iruri/insert_challenge")
-    public String c_make_form2(IClassVO iClassVO, ExerciseKindVO exerciseKindVO, Principal principal) {
+    public String c_make_form2(IClassVO iClassVO, Principal principal) {
         IUserVO vo = iUserService.selectOne(principal.getName());
 
         log.info("challenge_make_form()...");
@@ -187,10 +187,10 @@ public class ChallengeController {
         iClassVO.setClassPrice(150000);
         iClassVO.setClassNeed("준비물테스트");
         iClassVO.setCategoryId(1);
-        iClassVO.setUserId(vo.getUserId());
+        iClassVO.setIUserVO(vo);
 
         log.info("iClassVO: " + iClassVO);
-        log.info("exerciseKindVO: " + exerciseKindVO.getExerciseKind());
+     
 
         challengeService.insertChallenge(iClassVO);
 
@@ -198,7 +198,7 @@ public class ChallengeController {
     }
 
    
-
+    /*-------------챌린지 상세 페이지-------------*/
     // 챌린지 상세 -참여 전
     @GetMapping("/iruri/c_detail_before")
     public String c_detail_before(IClassVO iClassVO, Model model) {
@@ -207,6 +207,14 @@ public class ChallengeController {
         model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
  
         return "challenge/challenge_detail_before";
+    }
+    
+    //챌린지 참여-유저 챌린지 목록 업데이트
+    @PostMapping("iruri/insert_user_challenge")
+    public String insertUserChallenge(IClassVO iClassVO, Principal principal) {
+        IUserVO vo = iUserService.selectOne(principal.getName());
+        
+        return"redirect:challenge_detail_after";
     }
 
     // 챌린지 상세 - 참여 후

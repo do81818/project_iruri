@@ -23,7 +23,7 @@
 		<result property="classNeed" column="CLASS_NEED"/>
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>		
+		<result property="rnum" column="rnum"/>	
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 		<collection property="exerciseDateList" resultMap="exerciseDateMap">
 		</collection>

@@ -154,10 +154,9 @@ input[type=checkbox] {
 .c_main_tab {
     margin-bottom: 53px;
     text-align: center;
-
 }
 
-.c_like_last {   
+.c_like_last {
     font-family: 'Cafe24Ssurround', sans-serif;
     font-size: 24px;
     color: var(--iruri-blue-color);
@@ -165,8 +164,6 @@ input[type=checkbox] {
     margin: 0 20px;
     text-decoration: none;
 }
-
-
 
 .c_like_last label {
     display: inline-block;
@@ -183,16 +180,20 @@ input[type=checkbox] {
     color: var(--iruri-blue-color);
 }
 
+
 /*관심챌린지 없을때 문구*/
-.c_list_not{
-	text-align: center;
-	font-family: 'Cafe24Ssurround', sans-serif;
+
+.c_list_not {
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
     font-size: 24px;
     color: var(--iruri-blue-color);
     display: inline-block;
     margin: 0 20px;
     text-decoration: none;
 }
+
+
 /*챌린지 검색창*/
 
 .c_search {
@@ -235,7 +236,6 @@ input[type=checkbox] {
     position: relative;
     right: 20px;
     bottom: 3.5px;
-    
 }
 
 
@@ -331,7 +331,7 @@ input[type=checkbox] {
     margin-right: 18.5px;
 }
 
-.c_list_detail .c_list_img img{
+.c_list_detail .c_list_img img {
     display: inline-block;
     text-align: center;
     width: 360px;

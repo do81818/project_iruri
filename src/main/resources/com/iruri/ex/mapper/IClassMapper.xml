@@ -101,22 +101,9 @@
 			user_id = #{userId} 
 		]]> 
 	</select>
-	
-	<!-- 참여 가능한 상위 챌린지 5개  -->
-	<select id="mainPageChallengeList" resultMap="iClassMap">
-		<![CDATA[
-SELECT *
-FROM
-(
-    SELECT cl.*, ca.category_name
-    FROM iclass cl, category ca
-    WHERE cl.category_id = ca.category_id
-    ORDER BY cl.class_like DESC
-)
-WHERE 
-rownum <= 5 and category_id = 1 and class_enddate >= sysdate
-		]]> 
-	</select>
+
+
+
 	
 	<!-- 참여 가능한 상위 PT클래스 5개 -->
 	<select id="mainPagePtClassLIst" resultMap="iClassMap">
@@ -151,6 +138,5 @@ FROM exercise_kind e,
 WHERE c.class_id = e.class_id
 	]]>		
 	</select>
-
 
 </mapper>
