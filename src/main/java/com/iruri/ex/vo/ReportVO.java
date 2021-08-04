@@ -1,11 +1,11 @@
 package com.iruri.ex.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /*
     BOARD_ID        NUMBER              No  
@@ -26,6 +26,4 @@ public class ReportVO {
     private int reportId;
     private int userId;
     
-    private String reportUserNickName;
-    private String reportUserRoll;
 }

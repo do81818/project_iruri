@@ -1,4 +1,4 @@
-@import url('./admin_main_basic.css');
+	@import url('./admin_main_basic.css');
 
 
 #admin_managementMenu {
@@ -112,7 +112,7 @@ td {
 }
 
 #memberInfo_balackList[type="checkbox"]+label {
-    background-image: url("../images/icon/check_no.png");
+    background-image: url("/ex/resources/src/img/icon/check_no.png");
     background-size: 18px auto;
     background-repeat: no-repeat;
     background-position: left center;
@@ -121,11 +121,11 @@ td {
 }
 
 #memberInfo_balackList[type=checkbox]:checked+label {
-    background-image: url('../images/icon/check_yes.png');
+    background-image: url('/ex/resources/src/img/icon/check_yes.png');
 }
 
 #memberInfo_balackList[type=checkbox]:disabled+label {
-    background-image: url('../images/icon/check_no.png');
+    background-image: url('/ex/resources/src/img/icon/check_no.png');
 }
 
 .memberInfo_balackListForm>div {
@@ -210,7 +210,7 @@ td {
 .admin_memberInfo_pointTitle input[type="radio"]+label {
     font-size: 18px ;
     color: var(--iruri-dark-gray-color);
-    background-image: url("../images/icon/check_no.png");
+    background-image: url("/ex/resources/src/img/icon/check_no.png");
     background-size: 18px auto;
     background-repeat: no-repeat;
     background-position: left center;
@@ -225,11 +225,11 @@ td {
 } */
 
 .admin_memberInfo_pointTitle form input[type="radio"]:checked +label{
-    background-image: url("../images/icon/check_yes.png");
+    background-image: url("/ex/resources/src/img/icon/check_yes.png");
 }
 
 .admin_memberInfo_pointTitle form input[type="radio"]:disabled +label{
-    background-image: url("../images/icon/check_yes.png");
+    background-image: url("/ex/resources/src/img/icon/check_yes.png");
 }
 
 .admin_memberInfo_pointTitle form input[type="number"] {
