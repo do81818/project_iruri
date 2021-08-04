@@ -25,6 +25,8 @@
 @import "page/mypage_user_boardlist.css";
 @import "page/mypage_user_pointlist.css";
 @import "page/datepicker.min.css";
+@import "page/mypage_user_challengelist.css";
+@import "page/ptClass.css";
 
 :root {
   /* font-size */
@@ -95,7 +97,10 @@ html {
 .iruri-level-icon,
 .iruri-time-icon,
 .iruri-check-no-icon,
-.iruri-check-yes-icon {
+.iruri-check-yes-icon,
+.iruri-heart-gray-icon,
+.iruri-heart-red-icon,
+.iruri-selectBox-arrow-icon {
   display: inline-block;
   background-size: cover;
   width: 16px;
@@ -140,3 +145,14 @@ html {
   background-image: url("../img/icon/check_yes.png");
 }
 
+.iruri-heart-gray-icon {
+  background-image: url("../img/icon/heart_gray.png");
+}
+
+.iruri-heart-red-icon {
+  background-image: url("../img/icon/heart_red.png");
+}
+
+.iruri-selectBox-arrow-icon {
+  background-image: url("../img/icon/arrow_select.png");
+}

@@ -22,9 +22,10 @@
 		<result property="classPrice" column="CLASS_PRICE"/>
 		<result property="classNeed" column="CLASS_NEED"/>
 		<result property="categoryId" column="CATEGORY_ID"/>
-		<result property="userId" column="USER_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>		
+		<result property="rnum" column="rnum"/>
+		<result property="classTime" column="CLASS_TIME"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 		<collection property="exerciseDateList" resultMap="exerciseDateMap">
 		</collection>
 		<collection property="exerciseKindList" resultMap="exerciseKindMap">
@@ -98,19 +99,58 @@
 			iclass
 		WHERE
 			user_id = #{userId} 
-		
-			
 		]]> 
 	</select>
 	
+	<!-- 참여 가능한 상위 챌린지 5개  -->
+	<select id="mainPageChallengeList" resultMap="iClassMap">
+		<![CDATA[
+SELECT *
+FROM
+(
+    SELECT cl.*, ca.category_name
+    FROM iclass cl, category ca
+    WHERE cl.category_id = ca.category_id
+    ORDER BY cl.class_like DESC
+)
+WHERE 
+rownum <= 5 and category_id = 1 and class_enddate >= sysdate
+		]]> 
+	</select>
 	
+	<!-- 참여 가능한 상위 PT클래스 5개 -->
+	<select id="mainPagePtClassLIst" resultMap="iClassMap">
+		<![CDATA[
+SELECT ic.*, e.exercise_kind
+FROM exercise_kind e,
+(
+    SELECT c.*, iu.user_nickname
+    FROM
+    (
+        SELECT cl.*, ca.category_name
+        FROM iclass cl, category ca
+        WHERE cl.category_id = ca.category_id
+        ORDER BY cl.class_like DESC
+    ) c, iuser iu
+    WHERE rownum <= 5 and category_id = 2 and class_state = 'show' and c.user_id = iu.user_id
+) ic
+WHERE ic.class_id = e.class_id
+		]]>
+	</select>
+	
+	<select id="mainPageExerciseVideoList" resultMap="iClassMap">
+	<![CDATA[
+SELECT c.*, e.exercise_kind
+FROM exercise_kind e,
+(
+    SELECT class_title, class_like, class_id
+    FROM iclass, category
+    WHERE iclass.category_id = category.category_id and iclass.category_id = 9 and rownum <= 5
+    ORDER BY class_like DESC
+) c
+WHERE c.class_id = e.class_id
+	]]>		
+	</select>
 
-	
-	
-	
-
-	
-   
-   
 
 </mapper>

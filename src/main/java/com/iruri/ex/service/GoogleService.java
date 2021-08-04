@@ -5,6 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -127,16 +130,24 @@ public class GoogleService {
         
     }
     
-    public void setContextHolder(String code) {
+    public int setContextHolder(String code, HttpServletRequest request) {
         log.info("setContextHolder: " + code);
         
         GoogleAuth googleAuth = getGoogleTokenInfo(code);
         GoogleProfile profile = getGoogleProfile(googleAuth.getAccess_token());
 
         IUserVO originUser = iUserService.findGoogleUser(profile.getEmail());
+        if(originUser == null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("googleId", profile.getEmail());
+            
+            return 0;
+        }
         UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+        return 1;
     }
     
 }

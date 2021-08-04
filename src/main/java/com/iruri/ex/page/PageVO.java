@@ -1,5 +1,8 @@
 package com.iruri.ex.page;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -17,10 +20,12 @@ public class PageVO {
     
     private int total;
     private Criteria cri;
+
     
     public PageVO(Criteria cri, int total) {
         this.cri = cri;
         this.total = total;
+
         
         this.endPage = (int) (Math.ceil(cri.getPageNum() / 5.0)) * 5;
         this.startPage = this.endPage - 4; //5페이지 기준
@@ -44,12 +49,18 @@ public class PageVO {
     //util
     public String makeQuery(int page) {
         UriComponents uriComponentsBuilder = UriComponentsBuilder.newInstance()
-                .queryParam("pageNum", page)
+                //.queryParam("pageNum", page)
                 .queryParam("pageNum", page) // pageNum=3
                 .queryParam("amount", cri.getAmount()) // pageNum=3&amount=10 (URL에서 3페이지 눌렀을때)
+                .queryParam("keyword", cri.getKeyword())
                 .build(); // ?pageNum=3&amount=10
+        
+     
         
         return uriComponentsBuilder.toUriString(); // ?pageNum=3&amount=10 리턴
     }
+    
+
+    
     
 }

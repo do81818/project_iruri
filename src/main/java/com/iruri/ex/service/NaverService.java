@@ -3,6 +3,9 @@ package com.iruri.ex.service;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -104,15 +107,25 @@ public class NaverService {
         return null;
     }
     
-    public void setContextHolder(String code, String state) {
+    public int setContextHolder(String code, String state, HttpServletRequest request) {
         log.info("setContextHolder: " + "CODE: " + code + "STATE: " + state);
         
         NaverAuth naverAuth = getNaverTokenInfo(code, state);
         NaverProfile profile = getNaverProfile(naverAuth.getAccess_token());
         
+        
         IUserVO originUser = iUserService.findNaverUser(profile.getResponse().getEmail());
+        if(originUser == null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("naverId", profile.getResponse().getEmail());
+            
+            return 0;
+        }
+                
         UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+        return 1;
     }
 }

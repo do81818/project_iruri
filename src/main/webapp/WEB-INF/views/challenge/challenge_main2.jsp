@@ -10,9 +10,6 @@
 	scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources"
 	scope="application" />
-	<c:set var="CONTEXT_PATH_CHALLENGE"
-	value="${pageContext.request.contextPath}/iruri"
-	scope="application" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,7 +22,73 @@
 <script src="${RESOURCES_PATH}/src/js/challenge/c_select.js" defer></script>
 
 
+<!-- <script type="text/javascript">
+        window.onload = function() {
 
+            $.ajax({
+                url: 'http://localhost:8282/ex/iruri/challengeAllList',
+                type: 'GET',
+                cache: false,
+                dataType: 'json',
+                success: function(list) {
+
+                	var htmls = '';
+
+                	  if (list.length < 1) {
+                          htmls = '현재 등록된 챌린지가 없습니다.';
+                      } else {
+                        
+                        const challengeList = document.querySelector('.c_list');
+
+                    list.forEach(function(listItem) {
+                        console.log(listItem.classStartDate);
+                        htmls += '<div class="c_list_detail">';
+                        htmls +=    '<div class="c_list_img">';
+                        htmls +=        '<img src="/ex/resources/src/img/icon/360-250.png">';
+                        htmls +=    '</div>';
+
+                        htmls +=    '<div class="c_list_title">';
+                        htmls +=        listItem.classTitle;
+                        htmls +=    '</div>';
+
+                        htmls +=    '<div class="c_list_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
+                        
+                        htmls +=    '<div class="data_tags">';
+                        htmls +=        '<div class="data_tag_blue">';
+                        htmls +=            '<i class="iruri_time_icon"></i>';
+                        htmls +=                listItem.classLevel;
+                        htmls +=         '</div>';
+
+                        htmls +=        '<div class="data_tag_blue">';
+                        htmls +=            '<i class="iruri_time_icon"></i>주';
+                        htmls +=                listItem.classExerciseCount + '회 이상';
+                        htmls +=        '</div>';
+                        htmls +=     '</div>';
+
+                        htmls +=        '<div class="c_list_person">';
+                        htmls +=                '참여중인 인원' + listItem.classJoinMember + '명';
+                        htmls +=                '(최대인원' + listItem.classTotalMember + '명)';
+                        htmls +=        '</div>';
+
+                        htmls +=    '<div class="c_list_heart">';
+                        htmls += 	'<input type="checkbox" id="heart3">';
+                        htmls += 	'<label for="heart3" class="heart_label">';
+                        htmls += 	'</label>';
+                        htmls += '</div>';
+
+                        htmls += '</div>';
+
+                        
+                    });
+
+                    challengeList.innerHTML = htmls;
+                    page.innerHTML = htmls2;
+                    }
+			
+			}
+		});
+	}
+    </script> -->
 <script>
 	$(document).ready(function(){
 		/* window.onload = function(){ */
@@ -54,9 +117,18 @@
             actionForm.submit();
         });
 	});
-	</script>	
 	
 	
+	//챌린지 검색
+	$(".search_icon").on("click", function(e){
+		e.preventDefault();
+		let val = $("input[name='keyword']").val();
+		moveForm.find("input[name='keyword']").val(val);
+		moveForm.find("input[name='pageNum']").val(1);
+		moveForm.submit();
+	});
+	</script>
+
 
 
 
@@ -87,7 +159,7 @@
 
 
 						<div class="c_heart">
-							<input type="checkbox" id="heart10000"><label for="heart10000"
+							<input type="checkbox" id="heart1"><label for="heart1"
 								class="heart_label"></label>
 						</div>
 					</div>
@@ -102,7 +174,7 @@
 
 
 						<div class="c_heart">
-							<input type="checkbox" id="heart20000"><label for="heart20000"
+							<input type="checkbox" id="heart2"><label for="heart2"
 								class="heart_label"></label>
 						</div>
 
@@ -111,38 +183,38 @@
 
 
 
-					<div class="c_main_tab">
-            		<p class="c_like_last">
-            		
-		                <input type="radio" id="c_tap1" name="c_taps" onclick="location.href='/ex/iruri/challengeList'">
-		                <label for="c_tap1">전체챌린지</label>
-		                <input type="radio" id="c_tap2" name="c_taps" onclick="location.href='/ex/iruri/challengeLikeList'">
-		                <label for="c_tap2">관심챌린지</label>
-		                <input type="radio" id="c_tap3" name="c_taps" onclick="location.href='/ex/iruri/challengeEndList'" checked>
-		                <label for="c_tap3">지난챌린지</label>
-						</p>
-            		
-        		</div>
+				<div class="c_main_tab">
+           		 <p class="c_like_last">
+	                <input type="radio" id="c_tap1" name="c_taps" onclick="location.href='/ex/iruri/challengeList'" checked>
+	                <label for="c_tap1">전체챌린지</label>
+	                <input type="radio" id="c_tap2" name="c_taps" onclick="location.href='/ex/iruri/challengeLikeList'" >
+	                <label for="c_tap2">관심챌린지</label>
+	                <input type="radio" id="c_tap3" name="c_taps" onclick="location.href='/ex/iruri/challengeEndList'" >
+	                <label for="c_tap3">지난챌린지</label>
+
+            	</p>
+       		 </div>
+
 
 
 				<div class="c_search">
 					<!--챌린지 검색창-->
-					<div class="c_search_box">
-					<%-- <form class="c_search_box"  action=""> --%>
+					<div class = "c_search_div">
+					<form class="c_search_box"  action="">
 
-						<input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" 
-						value="${pageMaker.cri.keyword}">
-						<button type="submit" class="search_icon"></button>
+						<input type="text" placeholder="검색어를 입력하세요.(진행중인 챌린지 제목만 검색됩니다.)" value="${pageMaker.cri.keyword}">
+						<button class="search_icon"></button>
 
-					
+					</form>
 					</div>
+
 					<!--정렬(셀렉트박스)-->
 					<div id="select_wrap">
-						<div id="select" class="select">인기순</div>
+						<div id="select" class="select">시작일순</div>
 						<ul id="ul" class="select_ul">
 
-							<li data-value="value 1">인기순</li>
-							<li data-value="value 2">시작일순</li>
+							<li data-value="value 1">시작일순</li>
+							<li data-value="value 2">인기순</li>
 							<li data-value="value 3">평점순</li>
 						</ul>
 					</div>
@@ -221,24 +293,19 @@
 				<!--페이징-->
 				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 				<div class="page_nation"></div>
-				
-				<form id="actionForm" action="/ex/iruri/challengeEndList" method="get">
+				<form id="actionForm" action="/ex/iruri/challengeList" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 				<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-			
 				</form>
 				
-<script> 
-
-
-
+<script>
 		function getlist(page) {
 			
 
 			    $.ajax({
 			        //url : '${pageContext.request.contextPath}/rest/after.json',
-			        url: 'http://localhost:8282/ex/ajax/challengeEndList.json',
+			        url: 'http://localhost:8282/ex/ajax/challengeList.json',
 			        //url : 'http://localhost:8282/ex/iruri/challengeList',
 			        type: 'GET',
 			        cache: false,
@@ -249,7 +316,6 @@
 			        data: {
 			        	
 			           pageNum : page,
-		
 			    
 			       
 			            
@@ -264,7 +330,6 @@
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
-			
 
 						if (list.length < 1) {
 							htmls = '현재 등록된 챌린지가 없습니다.';
@@ -273,16 +338,17 @@
 							//const page = document.querySelector('.page_nation');
 
 							$(list).each(function() {
-							
 
-												//챌린지 리스트
+												//챌린지 리스트 
 												htmls += '<div class="c_list_detail">';
 												htmls += '<div class="c_list_img">';
 												htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
+												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
 												htmls += this.classTitle;
+												htmls += '</a>';
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_date">'
@@ -314,8 +380,8 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_heart">';
-												htmls += '<input type="checkbox" id="heart'+this.classId+'">';
-												htmls += '<label for="heart'+this.classId+'" class="heart_label"></label>';
+												htmls += '<input type="checkbox" id="heart3">';
+												htmls += '<label for="heart3" class="heart_label"></label>';
 												htmls += '</div>';
 
 												htmls += '</div>';
@@ -401,24 +467,6 @@
 	
 
 </script>
-
-<script>
-	//챌린지 검색
-
-	$(document).ready(function(){
-		var actionForm = $("#actionForm");
-	$(".search_icon").on("click", function(e){
-		e.preventDefault();
-		let val = $("input[name='keyword']").val();
-		actionForm.find("input[name='keyword']").val(val);
-		actionForm.find("input[name='pageNum']").val(1);
-		actionForm.submit();
-	});
-	});
-
-	</script>
-
-
 
 		</main>
 

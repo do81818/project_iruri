@@ -2,6 +2,9 @@ package com.iruri.ex.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.PointVO;
@@ -19,7 +22,8 @@ public interface PointService {
     
     int totalpoint(int userId);
     
-    List<PointVO> pointList(int userId);
+    List<PointVO> pointList(int userId, Criteria criteria);
+	int total(int userId);
 
     
 

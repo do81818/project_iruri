@@ -15,13 +15,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
-POINT_ID	NUMBER
-POINT_CHANGEDATE	DATE
-POINT_SAVEDATE	DATE
-POINT_STATE	VARCHAR2(100 BYTE)
-POINT_VALUE	NUMBER
-POINT_CONTENT	VARCHAR2(100 BYTE)
-USER_ID	NUMBER
+이름          널?       유형     
+----------- -------- ------ 
+LIKELIST_ID NOT NULL NUMBER 
+USER_ID              NUMBER 
+CLASS_ID             NUMBER 
+BOARD_ID             NUMBER 
 */
 
 @Getter
@@ -29,19 +28,13 @@ USER_ID	NUMBER
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PointVO {
+public class LikeListVO {
     
-    private int pointId;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date pointChangedate;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date pointSavedate;
-    private String pointState;
-    private int pointValue;
-    private String pointContent;
+    private int likeListId;
     private int userId;
+    private int classId;
+    private int boardId;
     private int rnum;
-
 
 
     

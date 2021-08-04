@@ -15,11 +15,15 @@ import com.iruri.ex.service.IUserInfoService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.IUserUpdateService;
 import com.iruri.ex.service.PointService;
+import com.iruri.ex.service.UserChallengeService;
+import com.iruri.ex.page.Criteria;
+import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.BoardService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserInfoService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.vo.BoardVO;
+import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserInfoVO;
 
 import com.iruri.ex.vo.IUserVO;
@@ -45,6 +49,8 @@ public class MypageUserController {
 	PointService pointService;
 	@Autowired
 	IUserUpdateService iuserupdateService;
+	@Autowired
+	UserChallengeService userchallengeService;
 
 		
 	// 마이페이지의 메인
@@ -61,11 +67,10 @@ public class MypageUserController {
         model.addAttribute("userinfo",infoVO) ;
         log.info(infoVO);
 
-        // 유저의 클래스 갯수 받아오기 (수정해야함)
-        // 내가 한거
-        int classcountvo = iClassService.classcount(vo.getUserId());
-        model.addAttribute("iclass",classcountvo);
-        log.info(classcountvo);
+        // 유저의 챌린지 갯수 받아오기 (수정해야함)
+		  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
+		  log.info(challengecountvo);
+		  model.addAttribute("userchallengecount",challengecountvo);
         
 
 		// 유저의 작성글 갯수 받아오기
@@ -106,6 +111,7 @@ public class MypageUserController {
  		
  		iuservo.setUserId(vo.getUserId());
  	    iuserupdateService.update(iuservo);
+ 	    
 
         return "redirect:/mypage";
         
@@ -135,8 +141,8 @@ public class MypageUserController {
 	
 	// 마이페이지의 보드리스트 페이지
     // 메인 페이지 이동
-	   @RequestMapping("/mypage/boardlist")
-	   public String boardmain(Principal principal,Model model) {
+	@GetMapping("/mypage/boardlist")
+	   public String boardmain(Principal principal,Model model,Criteria cri) {
 	       log.info("main() ... ");
 	       
 	       
@@ -146,9 +152,10 @@ public class MypageUserController {
 	        
 	        // 유저의 클래스 갯수 받아오기 (수정해야함)
 	        // 내가 한거
-	        int classcountvo = iClassService.classcount(vo.getUserId());
-	        model.addAttribute("iclass",classcountvo);
-	        log.info(classcountvo);
+			/*
+			 * int classcountvo = iClassService.classcount(vo.getUserId());
+			 * model.addAttribute("iclass",classcountvo); log.info(classcountvo);
+			 */
 	        
 			// 유저의 작성글 갯수 받아오기
 	        int boardcountvo = boardService.boardcount(vo.getUserId());
@@ -179,24 +186,38 @@ public class MypageUserController {
 			 * boardService.myboardList(vo.getUserId());
 			 * model.addAttribute("myboardlist",boardlistVO); log.info(boardlistVO);
 			 */
+	
+	        // 내가 작성한 댓글 list ( 페이징 )
+	        List<BoardVO> commentlistVO = boardService.commentList(vo.getUserId(),cri);
 	        
-	        // 내가 작성한 댓글 list
-	        List<BoardVO> commentlistVO = boardService.commentList(vo.getUserId());
+	        int total = boardService.total(vo.getUserId());
+	        log.info(total);
 	        model.addAttribute("commentlist",commentlistVO);
-	        log.info(commentlistVO);
+	        model.addAttribute("pageMaker", new PageVO(cri, total));
+	        
+	        log.info("list"+commentlistVO);
 	        
 	        // 유저의 토탈 포인트
 	        int totalpointvo = pointService.totalpoint(vo.getUserId());
 	        model.addAttribute("totalpoint",totalpointvo);
-	        log.info(totalpointvo);
+	        log.info("totalpoont" +totalpointvo);
+	        
+	        // 유저의 챌린지 갯수 받아오기 (수정해야함)
+			  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
+			  log.info(challengecountvo);
+			  model.addAttribute("userchallengecount",challengecountvo);
+	        
+	        
+	        // 페이징
+	        
 	       
 	      return "/mypage_user/mypage_user_boardlist";
 	   }
 	   
 	   
 	   // 마이페이지 포인트 리스트
-	   @RequestMapping("/mypage/pointlist")
-	   public String pointmain(Principal principal,Model model) {
+	   @GetMapping("/mypage/pointlist")
+	   public String pointmain(Principal principal,Model model,Criteria cri) {
 	       log.info("main() ... ");
 	       
 	    // 로그인한 유저의 정보 받아오기
@@ -205,9 +226,10 @@ public class MypageUserController {
 	        
 	        // 유저의 클래스 갯수 받아오기 (수정해야함)
 	        // 내가 한거
-	        int classcountvo = iClassService.classcount(vo.getUserId());
-	        model.addAttribute("iclass",classcountvo);
-	        log.info(classcountvo);
+			/*
+			 * int classcountvo = iClassService.classcount(vo.getUserId());
+			 * model.addAttribute("iclass",classcountvo); log.info(classcountvo);
+			 */
 	        
 
 			// 유저의 작성글 갯수 받아오기
@@ -237,9 +259,25 @@ public class MypageUserController {
 	        log.info(totalpointvo);
 	        
 	        // 유저의 포인트 list
-	        List<PointVO> pointlistVO = pointService.pointList(vo.getUserId());
+			/*
+			 * List<PointVO> pointlistVO = pointService.pointList(vo.getUserId());
+			 * model.addAttribute("pointlist",pointlistVO); log.info(pointlistVO);
+			 */
+	        
+	        // 유저의 포인트 list ( 페이징 )
+	        List<PointVO> pointlistVO =  pointService.pointList(vo.getUserId(),cri);
+	        
+	        int total = boardService.total(vo.getUserId());
+	        log.info(total);
 	        model.addAttribute("pointlist",pointlistVO);
-	        log.info(pointlistVO);
+	        model.addAttribute("pageMaker", new PageVO(cri, total));
+	        
+	        log.info("list"+pointlistVO);
+	        
+	        // 유저의 챌린지 갯수 받아오기 (수정해야함)
+			  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
+			  log.info(challengecountvo);
+			  model.addAttribute("userchallengecount",challengecountvo);
 	        
 
 	        
@@ -247,5 +285,51 @@ public class MypageUserController {
 	        
 	       return "/mypage_user/mypage_user_pointlist";
 	       
+	   }
+	   
+	   
+	   
+	   @GetMapping("/mypage/challengelist")
+	   public String challengemain(Principal principal,Model model) {
+	       log.info("main() ... ");
+	       
+	    // 로그인한 유저의 정보 받아오기
+	        IUserVO vo = iUserService.selectOne(principal.getName());
+	        model.addAttribute("user",vo) ;
+	        
+
+			// 유저의 작성글 갯수 받아오기
+	        int boardcountvo = boardService.boardcount(vo.getUserId());
+	        model.addAttribute("boardcount",boardcountvo);
+	        log.info(boardcountvo);
+	        
+
+	        // 유저의 토탈 포인트
+	        int totalpointvo = pointService.totalpoint(vo.getUserId());
+	        model.addAttribute("totalpoint",totalpointvo);
+	        log.info(totalpointvo);
+	        
+	        // 유저의 챌린지 갯수 받아오기 
+			  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
+			  log.info(challengecountvo);
+			  model.addAttribute("userchallengecount",challengecountvo); 
+		        List<IUserInfoVO> infoVO = iUserinfoService.userinfoList(vo.getUserId());
+		        model.addAttribute("userinfo",infoVO) ;
+		        log.info(infoVO);
+		        
+		        
+		     // 유저의 신청 챌린지 리스트 
+		       List<IClassVO> userchallengelistvo = userchallengeService.userchallengelist(vo.getUserId());
+		       log.info(userchallengelistvo);
+		       model.addAttribute("userchallengelist",userchallengelistvo);	
+		       
+		       
+		     // 유저의 관심챌린지 리스트
+		      List<IClassVO> userlikelistvo = userchallengeService.userlikelist(vo.getUserId());
+		      log.info(userlikelistvo);
+		      model.addAttribute("userlikelist",userlikelistvo);
+			  
+			 
+	        return "/mypage_user/mypage_user_challengelist";
 	   }
 }
