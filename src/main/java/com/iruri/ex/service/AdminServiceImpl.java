@@ -130,8 +130,12 @@ public class AdminServiceImpl implements AdminService {
 
     // 일반/유료회원 현재 보유포인트
     @Override
-    public int getUserBasicInfoPointTotal(int userId) {
-        return mapper.getUserBasicInfoPointTotal(userId);
+    public Integer getUserBasicInfoPointTotal(int userId) {
+    	Integer totalPoint = mapper.getUserBasicInfoPointTotal(userId);
+    	if(!(totalPoint > 0)) {
+    		return mapper.getUserBasicInfoPointTotal(userId);
+    	}
+    	return 0;
     }
 
     // 일반/유료회원정보 운동정보 리스트보기 _all

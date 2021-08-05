@@ -179,30 +179,31 @@
 
 	<!-- 트레이너 회원 리스트 -->
 	<select id="getTrainerMemberList" resultMap="iuserAuthJoinMap">
-		<![CDATA[
+		<![CDATA[  
 		select *
 		from (
 		select rownum rn, li.*
 		from (
-		select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
-      		round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
+		select ui.*, gr.grade
 			from (
-			    select a.*, authority.auth_content from authority, (
-			        select u.*, gs.avg_grade
-			        from iuser u, (
-			            select g.avg_grade, iclass.class_id, iclass.user_id
-			            from (select round(avg(grade_score),1) as avg_grade, class_id 
-			                  from grade
-			                  group by class_id) g, iclass
-			            where g.class_id = iclass.class_id
-			            ) gs
-			        where u.user_id = gs.user_id
-			        ) a
-			    where authority.user_id = a.user_id and authority.auth_id = 3
-			        ) t 
-			group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
-			       t.user_blacklist, t.user_blacklist_reason, t.auth_content
-			order by t.user_id desc) li
+				select u.*, a.auth_id, a.auth_content 
+				from iuser u inner join authority a
+				on u.user_id = a.user_id and a.auth_id = 3
+			) ui inner join
+			(
+				select c.user_id, avg(g.gs) as grade, count(*)
+				from iclass c, (
+				select class_id, avg(grade_score) gs, count(*) from grade
+				group by class_id
+				having count(*)> 0) g
+				where c.class_id = g.class_id
+				group by c.user_id
+				having count(*)>0
+			) gr
+			on ui.user_id = gr.user_id
+			order by ui.user_id desc
+					
+		) li
 		where rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} - 1) * #{amount}
@@ -354,14 +355,14 @@
 	</select>
 
 	<!-- 일반/유료회원 현재보유포인트 -->
-	<select id="getUserBasicInfoPointTotal" resultType="int">
+	<!-- <select id="getUserBasicInfoPointTotal" resultType="int">
 		<![CDATA[
 		select DISTINCT 
 		((select sum(point_value)from ipoint where user_id = #{user_id} and point_state = 'save')
 		- (select sum(point_value)from ipoint where user_id = #{user_id} and point_state = 'use')) as total_point
 		from ipoint where user_id=#{user_id}
 		]]>
-	</select>
+	</select> -->
 
 
 	<!-- 일반회원정보 운동정보 리스트 -->

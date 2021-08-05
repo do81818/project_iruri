@@ -60,7 +60,7 @@ public interface AdminService {
 	int countUserBasicInfoPoint(int userId);
 
 	// 일반/유료회원 현재 보유포인트
-	int getUserBasicInfoPointTotal(int userId);
+	Integer getUserBasicInfoPointTotal(int userId);
 
 	// 일반/유료회원정보 운동정보 리스트보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);

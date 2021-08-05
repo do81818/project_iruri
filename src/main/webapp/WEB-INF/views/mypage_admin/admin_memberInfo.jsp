@@ -119,6 +119,7 @@
 		</table>
 
 		<!---------------------- 포인트 적립/사용 테이블 -------------------------->
+		
 		<div class="admin_memberInfo_point">
 			<div class="admin_memberInfo_pointTitle">
 				<h3>포인트</h3>
@@ -149,11 +150,9 @@
 
 		</div>
 	</div>
-
+	
 	<script>
 	function getlist(page) {
-	
-	    
 	    $.ajax({
             url : '${CONTEXT_PATH_ADMIN}/ajax/member/info',
             type : 'GET',

@@ -42,7 +42,7 @@ public class MypageAdminController {
 	@ResponseBody
 	@GetMapping("ajax/reportList")
 	public ResponseEntity<HashMap<String, Object>> restAfter(@RequestParam("pageNum") int pageNum) {
-
+		log.info("restAfter()...");
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
 		int total = adminService.countReportId();
@@ -201,9 +201,7 @@ public class MypageAdminController {
 	    log.info(userId);
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
-		log.info("1"+userId);
 		int total = adminService.countUserBasicInfoPoint(userId);
-		log.info("2"+userId);
 		result.put("pageMaker", new PageVO(cri, total));
 		result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
 		log.info(result);
