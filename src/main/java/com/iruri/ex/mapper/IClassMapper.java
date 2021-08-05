@@ -1,9 +1,9 @@
-
 package com.iruri.ex.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
@@ -28,12 +28,19 @@ public interface IClassMapper {
     List<IClassVO> mainPagePtClassLIst();
     List<IClassVO> mainPageExerciseVideoList();
     
-    /*
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
     
     //챌린지 메인 리스트
     List<IClassVO> ChallengeSelectAll();
+
+
+    //클래스 메인 페이징처리
+    int getTotalCount(int userId, Criteria cri); 
+    
+    List<IClassVO> getListWithPaging(int userId, Criteria cri);
+ 
+
     //지난 챌린지 리스트
     List<IClassVO> selectAllEnd_challenge();
     
@@ -44,5 +51,15 @@ public interface IClassMapper {
     //지난 챌린지 
     List<IClassVO> getListWithPaging_challengeEndList(Criteria criteria);
     int getTotalCount_challengeEndList(Criteria cri);
-    */
+    
+    
+    // 현재 진행중인 클래스(+페이징)
+    List<IClassVO> getListWithPaging_mypageTrainerClassList(@Param("cri") Criteria cri, @Param("userId") int userId);
+    int getTotalCount_mypageTrainerClassList(Criteria cri, @Param("userId") int userId);
+    
+    // 종료된 클래스(+페이징)
+    List<IClassVO> getListWithPaging_mypageTrainerClassListEnd(@Param("cri") Criteria cri, @Param("userId") int userId);
+    int getTotalCount_mypageTrainerClassListEnd(Criteria cri, @Param("userId") int userId);
+    
+    
 }

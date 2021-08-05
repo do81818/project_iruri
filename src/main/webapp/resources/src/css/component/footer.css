@@ -1,7 +1,13 @@
 .iruri__footer {
+  min-width: 1200px;
   height: 480px;
   padding-top: 98px;
   background-color: var(--iruri-indigo-color);
+  margin-bottom: -480px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .footer__contentWrapper {

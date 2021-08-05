@@ -189,6 +189,7 @@ public class ChallengeController {
         iClassVO.setCategoryId(1);
         iClassVO.setIUserVO(vo);
 
+
         log.info("iClassVO: " + iClassVO);
      
 

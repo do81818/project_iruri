@@ -4,28 +4,72 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.AdminMapper">
 
+	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
+		<result property="userId" column="user_id" />
+		<result property="userEmail" column="user_email" />
+		<result property="userPw" column="user_pw" />
+		<result property="userNickname" column="user_nickname" />
+		<result property="userName" column="user_name" />
+		<result property="userPhone" column="user_phone" />
+		<result property="userSigndate" column="user_signdate" />
+		<result property="userPoint" column="user_point" />
+		<result property="userBlackList" column="user_blacklist" />
+		<result property="userBlaskListReason"
+			column="user_blacklist_reason" />
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.AuthVO" id="authMap">
+		<result property="authNumber" column="auth_number" />
+		<result property="authId" column="auth_id" />
+		<result property="authContent" column="auth_content" />
+		<result property="userId" column="user_id" />
+	</resultMap>
+
 	<resultMap type="com.iruri.ex.vo.ReportVO" id="reportMap">
 		<result property="boardId" column="BOARD_ID" />
 		<result property="reportContent" column="REPORT_CONTENT" />
 		<result property="reportDate" column="REPORT_DATE" />
 		<result property="reportId" column="REPORT_ID" />
 		<result property="userId" column="USER_ID" />
-		<result property="reportUserNickName" column="user_nickname" />
-		<result property="reportUserRoll" column="auth_content" />
-		
-		<!-- <collection property="reportList" resultMap="reportMap">
-		</collection> -->
 	</resultMap>
 
-	<!-- <resultMap type="com.iruri.ex.vo.AuthVO" id="authMap"> <result property="authNumber" 
-		column="auth_number"/> <result property="authId" column="auth_id"/> <result 
-		property="authContent" column="auth_content"/> <result property="userId" 
-		column="user_id"/> </resultMap> -->
+	<resultMap type="com.iruri.ex.vo.PointVO" id="pointMap">
+		<result property="pointId" column="point_id" />
+		<result property="pointChangedate" column="point_changedate" />
+		<result property="pointSavedate" column="point_savedate" />
+		<result property="pointState" column="point_state" />
+		<result property="pointValue" column="point_value" />
+		<result property="pointContent" column="point_content" />
+		<result property="userId" column="user_id" />
+	</resultMap>
+    
+	<resultMap type="com.iruri.ex.vo.IClassVO" id="classMap">
+		<result property="classId" column="class_id" />
+		<result property="classTitle" column="class_title" />
+		<result property="classState" column="class_state" />
+		<result property="classPrice" column="class_pirce" />
+		<result property="userId" column="user_id" />
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="iuserAuthJoinMap">
+		<result property="avgGrade" column="grade" />
+		<collection property="iuserVo" resultMap="iUserMap" />
+		<collection property="authVo" resultMap="authMap" />
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="reportIuserAuthJoinMap">
+		<collection property="iuserVo" resultMap="iUserMap" />
+		<collection property="authVo" resultMap="authMap" />
+		<collection property="reportVo" resultMap="reportMap" />
+	</resultMap>
+
 
 
 	<!-- 신고들어온 게시글(신고알림) 리스트 -->
 	<!-- 1.페이징처리 안된 리스트 -->
-	<select id="getReportList" resultMap="reportMap">
+	<select id="getReportList" resultMap="reportIuserAuthJoinMap">
 		<![CDATA[
 		select r.*, c.user_nickname, c.auth_content 
 		from report r,
@@ -39,9 +83,10 @@
 		where r.board_id = c.board_id order by report_id desc
 		]]>
 	</select>
-	
-	<!-- 2.페이징처리 리스트-->
-	<select id="getReportListWithPaging" resultMap="reportMap">
+
+	<!-- 2.페이징처리 리스트 -->
+	<select id="getReportListWithPaging"
+		resultMap="reportIuserAuthJoinMap">
 		<![CDATA[
 		select *
 			from (
@@ -66,7 +111,295 @@
 		select count(REPORT_ID) from report
 		]]>
 	</select>
-	
+
+
+
+	<!-- 일반/유료회원 리스트 -->
+	<select id="getNormalUserList" resultMap="iuserAuthJoinMap">
+		<![CDATA[
+		select *
+		from (
+		select rownum rn, li.*
+		from (
+		select distinct u.user_id, a.auth_content, u.user_nickname, u.user_email, u.user_signdate, u.user_blacklist, u.user_blacklist_reason
+		    from iuser u, (select user_id, auth_content from authority where auth_id = 1 or auth_id = 2) a
+		where u.user_id = a.user_id and u.user_blacklist = 0 order BY u.user_id desc
+		) li
+		where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+	<!-- 일반/유료회원 리스트 갯수 -->
+	<select id="countNormalMember" resultType="int">
+		<![CDATA[
+		select count(li.user_id)
+		from (
+		    select distinct u.user_id, a.auth_content, u.user_nickname, u.user_email, u.user_signdate, u.user_blacklist, u.user_blacklist_reason
+		    from iuser u, (select user_id, auth_content from authority where auth_id = 1 or auth_id = 2) a
+		    where u.user_id = a.user_id and u.user_blacklist = 0 order BY u.user_id desc
+		    ) li
+		]]>
+	</select>
+
+
+
+	<!-- 일반/유료회원 블랙리스트 -->
+	<select id="getNormalUserBlackList" resultMap="iuserAuthJoinMap">
+		<![CDATA[
+		select *
+		from (
+		select rownum rn, li.*
+		from (
+		select distinct u.user_id, a.auth_content, u.user_nickname, u.user_email, u.user_signdate, u.user_blacklist, u.user_blacklist_reason
+		    from iuser u, (select user_id, auth_content from authority where auth_id = 1 or auth_id = 2) a
+		where u.user_id = a.user_id and u.user_blacklist = 1 order BY u.user_id desc
+		) li
+		where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+	<!-- 일반/유료회원 블랙리스트 갯수 -->
+	<select id="countNormalBlackMember" resultType="int">
+		<![CDATA[
+		select count(li.user_id)
+		from (
+		    select distinct u.user_id, a.auth_content, u.user_nickname, u.user_email, u.user_signdate, u.user_blacklist, u.user_blacklist_reason
+		    from iuser u, (select user_id, auth_content from authority where auth_id = 1 or auth_id = 2) a
+		    where u.user_id = a.user_id and u.user_blacklist = 1 order BY u.user_id desc
+		    ) li
+		]]>
+	</select>
+
+
+
+
+	<!-- 트레이너 회원 리스트 -->
+	<select id="getTrainerMemberList" resultMap="iuserAuthJoinMap">
+		<![CDATA[
+		select *
+		from (
+		select rownum rn, li.*
+		from (
+		select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+      		round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
+			from (
+			    select a.*, authority.auth_content from authority, (
+			        select u.*, gs.avg_grade
+			        from iuser u, (
+			            select g.avg_grade, iclass.class_id, iclass.user_id
+			            from (select round(avg(grade_score),1) as avg_grade, class_id 
+			                  from grade
+			                  group by class_id) g, iclass
+			            where g.class_id = iclass.class_id
+			            ) gs
+			        where u.user_id = gs.user_id
+			        ) a
+			    where authority.user_id = a.user_id and authority.auth_id = 3
+			        ) t 
+			group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+			       t.user_blacklist, t.user_blacklist_reason, t.auth_content
+			order by t.user_id desc) li
+		where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+
+	<!-- 트레이너회원 리스트 갯수 -->
+	<select id="countTrainerMemberList" resultType="int">
+		<![CDATA[
+		select count(li.user_id)
+		from (select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+      		round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
+			from (
+			    select a.*, authority.auth_content from authority, (
+			        select u.*, gs.avg_grade
+			        from iuser u, (
+			            select g.avg_grade, iclass.class_id, iclass.user_id
+			            from (select round(avg(grade_score),1) as avg_grade, class_id 
+			                  from grade
+			                  group by class_id) g, iclass
+			            where g.class_id = iclass.class_id
+			            ) gs
+			        where u.user_id = gs.user_id
+			        ) a
+			    where authority.user_id = a.user_id and authority.auth_id = 3
+			        ) t 
+			group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+			       t.user_blacklist, t.user_blacklist_reason, t.auth_content
+			order by t.user_id desc) li
+		]]>
+	</select>
+
+
+	<!-- 트레이너 회원 블랙리스트 -->
+	<select id="getTrainerBlackList" resultMap="iuserAuthJoinMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+				       round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
+				from (
+				    select a.*, authority.auth_content from authority, (
+				        select u.*, gs.avg_grade
+				        from iuser u, (
+				            select g.avg_grade, iclass.class_id, iclass.user_id
+				            from (select round(avg(grade_score),1) as avg_grade, class_id 
+				                  from grade
+				                  group by class_id) g, iclass
+				            where g.class_id = iclass.class_id
+				            ) gs
+				        where u.user_id = gs.user_id
+				        ) a
+				    where authority.user_id = a.user_id and authority.auth_id = 3 and a.user_blacklist = 1
+				        ) t 
+				group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+				       t.user_blacklist, t.user_blacklist_reason, t.auth_content
+				order by t.user_id desc
+				) li
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+
+	<!-- 트레이너 회원 블랙리스트 갯수 -->
+	<select id="countTrainerBlackList" resultType="int">
+		<![CDATA[
+		select count(li.user_id)
+		from (select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+      		round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
+			from (
+			    select a.*, authority.auth_content from authority, (
+			        select u.*, gs.avg_grade
+			        from iuser u, (
+			            select g.avg_grade, iclass.class_id, iclass.user_id
+			            from (select round(avg(grade_score),1) as avg_grade, class_id 
+			                  from grade
+			                  group by class_id) g, iclass
+			            where g.class_id = iclass.class_id
+			            ) gs
+			        where u.user_id = gs.user_id
+			        ) a
+			    where authority.user_id = a.user_id and authority.auth_id = 3 and a.user_blacklist = 1
+			        ) t 
+			group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
+			       t.user_blacklist, t.user_blacklist_reason, t.auth_content
+			order by t.user_id desc) li
+		]]>
+	</select>
+
+
+	<!-- 트레이너 등록 -->
+	<insert id="trainerRegistInsert"
+		parameterType="com.iruri.ex.vo.IUserVO">
+		INSERT INTO iuser (
+		USER_ID, USER_EMAIL, USER_PW,
+		USER_NICKNAME, USER_NAME, USER_PHONE,
+		USER_SIGNDATE, USER_POINT,
+		USER_BLACKLIST
+		) VALUES (
+		(select max(user_id)+1 from iuser),
+		#{userEmail}, #{userPw}, #{userName}, #{userName}, #{userPhone},
+		default, default, default
+		)
+	</insert>
+
+	<!-- 트레이너 등록 후 권한 변경 -->
+	<update id="trainerAuthUpdate">
+		UPDATE authority SET auth_id = '3', auth_content =
+		'ROLE_TRAINER'
+		where user_id= (select max(user_id) from authority)
+	</update>
+
+
+	<!-- 일반회원정보 보기 -->
+	<select id="getUserBasicInfo" parameterType="int" resultMap="iuserAuthJoinMap">
+		<![CDATA[
+			select u.*, a.*
+			from iuser u join authority a
+			on u.user_id = a.user_id where a.user_id = #{userId}
+		]]>
+	</select>
+
+	<!-- 일반회원정보 포인트리스트 보기 -->
+	<select id="getUserBasicInfoPoint" resultMap="pointMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				select * from ipoint where not point_state = 'appointed' and user_id = #{userId}
+				order by point_id desc
+				) li
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+	<!-- 일반회원정보 포인트리스트 갯수보기 -->
+	<select id="countUserBasicInfoPoint" resultType="int">
+		<![CDATA[
+		select count(point_id) from ipoint where not point_state = 'appointed' and user_id = #{userId}
+		]]>
+	</select>
+
+	<!-- 일반/유료회원 현재보유포인트 -->
+	<select id="getUserBasicInfoPointTotal" resultType="int">
+		<![CDATA[
+		select DISTINCT 
+		((select sum(point_value)from ipoint where user_id = #{user_id} and point_state = 'save')
+		- (select sum(point_value)from ipoint where user_id = #{user_id} and point_state = 'use')) as total_point
+		from ipoint where user_id=#{user_id}
+		]]>
+	</select>
+
+
+	<!-- 일반회원정보 운동정보 리스트 -->
+	<select id="getUserExInfoAll" resultMap="pointMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				from (
+					select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+					from iclass, category, (select class_id from buy
+		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+				where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+				) li
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+
+
+	<!-- 일반회원정보 운동정보 갯수 -->
+	<select id="countUserExInfoAll" resultType="int">
+		<![CDATA[
+		select count(li.class_id)
+		from (
+		select iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+		from iclass, category, (select class_id from buy
+		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+		where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+		) li
+		]]>
+	</select>
+
+
+
+
 
 
 </mapper>

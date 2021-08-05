@@ -235,14 +235,15 @@ function insertPasswordCheck(obj) {
 }
 
 
+
 // 최종 체크
 function insertFinalCheck() {
 
-	const str_name = document.querySelector('input[name=inputName]').value;
+	const str_name = document.querySelector('input[name=userName]').value;
 	const str_email = document.getElementById('trainerMemberInsert_email').value +
 		"@" + document.getElementById('trainerMemberInsert_emailType').value;
-	const str_phoneNumber = document.querySelector('input[name=inputPhoneNumber]').value;
-	const str_password = document.querySelector('input[name=inputPassword]').value;
+	const str_phoneNumber = document.querySelector('input[name=userPhone]').value;
+	const str_password = document.querySelector('input[name=userPw]').value;
 
 	const fin_namePattern = /[가-힣]+$/;
 	const fin_emailPattern = /^[0-9a-zA-Z]|[-_]*@[0-9a-zA-Z]*.[a-zA-Z]{2,3}$/i;
@@ -275,7 +276,7 @@ function insertFinalCheck() {
 	}
 
 	if (check1 + check2 + check3 + check4 == 4) {
-
+		document.trainerInsertForm.submit();
 		return true;
 	} else {
 		return false;
@@ -283,3 +284,19 @@ function insertFinalCheck() {
 
 }
 
+
+// 숫자 표기 000,000
+function priceToString(price) {
+	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+
+// 날짜 표기 yyyy.MM.dd
+function getFormatDate(date){
+    var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '.' + month + '.' + day;       
+}

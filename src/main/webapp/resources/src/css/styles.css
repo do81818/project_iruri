@@ -20,6 +20,7 @@
 @import "page/c_detail_before_styles.css";
 @import "page/c_detail_after_styles.css";
 @import "page/mypage_trainer.css";
+@import "page/mypage_trainer_profit.css";
 @import "page/mypage_user_main.css";
 @import "page/mypage_user_modal.css";
 @import "page/mypage_user_boardlist.css";
@@ -27,6 +28,8 @@
 @import "page/datepicker.min.css";
 @import "page/mypage_user_challengelist.css";
 @import "page/ptClass.css";
+@import "page/ptClassDetails.css";
+@import "page/ptClassMakeForm.css";
 
 :root {
   /* font-size */
@@ -56,18 +59,9 @@
   box-sizing: border-box;
 }
 
-/* 푸터 하단 고정 */
 html {
   position: relative;
   min-height: 100vh;
-}
-
-.iruri__footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  margin-bottom: -480px;
 }
 
 @font-face {
@@ -102,7 +96,8 @@ html {
 .iruri-heart-red-icon,
 .iruri-selectBox-arrow-icon {
   display: inline-block;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
   width: 16px;
   height: 16px;
 }

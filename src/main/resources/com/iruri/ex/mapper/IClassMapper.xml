@@ -101,7 +101,8 @@
 			user_id = #{userId} 
 		]]> 
 	</select>
-	
+
+
 	<!-- 참여 가능한 상위 챌린지 5개  -->
 	<select id="mainPageChallengeList" resultMap="iClassMap">
 		<![CDATA[
@@ -151,6 +152,68 @@ FROM exercise_kind e,
 WHERE c.class_id = e.class_id
 	]]>		
 	</select>
+	
+	<!-- 현재 진행중인 클래스(+페이징)  -->
+	
+	<select id="getTotalCount_mypageTrainerClassList" resultType="int">
+	<![CDATA[
+		select count(*) from iClass where user_id = #{userId} and CLASS_ENDDATE >= sysdate
+	]]>
+	</select>
 
+
+	<select id="getListWithPaging_mypageTrainerClassList" parameterType="HashMap" resultMap="iClassMap">
+	 <![CDATA[
+	
+		SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+    FROM
+    (
+        SELECT B.*
+        FROM iclass B
+        WHERE user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE >= sysdate
+        ORDER BY B.class_startdate DESC
+    ) C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+
+	]]> 
+
+	</select>
+	
+	<!--  종료된 클래스(+페이징)  -->
+	
+	<select id="getTotalCount_mypageTrainerClassListEnd" resultType="int">
+	<![CDATA[
+		select count(*) from iClass where user_id = #{userId} and CLASS_ENDDATE < sysdate
+	]]>
+	</select>
+
+
+	<select id="getListWithPaging_mypageTrainerClassListEnd" parameterType="HashMap" resultMap="iClassMap">
+	 <![CDATA[
+	
+		SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+    FROM
+    (
+        SELECT B.*
+        FROM iclass B
+        WHERE user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE < sysdate
+        ORDER BY B.class_startdate DESC
+    ) C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+
+	]]> 
+
+	</select>
+	
 
 </mapper>
