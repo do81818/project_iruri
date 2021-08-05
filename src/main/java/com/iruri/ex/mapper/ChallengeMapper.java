@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
@@ -16,15 +17,13 @@ public interface ChallengeMapper {
     
    
     
+    
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     List<IClassVO> selectAll(int userId);
-    
-    
-    
+
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
-    
-    
+
     /*----------챌린지 메인-----------*/
     //챌린지 메인 리스트
     List<IClassVO> ChallengeSelectAll();
@@ -49,5 +48,21 @@ public interface ChallengeMapper {
     
     //챌린지 참여 인원
     void upJoinMember(int classId);
+    
+    /*----------관심수-----------*/
+    //유저가 그 클래스에 좋아요 한 기록이 있는지 
+    int userLikeListCheck(LikeListVO likeListVO);
+    //likelist 추가
+    void challengeLikeInsert(LikeListVO likeListVO);
+    //likelist 삭제
+    void challengeLikeDelete(LikeListVO likeListVO);
+    //관심수 늘리기
+    void likeCountUp(int classId);
+    //관심수 줄이기
+    void likeCountDown(int classId);
+    
+    
+    //챌린지 개설자 닉네임
+    IUserVO userNickname(int userId);
   
 }

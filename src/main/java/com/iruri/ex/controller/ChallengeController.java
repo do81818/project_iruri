@@ -1,19 +1,26 @@
 package com.iruri.ex.controller;
 
+import java.net.http.HttpRequest;
 import java.security.Principal; 
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,10 +31,12 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
+import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.LikeListVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -60,13 +69,15 @@ public class ChallengeController {
     //챌린지 메인 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeList")
-    public ResponseEntity<HashMap<String, Object>> challengeList(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword) {
-       
+    public ResponseEntity<HashMap<String, Object>> challengeList(@RequestParam("pageNum") int pageNum, 
+            @RequestParam("keyword") String keyword) {
+        
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
-       
+   
         cri.setKeyword(keyword);
         
+            
         //전체챌린지
         int total = challengeService.getTotal_challenge(cri);
         log.info("ajax_getTotal_challenge:" + total);
@@ -77,10 +88,9 @@ public class ChallengeController {
         result.put("list", challengeService.challengeList(cri));
         log.info("ajax_challengeList()..");
         
-        
+      
         return ResponseEntity.ok(result);
     }
-    
     
     
 
@@ -177,7 +187,6 @@ public class ChallengeController {
         log.info("challenge_make_form()...");
 
    
-        iClassVO.setClassContent("클래스생성테스트내용");
         iClassVO.setClassImage("이미지경로2");
         iClassVO.setClassLike(0);
         iClassVO.setClassState("show");
@@ -191,7 +200,6 @@ public class ChallengeController {
 
 
         log.info("iClassVO: " + iClassVO);
-     
 
         challengeService.insertChallenge(iClassVO);
 
@@ -202,10 +210,14 @@ public class ChallengeController {
     /*-------------챌린지 상세 페이지-------------*/
     // 챌린지 상세 -참여 전
     @GetMapping("/iruri/c_detail_before")
-    public String c_detail_before(IClassVO iClassVO, Model model) {
+    public String c_detail_before(IClassVO iClassVO, Model model,IUserVO iUserVO) {
         log.info("challenge_detail_before_view()..");
 
         model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
+        
+        //챌린지개설자 확인
+        model.addAttribute("user",iUserVO) ;
+        
  
         return "challenge/challenge_detail_before";
     }
@@ -220,18 +232,67 @@ public class ChallengeController {
 
     // 챌린지 상세 - 참여 후
     @GetMapping("/iruri/challenge_detail_after")
-    public String c_detail_after(IClassVO iClassVO, Model model) {
+    public String c_detail_after(IClassVO iClassVO, BuyVO buyVO, Model model,IUserVO iUserVO) {
 
         log.info("challenge_detail_after()..");
         
         //참여인원 update
         challengeService.upJoinMember(iClassVO.getClassId());
+      
 
         model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
-        
+
+        //챌린지개설자 확인
+        model.addAttribute("getNickname", challengeService.getUserNickname(iUserVO.getUserId()));
         
 
         return "challenge/challenge_detail_after";
     }
+    
+    
+    /*-------------관심수-------------*/
+    //https://kwakkwakkwak.github.io/spring/2017/12/18/Sprng-%EC%A2%8B%EC%95%84%EC%9A%94%EA%B8%B0%EB%8A%A5/
+    /*
+    @RequestMapping(value = "/read", method = RequestMethod.GET)
+    public void read(@RequestParam("classId") int classId, Model model,
+            HttpServletRequest httpRequest, Principal principal) {
+        
+        IUserVO vo = iUserService.selectOne(principal.getName());
+        //int userId = ((IUserVO) httpRequest.getSession().getAttribute("login")).getUserId();
+        
+        LikeListVO likeListVO = new LikeListVO();
+        likeListVO.setClassId(classId);
+        likeListVO.setIUserVO(vo);
+        
+        int class_like = challengeService.getUserLikeListCheck(likeListVO);
+        
+        model.addAttribute("heart", likeListVO);
+        
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/heart", method=RequestMethod.POST, produces="application/json")
+    public int heart(HttpServletRequest httpRequest, Principal principal) {
+        
+        IUserVO vo = iUserService.selectOne(principal.getName());
+        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+        int classId = Integer.parseInt(httpRequest.getParameter("classId"));
+        //int userId = ((IUserVO) httpRequest.getSession().getAttribute("login")).getUserId();
+        
+        LikeListVO likeListVO = new LikeListVO();
+        
+        likeListVO.setClassId(classId);
+        likeListVO.setIUserVO(vo);
+        
+        if(heart >= 1) {
+            challengeService.challenge_likeDelete(likeListVO);
+            heart = 0;
+        }else {
+            challengeService.challenge_likeInsert(likeListVO);
+            heart = 1;
+        }
+        return heart;
+    }
+    */
 
 }

@@ -74,7 +74,10 @@
 								</ul>
 							</div>
 
-							<div class="c_join_completion">참여중인 챌린지 입니다.</div>
+
+							
+								<div class="c_join_completion">참여중인 챌린지 입니다.</div>
+					
 						</div>
 				</article>
 

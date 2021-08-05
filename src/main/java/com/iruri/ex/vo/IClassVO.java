@@ -35,6 +35,7 @@ CATEGORY_ID
 USER_ID
 CLASS_LEVEL
 */
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -73,6 +74,8 @@ public class IClassVO {
     private List<ExerciseDateVO> exerciseDateList;
     private List<ExerciseKindVO> exerciseKindList;
     private List<LikeListVO> likeListList;
+
+  
 
     
 }

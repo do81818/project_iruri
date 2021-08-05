@@ -31,10 +31,11 @@ BOARD_ID             NUMBER
 public class LikeListVO {
     
     private int likeListId;
-    private int userId;
+    private IUserVO iUserVO; 
     private int classId;
     private int boardId;
     private int rnum;
+    private int likeCheck;
 
 
     

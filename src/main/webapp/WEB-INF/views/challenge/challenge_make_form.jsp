@@ -55,48 +55,39 @@
 						<div class="c_name">
 						
 							<p>챌린지명</p>
-							<input type="text" class="inputbox_size1" name="classTitle" autocomplete="off">
+							<input type="text" class="inputbox_size1" name="classTitle" autocomplete="off"
+							placeholder="챌린지 제목을 입력해 주세요." required="required" autofocus />
 
 						</div>
 
 
-						<!--    <div class="c_kind">
-                    <p>운동종류</p>
-                    <input type="checkbox" id="cb1" name="exerciseKind[]" value="헬스"><label for="cb1" class="cb_label">헬스</label>
-                    <input type="checkbox" id="cb2" name="exerciseKind[]" value="필라테스"><label for="cb2" class="cb_label">필라테스</label>
-                    <input type="checkbox" id="cb3" name="exerciseKind[]" value="요가"><label for="cb3" class="cb_label">요가</label>
-                    <input type="checkbox" id="cb4" name="exerciseKind[]" value="바디프로필"><label for="cb4" class="cb_label">바디프로필</label>
-                    <input type="checkbox" id="cb5" name="exerciseKind[]" value="댄스"><label for="cb5" class="cb_label">댄스</label>
-                </div> -->
-
-
 						<div class="c_strength">
 							<p>운동강도</p>
-							<input type="radio" name="classLevel" id="easy" value="easy"><label
-								for="easy" class="rd_label">easy</label> <input type="radio"
-								name="classLevel" id="normal" value="normal"><label
-								for="normal" class="rd_label">normal</label> <input type="radio"
-								name="classLevel" id="hard" value="hard"><label
-								for="hard" class="rd_label">hard</label>
+							<input type="radio" name="classLevel" id="easy" value="easy" required="required" />
+							<label for="easy" class="rd_label">easy</label> 
+							<input type="radio" name="classLevel" id="normal" value="normal">
+							<label for="normal" class="rd_label">normal</label> 
+							<input type="radio" name="classLevel" id="hard" value="hard">
+							<label for="hard" class="rd_label">hard</label>
 						</div>
 
 
 						<div class="c_period">
 							<p>운동기간</p>
-							<input type="text" name="classStartDate" id="sDate" autocomplete="off">&nbsp - &nbsp 
-							<input type="text" name="classEndDate" id="eDate" autocomplete="off"> <br>
+							<input type="text" name="classStartDate" id="sDate" autocomplete="off" required="required" />&nbsp - &nbsp 
+							<input type="text" name="classEndDate" id="eDate" autocomplete="off" required="required" /> <br>
 						</div>
 
 						<div class="c_exNum">
 							<p></p>
-							<input type="radio" name="classExerciseCount" id="all" value="7"><label
-								for="all" class="rd_label">매일</label> <input type="radio"
-								name="classExerciseCount" id="5days" value="5"><label
-								for="5days" class="rd_label">주 5회이상</label> <input type="radio"
-								name="classExerciseCount" id="3days" value="3"><label
-								for="3days" class="rd_label">주 3회이상</label> <input type="radio"
-								name="classExerciseCount" id="1day" value="1"><label
-								for="1day" class="rd_label">주 1회이상</label>
+							<input type="radio" name="classExerciseCount" id="all" value="7" required="required" />
+							<label for="all" class="rd_label">매일</label> 
+							<input type="radio" name="classExerciseCount" id="5days" value="5">
+							<label for="5days" class="rd_label">주 5회이상</label> 
+							<input type="radio" name="classExerciseCount" id="3days" value="3">
+							<label for="3days" class="rd_label">주 3회이상</label> 
+							<input type="radio" name="classExerciseCount" id="1day" value="1">
+							<label for="1day" class="rd_label">주 1회이상</label>
 
 						</div>
 
@@ -104,10 +95,11 @@
 						<div class="c_person">
 							<p>총모집인원</p>
 							<input type="text" id="c_text" class="inputbox_size2"
-								name="classTotalMember" autocomplete="off">&nbsp명&nbsp 
+								name="classTotalMember" autocomplete="off" pattern="[0-9]+"
+								placeholder="숫자로 입력해 주세요." required="required" />&nbsp명&nbsp 
 								
 							<input type="checkbox" id="cb6" name="classTotalMember" value="9999999"
-								onclick="c_person_limit(this.form)"><label for="cb6"
+								onclick="c_person_limit(this.form)" required="required" /><label for="cb6"
 								class="cb_label">인원제한없음</label>
 						</div>
 
@@ -115,25 +107,25 @@
 						<div class="c_goal">
 							<p>목표</p>
 							<textarea placeholder="짧은 목표를 작성해 주세요." cols="30" rows="50"
-								class="goal_textarea" name="classGoal" autocomplete="off"></textarea>
+								class="goal_textarea" name="classGoal" autocomplete="off" required="required" /></textarea>
 						</div>
 
 						<div class="c_detailInfo">
 							<p>상세 정보</p>
 							<textarea placeholder="페이지에 들어갈 상세 정보를 작성해 주세요." cols="30"
-								rows="50" class="info_textarea" name="classGoal"
-								autocomplete="off"></textarea>
+								rows="50" class="info_textarea" name="classContent"
+								autocomplete="off" required="required" /></textarea>
 						</div>
 
 
 
 						<div class="c_img_direct">
 							<p>대표이미지 설정</p>
-							<input type="radio" name="classImage" id="direct"><label
-								for="direct" class="rd_label">직접 이미지 올리기</label> <input
-								type="file" name="classImage" accept=".jpg, .png" id="upload"><label
-								for="upload" class="file_upload"></label> <span
-								style="color: #999;">* 650x500px 크기의 jpg.png</span>
+							<input type="radio" name="classImage" id="direct" required="required" />
+							<label for="direct" class="rd_label">직접 이미지 올리기</label> 
+							<input type="file" name="classImage" accept=".jpg, .png" id="upload">
+							<label for="upload" class="file_upload"></label> 
+							<span style="color: #999;">* 650x500px 크기의 jpg.png</span>
 						</div>
 
 						<div class="c_img_basic">
@@ -146,7 +138,7 @@
 						<div class="c_img_list">
 							<p></p>
 							<div class="c_img_detail">
-								<input type="radio" name="file_img" id="c_basic_img_1">
+								<input type="radio" name="file_img" id="c_basic_img_1" required="required" />
 								<label for="c_basic_img_1" class="img_rd"> 
 								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
 								</label>
@@ -210,8 +202,8 @@
 							<p></p>
 							<button class="c_make_button_cancle" type="reset"><a href="challengeList">
 							챌린지등록 취소</a></button>
-							<button class="c_make_button_submit" type="submit">
-							<a href="challengeList">챌린지등록</a></button>
+							<button class="c_make_button_submit" onclick="location.href='challengeList'" type="submit" >
+							챌린지등록</button>
 						</div>
 
 

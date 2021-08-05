@@ -31,6 +31,7 @@
 		</collection>
 		<collection property="likeListList" resultMap="likeListMap">
 		</collection>
+		
 	</resultMap>
 
 
@@ -46,11 +47,23 @@
 	
 	<resultMap type="com.iruri.ex.vo.LikeListVO" id="likeListMap">
 		<result property="likeListId" column="LIKELIST_ID"/>
-		<result property="userId" column="USER_ID"/>
 		<result property="classId" column="CLASS_ID"/>
 		<result property="boardId" column="BOARD_ID"/>
 		<result property="rnum" column="rnum"/>	
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.BuyVO" id="BuyMap">
+	<result property="buyId" column="BuyId"/>
+	<result property="buyRealPay" column="Buyrealpay"/>
+	<result property="buyPoint" column="BuyPoint"/>
+	<result property="buyDate" column="BuyDate"/>
+	<result property="payId" column="PayId"/>
+	<result property="classId" column="ClassId"/>
+	<result property="rnum" column="rnum"/>
+	<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+	</resultMap>
+
 	<!-- 로그인 한 유저 클래스 정보 뽑아오기 -->
 	<!--
 	<select id="selectAll" resultMap="iClassMap">
@@ -236,7 +249,7 @@ FROM
 	
 	
 	<!-- 챌린지 시작일순 -->
-	 <select id="getTotalCount_challengeStartList" resultType="int">
+<!-- 	 <select id="getTotalCount_challengeStartList" resultType="int">
 	<![CDATA[
 		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE >= sysdate order by class_startdate desc
 	]]>
@@ -251,10 +264,10 @@ FROM
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>
-	</select>
+	</select> -->
 	
 	<!-- 챌린지 인기순 -->
-	 <select id="getTotalCount_challengePopList" resultType="int">
+<!-- 	 <select id="getTotalCount_challengePopList" resultType="int">
 	<![CDATA[
 		select count(*) from iclass where category_id = 1 and CLASS_ENDDATE >= sysdate order by class_like desc
 	]]>
@@ -269,12 +282,21 @@ FROM
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}
 	]]>
-	</select>
+	</select> -->
 	
 	<!-- 챌린지 상세정보 불러오기 -->
 	<select id="readChallengeInfo" resultMap="iClassMap">
 		<![CDATA[
 		SELECT * FROM ICLASS WHERE CATEGORY_ID = 1 and class_id > 0  and CLASS_ID = #{classId}
+	]]>
+	</select>
+	
+	<!-- 챌린지 개설자 닉네임 불러오기 -->
+	<select id="getUserNickname" resultMap="iClassMap">
+		<![CDATA[
+		select u.user_nickname 
+		from iclass A, iuser B
+		where B.user_id = A.user_id and A.class_id=#{classId}
 	]]>
 	</select>
 	
@@ -285,7 +307,88 @@ FROM
 	]]>
 	</update>
 	
-	<!-- 챌린지 참여 후(유저 참여챌린지 업데이트) -->
-   	
+	
+	<!-- 챌린지 참여, 취소(유저 참여챌린지) -->
+	<!-- 챌린지 참여 시 -->
+	<insert id="userJoinChallenge">
+			<![CDATA[
+			INSERT ALL INTO 
+			
+			buy (buy_id,buy_realpay, buy_point, buy_date, user_id, pay_id, class_id)
+			
+			VALUES 
+			((SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM
+			buy),0,0,sysdate,#{userId},(SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM
+			pay), #{classId})
+		
+		    INTO 
+		    pay(pay_id, pay_state, pay_way, buy_id)
+			VALUES ((SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM
+			pay),'pay','챌린지',(SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy))
+		
+			SELECT * FROM DUAL
+			]]>
+	</insert>
+	   	<!-- 유저가 챌린지에 참여한 기록이 있는지 -->
+	   	<select id="userReadChallenge" resultMap="BuyMap">
+	   		<![CDATA[
+	   			SELECT * 
+	   			FROM BUY
+	   			WHERE buy_id = #{buyId} and user_id = #{userId} and class_id = #{classId}
+	   		]]>
+	   	</select>
+	   	
+	   	<!-- 챌린지 취소 시 -->
+	   	<delete id="userCancleChallenge">
+	   		
+	   	</delete>
 
+
+		<!-- 관심수 -->
+		<!-- 유저가 그 클래스id에 좋아요 한 기록이 있는지 (likelist에 있는지) -->
+		<select id="userLikeListCheck" resultType="int">
+	   		<![CDATA[
+	   			SELECT count(likelist_id) 
+	   			FROM likelist
+	   			WHERE user_id = #{userId} and class_id = #{classId}
+	   		]]>
+	   	</select>
+	   	
+		<!-- likelist 추가 -->
+		<insert id="challengeLikeInsert">
+			<![CDATA[
+				INSERT INTO 
+				likelist (likelist_id, user_id, class_id)
+				VALUES (
+				(SELECT NVL(MAX(likelist_id), MAX(likelist_id)) + 1 FROM likelist), #{userId}, #{classId})
+			]]>
+		</insert>
+
+		<!-- likelist 삭제하기 -->
+		<delete id = "challengeLikeDelete">
+			<![CDATA[
+				DELETE FROM likelist
+				WHERE user_id=#{userId} and class_id=#{classId}
+			]]>
+		</delete>
+		
+		<!-- 좋아요 수 늘리기 -->
+		<update id="likeCountUp">
+			<![CDATA[
+				UPDATE iclass SET
+				class_like = class_like+1 
+				WHERE 
+				class_id=#{class_id} and user_id = #{userId}
+			]]>
+		</update>
+		
+		<!-- 좋아요 수 줄이기 -->
+		<update id="likeCountDown">
+			<![CDATA[
+				UPDATE iclass SET
+				class_like = class_like-1 
+				WHERE 
+				class_id=#{class_id} and user_id = #{userId}
+			]]>
+		</update>
 </mapper>

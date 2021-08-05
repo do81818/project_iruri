@@ -13,7 +13,7 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %> <!-- 경로를 확인해 주세요 -->
-    <title>챌린지 상세(참여 전)</title> <!-- 페이지 이름을 적어주세요 -->
+    <title>  ${challengeInfo.classTitle} </title> <!-- 페이지 이름을 적어주세요 -->
     <script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_sticky.js" defer></script>
@@ -72,7 +72,7 @@
                             <li class="c_mini_info2">${challengeInfo.classStartDate}~${challengeInfo.classEndDate}</li>
                             <li class="c_mini_info2">주 ${challengeInfo.classExerciseCount}일</li>
                             <li class="c_mini_info2">${challengeInfo.classJoinMember} / ${challengeInfo.classTotalMember}</li>
-                            <li class="c_mini_info2">${challengeInfo.userNickname}</li>
+                            <li class="c_mini_info2">${getNickname.userNickname}</li>
                         </ul>
                     </div>
 

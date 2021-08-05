@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.iruri.ex.mapper.ChallengeMapper;
 import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
@@ -50,7 +51,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     //챌린지 개설 폼 값 입력
     @Override
     public void insertChallenge(IClassVO iClassVO) {
-        log.info("insertChallenge");
+        log.info("insertChallenge()..");
         
         challengeMapper.insertChallenge(iClassVO);
         
@@ -109,6 +110,8 @@ public class ChallengeServiceImpl implements ChallengeService {
         return challengeMapper.getTotalCount_challengeLikeList(keyword, userId);
     }
 
+    
+    /*----------챌린지 상세페이지-----------*/
     //챌린지 상세 페이지
     @Override
     public IClassVO getChallengeInfo(int classId) {
@@ -123,6 +126,50 @@ public class ChallengeServiceImpl implements ChallengeService {
         challengeMapper.upJoinMember(classId);
         
     }
+
+    
+    /*----------관심수-----------*/
+    @Override
+    public int getUserLikeListCheck(LikeListVO likeListVO) {
+        log.info("challenge_userLikeListCheck()..");
+        return challengeMapper.userLikeListCheck(likeListVO);
+    }
+
+    @Override
+    public void challenge_likeInsert(LikeListVO likeListVO) {
+        log.info("challenge_likeInsert()..");
+        challengeMapper.challengeLikeInsert(likeListVO);
+        
+    }
+
+    @Override
+    public void challenge_likeDelete(LikeListVO likeListVO) {
+        log.info("challenge_likeDelete()..");
+        challengeMapper.challengeLikeDelete(likeListVO);
+        
+    }
+
+    @Override
+    public void challenge_likeCountUp(int classId) {
+        log.info("challenge_likeCountUp()..");
+        challengeMapper.likeCountUp(classId);
+    }
+
+    @Override
+    public void challenge_likeCountDown(int classId) {
+        log.info("challenge_likeCountDown()..");
+        challengeMapper.likeCountDown(classId);
+    }
+
+    
+    //유저 닉네임 출력
+    @Override
+    public IUserVO getUserNickname(int userId) {
+        log.info("getUserNickname()..");
+        return challengeMapper.userNickname(userId);
+    }
+
+
 
 
 
