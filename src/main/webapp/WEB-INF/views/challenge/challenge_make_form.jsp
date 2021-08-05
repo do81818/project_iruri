@@ -114,8 +114,15 @@
 
 						<div class="c_goal">
 							<p>목표</p>
-							<textarea cols="30" rows="50" class="goal_textarea"
-								name="classGoal" autocomplete="off"></textarea>
+							<textarea placeholder="짧은 목표를 작성해 주세요." cols="30" rows="50"
+								class="goal_textarea" name="classGoal" autocomplete="off"></textarea>
+						</div>
+
+						<div class="c_detailInfo">
+							<p>상세 정보</p>
+							<textarea placeholder="페이지에 들어갈 상세 정보를 작성해 주세요." cols="30"
+								rows="50" class="info_textarea" name="classGoal"
+								autocomplete="off"></textarea>
 						</div>
 
 
@@ -201,8 +208,8 @@
 
 						<div class="button">
 							<p></p>
-							<button class="c_make_button_cancle" type="reset">챌린지등록
-								취소</button>
+							<button class="c_make_button_cancle" type="reset"><a href="challengeList">
+							챌린지등록 취소</a></button>
 							<button class="c_make_button_submit" type="submit">
 							<a href="challengeList">챌린지등록</a></button>
 						</div>

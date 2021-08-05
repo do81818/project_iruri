@@ -72,7 +72,7 @@
                             <li class="c_mini_info2">${challengeInfo.classStartDate}~${challengeInfo.classEndDate}</li>
                             <li class="c_mini_info2">주 ${challengeInfo.classExerciseCount}일</li>
                             <li class="c_mini_info2">${challengeInfo.classJoinMember} / ${challengeInfo.classTotalMember}</li>
-                            <li class="c_mini_info2">루리</li>
+                            <li class="c_mini_info2">${challengeInfo.userNickname}</li>
                         </ul>
                     </div>
 
@@ -87,6 +87,7 @@
     					<c:set var = "classJoinMember" value = "${challengeInfo.classJoinMember}"/>
     					<c:set var = "classTotalMember" value = "${challengeInfo.classTotalMember}"/>
     					<c:set var = "classEndDate" value = "${challengeInfo.classEndDate}"/>
+    					<!-- 오늘 날짜 비교 -->
     					<jsp:useBean id="now" class="java.util.Date" />
 						<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
@@ -103,9 +104,6 @@
 	                    	<c:when test ="${classJoinMember ge classTotalMember}">
 	                        <div class="c_join_end">인원 마감된 챌린지 입니다.</div>
 	                        </c:when>
-	                        
-	                        
-	                       
                         </c:choose>
                         </sec:authorize>
                         
