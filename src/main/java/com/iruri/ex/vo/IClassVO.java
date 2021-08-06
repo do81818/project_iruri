@@ -70,10 +70,13 @@ public class IClassVO {
     private int rnum;
     private int classTime;
 
+
     
     private List<ExerciseDateVO> exerciseDateList;
     private List<ExerciseKindVO> exerciseKindList;
     private List<LikeListVO> likeListList;
+    private List<BuyVO> buyList;
+    private List<BoardVO> boardList;
 
   
 

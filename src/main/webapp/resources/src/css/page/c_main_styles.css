@@ -191,6 +191,8 @@ input[type=checkbox] {
     display: inline-block;
     margin: 0 20px;
     text-decoration: none;
+    position: relative;
+    left : 450px;
 }
 
 

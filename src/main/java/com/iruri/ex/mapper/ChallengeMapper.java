@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
@@ -51,18 +52,30 @@ public interface ChallengeMapper {
     
     /*----------관심수-----------*/
     //유저가 그 클래스에 좋아요 한 기록이 있는지 
-    int userLikeListCheck(LikeListVO likeListVO);
-    //likelist 추가
-    void challengeLikeInsert(LikeListVO likeListVO);
+    int userLikeListCheck(@Param("classId") int classId,  @Param("userId") int userId);
+    
     //likelist 삭제
-    void challengeLikeDelete(LikeListVO likeListVO);
-    //관심수 늘리기
-    void likeCountUp(int classId);
+    void challengeLikeDelete(@Param("classId") int classId,  @Param("userId") int userId);
+    
     //관심수 줄이기
     void likeCountDown(int classId);
+
+    //likelist 추가
+    void challengeLikeInsert(@Param("classId") int classId,  @Param("userId") int userId);
     
+    //관심수 늘리기
+    void likeCountUp(int classId);
+
     
-    //챌린지 개설자 닉네임
-    IUserVO userNickname(int userId);
+    //유저 챌린지 참여 등록(likelist insert)
+    void insertUserJoinChallenge(BuyVO buyVO);
+
+    
+    /*----------챌린지 커뮤니티-----------*/
+    //챌린지 댓글
+    int getTotalCount_challengeReply(Criteria cri, @Param("classId") int classId);
+    List<BoardVO> getListWithPaging_challengeReply(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("classId") int classId);
+    
+  
   
 }

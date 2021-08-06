@@ -46,7 +46,7 @@ public class BoardVO {
     private int boardLike;
     private int boardGroupId;
     private int categoryId;
-    private int userId;
+    private IUserVO iUserVO;
     private int rnum;
 
 
