@@ -70,11 +70,14 @@
 		                            <li class="c_mini_info2">${challengeInfo.classStartDate}~${challengeInfo.classEndDate}</li>
 		                            <li class="c_mini_info2">주 ${challengeInfo.classExerciseCount}일</li>
 		                            <li class="c_mini_info2">${challengeInfo.classJoinMember} / ${challengeInfo.classTotalMember}</li>
-		                            <li class="c_mini_info2">루리</li>
+		                            <li class="c_mini_info2">${challengeInfo.IUserVO.userNickname}</li>
 								</ul>
 							</div>
 
-							<div class="c_join_completion">참여중인 챌린지 입니다.</div>
+
+							
+								<div class="c_join_completion">참여중인 챌린지 입니다.</div>
+					
 						</div>
 				</article>
 

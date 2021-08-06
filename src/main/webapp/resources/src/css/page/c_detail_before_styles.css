@@ -475,6 +475,9 @@ ul li {
 
 
 /* 댓글갯수 */
+table {
+	width : 100%;
+}
 
 table,
 tr,

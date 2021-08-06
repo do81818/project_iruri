@@ -13,10 +13,43 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %> <!-- 경로를 확인해 주세요 -->
-    <title>챌린지 상세(참여 전)</title> <!-- 페이지 이름을 적어주세요 -->
+    <title>  ${challengeInfo.classTitle} </title> <!-- 페이지 이름을 적어주세요 -->
     <script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
     <script src="${RESOURCES_PATH}/src/js/challenge/c_sticky.js" defer></script>
+ 
+ <script>
+	$(document).ready(function(){
+		/* window.onload = function(){ */
+		var actionForm = $("#actionForm");
+        $(".pageNumLink").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".prev").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".next").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+	});
+	
+	</script>
+ 
+ 
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -72,7 +105,7 @@
                             <li class="c_mini_info2">${challengeInfo.classStartDate}~${challengeInfo.classEndDate}</li>
                             <li class="c_mini_info2">주 ${challengeInfo.classExerciseCount}일</li>
                             <li class="c_mini_info2">${challengeInfo.classJoinMember} / ${challengeInfo.classTotalMember}</li>
-                            <li class="c_mini_info2">루리</li>
+                            <li class="c_mini_info2">${challengeInfo.IUserVO.userNickname}</li>
                         </ul>
                     </div>
 
@@ -87,6 +120,7 @@
     					<c:set var = "classJoinMember" value = "${challengeInfo.classJoinMember}"/>
     					<c:set var = "classTotalMember" value = "${challengeInfo.classTotalMember}"/>
     					<c:set var = "classEndDate" value = "${challengeInfo.classEndDate}"/>
+    					<!-- 오늘 날짜 비교 -->
     					<jsp:useBean id="now" class="java.util.Date" />
 						<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
@@ -103,9 +137,6 @@
 	                    	<c:when test ="${classJoinMember ge classTotalMember}">
 	                        <div class="c_join_end">인원 마감된 챌린지 입니다.</div>
 	                        </c:when>
-	                        
-	                        
-	                       
                         </c:choose>
                         </sec:authorize>
                         
@@ -236,73 +267,126 @@
     </div>
     <!--댓글리스트-->
     <div class="c_before_reply" id="reply">
-
-
-
-        <div class="reply_count">총 77 개</div>
-        <table class="reply_table">
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate nostrum dolores unde dicta perferendis temporibus facilis nobis ducimus provident omnis voluptatum consequatur explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate nostrum dolores unde dicta perferendis temporibus facilis nobis ducimus provident omnis voluptatum consequatur explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate nostrum dolores unde dicta perferendis temporibus facilis nobis ducimus provident omnis voluptatum consequatur explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate nostrum dolores unde dicta perferendis temporibus facilis nobis ducimus provident omnis voluptatum consequatur explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate nostrum dolores unde dicta perferendis temporibus facilis nobis ducimus provident omnis voluptatum consequatur explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="reply_nickname">닉네임</td>
-                <td>
-                    <p class="reply_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate explicabo excepturi.</p>
-                    <p class="reply_date">2021.07.03</p>
-                </td>
-
-            </tr>
-
-        </table>
+  
     </div>
 
     <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
     <div class="page_nation">
-        <a class="arrow prev" href="#"></a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a class="arrow next" href="#"></a>
+    
     </div>
+    
+    
+<script>
+		function getlist(page) {
+			
+			    $.ajax({
+			        url: 'http://localhost:8282/ex/ajax/c_detail_before.json',
+			        type: 'GET',
+			        cache: false,
+			       	dateType:'json',
+			   
+			        data: {
+			        	
+			           pageNum : page,
+			           classId : ${challengeInfo.classId},
 
+			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
+			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
+			            // url 상으론 /rest/after?pageNum=2 이런식
+			        },
+					success : function(result) {
+						console.log(result);
+				    	var list = result['list'];
+						var pagination = result['pageMaker'];
+						var htmls = "";
+						var htmls2 = "";
+
+						if (list.length < 1) {
+							htmls += '<div class="c_list_not">';
+							htmls += '현재 등록된 댓글이 없습니다.';
+							htmls += '</div>';
+						} else {
+							
+							$(list).each(function() {
+								
+							
+								htmls += '<div class="reply_count">';
+								const count = $(this.boardList).length;
+								htmls += '총'
+										+ count 
+										+ '개';
+								htmls += '</div>';
+								htmls += '<table class="reply_table">';
+								$(this.boardList).each(function() {
+												//댓글 리스트 
+												
+
+												
+												
+												htmls += '<tr>';
+												
+												htmls += '<td class="reply_nickname">';
+												htmls += this.iuserVO.userNickname;
+												htmls += '</td>';
+
+												htmls += '<td>';
+												htmls += '<p class="reply_content">';
+												htmls += this.boardContent;
+												htmls += '</p>';
+
+												htmls += '<p class="reply_date">';
+												htmls += this.boardDate;
+												htmls += '</p>';
+												htmls += '</td>';
+												htmls += '</tr>';
+								});
+												
+								htmls += ' </table>';
+								
+											});
+							
+						
+							
+					         /* ------------------ 페이징 부분 --------------------- */
+	                        
+					         if (pagination['prev']) {
+	                             htmls2 += '<a class="arrow prev" href="javascript:list('+ (pagination['startPage']-1) +'"></a>';
+	         				} 
+	         				// 번호를 표시하는 부분
+	         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+	         					if (page !== idx) {
+	         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+	         					} else {
+	         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+	         					}
+	         				}
+	         				
+	         				if (pagination['next']) {
+	                            htmls2 += '<a class="arrow next" href="javascript:list('+ (pagination['endPage']+1) +')"></a>';
+	        						
+	        				}			
+	         			}	// if(list.length < 1) else 끝
+	                     
+	                        $(".c_before_reply").html(htmls);
+	         				$(".page_nation").html(htmls2);
+	         				
+	                     }
+	                     
+	                 });
+	                             
+	                             
+	            }
+		
+	
+	            $(document).ready(function() {
+	                getlist(1);
+	            });
+							
+							
+
+	
+
+</script>
 
 
 
