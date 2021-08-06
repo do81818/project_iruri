@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.ExerciseDateVO;
+import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 
@@ -22,7 +24,7 @@ public class IClassServiceImpl implements IClassService {
 
     // 현재 운영중인 클래스 조회
     @Override
-    public List<IClassVO> classCurrentList(int userId) {
+    public List<IClassVO> classList(int userId) {
         List<IClassVO> vo = iClassMapper.selectAllCurrent(userId);
         if(vo == null) {
             return null;
@@ -87,7 +89,6 @@ public class IClassServiceImpl implements IClassService {
 
     // 클래스 페이징
     @Override
-
     public int getTotal(int userId, Criteria cri) {
         return iClassMapper.getTotalCount(userId,cri);
     }
@@ -154,7 +155,17 @@ public class IClassServiceImpl implements IClassService {
     }
 
 
-
+  
+   
+    //운동종류
+    @Override
+    public List<ExerciseKindVO> selectExerciseKind(int userId) {
+        List<ExerciseKindVO> kind = iClassMapper.selectExerciseKind(userId);
+        if(kind == null) {
+            return null;
+        }
+        return kind;
+    }
 
  
 }
