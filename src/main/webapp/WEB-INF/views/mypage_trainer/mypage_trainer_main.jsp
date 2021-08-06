@@ -32,24 +32,35 @@
 			success : function(result){
 				var list = result['list'];
 				console.log(list);
+				 var jebal = result['jebal'];
+				console.log(jebal); 
 				var pagination = result['pageMaker'];
 				var htmls = ''; 
 				var htmls2 = '';
 				
+				 for(let j = 0; j < list.length; j++) {
+					for(let i = 0; i < jebal.length; i++) {
+						if(list[j].classId === jebal[i].classId) {
+							list[j] = jebal[i];
+						}												
+					}
+				 } 
+				
 				if(list.length < 1) {
 					htmls = '현재 등록된 클래스가 없습니다.';
-				} else {
-				
+				} else {			 
+					
 					$(list).each(function() {
+						//this.exerciseKindList = '';
+						//console.log(this.exerciseKindList);
+						
 						// src="../image/360-250.png"
 						htmls +=	'<div class="pt_card">';
 						htmls += 		'<div class="pt_image_and_mark">';
 						htmls +=			'<img class="pt_image">';
-						htmls +=			'<div class="pt_mark">1:1</div>';
+						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
 						htmls += 		'</div>';
-
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-
 						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
 
 						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
@@ -58,13 +69,14 @@
 						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + this.classLevel;
 						htmls +=			'</div>';
 						htmls +=			'<div class="pt_icon-blue">';
-						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">'+ this.classTime+'분/${dates.exerciseDate}';
 						htmls +=			'</div>';
 						htmls +=		'</div>';
 
 						htmls +=		'<div class="pt_icon">';
-						htmls +=			'<div class="pt_icon-red">댄스</div>';
-						htmls +=			'<div class="pt_icon-red">피트니스</div>';
+										for(var i = 0; i < this.exerciseKindList.length; i++) {
+						htmls +=			'<div class="pt_icon-red">' + this.exerciseKindList[i].exerciseKind + '</div>';																							
+										}
 						htmls +=		'</div>';
 
 						htmls +=		'<div class="pt_price">₩' + this.classPrice + '</div>';
@@ -129,7 +141,7 @@
 						htmls +=	'<div class="pt_card">';
 						htmls += 		'<div class="pt_image_and_mark">';
 						htmls +=			'<img class="pt_image">';
-						htmls +=			'<div class="pt_mark">1:1</div>';
+						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
 						htmls += 		'</div>';
 
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';

@@ -73,9 +73,9 @@
 		SELECT
 			*
 		FROM 
-			iclass
+			iclass, exercise_kind
 		WHERE
-			user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
 		]]>
 	</select>
 
@@ -164,8 +164,7 @@ WHERE c.class_id = e.class_id
 
 	<select id="getListWithPaging_mypageTrainerClassList" parameterType="HashMap" resultMap="iClassMap">
 	 <![CDATA[
-	
-		SELECT *
+SELECT *
 FROM
 (
     SELECT ROWNUM rn, c.*
@@ -173,13 +172,12 @@ FROM
     (
         SELECT B.*
         FROM iclass B
-        WHERE user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE >= sysdate
-        ORDER BY B.class_startdate DESC
+        WHERE B.user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE >= sysdate
+        ORDER BY B.class_id DESC, B.class_startdate DESC
     ) C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
-
 	]]> 
 
 	</select>
@@ -213,6 +211,27 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 
 	]]> 
 
+	</select>
+	
+	
+	<!-- 요일 -->
+	<select id="selectExerciseDate" resultMap="exerciseDateMap">
+		<![CDATA[
+		select * from exercise_date 
+		where class_id in
+		(SELECT class_id FROM iclass WHERE user_id = #{userId})
+		order by class_id
+		]]>
+	</select>
+	
+	<!-- 운동종류  -->
+	<select id="selectExerciseKind" resultMap="exerciseKindMap">
+		<![CDATA[
+		select * from exercise_kind 
+		where class_id in
+		(SELECT class_id FROM iclass WHERE user_id = #{userId})
+		order by class_id
+		]]>
 	</select>
 	
 
