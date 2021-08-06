@@ -83,8 +83,7 @@
 
 			<script>
 				function getlist(page) {
-					$
-							.ajax({
+					$.ajax({
 								url : '${CONTEXT_PATH_ADMIN}/ajax/trainer/list.json',
 								type : 'GET',
 								cache : false,
@@ -110,28 +109,40 @@
 										htmls += '</tr>'
 									} else {
 										$(list)
-												.each(
-														function() {
-															htmls += '<tr class="list_impact">';
+												.each(function() {
+														    
+															htmls += '<tr class="list_impact" onclick="link('
+																	+ this.userId
+																	+ ')">';
 															htmls += '<td class="table_No_date">'
-																	+ this.iuserVo.userId
+																	+ this.userId
 																	+ '</td>';
-															if (this.authVo.authContent == "ROLE_TRAINER") {
-																htmls += '<td class="table_indigo_text">'
-																		+ '트레이너'
-																		+ '</td>';
+															htmls += '<td class="table_indigo_text">';
+															if (this.authList[0].authContent == "ROLE_TRAINER") {
+															    htmls += '트레이너';
 															} else {
 																htmls += 00;
 															}
+															htmls += '</td>';
 
 															htmls += '<td class="table_indigo_text">'
-																	+ this.iuserVo.userNickname
+																	+ this.userNickname
 																	+ '</td>';
 															htmls += '<td class="table_blue_text">'
-																	+ this.iuserVo.userEmail
+																	+ this.userEmail
 																	+ '</td>';
+																	
+															var grade = 0;
+															var gradeLength = this.gradeList.length;
+															if (gradeLength > 0){
+																for(let i = 0; i < gradeLength; i++){
+																	grade += this.gradeList[i].gradeScore;
+																}
+															}
+															var avgGrade = grade/gradeLength;
+															
 															htmls += '<td class="table_red_text">'
-																	+ this.avgGrade
+																	+ (avgGrade).toFixed(1)
 																	+ '</td>'
 																	+ '</tr>';
 														});
@@ -179,6 +190,10 @@
 				$(document).ready(function() {
 					getlist(1);
 				});
+				
+				function link(userId){
+				    location.href='${CONTEXT_PATH_ADMIN}/trainer/info?userId='+ userId;
+				}
 			</script>
 
 		</div>
