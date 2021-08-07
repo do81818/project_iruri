@@ -270,7 +270,7 @@
 
 
                                                             htmls += '<div class="c_list_title">';
-                                                            htmls += '<a href="c_detail_before?classId=' + this.classId + '"target="_blank">';
+                                                            htmls += '<a href="challenge_detail_before?classId=' + this.classId + '"target="_blank">';
                                                             htmls += this.classTitle;
                                                             htmls += '</a>';
                                                             htmls += '</div>';

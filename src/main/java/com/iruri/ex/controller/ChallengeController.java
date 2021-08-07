@@ -203,22 +203,24 @@ public class ChallengeController {
     /*-------------챌린지 상세 페이지-------------*/
     // 챌린지 상세 -참여 전
     @GetMapping("/iruri/challenge_detail_before")
-    public ModelAndView c_detail_before(ModelAndView mav, Model model, IClassVO iClassVO) {
+    public ModelAndView c_detail_before(ModelAndView mav, IClassVO iClassVO) {
         mav.setViewName("challenge/challenge_detail_before");
         //챌린지 정보
         mav.addObject("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
         return mav;
     }
     
+    //댓글부분
     @ResponseBody
-    @GetMapping("/ajax/c_detail_before")
-    public ResponseEntity<HashMap<String, Object>> challenge_detail_before(@RequestParam("pageNum") int pageNum, @RequestParam("classId") int classId){
+    @GetMapping("/ajax/c_detail_before_reply")
+    public ResponseEntity<HashMap<String, Object>> challenge_detail_before(@RequestParam("pageNum") int pageNum, 
+            @RequestParam("classId") int classId){
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 6);
         log.info(classId);
        int total = challengeService.getTotal_challengeReply(cri,classId);
        result.put("pageMaker", new PageVO(cri,total));
-       result.put("list", challengeService.challengeReplyList(cri,classId));
+       result.put("replyList", challengeService.challengeReplyList(cri,classId));
        
        return ResponseEntity.ok(result); 
     }
@@ -231,7 +233,46 @@ public class ChallengeController {
         return"redirect:challenge_detail_after";
     }
 
+    
+    //챌린지 상세-참여 후 
+    @GetMapping("/iruri/challenge_detail_after")
+    public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, BuyVO buyVO, @CurrentUser IUserVO vo) {
+        mav.setViewName("challenge/challenge_detail_after");
+        //챌린지 정보
+        mav.addObject("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
+        
+        //참여인원 update
+        challengeService.upJoinMember(iClassVO.getClassId());
+        log.info("challenge up join member()..");
+        
+        //유저챌린지목록(buy table) insert
+        buyVO.setIUserVO(vo);
+       
+        challengeService.userJoinChallenge(buyVO);
+        log.info("insert user Join Challenge()..");
+        return mav;
+    }
+    
+    //댓글부분
+    @ResponseBody
+    @GetMapping("/ajax/c_detail_after_reply")
+    public ResponseEntity<HashMap<String, Object>> challenge_after_before(@RequestParam("pageNum") int pageNum, 
+            @RequestParam("classId") int classId){
+        HashMap<String, Object> result = new HashMap<>();
+        Criteria cri = new Criteria(pageNum, 6);
+        log.info(classId);
+       int total = challengeService.getTotal_challengeReply(cri,classId);
+       result.put("pageMaker", new PageVO(cri,total));
+       result.put("replyList", challengeService.challengeReplyList(cri,classId));
+       
+       return ResponseEntity.ok(result); 
+    }
+    
+    
+    
+    
     // 챌린지 상세 - 참여 후
+    /*
     @GetMapping("/iruri/challenge_detail_after")
     public String c_detail_after(IClassVO iClassVO, BuyVO buyVO, Model model,@CurrentUser IUserVO vo) {
 
@@ -252,7 +293,10 @@ public class ChallengeController {
 
         return "challenge/challenge_detail_after";
     }
+    */
     
+    /*-------------관심수-------------*/
+    //유저가 좋아요 한 기록이 있는지
     @GetMapping("/iruri/heart")
     @ResponseBody
     public int heart(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
@@ -260,6 +304,7 @@ public class ChallengeController {
         return challengeService.getUserLikeListCheck(classId, vo.getUserId());
     }
     
+    //좋아요 하면 likelist에 추가하고 삭제하기 
     @GetMapping("/iruri/heartList")
     @ResponseBody
     public int heartList(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
@@ -267,49 +312,6 @@ public class ChallengeController {
         return challengeService.getUserHeartList(classId, vo.getUserId());
     }
     
-    /*-------------관심수-------------*/
-    //https://kwakkwakkwak.github.io/spring/2017/12/18/Sprng-%EC%A2%8B%EC%95%84%EC%9A%94%EA%B8%B0%EB%8A%A5/
-    /*
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public void read(@RequestParam("classId") int classId, Model model,
-            HttpServletRequest httpRequest, Principal principal) {
-        
-        IUserVO vo = iUserService.selectOne(principal.getName());
-        //int userId = ((IUserVO) httpRequest.getSession().getAttribute("login")).getUserId();
-        
-        LikeListVO likeListVO = new LikeListVO();
-        likeListVO.setClassId(classId);
-        likeListVO.setIUserVO(vo);
-        
-        int class_like = challengeService.getUserLikeListCheck(likeListVO);
-        
-        model.addAttribute("heart", likeListVO);
-        
-    }
-    
-    @ResponseBody
-    @RequestMapping(value = "/heart", method=RequestMethod.POST, produces="application/json")
-    public int heart(HttpServletRequest httpRequest, Principal principal) {
-        
-        IUserVO vo = iUserService.selectOne(principal.getName());
-        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-        int classId = Integer.parseInt(httpRequest.getParameter("classId"));
-        //int userId = ((IUserVO) httpRequest.getSession().getAttribute("login")).getUserId();
-        
-        LikeListVO likeListVO = new LikeListVO();
-        
-        likeListVO.setClassId(classId);
-        likeListVO.setIUserVO(vo);
-        
-        if(heart >= 1) {
-            challengeService.challenge_likeDelete(likeListVO);
-            heart = 0;
-        }else {
-            challengeService.challenge_likeInsert(likeListVO);
-            heart = 1;
-        }
-        return heart;
-    }
-    */
+   
 
 }

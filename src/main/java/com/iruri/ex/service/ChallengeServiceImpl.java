@@ -37,26 +37,12 @@ public class ChallengeServiceImpl implements ChallengeService {
 	      return vo; 
 	  }
 	 
-    //챌린지 메인 리스트
-    /*
-    @Override
-    public List<IClassVO> challengeList() {
-        List<IClassVO> vo = iClassMapper.ChallengeSelectAll();
-        if(vo == null) {
-            return null;
-        }
-        return vo;
-    }
-    */
-   
-   
-  
+	/*----------챌린지 개설 폼-----------*/
     //챌린지 개설 폼 값 입력
     @Override
-    public void insertChallenge(IClassVO iClassVO) {
-        log.info("insertChallenge()..");
-        
+    public void insertChallenge(IClassVO iClassVO) {   
         log.info("insertChallenge: " + iClassVO);
+        
         challengeMapper.insertChallenge(iClassVO);
         
     }
@@ -132,6 +118,15 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     
+    //유저 챌린지 참여 후 likelist insert
+    @Override
+    public void userJoinChallenge(BuyVO buyVO) {
+        log.info("userJoinChallenge()..");
+        challengeMapper.insertUserJoinChallenge(buyVO);
+        
+    }
+    
+    
     /*----------관심수-----------*/
     
     @Override
@@ -142,6 +137,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         return check;
     }
+    
     
     @Override
     public int getUserLikeListCheck(int classId, int userId) {
@@ -160,24 +156,28 @@ public class ChallengeServiceImpl implements ChallengeService {
         return check;
     }
 
+    //좋아요 리스트 삭제
     @Override
     public void challenge_likeDelete(int classId, int userId) {
         log.info("challenge_likeDelete()..");
         challengeMapper.challengeLikeDelete(classId, userId);
     }
 
+    //좋아요 리스트 추가
     @Override
     public void challenge_likeInsert(int classId, int userId) {
         log.info("challenge_likeInsert()..");
         challengeMapper.challengeLikeInsert(classId, userId);
     }
 
+    //좋아요 수 1증가
     @Override
     public void challenge_likeCountUp(int classId) {
         log.info("challenge_likeCountUp()..");
         challengeMapper.likeCountUp(classId);
     }
-
+    
+    //좋아요 수 1감소
     @Override
     public void challenge_likeCountDown(int classId) {
         log.info("challenge_likeCountDown()..");
@@ -185,13 +185,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     
-    //유저 챌린지 참여 후 likelist insert
-    @Override
-    public void userJoinChallenge(BuyVO buyVO) {
-        log.info("userJoinChallenge()..");
-        challengeMapper.insertUserJoinChallenge(buyVO);
-        
-    }
+  
 
 
     /*----------챌린지 커뮤니티-----------*/
