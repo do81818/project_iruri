@@ -31,6 +31,16 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
         
     }
     
+    // 운영중인 클래스 갯수
+    public int countMypageTrainerClass(int userId) {
+        return mypageTrainerMapper.countMypageTrainerClass(userId);
+    }
+    
+    // 총수익
+    public int trainerProfit(int userId) {
+        return mypageTrainerMapper.trainerProfit(userId);
+    }
+    
     // 이달의 수익
     @Override
     public int monthProfit(int userId) {

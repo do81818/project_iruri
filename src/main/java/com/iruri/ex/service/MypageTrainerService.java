@@ -9,6 +9,12 @@ import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 
 public interface MypageTrainerService {
+    // 운영중인 클래스 갯수
+    int countMypageTrainerClass(int userId);
+    
+    // 총수익
+    int trainerProfit(int userId);
+    
     // 이달의 수익
     int monthProfit(int userId);
     

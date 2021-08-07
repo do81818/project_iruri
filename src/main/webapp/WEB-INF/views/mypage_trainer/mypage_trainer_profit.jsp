@@ -38,13 +38,13 @@
 
 					<div id="challenge">
 						운영중인 클래스
-						<div class="count">10</div>
+						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
 					<div id="buy">
 						수익금
 						<div class="count">
-							200
+							${trainerProfitMan}
 							<div class="buy_text">만원</div>
 						</div>
 					</div>

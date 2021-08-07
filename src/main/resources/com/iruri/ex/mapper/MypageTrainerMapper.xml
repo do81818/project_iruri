@@ -66,6 +66,26 @@
 		</collection>
 	
 	</resultMap>
+	
+	<!-- 현재 진행중인 클래스(+페이징)  -->
+	
+	<select id="countMypageTrainerClass" resultType="int">
+	<![CDATA[
+		select count(*) from iClass where user_id = #{userId} and CLASS_ENDDATE >= sysdate
+	]]>
+	</select>
+
+	<!-- 트레이너의 총수익 뽑기  -->
+	<select id="trainerProfit" resultType="int">
+		<![CDATA[
+	SELECT (select sum(buy_realpay + buy_point)
+from buy where class_id in (select class_id from iclass where user_id = #{userId}))
+-
+(select sum(money_output) from money where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id = #{userId})))) FROM DUAL
+		]]>
+	</select>
 
 	<!-- 트레이너의 월별 수익 뽑기  -->
 	<select id="monthProfit" resultType="int">
@@ -83,6 +103,7 @@ and (SELECT LAST_DAY(SYSDATE) FROM DUAL)
 )))) as thisMonthProfit from dual
 		]]>
 	</select>
+	
 
 	
 	

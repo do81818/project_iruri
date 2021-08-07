@@ -14,7 +14,10 @@ import com.iruri.ex.vo.ExerciseKindVO;
 
 @Mapper
 public interface MypageTrainerMapper {
-    
+    // 운영중인 클래스 갯수
+    int countMypageTrainerClass(int userId);
+    // 총수익
+    int trainerProfit(int userId);
     // 이달의 수익
     int monthProfit(int userId);
     

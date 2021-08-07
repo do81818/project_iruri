@@ -135,7 +135,18 @@ public class MypageTrainerController {
         model.addAttribute("user", vo);
         int userId = vo.getUserId();
         
+        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
+        
+        // 트레이너 총수익
+        int trainerProfit = mypageTrainerService.trainerProfit(userId);
+        int trainerProfitMan = trainerProfit/10000;
+        
+        model.addAttribute("trainerProfitMan", trainerProfitMan);
+        
+        // 트레이너 월별 수익
         int monthProfit = mypageTrainerService.monthProfit(userId);
+        
         model.addAttribute("monthProfit", monthProfit);
         log.info("ㅇㅇ"+monthProfit);
         
