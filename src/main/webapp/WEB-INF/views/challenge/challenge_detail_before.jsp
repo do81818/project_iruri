@@ -277,10 +277,11 @@
     
     
 <script>
+//댓글 ajax, 페이징
 		function getlist(page) {
 			
 			    $.ajax({
-			        url: 'http://localhost:8282/ex/ajax/c_detail_before.json',
+			        url: 'http://localhost:8282/ex/ajax/c_detail_before_reply.json',
 			        type: 'GET',
 			        cache: false,
 			       	dateType:'json',
@@ -296,18 +297,18 @@
 			        },
 					success : function(result) {
 						console.log(result);
-				    	var list = result['list'];
+				    	var replyList = result['replyList'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
 
-						if (list.length < 1) {
+						if (replyList.length < 1) {
 							htmls += '<div class="c_list_not">';
 							htmls += '현재 등록된 댓글이 없습니다.';
 							htmls += '</div>';
 						} else {
 							
-							$(list).each(function() {
+							$(replyList).each(function() {
 								
 							
 								htmls += '<div class="reply_count">';
@@ -372,19 +373,12 @@
 	         				
 	                     }
 	                     
-	                 });
-	                             
-	                             
+	                 });                             
 	            }
-		
-	
+
 	            $(document).ready(function() {
 	                getlist(1);
 	            });
-							
-							
-
-	
 
 </script>
 

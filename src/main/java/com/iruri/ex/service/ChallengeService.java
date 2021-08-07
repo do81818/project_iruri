@@ -18,6 +18,7 @@ public interface ChallengeService {
     List<IClassVO> classList(int userId);
     
     
+    /*----------챌린지 개설폼-----------*/
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
     
@@ -46,7 +47,7 @@ public interface ChallengeService {
     void userJoinChallenge(BuyVO buyVO);
     
     /*----------관심수-----------*/
-    
+    //유저의 likelist
     int getUserHeartList(int classId, int userId);
     
     //유저가 그 클래스에 좋아요 한 기록이 있는지 
