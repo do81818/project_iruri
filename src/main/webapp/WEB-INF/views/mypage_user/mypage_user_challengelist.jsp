@@ -6,12 +6,15 @@
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application" />
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
      <%@ include file="../include/static.jsp" %> 
     <title>마이페이지 챌린지리스트</title> 
       <script src="${RESOURCES_PATH}/src/js/mypage_user_main.js" defer></script>
+     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+	    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
       <script>
    $(document).ready(function(){
       /* window.onload = function(){ */
@@ -41,6 +44,38 @@
         });
    });
    
+   
+   </script>
+   
+   <script>
+/*    new Swiper('.swiper-container', {
+	   speed: 300,
+	   slidesPreView :2,
+	   slidesPerGroup : 2,
+	   loop:true,
+	   
+	   navigation: {
+		   nextEl: '.swiper-button-next',
+		   prevEl: '.swiper-button-prev',
+	   },
+	   pagination:{
+		   el:'.swiper-pagination',
+			type:'bullets',
+			clickable:true,
+	   },
+
+   });  */
+
+   var swiper = new Swiper(".mySwiper", {
+     slidesPerView: 2,
+     spaceBetween: 30,
+     freeMode: true,
+     pagination: {
+       el: ".swiper-pagination",
+       clickable: true,
+     },
+   });
+
    
    </script>
   </head>
@@ -79,7 +114,7 @@
         </div>
         <div id = "m_userclass_box">
           <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-          <div id="m_userclass_number"></div>
+          <div id="m_userclass_number">${userclasscount}</div>
         </div>
       </div>
        
@@ -93,7 +128,7 @@
                    </div>
                    <div id="m_pre_chanllengelist_box">
                        <div id="m_pre_chanllengelist">관심챌린지</div>
-                        <div id="m_pre_chanllengelistnb">${likecount}</div>
+                        <div id="m_pre_chanllengelistnb">${userlikecount}</div>
                    </div>
                    <div id="m_use_chanllengelist_box">
                        <div id="m_use_chanllengelist">지난챌린지</div>
@@ -108,14 +143,15 @@
                 <div class="m_c_text">
                   신청챌린지
               </div>
-
-                      <!--신청챌린지 이미지 2개-->
-        <div class="m_c_recommend">
+			
+			
+			                      <!--신청챌린지 이미지 2개-->
+        <div class=" m_c_recommend">
           <img class="m_left" role="button" src="/ex/resources/src/img/icon/arrow_blue_left.png">
-          <img class="m_right" role="button"src="/ex/resources/src/img/icon/arrow_blue_right.png">
           
           
-          <c:forEach var="userchallengelist" items="${userchallengelist}" varStatus="status">
+          
+          <c:forEach  var="userchallengelist" items="${userchallengelist}" varStatus="status">
                     <div class="m_c_recommend_img">
                     <button class="m_cl_cancel_challenge_bt">챌린지취소</button> 
               <div class="m_c_recommend_title">
@@ -131,29 +167,11 @@
                   <input type="checkbox" id="heart${userchallengelist.classId}"><label for="heart${userchallengelist.classId}" class="m_heart_label"></label>
               </div>
           </div>
-          
+
           </c:forEach>
 
-
-
-<!--           <div class="m_c_recommend_img">
-              <div class="m_c_recommend_title">
-                  러닝 전 5분 스트레칭
-              </div>
-
-
-              <span class="m_c_recommend_date">
-                  2021.03.01~2021.04.01
-              </span>
-
-
-              <div class="m_c_heart">
-                  <input type="checkbox" id="heart2"><label for="heart2" class="m_heart_label"></label>
-              </div>
-
-          </div> -->
+<img class="m_right" role="button"src="/ex/resources/src/img/icon/arrow_blue_right.png">
       </div>
-
 
 <!-- 챌린지 취소 버튼 (모달) -->
       
@@ -168,6 +186,13 @@
             <a href="">관심챌린지</a>
         </p>
     </div>
+    
+    
+    		 
+		    <p class="m_c_like_last1">
+		        <a href="">지난챌린지</a>
+		    </p>
+		
 
 <%--     <div class="m_c_list">
    <c:forEach var="userlikelist" items="${userlikelist}" varStatus="status">
@@ -288,14 +313,10 @@
 
    <!-- 지난챌린지 -->
    
-<%--    <div class="m_c_main_tab">
-    <p class="m_c_like_last">
-        <a href="">지난챌린지</a>
-    </p>
-</div>
+
    
-<div class="m_c_list">
-<c:forEach var="userendlist" items="${userendlist}">
+<!-- <div class="m_c_list"> -->
+<%-- <c:forEach var="userendlist" items="${userendlist}">
 
 
   <div class="m_c_list_detail">
@@ -328,7 +349,7 @@
   </div>
   
 </c:forEach>
-
+ --%>
 
 <!--   <div class="m_c_list_detail">
     <div class="m_c_list_img">
@@ -388,7 +409,7 @@
 
 </div>
  -->
-  <div class="m_page_nation">
+<!--   <div class="m_page_nation">
       <a class="m_arrow_prev" href="#"></a>
       <a href="#" class="m_active">1</a>
       <a href="#">2</a>
@@ -396,16 +417,25 @@
       <a href="#">4</a>
       <a href="#">5</a>
       <a class="m_arrow_next" href="#"></a>
-  </div>
+  </div> 
 
-</div> --%>
+</div> -->
 	
 	
 	
 	 <div class="m_c_list"></div>
 	 
-    <div class="m_page_nation">   </div>
+    <div class="m_page_nation page_nation">   </div>
       <form id="mactionForm"  action="/ex/mypage/challengelist" method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	 </form>
+	 
+	 
+
+	 	 <div class="m_c_list1"></div>
+    <div class="m_page_nation1 page_nation">   </div>
+      <form id="mactionForm"  action="/ex/mypage/endchallengelist" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 	 </form>
@@ -465,7 +495,7 @@
       </div>
     </div>
 	
-	
+	    </div>
 	<script>
 			function likelist(page){
 				
@@ -490,7 +520,7 @@
 						var htmls = "";
 						var htmls2 = "";
 						
-						if(list.lengt <1 ){
+						if(list.length <1 ){
 							htmls += '<div class="m_c_list_not">';
 							htmls += '하트를 누른 챌린지가 없습니다.';
 							htmls += '</div>';
@@ -541,7 +571,7 @@
 								
 								htmls += '<div class="m_c_list_heart">';
 								htmls += '<input type="checkbox" id="heart'+this.classId+'">';
-								htmls += '<label for="heart'+this.classId+'" class="heart_label"></label>';
+								htmls += '<label for="heart'+this.classId+'" class="m_heart_label"></label>';
 								htmls += '</div>';
 
 								htmls += '</div>';
@@ -580,13 +610,145 @@
 	                             
 			
 			}
-	            $(document).ready(function() {
-	                likelist(1);
-	            });
-	
+			
+            $(document).ready(function() {
+                likelist(1);
+            });
+			
+			</script>
+			
+			
+		
+		
+		<script>
+		
 
 	
+
+	            
+				function endlist(page){
+					
+					$.ajax({
+						url: 'http://localhost:8282/ex/ajax/endchallengelist.json',
+						type:'GET',
+						cache: false,
+						dateType:'json',
+						
+						data: {
+							pageNum : page,
+							
+							
+							
+							
+							
+						},
+						success: function(result){
+							console.log(result);
+							var endlist = result['endlist'];
+							var pagination1 = result['pageMaker'];
+							var htmls = "";
+							var htmls2 = "";
+							
+							if(endlist.length <1 ){
+								htmls += '<div class="m_c_list1_not">';
+								htmls += '지난 챌린지가 없습니다.';
+								htmls += '</div>';
+								
+							}else{
+								$(endlist).each(function(){
+									htmls += '<div class="m_c_list_detail">';
+									htmls += '<div class="m_c_list_img">';
+									htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+									htmls += '</div>';
+									
+									htmls += '<div class="m_c_list_title">';
+									htmls += '<a href="c_detail_before?classId='+this.classId+'">';
+									htmls += this.classTitle;
+									htmls += '</a>';
+									htmls += '</div>';
+									
+									htmls += '<div class=" m_c_list_date">'
+											+ this.classStartDate
+											+ '~'
+											+ this.classEndDate
+											+ '</div>';
+									
+											
+									htmls += '<div class="m_data_tags">';
+									htmls += '<div class="m_data_tag_blue">';
+									htmls += '<i class="m_iruri_time_icon"></i>';
+									htmls += this.classLevel;
+									htmls += '</div>';
+									
+									htmls += '<div class="m_data_tag_blue">';
+									htmls += '<i class="m_iruri_level_icon"></i>주';
+									htmls += this.classExerciseCount
+											+ '회 이상';
+									htmls += '</div>';
+									htmls += '</div>';
+									
+									
+									htmls += '<div class="m_c_list_price">';
+									htmls += '참여중인 인원'
+											+ this.classJoinMember
+											+ '명';
+									htmls += '(최대인원'
+											+ this.classTotalMember
+											+ '명)';
+									htmls += '</div>';
+									
+									
+						
+
+									htmls += '</div>';
+											
+									
+									
+								});
+								
+								
+						         if (pagination1['prev']) {
+		                             htmls2 += '<a class="arrow prev" href="javascript:endlist('+ (pagination1['startPage']-1) +'"></a>';
+		         				} 
+		         				// 번호를 표시하는 부분
+		         				for (var idx = pagination1['startPage']; idx <= pagination1['endPage']; idx++) {
+		         					if (page !== idx) {
+		         					   htmls2 += '<a class="pageNumLink" href="javascript:endlist('+ idx + ')">' + (idx) + "</a>";
+		         					} else {
+		         					   htmls2 += '<a class="pageNumLink active" href="javascript:endlist('+ idx + ')">' + (idx) + "</a>";
+		         					}
+		         				}
+		         				
+		         				if (pagination1['next']) {
+		                            htmls2 += '<a class="arrow next" href="javascript:endlist('+ (pagination1['endPage']+1) +')"></a>';
+		        						
+		        				}
+								
+							}		
+								$(".m_c_list1").html(htmls);
+								$(".m_page_nation1").html(htmls2);
+						
+								
+							}
+				
+					
+					});
+		                             
+				
+				}
+		            $(document).ready(function() {
+		                endlist(1);
+		            });
+		
+	
 	</script>
+	
+	
+	
+	
+
+
+
 	
 	
 	

@@ -27,7 +27,7 @@
 <script>
 	$(document).ready(function(){
 		/* window.onload = function(){ */
-		var actionForm = $("#actionForm");
+		var Form = $("#actionForm");
         $(".pageNumLink").on("click", function(e) {
             e.preventDefault();
             var targetPage = $(this).attr("href");

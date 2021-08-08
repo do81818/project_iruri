@@ -127,15 +127,31 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]> 
 	</select>
 	
-	
-					<select id="userendlist"  parameterType="int" resultMap="UserChallengeMap">
+		
+		<select id="userendlist"  parameterType="int" resultMap="UserChallengeMap">
 		<![CDATA[
+		
+		
+		
+				SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+   FROM
+   (
+
 		SELECT
 			*
 		FROM
 			iclass
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 1 and class_enddate < sysdate
+   
+   )C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+
 		]]> 
 	</select>
 	
@@ -161,6 +177,187 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 					and category_id = 1 and class_enddate < sysdate
 		]]> 
 	</select>
+	
+	
+						<select id="userlikecount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+				WHERE
+			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 1	and class_enddate >= sysdate
+		]]> 
+	</select>
+	
+	
+	
+							<select id="userendcount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 1 and class_enddate < sysdate
+		]]> 
+	</select>
+	
+	
+	
+	
+			<select id="classcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass 
+			WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+			and category_id = 2 and class_enddate >= sysdate
+			
+		]]> 
+	</select>
+	
+						<select id="classlikecount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+				WHERE
+			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate >= sysdate
+		]]> 
+	</select>
+		
+		
+								<select id="classendcount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate < sysdate
+		]]> 
+	</select>
+	
+	
+	
+				<select id="userclasslist" parameterType="int" resultMap="UserChallengeMap">
+		<![CDATA[
+		SELECT
+			*
+		FROM
+			iclass
+				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate >= sysdate
+		
+		]]> 
+	</select>
+	
+	
+					<select id="userclasslikelist_kind" parameterType="int" resultMap="UserChallengeMap">
+		<![CDATA[
+SELECT
+    *
+	FROM
+	    iclass i, exercise_kind e
+	WHERE
+	    i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
+		
+		]]> 
+	</select>
+	
+	
+	
+						<select id="userclasslikelist_date" parameterType="int" resultMap="UserChallengeMap">
+		<![CDATA[
+SELECT
+    *
+	FROM
+	    iclass i, exercise_date e
+	WHERE
+	    i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
+		
+		]]> 
+	</select>
+	
+	
+				<select id="class_likecount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			iclass
+				WHERE
+			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate >= sysdate
+		]]> 
+	</select>
+	
+	
+	
+
+	
+					<select id="userclasslikelist" parameterType="HashMap"  resultMap="UserChallengeMap">
+		<![CDATA[
+			SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+   FROM
+   (SELECT
+    *
+	FROM
+	    iclass 
+	WHERE
+	 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate>= sysdate
+   
+   )C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+ 
+		
+		]]> 
+	</select>
+	
+	
+	
+	
+				<select id="class_endcount"  parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+				from iclass where class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate < sysdate
+		]]> 
+	</select>
+	
+	
+	
+
+	
+					<select id="userclassendlist" parameterType="HashMap"  resultMap="UserChallengeMap">
+		<![CDATA[
+			SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+   FROM
+   (select * 
+		from iclass where class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+		and category_id = 2 and class_enddate < sysdate
+   
+   )C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+ 
+		
+		]]> 
+	</select>
+	
+
 	
 
    

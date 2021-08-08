@@ -95,7 +95,10 @@ public class MypageUserController {
 		 * iUserinfoService.userheightdate(vo.getUserId());
 		 * model.addAttribute("writedate",writedatevo);
 		 */
-            
+        // 유저의 참여 클래스 갯수
+        int classcountvo = userchallengeService.classcount(vo.getUserId());
+        log.info(classcountvo);
+        model.addAttribute("userclasscount",classcountvo);    
 
 
         return "/mypage_user/mypage_user_main";
@@ -213,7 +216,10 @@ public class MypageUserController {
 			  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
 			  log.info(challengecountvo);
 			  model.addAttribute("userchallengecount",challengecountvo);
-	        
+		        // 유저의 참여 클래스 갯수
+		        int classcountvo = userchallengeService.classcount(vo.getUserId());
+		        log.info(classcountvo);
+		        model.addAttribute("userclasscount",classcountvo);
 	        
 	        // 페이징
 	        
@@ -286,7 +292,10 @@ public class MypageUserController {
 			  log.info(challengecountvo);
 			  model.addAttribute("userchallengecount",challengecountvo);
 	        
-
+		        // 유저의 참여 클래스 갯수
+		        int classcountvo = userchallengeService.classcount(vo.getUserId());
+		        log.info(classcountvo);
+		        model.addAttribute("userclasscount",classcountvo);
 	        
 	        
 	        
@@ -325,11 +334,11 @@ public class MypageUserController {
 				  model.addAttribute("userchallengecount",challengecountvo); 
 				  
 			        
-			     // 유저의 관심챌린지 갯수 
-					/*
-					 * int likecountvo = userchallengeService.likecount(vo.getUserId());
-					 * log.info(likecountvo); model.addAttribute("likecount",likecountvo);
-					 */
+			      //유저의 관심챌린지 갯수 
+					
+					  int userlikecountvo = userchallengeService.userlikecount(vo.getUserId());
+					  log.info(userlikecountvo); model.addAttribute("userlikecount",userlikecountvo);
+					 
 			         
 			        
 			        // 유저의 지난챌린지 갯수
@@ -343,7 +352,10 @@ public class MypageUserController {
 			       log.info(userchallengelistvo);
 			       model.addAttribute("userchallengelist",userchallengelistvo);	
 			       
-			       
+			        // 유저의 참여 클래스 갯수
+			        int classcountvo = userchallengeService.classcount(vo.getUserId());
+			        log.info(classcountvo);
+			        model.addAttribute("userclasscount",classcountvo);
 			     // 유저의 관심챌린지 리스트
 					/*
 					 * List<IClassVO> userlikelistvo =
@@ -352,9 +364,11 @@ public class MypageUserController {
 					 */
 			      
 			      // 유저의 지난챌린지 리스트
-			      List<IClassVO> userendlistvo = userchallengeService.userendlist(vo.getUserId());
-			      log.info(userendlistvo);
-			      model.addAttribute("userendlist",userendlistvo);
+					/*
+					 * List<IClassVO> userendlistvo =
+					 * userchallengeService.userendlist(vo.getUserId()); log.info(userendlistvo);
+					 * model.addAttribute("userendlist",userendlistvo);
+					 */
 	  			  
 		      mav.setViewName("mypage_user/mypage_user_challengelist");
 			 
@@ -386,9 +400,181 @@ public class MypageUserController {
 		  
 		  return ResponseEntity.ok(result);
 		  
+		  }
 		  
-
+		  // 유저의 지난 챌린지 ajax 페이징
+		  @ResponseBody
+		  @GetMapping("/ajax/endchallengelist") 
+		  public ResponseEntity<HashMap<String,Object>> endchallengelist(@CurrentUser IUserVO vo, @RequestParam("pageNum")int pageNum){
+			  log.info("endchallengelist");
+			  
+			  
+		  HashMap<String, Object> result = new HashMap<>();
+		  Criteria cri = new Criteria(pageNum,3);
+		  
+		  int userId = vo.getUserId();
+		  log.info("유저아이디: "+userId);
+		  
+		  int total = userchallengeService.userendcount(userId);
+		  log.info("토탇" +total);
+		  
+		  List<IClassVO> userendlistvo = userchallengeService.userendlist(cri,userId);
+		  result.put("endlist", userendlistvo);
+		  log.info("지난리스트"+userendlistvo);
+		  
+		  result.put("pageMaker", new PageVO(cri,total));
+		  
+		  return ResponseEntity.ok(result);
 		  
 		  }
+		  
+		  
+		  
+		  // 유저의 클래스 ajax
+		  @GetMapping("/mypage/classlist")
+		  public ModelAndView classlist(Principal principal, IUserVO iuservo, Model model, ModelAndView mav) {
+			  
+
+		        // 로그인한 유저의 정보 받아오기
+		        IUserVO vo = iUserService.selectOne(principal.getName());
+		        model.addAttribute("user",vo) ;
+
+
+		        // 유저의 챌린지 갯수 받아오기 (수정해야함)
+				  int challengecountvo = userchallengeService.challengecount(vo.getUserId());
+				  log.info(challengecountvo);
+				  model.addAttribute("userchallengecount",challengecountvo);
+		        
+
+				// 유저의 작성글 갯수 받아오기
+		        int boardcountvo = boardService.boardcount(vo.getUserId());
+		        model.addAttribute("boardcount",boardcountvo);
+		        log.info(boardcountvo);
+		        
+		        // 유저의 토탈 포인트
+		        int totalpointvo = pointService.totalpoint(vo.getUserId());
+		        model.addAttribute("totalpoint",totalpointvo);
+		        log.info(totalpointvo);
+		        
+		        // 유저의 참여 클래스 갯수
+		        int classcountvo = userchallengeService.classcount(vo.getUserId());
+		        log.info(classcountvo);
+		        model.addAttribute("userclasscount",classcountvo);
+		        
+		        // 유저의 관심 클래스 갯수
+		        int classlikecount = userchallengeService.classlikecount(vo.getUserId());
+		        log.info(classlikecount);
+		        model.addAttribute("classlikecount",classlikecount);
+		        
+		        // 유저의 지난 클래스 갯수
+		        int classendcount = userchallengeService.classendcount(vo.getUserId());
+		        log.info(classendcount);
+		        model.addAttribute("classendcount",classendcount);
+		        
+		        // 신청 클래스 list
+			    List<IClassVO> userclasslistvo = userchallengeService.userclasslist(vo.getUserId());
+			    log.info(userclasslistvo);
+			    model.addAttribute("userclasslist",userclasslistvo);	
+			    
+			    
+			    // 관심 클래스 list
+				/*
+				 * List<IClassVO> userclasslikelist =
+				 * userchallengeService.userclasslikelist(vo.getUserId());
+				 * log.info(userclasslikelist);
+				 * model.addAttribute("userclasslikelist",userclasslikelist);
+				 */
+			    
+			    // 관심클래스 종류 list
+			    List<IClassVO> userclasslikelist_kind = userchallengeService.userclasslikelist_kind(vo.getUserId());
+			    log.info(userclasslikelist_kind);
+			    model.addAttribute(userclasslikelist_kind);
+		        
+			    
+			    // 관심클래스 요일 list
+			    List<IClassVO> userclasslikelist_date = userchallengeService.userclasslikelist_date(vo.getUserId());
+			    log.info(userclasslikelist_date);
+			    model.addAttribute(userclasslikelist_date);
+			    
+			    // 지난클래스 종류 list
+			    
+			    
+			    // 지난클래스 요일 list
+			    
+			    
+			    mav.setViewName("mypage_user/mypage_user_classlist");
+				 
+			      return mav;
+			  
+		  }
+		  
+		  
+		  
+			
+		   // 유저의 클래스 페이지 - 관심클래스 페이징 처리(ajax)
+			  @ResponseBody
+			  @GetMapping("/ajax/classlikelist") 
+			  public ResponseEntity<HashMap<String,Object>> classlikelist(@CurrentUser IUserVO vo, @RequestParam("pageNum")int pageNum){
+				  log.info("classlikelist");
+				  
+				  
+			  HashMap<String, Object> result = new HashMap<>();
+			  Criteria cri = new Criteria(pageNum,3);
+			  
+			  int userId = vo.getUserId();
+			  log.info("유저아이디: "+userId);
+		      
+
+			  int total = userchallengeService.class_likecount(userId);
+			  log.info("토탇" +total);
+			  
+			  List<IClassVO> userclasslikelistvo = userchallengeService.userclasslikelist(cri,userId);
+			  result.put("list", userclasslikelistvo);
+			  log.info("리스트"+userclasslikelistvo);
+			  
+			  result.put("pageMaker", new PageVO(cri,total));
+			  
+			  return ResponseEntity.ok(result);
+			  
+			  }
+			  
+			  
+			  
+			  
+			   // 유저의 클래스 페이지 - 지난클래스 페이징 처리(ajax)
+				  @ResponseBody
+				  @GetMapping("/ajax/classendlist") 
+				  public ResponseEntity<HashMap<String,Object>> classendlist(@CurrentUser IUserVO vo, @RequestParam("pageNum")int pageNum){
+					  log.info("classendlist");
+					  
+					  
+				  HashMap<String, Object> result = new HashMap<>();
+				  Criteria cri = new Criteria(pageNum,3);
+				  
+				  int userId = vo.getUserId();
+				  log.info("유저아이디: "+userId);
+			      
+
+				  int total = userchallengeService.class_endcount(userId);
+				  log.info("지난클래스토탇" +total);
+				  
+				  List<IClassVO> userclassendlistvo = userchallengeService.userclassendlist(cri,userId);
+				  result.put("endlist", userclassendlistvo);
+				  log.info("엔드리스트"+userclassendlistvo);
+				  
+				  result.put("pageMaker", new PageVO(cri,total));
+				  
+				  return ResponseEntity.ok(result);
+				  
+				  
+				  
+				  
+				  
+				  
+				  }
+		  
+		  
+		  
+		  
 		 
 }
