@@ -17,5 +17,5 @@ public class TableJoinVO {
 	private AuthVO authVo;
 	private ReportVO reportVo;
 	
-	private double avgGrade;
+	private String avgGrade;
 }

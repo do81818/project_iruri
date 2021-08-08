@@ -22,31 +22,32 @@ public interface AdminMapper {
 	List<ReportVO> getReportListWithPaging(Criteria cri);
 
 	// 신고알림 리스트 갯수
-	int countReportId();
+	Integer countReportId();
 
 	// 일반/유료회원 전체 리스트
 	List<TableJoinVO> getNormalUserList(Criteria cri);
 
 	// 일반/유료회원 리스트 갯수
-	int countNormalMember();
+	Integer countNormalMember();
 
 	// 일반/유료회원 블랙리스트
 	List<TableJoinVO> getNormalUserBlackList(Criteria cri);
 
 	// 일반/유료회원 블랙리스트 갯수
-	int countNormalBlackMember();
+	Integer countNormalBlackMember();
 
 	// 트레이너회원 리스트
-	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+//	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+	List<IUserVO> getTrainerMemberList2(Criteria cri);
 
 	// 트레이너회원 리스트 갯수
-	int countTrainerMemberList();
+	Integer countTrainerMemberList();
 
 	// 트레이너회원 블랙리스트
 	List<TableJoinVO> getTrainerBlackList(Criteria cri);
 
 	// 트레이너회원 블랙리스트 갯수
-	int countTrainerBlackList();
+	Integer countTrainerBlackList();
 	
 	// 트레이너 등록
 	void trainerRegistInsert(IUserVO vo);
@@ -61,14 +62,16 @@ public interface AdminMapper {
 	List<PointVO> getUserBasicInfoPoint(@Param("userId") int userId, @Param("pageNum") int pageNum, @Param("amount") int amount);
 	
 	// 일반/유료회원 포인트리스트 갯수
-	int countUserBasicInfoPoint(@Param("userId")int userId);
+	Integer countUserBasicInfoPoint(@Param("userId")int userId);
 	
 	// 일반/유료회원 현재 보유포인트
-	int getUserBasicInfoPointTotal(int userId);
+	Integer getUserBasicInfoPointTotal(int userId);
 
 	// 일반/유료회원정보 운동정보보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
 	
 	// 일반/유료회원 운동정보 갯수
-	int countUserExInfoAll();
+	Integer countUserExInfoAll();
+	
+	
 }

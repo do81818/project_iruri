@@ -69,6 +69,7 @@ public class IClassVO {
     private String classLevel;
     private int rnum;
     private int classTime;
+    private int userId;
 
 
     

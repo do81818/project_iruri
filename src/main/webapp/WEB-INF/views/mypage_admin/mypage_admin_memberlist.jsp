@@ -102,7 +102,7 @@
 					/* --------------------- 회원리스트 부분 --------------------- */
 	
  					if (list.length < 1) {
-						htmls += '<tr>';
+ 						htmls += '<tr>';
 						htmls += '<td colspan="5" class="table_No_date">'
 								+ '등록된 일반/유료회원이 없습니다.' + '</td>';
 						+'등록된 회원이 없습니다.' + '</td>';
@@ -110,12 +110,12 @@
 					} else {
 						$(list).each(
 							function() {
-								var url = "${CONTEXT_PATH_ADMIN}/member/info";
-								htmls += '<tr class="list_impact">';
+								htmls += '<tr class="list_impact" onclick="link('
+										+ this.iuserVo.userId
+										+ ')">';
 								htmls += '<td class="table_No_date">'
 										+ this.iuserVo.userId
 										+ '</td>';
-
 								htmls += '<td class="table_indigo_text">';
 								if (this.authVo.authContent == "ROLE_USER") {
 									htmls += '일반회원';
@@ -177,7 +177,14 @@
 		$(document).ready(function() {
 			getlist(1);
 		});
-	</script>
+		
+		function link(id){
+			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId="+id;
+		}
+		
+		
+		
+		</script>
 
 
 
