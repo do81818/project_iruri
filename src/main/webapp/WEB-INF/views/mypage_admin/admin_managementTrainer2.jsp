@@ -112,13 +112,13 @@
 												.each(function() {
 														    
 															htmls += '<tr class="list_impact" onclick="link('
-																	+ this.iuserVo.userId
+																	+ this.userId
 																	+ ')">';
 															htmls += '<td class="table_No_date">'
-																	+ this.iuserVo.userId
+																	+ this.userId
 																	+ '</td>';
 															htmls += '<td class="table_indigo_text">';
-															if (this.authVo.authContent == "ROLE_TRAINER") {
+															if (this.authList[0].authContent == "ROLE_TRAINER") {
 															    htmls += '트레이너';
 															} else {
 																htmls += 00;
@@ -126,21 +126,25 @@
 															htmls += '</td>';
 
 															htmls += '<td class="table_indigo_text">'
-																	+ this.iuserVo.userNickname
+																	+ this.userNickname
 																	+ '</td>';
 															htmls += '<td class="table_blue_text">'
-																	+ this.iuserVo.userEmail
+																	+ this.userEmail
 																	+ '</td>';
-															
-															var avgGrade = this.avgGrade - this.iuserVo.userId;
-															if(avgGrade < 0) {
-																avgGrade = 0;
+																	
+															/* var grade = 0;
+															var gradeLength = this.gradeList.length;
+															if (gradeLength > 0){
+																for(let i = 0; i < gradeLength; i++){
+																	grade += this.gradeList[i].gradeScore;
+																}
 															}
+															var avgGrade = grade/gradeLength;
 															
 															htmls += '<td class="table_red_text">'
 																	+ (avgGrade).toFixed(1)
-																	+ '</td>'
-																	+ '</tr>';
+																	+ '</td>' */
+																	htmls += '</tr>';
 														});
 
 										/* ------------------ 페이징 부분 --------------------- */

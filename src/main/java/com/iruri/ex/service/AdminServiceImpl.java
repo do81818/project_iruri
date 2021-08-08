@@ -43,7 +43,12 @@ public class AdminServiceImpl implements AdminService {
     // 신고알림 리스트 갯수
     @Override
     public int countReportId() {
-        return mapper.countReportId();
+        try {
+            int count = mapper.countReportId();
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // 일반/유료회원 전체 리스트
@@ -55,7 +60,12 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 리스트 갯수
     @Override
     public int countNormalMember() {
-        return mapper.countNormalMember();
+        try {
+            int count = mapper.countNormalMember();
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // 일반/유료회원 블랙리스트
@@ -67,7 +77,12 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 블랙리스트 갯수
     @Override
     public int countNormalBlackMember() {
-        return mapper.countNormalBlackMember();
+        try {
+            int count = mapper.countNormalBlackMember();
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // 트레이너회원 리스트
@@ -76,13 +91,33 @@ public class AdminServiceImpl implements AdminService {
         log.info(mapper.getTrainerMemberList(cri));
         return mapper.getTrainerMemberList(cri);
     }
-
+//    public List<IUserVO> getTrainerMemberList3(Criteria cri) {
+//        log.info(mapper.getTrainerMemberList3(cri));
+//        return mapper.getTrainerMemberList3(cri);
+//    }
+    
     // 트레이너회원 리스트 갯수
     @Override
     public int countTrainerMemberList() {
-        return mapper.countTrainerMemberList();
+        try {
+            int count = mapper.countTrainerMemberList();
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
+    // 트레이너 별 등급(평점)
+    @Override
+ 	public double getTrainerGrade(int userId) {
+    	String str = mapper.getTrainerGrade(userId);
+    	double grade = 0.0;
+    	if(str != null) {
+    		grade = Double.parseDouble(str); 
+    	}
+ 		return grade;
+ 	}
+    
     // 트레이너회원 블랙리스트
     @Override
     public List<TableJoinVO> getTrainerBlackList(Criteria cri) {
@@ -92,7 +127,12 @@ public class AdminServiceImpl implements AdminService {
     // 트레이너회원 블랙리스트 갯수
     @Override
     public int countTrainerBlackList() {
-        return mapper.countTrainerBlackList();
+        try {
+            int count = mapper.countTrainerBlackList();
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // 트레이너 등록
@@ -116,7 +156,6 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 포인트리스트 보기
     @Override
     public List<PointVO> getUserBasicInfoPoint(int userId, Criteria cri) {
-        
         int pageNum = cri.getPageNum();
         int amount = cri.getAmount();
         return mapper.getUserBasicInfoPoint(userId, pageNum, amount);
@@ -125,13 +164,29 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 포인트리스트 갯수
     @Override
     public int countUserBasicInfoPoint(int userId) {
-        return mapper.countUserBasicInfoPoint(userId);
+        try {
+            int count = mapper.countUserBasicInfoPoint(userId);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     // 일반/유료회원 현재 보유포인트
     @Override
     public int getUserBasicInfoPointTotal(int userId) {
-        return mapper.getUserBasicInfoPointTotal(userId);
+        try {
+//            String totalPoint = String.valueOf(mapper.getUserBasicInfoPointTotal(userId));
+//            int point = Integer.parseInt(totalPoint);
+//            log.info(point);
+//            return point;
+            int totalPoint = mapper.getUserBasicInfoPointTotal(userId);
+            log.info(totalPoint);
+            return totalPoint;
+        } catch (Exception e) {
+            log.info(e);
+            return 0;
+        }
     }
 
     // 일반/유료회원정보 운동정보 리스트보기 _all
@@ -140,4 +195,5 @@ public class AdminServiceImpl implements AdminService {
         return mapper.getUserExInfoAll(userId, cri);
     }
 
+    
 }

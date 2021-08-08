@@ -35,5 +35,6 @@ public class MoneyVO {
 	private int moneyInput;
     private int moneyOutput;
     private int payId;
-	private IUserVO iUserVO; 
+	private IUserVO iUserVO;
+	private int userID;
 }
