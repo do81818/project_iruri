@@ -62,7 +62,7 @@
 		<result property="payWay" column="pay_way" />
 	</resultMap>
 
-	<resultMap type="com.iruri.ex.vo.buyVO" id="buyMap">
+	<resultMap type="com.iruri.ex.vo.BuyVO" id="buyMap">
 		<result property="buyId" column="buy_id" />
 		<result property="buyPoint" column="pay_id" />
 		<result property="class_id" column="pay_state" />
