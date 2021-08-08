@@ -32,6 +32,7 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
@@ -233,25 +234,57 @@ public class ChallengeController {
         return"redirect:challenge_detail_after";
     }
 
+    //유저가 챌린지 신청 기록이 있는지 
+    @GetMapping("/iruri/challengeJoinCheck")
+    @ResponseBody
+    public int joinCheck(@RequestParam("buyId") int buyId, @CurrentUser IUserVO vo) {
+        
+        return challengeService.getUserJoinChallengeList(buyId, vo.getUserId());
+    }
+    
+    //챌린지 참여하면 buy에 추가하기
+    @GetMapping("/iruri/challengeJoinComplete")
+    @ResponseBody
+    public int joinList(@RequestParam("buyId") int buyId, @CurrentUser IUserVO vo) {
+        return challengeService.getUserJoinChallengeList(buyId, vo.getUserId());
+    }
     
     //챌린지 상세-참여 후 
     @GetMapping("/iruri/challenge_detail_after")
-    public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, BuyVO buyVO, @CurrentUser IUserVO vo) {
+    public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, BuyVO buyVO, 
+            BoardVO boardVO, @CurrentUser IUserVO vo) {
         mav.setViewName("challenge/challenge_detail_after");
         //챌린지 정보
         mav.addObject("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
         
+        
         //참여인원 update
-        challengeService.upJoinMember(iClassVO.getClassId());
-        log.info("challenge up join member()..");
+        //challengeService.upJoinMember(iClassVO.getClassId());
+        //log.info("challenge up join member()..");
         
         //유저챌린지목록(buy table) insert
-        buyVO.setIUserVO(vo);
-       
-        challengeService.userJoinChallenge(buyVO);
-        log.info("insert user Join Challenge()..");
+        //buyVO.setIUserVO(vo);
+        //challengeService.userJoinChallenge(buyVO);
+        
         return mav;
     }
+    
+    //댓글 작성
+    
+    @ResponseBody
+    @PostMapping("/iruri/c_detail_reply_insert")
+    public String c_detail_reply_insert(BoardVO boardVO, @CurrentUser IUserVO vo) {
+        log.info("challenge reply insert()..");
+        
+        boardVO.setIUserVO(vo);
+        challengeService.challengeReplyInsert(boardVO);
+        log.info("boardVO :" + boardVO);
+        
+        return "redirect:challenge_detail_after";
+    }
+ 
+ 
+  
     
     //댓글부분
     @ResponseBody

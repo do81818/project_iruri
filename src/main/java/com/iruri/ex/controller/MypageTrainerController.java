@@ -1,6 +1,6 @@
 package com.iruri.ex.controller;
 
-import java.security.Principal;
+import java.security.Principal; 
 import java.util.HashMap;
 import java.util.List;
 
@@ -126,6 +126,7 @@ public class MypageTrainerController {
     }
 
     // 수익
+    
     @RequestMapping("/mypage/trainer/profit")
     public String mypageProfit(Principal principal, Model model) {
         log.info("profit() ... ");
@@ -182,5 +183,6 @@ public class MypageTrainerController {
 
         return ResponseEntity.ok(result);
     }
+    
 
 }

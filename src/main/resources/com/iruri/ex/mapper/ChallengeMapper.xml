@@ -80,8 +80,10 @@
 			<result property="boardLike" column="BOARD_LIKE"/>
 			<result property="boardGroupId" column="BOARD_GROUPID"/>
 			<result property="categoryId" column="CATEGORY_ID"/>
-			<result property="rnum" column="rnum"/>	
+			<result property="rn" column="rn"/>	
+			<result property="classId" column="ClassId"/>
 			<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+
 	</resultMap>
 
 
@@ -267,49 +269,19 @@
 	]]>
 	</select>
 	
-	
-	<!-- 챌린지 댓글 불러오기 -->
-		<select id="getTotalCount_challengeReply" resultType="int">
-		<![CDATA[
-			  	select count(*) 
-			  	from board b, iclass i
-	       	 	where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
-		]]>
-		</select>
-		
-		<select id="getListWithPaging_challengeReply" resultMap="iClassMap">
-			<![CDATA[
-			
-				SELECT *
-				FROM
-				(
-				    SELECT ROWNUM rn, c.*
-				    FROM
-				    (
-				        SELECT B.*, u.user_nickname 
-				        FROM board B, iclass A, iuser u
-         				where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
-				    ) C
-				    WHERE rownum <= #{pageNum} * #{amount} 
-				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
-			]]>
-      
-			</select>
-			
-				
-			
-	
-	
-	<!-- 챌린지 참여인원 update -->
-   	<update id="upJoinMember">
-	<![CDATA[
-		update ICLASS set CLASS_JOINMEMBER = CLASS_JOINMEMBER+1 where CATEGORY_ID = 1 and class_id > 0 and class_joinmember <= class_totalmember and CLASS_ID = #{classId}
-	]]>
-	</update>
-	
-	
-		<!-- 챌린지 참여, 취소(유저 참여챌린지) -->
-		<!-- 챌린지 참여 시 -->
+
+	<!-- 챌린지 신청 -->
+	<!-- 유저가 챌린지에 참여한 기록이 있는지 -->
+	<select id="userJoinChallengeList" resultType="int">
+	   	<![CDATA[
+	   		SELECT count(*) 
+	   		FROM BUY
+	   		WHERE user_id = #{iUserVO.userId} and class_id = #{classId}
+	   	]]>
+	</select>
+	   	
+
+		<!-- 챌린지 참여 시 --> 
 		<insert id="insertUserJoinChallenge">
 				<![CDATA[
 				INSERT ALL INTO 
@@ -329,15 +301,16 @@
 				SELECT * FROM DUAL
 				]]>
 		</insert>
-	
-	   	<!-- 유저가 챌린지에 참여한 기록이 있는지 -->
-	   	<select id="userReadChallenge" resultType="int">
-	   		<![CDATA[
-	   			SELECT count(*) 
-	   			FROM BUY
-	   			WHERE user_id = #{iUserVO.userId} and class_id = #{classId}
-	   		]]>
-	   	</select>
+
+		<!-- 챌린지 참여인원 update -->
+   	<update id="upJoinMember">
+	<![CDATA[
+		update ICLASS 
+		set CLASS_JOINMEMBER = CLASS_JOINMEMBER+1 
+		where CATEGORY_ID = 1 and class_id > 0 and class_joinmember <= class_totalmember and CLASS_ID = #{classId}
+	]]>
+	</update>
+
 	   	
 
 		<!-- 관심수 -->
@@ -387,6 +360,56 @@
 				class_id=#{class_id}
 			]]>
 		</update>
+		
+		
+		<!-- 챌린지 커뮤니티 -->
+		<!-- 챌린지 댓글 불러오기 -->
+		<select id="getTotalCount_challengeReply" resultType="int">
+		<![CDATA[
+			  	select count(*) 
+			  	from board b, iclass i
+	       	 	where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
+		]]>
+		</select>
+		
+		<select id="getListWithPaging_challengeReply" resultMap="iClassMap">
+			<![CDATA[
+			
+				SELECT *
+				FROM
+				(
+				    SELECT ROWNUM rn, c.*
+				    FROM
+				    (
+				        SELECT B.*, u.user_nickname 
+				        FROM board B, iclass A, iuser u
+         				where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+				    ) C
+				    WHERE rownum <= #{pageNum} * #{amount} 
+				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+			]]>
+      
+			</select>
+			
+			
+			<!-- 챌린지 참여 후 댓글 입력 -->
+			<insert id="challengeReplyInsert">
+			<![CDATA[
+				INSERT INTO
+				board (board_id, board_title, board_content, board_date,
+				board_state, board_hit, board_like, board_groupid, category_id, user_id)
+				
+				VALUES(
+				
+				(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM
+				board),'테스트',#{boardContent}, sysdate, 'show', 0, 0, 
+				(select DISTINCT b.board_groupid 
+			  	from board b, iclass i
+	       	 	where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=129), 6, #{iUserVO.userId})
+			]]>
+		</insert>
+		
+	
 		
 		
 </mapper>

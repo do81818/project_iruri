@@ -202,6 +202,8 @@
 				</div>
 				<div class="modal_layer"></div>
 			</div>
+			
+
 	</div>
 
 
@@ -241,7 +243,23 @@
 	</div>
 	
 	<!-- 댓글 입력창 -->
+	<div class="c_reply_insert">
+		<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />
+		<form:form name="commentForm" class="c_reply_insertBox" method="POST"
+			action="${challengeReplyInsert}" accept-charset="utf-8">
 
+			<table>
+				<tr>
+
+					<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."
+							name="boardContent"></textarea></td>
+					<td class="c_reply_insertButton"><button type="submit">입력</button></td>
+
+				</tr>
+			</table>
+
+		</form:form>
+	</div>
 
 
 	<!--댓글리스트-->
@@ -335,6 +353,49 @@
 
 
 
+
+
+<!-- 
+function insertReply() {
+
+    $.ajax({
+        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
+        type: 'POST',
+        cache: false,
+        dateType: 'json',
+        data: {
+
+        },
+        success: function() {
+   
+            var htmls3 = "";
+
+
+            htmls3 += '<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />';
+            htmls3 += '<form class="c_reply_insertBox" method="POST" action="c_detail_reply_insert" accept-charset="utf-8">';
+
+            htmls3 += '<table>';
+            htmls3 += '<tr>';
+
+            htmls3 += '<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요." name="boardContent"></textarea></td>';
+            htmls3 += '<td class="c_reply_insertButton"><button type="submit">입력</button></td>';
+
+            htmls3 += '</tr>';
+            htmls3 += '</table>';
+
+            htmls3 += '</form>';
+
+
+        }
+        
+      
+        
+
+    });
+    $(".c_reply_insert").html(htmls3);
+   
+}
+ -->
 <script>
 //댓글 ajax, 페이징
 		function getlist(page) {
@@ -349,18 +410,16 @@
 			        	
 			           pageNum : page,
 			           classId : ${challengeInfo.classId},
-
 			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
 			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
 			            // url 상으론 /rest/after?pageNum=2 이런식
 			        },
 					success : function(result) {
-						console.log(result);
+				
 				    	var replyList = result['replyList'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
-
 						if (replyList.length < 1) {
 							htmls += '<div class="c_list_not">';
 							htmls += '현재 등록된 댓글이 없습니다.';
@@ -368,6 +427,7 @@
 						} else {
 							
 							$(replyList).each(function() {
+								/*
 								htmls += '<div class="c_reply_insert" id="reply">';
 								
 								htmls += '<form class="c_reply_insertBox" action="">';
@@ -384,8 +444,8 @@
 								htmls += '</form>';
 								
 								htmls += '</div>';
+								*/
 							
-
 								htmls += '<div class="reply_count">';
 								const count = $(this.boardList).length;
 								htmls += '총'
@@ -396,7 +456,6 @@
 								$(this.boardList).each(function() {
 												//댓글 리스트 
 												
-
 												
 												
 												htmls += '<tr>';
@@ -404,12 +463,10 @@
 												htmls += '<td class="reply_nickname">';
 												htmls += this.iuserVO.userNickname;
 												htmls += '</td>';
-
 												htmls += '<td>';
 												htmls += '<p class="reply_content">';
 												htmls += this.boardContent;
 												htmls += '</p>';
-
 												htmls += '<p class="reply_date">';
 												htmls += this.boardDate;
 												htmls += '</p>';
@@ -450,11 +507,33 @@
 	                     
 	                 });                             
 	            }
-
 	            $(document).ready(function() {
 	                getlist(1);
 	            });
+</script>
+<script>
 
+//댓글 등록하기
+$('.c_reply_insertButton').click(function(){
+	
+	$.ajax({
+        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
+        type: 'POST',
+        cache: false,
+        dateType: 'text',
+        data: $("#commentForm").serialize(),
+        success: function(result) {
+            if(result=="success")
+            {
+            	getlist(1);
+                $("#boardContent").val("");
+            }
+        }
+      	
+        
+	});
+	
+});
 </script>
 
 

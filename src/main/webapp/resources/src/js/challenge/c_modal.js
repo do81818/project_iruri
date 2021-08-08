@@ -136,3 +136,13 @@ $(function() {
     });
 
 });
+
+
+//인증글 수정 모달//
+$(function() {
+	$(".c_myCertify_modal_submit2").click(function(){
+		$(".c_myCertify_modal").fadeOut();
+		$("#c_certify_modal").fadeIn();
+	});
+});
+		

@@ -40,11 +40,18 @@ public interface ChallengeService {
     //챌린지 상세페이지 정보
     IClassVO getChallengeInfo(int classId);
     
+    //유저의 buylist
+    int getUserJoinChallengeList(int buyId, int userId);
+    
+    //챌린지 참여 기록 체크
+    int getUserJoinChallengeListCheck(int buyId, int userId, int classId);
+    
+    //유저 챌린지 참여 등록(buy insert)
+    void userJoinChallenge(int buyId, int userId);
+    
     //챌린지 참여인원
     public void upJoinMember(int classId);
     
-    //유저 챌린지 참여 등록(likelist insert)
-    void userJoinChallenge(BuyVO buyVO);
     
     /*----------관심수-----------*/
     //유저의 likelist
@@ -70,8 +77,18 @@ public interface ChallengeService {
     int getTotal_challengeReply(Criteria cri, int classId);
     List<BoardVO> challengeReplyList(Criteria criteria, int classId);
 
+    //챌린지 댓글 입력
+    void challengeReplyInsert(BoardVO boardVO);
 
-  
+    //댓글 유저 
+    BoardVO getUserId(IUserVO iUserVO);
+
+
+
+
+
+
+
  
 
 }

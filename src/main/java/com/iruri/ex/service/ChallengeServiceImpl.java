@@ -108,8 +108,35 @@ public class ChallengeServiceImpl implements ChallengeService {
         log.info("getChallengeInfo()..");
         return challengeMapper.readChallengeInfo(classId);
     }
+    
+    //챌린지 참여 기록 체크
+    @Override
+    public int getUserJoinChallengeList(int buyId, int userId) {
+        log.info("challenge_userLikeListCheck()..");
+        
+        int check = challengeMapper.userJoinChallengeList(buyId,  userId);
+        
+        return check;
+    }
+    
+    
 
-    //챌린지 참여인원
+    @Override
+    public int getUserJoinChallengeListCheck(int buyId, int userId, int classId) {
+        log.info("challenge_userLikeListCheck()..");
+        
+        int check = challengeMapper.userJoinChallengeList(buyId,  userId);
+        
+        if(check == 0) {
+            userJoinChallenge(buyId, userId);
+            upJoinMember(classId);
+        }
+        
+        return check;
+    }
+
+
+    //챌린지 참여인원 1증가
     @Override
     public void upJoinMember(int classId) {
         
@@ -120,9 +147,9 @@ public class ChallengeServiceImpl implements ChallengeService {
     
     //유저 챌린지 참여 후 likelist insert
     @Override
-    public void userJoinChallenge(BuyVO buyVO) {
+    public void userJoinChallenge(int buyId, int userId) {
         log.info("userJoinChallenge()..");
-        challengeMapper.insertUserJoinChallenge(buyVO);
+        challengeMapper.insertUserJoinChallenge(buyId, userId);
         
     }
     
@@ -204,6 +231,21 @@ public class ChallengeServiceImpl implements ChallengeService {
         int amount = cri.getAmount();
         
         return challengeMapper.getListWithPaging_challengeReply(pageNum, amount,classId);
+    }
+
+    //댓글 입력
+    @Override
+    public void challengeReplyInsert(BoardVO boardVO) {
+        log.info("challenge reply insert()..");
+        return challengeMapper.challengeReplyInsert(boardVO);
+        
+    }
+
+    //댓글 userId
+    @Override
+    public BoardVO getUserId(IUserVO iUserVO) {
+        log.info("get userId : " + iUserVO.getUserId());
+        return challengeMapper.readUserId(iUserVO);
     }
     
 
