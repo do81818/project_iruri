@@ -202,6 +202,8 @@
 				</div>
 				<div class="modal_layer"></div>
 			</div>
+			
+
 	</div>
 
 
@@ -239,21 +241,32 @@
 
 
 	</div>
+	
 	<!-- 댓글 입력창 -->
-	<div class="c_reply_insert" id="reply">
-		<form class="c_reply_insertBox" action="">
+	<div class="c_reply_insert">
+		<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />
+		<form:form name="commentForm" class="c_reply_insertBox" method="POST"
+			action="${challengeReplyInsert}" accept-charset="utf-8">
+
 			<table>
 				<tr>
-					<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."></textarea></td>
-					<td class="c_reply_insertButton"><button>입력</button></td>
+
+					<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."
+							name="boardContent"></textarea></td>
+					<td class="c_reply_insertButton"><button type="submit">입력</button></td>
+
 				</tr>
 			</table>
-		</form>
+
+		</form:form>
 	</div>
 
 
 	<!--댓글리스트-->
-	<div class="c_reply">
+	<div class="c_after_reply" id="reply">
+
+		<%-- 
+	
 		<div class="reply_count">총 77 개</div>
 		<table class="reply_table">
 			<tr>
@@ -269,71 +282,7 @@
 				<td class="reply_button"><button class="reply_modify">수정</button>
 					<button class="reply_complain">신고</button></td>
 			</tr>
-
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						nostrum dolores unde dicta perferendis temporibus facilis nobis
-						ducimus provident omnis voluptatum consequatur explicabo
-						excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_complain">신고</button></td>
-			</tr>
-
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						nostrum dolores unde dicta perferendis temporibus facilis nobis
-						ducimus provident omnis voluptatum consequatur explicabo
-						excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_complain">신고</button></td>
-			</tr>
-
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						nostrum dolores unde dicta perferendis temporibus facilis nobis
-						ducimus provident omnis voluptatum consequatur explicabo
-						excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_complain">신고</button></td>
-			</tr>
-
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						nostrum dolores unde dicta perferendis temporibus facilis nobis
-						ducimus provident omnis voluptatum consequatur explicabo
-						excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_complain">신고</button></td>
-			</tr>
-
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						explicabo excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_complain">신고</button></td>
-			</tr>
-
-		</table>
+		</table> --%>
 	</div>
 
 
@@ -399,11 +348,193 @@
 
 	<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
 	<div class="page_nation">
-		<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a> <a
-			href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-		<a class="arrow next" href="#"></a>
 	</div>
 
+
+
+
+
+
+<!-- 
+function insertReply() {
+
+    $.ajax({
+        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
+        type: 'POST',
+        cache: false,
+        dateType: 'json',
+        data: {
+
+        },
+        success: function() {
+   
+            var htmls3 = "";
+
+
+            htmls3 += '<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />';
+            htmls3 += '<form class="c_reply_insertBox" method="POST" action="c_detail_reply_insert" accept-charset="utf-8">';
+
+            htmls3 += '<table>';
+            htmls3 += '<tr>';
+
+            htmls3 += '<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요." name="boardContent"></textarea></td>';
+            htmls3 += '<td class="c_reply_insertButton"><button type="submit">입력</button></td>';
+
+            htmls3 += '</tr>';
+            htmls3 += '</table>';
+
+            htmls3 += '</form>';
+
+
+        }
+        
+      
+        
+
+    });
+    $(".c_reply_insert").html(htmls3);
+   
+}
+ -->
+<script>
+//댓글 ajax, 페이징
+		function getlist(page) {
+			
+			    $.ajax({
+			        url: 'http://localhost:8282/ex/ajax/c_detail_after_reply.json',
+			        type: 'GET',
+			        cache: false,
+			       	dateType:'json',
+			   
+			        data: {
+			        	
+			           pageNum : page,
+			           classId : ${challengeInfo.classId},
+			            // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
+			            // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
+			            // url 상으론 /rest/after?pageNum=2 이런식
+			        },
+					success : function(result) {
+				
+				    	var replyList = result['replyList'];
+						var pagination = result['pageMaker'];
+						var htmls = "";
+						var htmls2 = "";
+						if (replyList.length < 1) {
+							htmls += '<div class="c_list_not">';
+							htmls += '현재 등록된 댓글이 없습니다.';
+							htmls += '</div>';
+						} else {
+							
+							$(replyList).each(function() {
+								/*
+								htmls += '<div class="c_reply_insert" id="reply">';
+								
+								htmls += '<form class="c_reply_insertBox" action="">';
+								
+								htmls += '<table>';
+								htmls += '<tr>';
+								
+								htmls += '<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."></textarea></td>';
+								htmls += '<td class="c_reply_insertButton"><button>입력</button></td>';
+								
+								htmls += '</tr>';
+								htmls += '</table>';
+								
+								htmls += '</form>';
+								
+								htmls += '</div>';
+								*/
+							
+								htmls += '<div class="reply_count">';
+								const count = $(this.boardList).length;
+								htmls += '총'
+										+ count 
+										+ '개';
+								htmls += '</div>';
+								htmls += '<table class="reply_table">';
+								$(this.boardList).each(function() {
+												//댓글 리스트 
+												
+												
+												
+												htmls += '<tr>';
+												
+												htmls += '<td class="reply_nickname">';
+												htmls += this.iuserVO.userNickname;
+												htmls += '</td>';
+												htmls += '<td>';
+												htmls += '<p class="reply_content">';
+												htmls += this.boardContent;
+												htmls += '</p>';
+												htmls += '<p class="reply_date">';
+												htmls += this.boardDate;
+												htmls += '</p>';
+												htmls += '</td>';
+												htmls += '</tr>';
+								});
+												
+								htmls += ' </table>';
+								
+											});
+							
+						
+							
+					         /* ------------------ 페이징 부분 --------------------- */
+	                        
+					         if (pagination['prev']) {
+	                             htmls2 += '<a class="arrow prev" href="javascript:list('+ (pagination['startPage']-1) +'"></a>';
+	         				} 
+	         				// 번호를 표시하는 부분
+	         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+	         					if (page !== idx) {
+	         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+	         					} else {
+	         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+	         					}
+	         				}
+	         				
+	         				if (pagination['next']) {
+	                            htmls2 += '<a class="arrow next" href="javascript:list('+ (pagination['endPage']+1) +')"></a>';
+	        						
+	        				}			
+	         			}	// if(list.length < 1) else 끝
+	                     
+	                        $(".c_after_reply").html(htmls);
+	         				$(".page_nation").html(htmls2);
+	         				
+	                     }
+	                     
+	                 });                             
+	            }
+	            $(document).ready(function() {
+	                getlist(1);
+	            });
+</script>
+<script>
+
+//댓글 등록하기
+$('.c_reply_insertButton').click(function(){
+	
+	$.ajax({
+        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
+        type: 'POST',
+        cache: false,
+        dateType: 'text',
+        data: $("#commentForm").serialize(),
+        success: function(result) {
+            if(result=="success")
+            {
+            	getlist(1);
+                $("#boardContent").val("");
+            }
+        }
+      	
+        
+	});
+	
+});
+</script>
 
 
 

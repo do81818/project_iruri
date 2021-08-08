@@ -29,7 +29,7 @@
 						</div>
 						<div class="user_detail">
 							<c:if test="${user.authList[0].authContent eq 'ROLE_TRAINER'}">
-								<div>트레이너입니다</div>
+								<div>당신은 이루리의 트레이너!!</div>
 							</c:if>
 							<div>${user.userEmail}</div>
 							
@@ -38,13 +38,13 @@
 
 					<div id="challenge">
 						운영중인 클래스
-						<div class="count">10</div>
+						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
 					<div id="buy">
 						수익금
 						<div class="count">
-							200
+							${trainerProfitMan}
 							<div class="buy_text">만원</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
 
                     <tr>
                         <td class="pt_month_number">
-                            2,004,500<span class="pt_won">&nbsp;원</span>
+                            ${monthProfit}<span class="pt_won">&nbsp;원</span>
                         </td>
                         <td class="pt_pre_month"><span>이전달</span>
                             <a href=""><img src="../image/arrow_red_left.png" alt="up" class="arrow_width_up_down"></a>

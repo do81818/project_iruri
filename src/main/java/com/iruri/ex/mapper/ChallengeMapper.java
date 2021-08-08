@@ -22,6 +22,8 @@ public interface ChallengeMapper {
     // 6. 메퍼에서 메소드를 만든다 servicelImpl에서받는 메소드이다.
     List<IClassVO> selectAll(int userId);
 
+    
+    /*----------챌린지 개설 폼-----------*/
     //챌린지 개설 폼
     void insertChallenge(IClassVO iClassVO);
 
@@ -47,8 +49,14 @@ public interface ChallengeMapper {
     //챌린지 상세페이지 정보
     IClassVO readChallengeInfo(int classId);
     
+    //유저가 챌린지 참여한 기록이 있는지
+    int userJoinChallengeList(@Param("buyId") int buyId, @Param("userId") int userId);
+    
     //챌린지 참여 인원
     void upJoinMember(int classId);
+    
+    //유저 챌린지 참여 등록(likelist insert)
+    void insertUserJoinChallenge(@Param("buyId") int buyId, @Param("userId") int userId);
     
     /*----------관심수-----------*/
     //유저가 그 클래스에 좋아요 한 기록이 있는지 
@@ -66,15 +74,18 @@ public interface ChallengeMapper {
     //관심수 늘리기
     void likeCountUp(int classId);
 
-    
-    //유저 챌린지 참여 등록(likelist insert)
-    void insertUserJoinChallenge(BuyVO buyVO);
-
-    
+  
     /*----------챌린지 커뮤니티-----------*/
     //챌린지 댓글
     int getTotalCount_challengeReply(Criteria cri, @Param("classId") int classId);
     List<BoardVO> getListWithPaging_challengeReply(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("classId") int classId);
+
+
+    //댓글 입력
+    void challengeReplyInsert(BoardVO boardVO);
+
+    //댓글 userId
+    BoardVO readUserId(IUserVO iUserVO);
     
   
   

@@ -48,6 +48,62 @@
 	});
 	
 	</script>
+	
+	<script>
+	function join_c(){
+		
+		$.ajax({
+			url: '${CONTEXT_PATH}/iruri/challengeJoinComplete',
+			typel: 'GET',
+			cache: false,
+            dateType: 'json',
+            data: {
+                buyId: buyId,
+            },
+            success: function(result) {
+
+                if (result !== 0) {
+                    $('.c_parti_modal_submit').attr('checked', true);
+                }
+                htmls += '<form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">';
+                htmls += '<ul>';
+                htmls += '<li>챌린지에 참여 하시겠습니까?</li>';
+                htmls += '<li>챌린지 시작일 전 까지만 취소가 가능합니다.</li>';
+                htmls += '<li>챌린지 시작일 후에는 취소하실 수 없습니다.</li>';
+
+                htmls += '</ul>';
+
+
+
+                htmls += '<div class="c_parti_modal_button">';
+
+                htmls += '<button class="c_parti_modal_cancle" type="reset">취소</button>';
+                htmls += '<button class="c_parti_modal_submit" type="submit">';
+                htmls += '<a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>';
+                htmls += '</div>';
+                htmls += '</form>';
+            }
+		});
+	
+	$(".c_parti_modal_content").html(htmls);
+	$('.c_parti_modal_submit').on('click', function(e){
+		let froStr = e.currentTarget.htmlFor
+		let buyId = forStr.substring(5);
+		
+		$.ajax({
+			   url: '${CONTEXT_PATH}/iruri/challengeJoinCheck',
+               type: 'GET',
+               cache: false,
+               dateType: 'json',
+               data: {
+                   buyId: buyId,
+               }
+		});
+	});
+	}
+	
+	
+	</script>
  
  
   </head>
@@ -148,6 +204,7 @@
                     <div id="c_parti_modal">
                         <div class="c_parti_modal_start">
                             <div class="c_parti_modal_content">
+                            <!--  
                                 <form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">
                                     <ul>
                                         <li>챌린지에 참여 하시겠습니까?</li>
@@ -165,6 +222,7 @@
                                         <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>
                                     </div>
                                 </form>
+                                -->
                             </div>
                         </div>
                         <div class="modal_layer"></div>
@@ -277,10 +335,11 @@
     
     
 <script>
+//댓글 ajax, 페이징
 		function getlist(page) {
 			
 			    $.ajax({
-			        url: 'http://localhost:8282/ex/ajax/c_detail_before.json',
+			        url: 'http://localhost:8282/ex/ajax/c_detail_before_reply.json',
 			        type: 'GET',
 			        cache: false,
 			       	dateType:'json',
@@ -296,18 +355,18 @@
 			        },
 					success : function(result) {
 						console.log(result);
-				    	var list = result['list'];
+				    	var replyList = result['replyList'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
 
-						if (list.length < 1) {
+						if (replyList.length < 1) {
 							htmls += '<div class="c_list_not">';
 							htmls += '현재 등록된 댓글이 없습니다.';
 							htmls += '</div>';
 						} else {
 							
-							$(list).each(function() {
+							$(replyList).each(function() {
 								
 							
 								htmls += '<div class="reply_count">';
@@ -316,6 +375,7 @@
 										+ count 
 										+ '개';
 								htmls += '</div>';
+								
 								htmls += '<table class="reply_table">';
 								$(this.boardList).each(function() {
 												//댓글 리스트 
@@ -372,19 +432,12 @@
 	         				
 	                     }
 	                     
-	                 });
-	                             
-	                             
+	                 });                             
 	            }
-		
-	
+
 	            $(document).ready(function() {
 	                getlist(1);
 	            });
-							
-							
-
-	
 
 </script>
 

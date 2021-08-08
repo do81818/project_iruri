@@ -288,7 +288,7 @@
                                                             htmls += '</div>';
 
                                                             htmls += '<div class="c_list_title">';
-                                                            htmls += '<a href="c_detail_before?classId='+ this.classId +'"target="_blank">';
+                                                            htmls += '<a href="challenge_detail_before?classId='+ this.classId +'"target="_blank">';
             												htmls += this.classTitle;
             												htmls += '</a>';
                                                             htmls += '</div>';
@@ -321,19 +321,11 @@
                                                                 '명)';
                                                             htmls += '</div>';
 
-                                                            
-                                                            htmls += '<sec:authorize access="isAuthenticated()">';
-            												htmls += '<div class="c_list_heart">';
-                                                            htmls += '<input type="checkbox" id="heart' + this.classId + '">';
-                                                            htmls += '<label for="heart' + this.classId + '" class="heart_label"></label>';
-                                                            htmls += '</div>';
-            												htmls += '</sec:authorize>'
-            												
-            												htmls += '<sec:authorize access="isAnonymous()">';
+                                                     
             												htmls += '<div class="c_list_heart">';
                                                             htmls += '<img class="heart_nologin_img" src="/ex/resources/src/img/icon/heart_gray.png" alt="">';
                                                             htmls += '</div>';
-            												htmls += '</sec:authorize>'
+            												
 
                                                             htmls += '</div>';
 

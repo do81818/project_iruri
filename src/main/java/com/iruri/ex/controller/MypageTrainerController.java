@@ -1,6 +1,6 @@
 package com.iruri.ex.controller;
 
-import java.security.Principal;
+import java.security.Principal; 
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,10 +19,13 @@ import com.iruri.ex.page.PageVO;
 import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
+import com.iruri.ex.service.MypageTrainerService;
+import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.MoneyVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,6 +37,8 @@ public class MypageTrainerController {
     IUserService iUserService;
     @Autowired
     IClassService iClassService;
+    @Autowired
+    MypageTrainerService mypageTrainerService;
 
     // 마이페이지로 이동
     @RequestMapping("/mypage/trainer")
@@ -121,6 +126,7 @@ public class MypageTrainerController {
     }
 
     // 수익
+    
     @RequestMapping("/mypage/trainer/profit")
     public String mypageProfit(Principal principal, Model model) {
         log.info("profit() ... ");
@@ -128,8 +134,55 @@ public class MypageTrainerController {
         // 유저정보 받기
         IUserVO vo = iUserService.selectOne(principal.getName());
         model.addAttribute("user", vo);
-
+        int userId = vo.getUserId();
+        
+        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
+        
+        // 트레이너 총수익
+        int trainerProfit = mypageTrainerService.trainerProfit(userId);
+        int trainerProfitMan = trainerProfit/10000;
+        
+        model.addAttribute("trainerProfitMan", trainerProfitMan);
+        
+        // 트레이너 월별 수익
+        int monthProfit = mypageTrainerService.monthProfit(userId);
+        
+        model.addAttribute("monthProfit", monthProfit);
+        log.info("ㅇㅇ"+monthProfit);
+        
+        System.out.println("ㅇㅇㅇ"+monthProfit);
+        
         return "mypage_trainer/mypage_trainer_profit";
     }
+    
+    // 수익 ajax
+    @ResponseBody
+    @GetMapping("/ajax/mypage/trainerProfit")
+    public ResponseEntity<HashMap<String, Object>> mypageTrainerProfit(@CurrentUser IUserVO vo,
+            @RequestParam("pageNum") int pageNum) {
+        log.info("mypageTrainerProfit");
+        // 10개의 리스트
+        Criteria cri = new Criteria(pageNum, 10);
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        int userId = vo.getUserId();
+        log.info("유저아이디: " + userId);
+
+        int total = mypageTrainerService.getTotal_mypageTrainerProfit(cri, userId);
+        log.info("토탈: " + total);
+
+        List<BuyVO> profitList = mypageTrainerService.mypageTrainerProfit(cri, userId);
+
+        result.put("list", profitList);
+
+        log.info("리스트: " + profitList);
+
+        result.put("pageMaker", new PageVO(cri, total));
+
+        return ResponseEntity.ok(result);
+    }
+    
 
 }

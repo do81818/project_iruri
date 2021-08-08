@@ -47,7 +47,10 @@ public class BoardVO {
     private int boardGroupId;
     private int categoryId;
     private IUserVO iUserVO;
-    private int rnum;
+    private int rn;
+    private int classId;
+  
+    private List<IClassVO> iClassList;
 
 
     
