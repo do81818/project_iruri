@@ -121,7 +121,7 @@ public class MypageAdminController {
 		Criteria cri = new Criteria(pageNum, 10);
 		int total = adminService.countTrainerMemberList();
 		result.put("pageMaker", new PageVO(cri, total));
-		result.put("list", adminService.getTrainerMemberList2(cri));
+		result.put("list", adminService.getTrainerMemberList(cri));
 		log.info(result);
 		return ResponseEntity.ok(result);
 	}
@@ -224,12 +224,11 @@ public class MypageAdminController {
 	@GetMapping("trainer/info")
 	public ModelAndView showProfileTrainer_Admin(ModelAndView mav, @RequestParam("userId") int userId) {
 
-        log.info("showMemberDetail_Admin()...");
+        log.info("showProfileTrainer_Admin()...");
         mav.setViewName("mypage_admin/admin_trainerInfo");
         mav.addObject("info", adminService.getUserBasicInfo(userId));
-        int totalPoint = adminService.getUserBasicInfoPointTotal(userId);
-        DecimalFormat formatter = new DecimalFormat("###,###");
-        mav.addObject("point",formatter.format(totalPoint));
+        // 트레이너 평점
+        mav.addObject("grade",adminService.getTrainerGrade(userId));
         log.info(mav);
         return mav;
     }

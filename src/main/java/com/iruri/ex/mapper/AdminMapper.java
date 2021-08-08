@@ -37,12 +37,15 @@ public interface AdminMapper {
 	Integer countNormalBlackMember();
 
 	// 트레이너회원 리스트
-//	List<TableJoinVO> getTrainerMemberList(Criteria cri);
-	List<IUserVO> getTrainerMemberList2(Criteria cri);
+	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+//	List<IUserVO> getTrainerMemberList3(Criteria cri);
 
 	// 트레이너회원 리스트 갯수
 	Integer countTrainerMemberList();
 
+	// 트레이너 별 등급(평점)
+	String getTrainerGrade(int userId);
+	
 	// 트레이너회원 블랙리스트
 	List<TableJoinVO> getTrainerBlackList(Criteria cri);
 
@@ -73,5 +76,6 @@ public interface AdminMapper {
 	// 일반/유료회원 운동정보 갯수
 	Integer countUserExInfoAll();
 	
-	
+	// 트레이너정보_수익관리 리스트
+	List<TableJoinVO> gettrainerMoneyList(int userId, Criteria cri);
 }

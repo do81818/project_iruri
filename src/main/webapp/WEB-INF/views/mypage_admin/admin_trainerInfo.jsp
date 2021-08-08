@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}"
 	scope="application" />
@@ -33,7 +34,7 @@
 
 	 <div class="wrap">
         <div class="admin_trainerInfo_title">
-            <a href="history.back()"><img src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+            <a href="#" onclick="history.back()"><img src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
             <h3>트레이너 정보</h3>
         </div>
 
@@ -43,49 +44,75 @@
                 <td>회원번호</td>
                 <td>
                     <form>
-                        <input type="text" disabled value="1"></input>
+                        <input type="text" disabled value="${info.iuserVo.userId}"></input>
                         <button>탈퇴회원으로 전환</button>
                     </form>
                 </td>
             </tr>
             <tr>
                 <td>트레이너 실명</td>
-                <td>홍길동</td>
+                <td>${info.iuserVo.userName}</td>
             </tr>
             <tr>
                 <td>닉네임</td>
-                <td>루리</td>
+                <td>${info.iuserVo.userNickname }</td>
             </tr>
             <tr>
                 <td>이메일</td>
-                <td>iruri012345@iruri.com</td>
+                <td>${info.iuserVo.userEmail }</td>
             </tr>
             <tr>
                 <td>연락처</td>
-                <td>01012345678</td>
+                <td>${info.iuserVo.userPhone }</td>
             </tr>
             <tr>
                 <td>가입일</td>
-                <td>2021.07.06</td>
+                <td><fmt:formatDate value="${info.iuserVo.userSigndate }" pattern="yyyy.MM.dd" /></td>
             </tr>
             <tr>
                 <td>평점</td>
-                <td>4.3</td>
+                <td>
+                <c:choose>
+                	<c:when test="${grade} == null">0.0</c:when>
+                	<c:otherwise>${grade}</c:otherwise>
+               	</c:choose>
+                </td>
             </tr>
             <tr>
                 <td>블랙리스트여부</td>
                 <td>
                     <form class="memberInfo_balackListForm">
-                        <input id="memberInfo_balackList" type="checkbox">
-                        <label for="memberInfo_balackList">
-                            <sapn></sapn>블랙리스트
-                        </label>
-                        <div>
-                            <textarea id="memberInfo_balackList_reason" onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
-                            <span id="nowByte" class="table_blue_text">0</span>
-                            <span class="table_gray_text"> / 3000byte</span>
-                            <button>입력</button></div>
-                    </form>
+						<c:choose>
+							<c:when test="${info.iuserVo.userBlackList == true }">
+								<input id="memberInfo_balackList" type="checkbox" checked>
+								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								</label>
+							</c:when>
+							<c:otherwise>
+								<input id="memberInfo_balackList" type="checkbox">
+								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								</label>
+							</c:otherwise>
+						</c:choose>
+
+						<div>
+							<c:choose>
+								<c:when test="${info.iuserVo.userBlaskListReason eq null }">
+									<textarea id="memberInfo_balackList_reason"
+										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
+								</c:when>
+								<c:otherwise>
+									<textarea id="memberInfo_balackList_reason"
+										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
+										value="${info.iuserVo.userBlaskListReason}"></textarea>
+								</c:otherwise>
+							</c:choose>
+
+							<span id="nowByte" class="table_blue_text">0</span> <span
+								class="table_gray_text"> / 3000byte</span>
+							<button>입력</button>
+						</div>
+					</form>
                 </td>
             </tr>
         </table>

@@ -46,14 +46,34 @@
 		<result property="userId" column="user_id" />
 	</resultMap>
 
+	<resultMap type="com.iruri.ex.vo.MoneyVO" id="moneyMap">
+		<result property="moneyId" column="money_id" />
+		<result property="moneyDate" column="money_date" />
+		<result property="moneyInput" column="money_input" />
+		<result property="moneyOutput" column="money_output" />
+		<result property="payId" column="pay_id" />
+		<result property="userId" column="user_id" />
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.PayVO" id="payMap">
+		<result property="payId" column="pay_id" />
+		<result property="buyId" column="buy_id" />
+		<result property="payState" column="pay_state" />
+		<result property="payWay" column="pay_way" />
+	</resultMap>
+
+	<resultMap type="com.iruri.ex.vo.buyVO" id="buyMap">
+		<result property="buyId" column="buy_id" />
+		<result property="buyPoint" column="pay_id" />
+		<result property="class_id" column="pay_state" />
+	</resultMap>
+
 	<resultMap type="com.iruri.ex.vo.IClassVO" id="classMap">
 		<result property="classId" column="class_id" />
 		<result property="classTitle" column="class_title" />
 		<result property="classState" column="class_state" />
 		<result property="classPrice" column="class_pirce" />
 		<result property="userId" column="user_id" />
-		<collection property="exerciseKindList"
-			resultMap="exerciseKindOMap" />
 	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.GradeVO" id="gradeMap">
@@ -63,17 +83,21 @@
 		<result property="classId" column="class_id" />
 	</resultMap>
 
-	<resultMap type="com.iruri.ex.vo.ExerciseKindVO"
-		id="exerciseKindOMap">
-		<result property="exerciseKind" column="grade_id" />
-		<result property="classId" column="grade_score" />
-	</resultMap>
-
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
 		id="iuserAuthJoinMap">
 		<result property="avgGrade" column="grade" />
 		<collection property="iuserVo" resultMap="iUserMap" />
 		<collection property="authVo" resultMap="authMap" />
+	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="moneyJoinMap">
+		<result property="totalMoney" column="totalMoney" />
+		<collection property="iuserVo" resultMap="iUserMap" />
+		<collection property="moneyVo" resultMap="moneyMap" />
+		<collection property="payVo" resultMap="payMap" />
+		<collection property="buyVo" resultMap="buyMap" />
+		<collection property="iclassVo" resultMap="classMap" />
 	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
@@ -201,50 +225,15 @@
 		from (
 		select rownum rn, li.*
 		from (
-		select ui.*, gr.grade
-			from (
-				select u.*, a.auth_id, a.auth_content 
-				from iuser u inner join authority a
-				on u.user_id = a.user_id and a.auth_id = 3
-			) ui inner join
-			(
-				select c.user_id, avg(g.gs) as grade, count(*)
-				from iclass c, (
-				select class_id, avg(grade_score) gs, count(*) from grade
-				group by class_id
-				having count(*)> 0) g
-				where c.class_id = g.class_id
-				group by c.user_id
-				having count(*)>0
-			) gr
-			on ui.user_id = gr.user_id
-			order by ui.user_id desc
-					
-		) li
-		where rownum <= #{pageNum} * #{amount}
-			)
-		where rn > (#{pageNum} - 1) * #{amount}
-		]]>
-	</select>
-
-
-	<!-- 트레이너 회원 리스트 -->
-	<select id="getTrainerMemberList2" resultMap="iUserMap">
-		<![CDATA[  
-		select *
-		from (
-			select rownum rn, li.*
-			from (
-			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
-			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content, c.class_id, g.grade_score
+			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
 			inner join authority a
-			on u.user_id = a.user_id and a.auth_id = 3
-			inner join iclass c
+			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
+			left outer join iclass c
 			on u.user_id = c.user_id
-			inner join grade g
+			left outer join grade g
 			on c.class_id = g.class_id
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email
 			order by u.user_id desc
 		) li
 		where rownum <= #{pageNum} * #{amount}
@@ -254,24 +243,35 @@
 	</select>
 
 
+	<!-- 트레이너 회원 리스트 -->
+	<!-- <select id="getTrainerMemberList2" resultMap="iUserMap"> <![CDATA[ 
+		select * from ( select rownum rn, li.* from ( select u.user_id, u.user_email, 
+		u.user_pw, u.user_nickname, u.user_name, user_signdate, u.user_blacklist, 
+		u.user_blacklist_reason, u.user_phone, a.auth_id, a.auth_content, c.class_id, 
+		g.grade_score from iuser u inner join authority a on u.user_id = a.user_id 
+		and a.auth_id = 3 inner join iclass c on u.user_id = c.user_id inner join 
+		grade g on c.class_id = g.class_id order by u.user_id desc ) li where rownum 
+		<= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} ]]> </select> 
+		<select id="getTrainerMemberList3" resultMap="iUserMap"> <![CDATA[ select 
+		* from ( select rownum rn, li.* from ( select u.user_id, u.user_email, u.user_pw, 
+		u.user_nickname, u.user_name, user_signdate, u.user_blacklist, u.user_blacklist_reason, 
+		u.user_phone, a.auth_id, a.auth_content from iuser u inner join authority 
+		a on u.user_id = a.user_id and a.auth_id = 3 order by u.user_id desc ) li 
+		where rownum <= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} 
+		]]> </select> -->
+
 
 	<!-- 트레이너회원 리스트 갯수 -->
 	<select id="countTrainerMemberList" resultType="Integer">
 		<![CDATA[
 		select count(li.user_id)
-		from (
-		select rownum rn, li.*
-			from (
+		from(
 			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
 			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content, c.class_id, g.grade_score
+			    a.auth_id, a.auth_content
 			from iuser u
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3
-			inner join iclass c
-			on u.user_id = c.user_id
-			inner join grade g
-			on c.class_id = g.class_id
 			order by u.user_id desc
 		) li
 		]]>
@@ -283,18 +283,17 @@
 		<![CDATA[
 		select *
 		from (
-			select rownum rn, li.*
-			from (
-			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
-			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content, c.class_id, g.grade_score
+		select rownum rn, li.*
+		from (
+			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 1
-			inner join iclass c
+			left outer join iclass c
 			on u.user_id = c.user_id
-			inner join grade g
+			left outer join grade g
 			on c.class_id = g.class_id
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email
 			order by u.user_id desc
 		) li
 		where rownum <= #{pageNum} * #{amount}
@@ -308,25 +307,18 @@
 	<select id="countTrainerBlackList" resultType="Integer">
 		<![CDATA[
 		select count(li.user_id)
-		from (select t.user_id, t.auth_content, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
-      		round(avg(t.avg_grade))as grade, t.user_blacklist, t.user_blacklist_reason
-			from (
-			    select a.*, authority.auth_content from authority, (
-			        select u.*, gs.avg_grade
-			        from iuser u, (
-			            select g.avg_grade, iclass.class_id, iclass.user_id
-			            from (select round(avg(grade_score),1) as avg_grade, class_id 
-			                  from grade
-			                  group by class_id) g, iclass
-			            where g.class_id = iclass.class_id
-			            ) gs
-			        where u.user_id = gs.user_id
-			        ) a
-			    where authority.user_id = a.user_id and authority.auth_id = 3 and a.user_blacklist = 1
-			        ) t 
-			group by t.user_id, t.user_name, t.user_nickname, t.user_email, t.user_phone, t.user_signdate,
-			       t.user_blacklist, t.user_blacklist_reason, t.auth_content
-			order by t.user_id desc) li
+		from (
+			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
+			from iuser u
+			inner join authority a
+			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 1
+			left outer join iclass c
+			on u.user_id = c.user_id
+			left outer join grade g
+			on c.class_id = g.class_id
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email
+			order by u.user_id desc
+		) li
 		]]>
 	</select>
 
@@ -354,7 +346,7 @@
 	</update>
 
 
-	<!-- 일반회원정보 보기 -->
+	<!-- 일반/트레이너회원정보 보기 -->
 	<select id="getUserBasicInfo" parameterType="int"
 		resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -381,7 +373,7 @@
 	</select>
 
 	<!-- 일반회원정보 포인트리스트 갯수보기 -->
-	<select id="countUserBasicInfoPoint" resultType="int">
+	<select id="countUserBasicInfoPoint" resultType="Integer">
 		<![CDATA[
 		select count(point_id) from ipoint where not point_state = 'appointed' and user_id = #{userId}
 		]]>
@@ -419,7 +411,7 @@
 
 
 	<!-- 일반회원정보 운동정보 갯수 -->
-	<select id="countUserExInfoAll" resultType="int">
+	<select id="countUserExInfoAll" resultType="Integer">
 		<![CDATA[
 		select count(li.class_id)
 		from (
@@ -432,24 +424,45 @@
 	</select>
 
 
-	<!-- 트레이너회원 정보보기 -->
-	<select id="getTrainerMemberInfo" resultType="iUserMap">
-		<![CDATA[
-		
-			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
-			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content, c.class_id, g.grade_score
-			from iuser u
-			inner join authority a
-			on u.user_id = a.user_id and a.auth_id = 3 and u.user_id = #{userId}
-			inner join iclass c
-			on u.user_id = c.user_id
-			inner join grade g
-			on c.class_id = g.class_id
-		) li
+	<!-- 트레이너 별 평점 -->
+	<select id="getTrainerGrade" resultType="String">
+		<![CDATA[  
+		select round(avg(g.grade_score),1) as grade
+		from iuser u, iclass c, grade g
+		where u.user_id = c.user_id and c.class_id = g.class_id
+		group by u.user_id
+		having u.user_id = #{userId}
 		]]>
 	</select>
 
+
+	<!-- 트레이너정보_수익관리 리스트 -->
+	<select id="gettrainerMoneyList" resultMap="moneyJoinMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				select a.*, sum(a.total) over(order by rowId) totalMoney
+				from (
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+				    from money m
+				    inner join pay p
+				    on m.pay_id = p.pay_id
+				    INNER join buy b
+				    on p.buy_id = b.buy_id
+				    inner join iclass c
+				    on b.class_id = c.class_id and c.user_id = #{userId}
+				    inner join iuser u
+				    on m.user_id = u.user_id
+				    ) a
+				    order by a.money_id desc
+				) li
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
 
 
 

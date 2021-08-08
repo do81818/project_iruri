@@ -1,11 +1,5 @@
 package com.iruri.ex.vo;
 
-import java.sql.Timestamp;
-import java.sql.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +26,5 @@ public class PayVO {
     private String payWay;
     private int buyId;
     private int rnum;
-   
     
-
 }

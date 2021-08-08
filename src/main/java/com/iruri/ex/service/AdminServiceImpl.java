@@ -87,14 +87,14 @@ public class AdminServiceImpl implements AdminService {
 
     // 트레이너회원 리스트
     @Override
-//    public List<TableJoinVO> getTrainerMemberList(Criteria cri) {
-//        log.info(mapper.getTrainerMemberList(cri));
-//        return mapper.getTrainerMemberList(cri);
-//    }
-    public List<IUserVO> getTrainerMemberList2(Criteria cri) {
-        log.info(mapper.getTrainerMemberList2(cri));
-        return mapper.getTrainerMemberList2(cri);
+    public List<TableJoinVO> getTrainerMemberList(Criteria cri) {
+        log.info(mapper.getTrainerMemberList(cri));
+        return mapper.getTrainerMemberList(cri);
     }
+//    public List<IUserVO> getTrainerMemberList3(Criteria cri) {
+//        log.info(mapper.getTrainerMemberList3(cri));
+//        return mapper.getTrainerMemberList3(cri);
+//    }
     
     // 트레이너회원 리스트 갯수
     @Override
@@ -107,6 +107,17 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    // 트레이너 별 등급(평점)
+    @Override
+ 	public double getTrainerGrade(int userId) {
+    	String str = mapper.getTrainerGrade(userId);
+    	double grade = 0.0;
+    	if(str != null) {
+    		grade = Double.parseDouble(str); 
+    	}
+ 		return grade;
+ 	}
+    
     // 트레이너회원 블랙리스트
     @Override
     public List<TableJoinVO> getTrainerBlackList(Criteria cri) {
