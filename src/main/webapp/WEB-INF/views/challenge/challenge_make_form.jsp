@@ -50,7 +50,7 @@
                                     <div class="c_makeForm_insert">
 
                                         <c:url value="/iruri/insert_challenge" var="insertChallenge" />
-                                        <form:form name="aa" class="c_makeForm" method="POST" action="${insertChallenge}" accept-charset="utf-8">
+                                        <form:form name="aa" class="c_makeForm" method="POST" action="${insertChallenge}" accept-charset="utf-8" enctype="multipart/form-data">
 
                                             <h2 class="c_makeForm_title">챌린지 개설</h2>
 
@@ -106,79 +106,17 @@
 
                                             <div class="c_img_direct">
                                                 <p>대표이미지 설정</p>
-                                                <input type="radio" name="classImage" id="direct" required="required" />
+                                                <input type="radio" id="direct" required="required" />
                                                 <label for="direct" class="rd_label">직접 이미지 올리기</label>
-                                                <input type="file" name="classImage" accept=".jpg, .png" id="upload">
+                                                <input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
                                                 <label for="upload" class="file_upload"></label>
                                                 <span style="color: #999;">* 650x500px 크기의 jpg.png</span>
                                             </div>
 
                                             <div class="c_img_basic">
                                                 <p></p>
-                                                <input type="radio" name="classImage" id="basic"><label for="basic" class="rd_label">기본 이미지 사용</label>
+                                                <input type="radio" id="basic"><label for="basic" class="rd_label">기본 이미지 사용</label>
                                             </div>
-
-                                            <!-- <div class="c_img_list">
-                                                <p></p>
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_1" required="required" />
-                                                    <label for="c_basic_img_1" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_2">
-                                                    <label for="c_basic_img_2" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_3">
-                                                    <label for="c_basic_img_3" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_4">
-                                                    <label for="c_basic_img_4" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <p></p>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_5">
-                                                    <label for="c_basic_img_5" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_6">
-                                                    <label for="c_basic_img_6" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_7">
-                                                    <label for="c_basic_img_7" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_8">
-                                                    <label for="c_basic_img_8" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                            </div> -->
 
                                             <div class="button">
                                                 <p></p>
