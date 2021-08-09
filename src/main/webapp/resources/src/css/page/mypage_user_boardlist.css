@@ -191,52 +191,7 @@ height: 30px;
 /* 페이징 */
 /*페이징*/
 
-.page_nation {
-    display: flex;
-    width: 100%;
-    margin-top: 80px;
-    margin-bottom: 110px;
-    justify-content: center;
-}
 
-.page_nation a {
-    display: block;
-    margin: 0 10px;
-    float: left;
-    width: 36px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-    font-size: 16px;
-    color: var(--iruri-gray-color);
-    text-decoration: none;
-}
-
-.page_nation .prev {
-    position: relative;
-    top: 9px;
-    background: transparent url("../ex/resources/src/img/icon/icon_page_arrow_left.png") no-repeat center center;
-    width: 14px;
-    height: 14px;
-    background-size: cover;
-    margin-right: 7px;
-}
-
-.page_nation .next {
-    position: relative;
-    top: 9px;
-    background: transparent url("../ex/resources/src/img/icon/icon_page_arrow_right.png") no-repeat center center;
-    width: 14px;
-    height: 14px;
-    background-size: cover;
-    margin-left: 7px;
-}
-
-.page_nation a.active {
-    background-color: var(--iruri-red-color);
-    color: var(--iruri-yellow-color);
-    border-radius: 18px;
-}
 
 
 
