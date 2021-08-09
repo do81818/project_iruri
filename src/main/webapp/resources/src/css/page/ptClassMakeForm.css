@@ -61,6 +61,12 @@
   gap: 30px;
 }
 
+.ptClassthumbnail {
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
 .exerciseList label,
 .exerciseLevel label,
 .exerciseDate label,
@@ -87,9 +93,10 @@
   width: 200px !important;
 }
 
-.ptClassFormInsert .iruri-check-no-icon {
-  width: 18px;
-  height: 18px;
+.ptClassFormInsert .iruri-check-no-icon,
+.ptClassFormInsert .iruri-check-yes-icon {
+  width: 22px;
+  height: 22px;
   background-size: cover;
 }
 
@@ -110,9 +117,10 @@
   padding: 3px 20px;
 }
 
-.thumbnail .title .thumbnailWrap {
+.thumbnail .thumbnailWrap {
   display: flex;
   flex-direction: column;
+  width: 525px;
 }
 
 .ptClassthumbnail,
@@ -149,4 +157,8 @@
 
 .ptClassFormInsert .button button {
   margin: 0;
+}
+
+.exercisePrice {
+  margin-bottom: 24px;
 }
