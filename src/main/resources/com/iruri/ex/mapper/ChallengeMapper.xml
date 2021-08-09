@@ -384,6 +384,7 @@
 				        SELECT B.*, u.user_nickname 
 				        FROM board B, iclass A, iuser u
          				where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+         				order by B.board_date desc
 				    ) C
 				    WHERE rownum <= #{pageNum} * #{amount} 
 				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
@@ -395,17 +396,37 @@
 			<!-- 챌린지 참여 후 댓글 입력 -->
 			<insert id="challengeReplyInsert">
 			<![CDATA[
-				INSERT INTO
-				board (board_id, board_title, board_content, board_date,
-				board_state, board_hit, board_like, board_groupid, category_id, user_id)
+				INSERT INTO board 
+				(
+					board_id, 
+					board_title, 
+					board_content, 
+					board_date,
+					board_state, 
+					board_hit, 
+					board_like, 
+					board_groupid, 
+					category_id, 
+					user_id
+				)
 				
-				VALUES(
-				
-				(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM
-				board),'테스트',#{boardContent}, sysdate, 'show', 0, 0, 
-				(select DISTINCT b.board_groupid 
-			  	from board b, iclass i
-	       	 	where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=129), 6, #{iUserVO.userId})
+				VALUES
+				(
+					(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
+					'테스트',
+					#{boardVO.boardContent},
+					sysdate, 
+					'show', 
+					0, 
+					0, 
+					(
+						select DISTINCT b.board_groupid 
+						from board b, iclass i
+	       	 			where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
+       	 			),
+       	 			6, 
+       	 			#{boardVO.iUserVO.userId}
+	       	 	)
 			]]>
 		</insert>
 		

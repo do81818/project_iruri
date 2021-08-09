@@ -82,7 +82,7 @@ public interface ChallengeMapper {
 
 
     //댓글 입력
-    void challengeReplyInsert(BoardVO boardVO);
+    void challengeReplyInsert(@Param("boardVO") BoardVO boardVO, @Param("classId") int classId);
 
     //댓글 userId
     BoardVO readUserId(IUserVO iUserVO);

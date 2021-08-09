@@ -235,10 +235,9 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     //댓글 입력
     @Override
-    public void challengeReplyInsert(BoardVO boardVO) {
+    public void challengeReplyInsert(BoardVO boardVO, int classId) {
         log.info("challenge reply insert()..");
-        return challengeMapper.challengeReplyInsert(boardVO);
-        
+        challengeMapper.challengeReplyInsert(boardVO, classId);
     }
 
     //댓글 userId

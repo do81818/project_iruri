@@ -100,16 +100,16 @@ $(function() {
 
 
 //인증사진 상세 모달//
-$(function() {
-    $(".c_certify_img").click(function() {
-        $(".c_myCertify_modal").fadeIn();
-    });
+//$(function() {
+//    $(".c_certify_img").click(function() {
+//        $(".c_myCertify_modal").fadeIn();
+//    });
 
-    $(".c_myCertify_modal_submit").click(function() {
-        $(".c_myCertify_modal").fadeOut();
-    });
+//    $(".c_myCertify_modal_submit").click(function() {
+//        $(".c_myCertify_modal").fadeOut();
+//    });
 
-});
+//});
 
 
 //댓글 삭제 확인 모달//
@@ -138,11 +138,11 @@ $(function() {
 });
 
 
-//인증글 수정 모달//
+/*//인증글 수정 모달//
 $(function() {
 	$(".c_myCertify_modal_submit2").click(function(){
 		$(".c_myCertify_modal").fadeOut();
 		$("#c_certify_modal").fadeIn();
 	});
 });
-		
+		*/

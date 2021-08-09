@@ -169,7 +169,7 @@
 						<img src="/ex/resources/src/img/icon/close.png" alt="">
 					</div>
 					<h2 class="c_certify_modal_title">인증글 작성</h2>
-					<form action="#">
+					<form class="c_certify_modal_form">
 						<ul class="c_certify_modal_ul">
 							<li>- 인증글 작성 시 포인트가 누적됩니다.</li>
 							<li>- 누적된 포인트는 챌린지 종료 후 3일 이내 자동 적립됩니다.</li>
@@ -188,7 +188,7 @@
 
 						<div class="c_certify_img">
 							<p>사진첨부</p>
-							<input type="file" accept=".jpg, .png" id="certify_upload"><label
+							<input type="file" name="uploadFile" accept=".jpg, .png" id="certify_upload"><label
 								for="certify_upload" class="certify_file_upload"></label> <span
 								style="color: #999;">* 650x500px 크기의 jpg.png</span>
 						</div>
@@ -206,6 +206,56 @@
 
 	</div>
 
+	<script>
+		$(document).ready(function() {
+			$('.c_certify_modal_form').submit(function(e) {
+				e.preventDefault();
+			});
+			
+			var maxSize = 5242880;
+			function checkExtension(fileSize) {
+				if(fileSize >= maxSize) {
+					alert("파일 사이즈 초과");
+					return false;
+				}
+				return true;
+			}
+			
+			$('.c_certify_modal_submit').on('click', function(e) {
+				
+				var formData = new FormData();
+				var inputFile = document.querySelector('input[name="uploadFile"]');
+				var files = inputFile.files;
+				
+				console.log(inputFile);
+				console.log(files[0]);
+				
+				if(!checkExtension(files[0].size)) {
+					return false;
+				}
+				
+				formData.append('uploadFile', files[0]);					
+				
+				console.log(formData);
+				
+				const header = $('meta[name="_csrf_header"]').attr('th:content');
+				const token = $('meta[name="_csrf"]').attr('th:content');
+				$.ajax({
+					url: '${CONTEXT_PATH}/uploadAjaxAction',
+					type: 'POST',
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					processData: false,
+					contentType: false,
+					data: formData,
+					success: function(result) {
+						console.log("uploaded");
+					}
+				});
+			});
+		});
+	</script>
 
 
 
@@ -244,22 +294,25 @@
 	
 	<!-- 댓글 입력창 -->
 	<div class="c_reply_insert">
-		<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />
-		<form:form name="commentForm" class="c_reply_insertBox" method="POST"
-			action="${challengeReplyInsert}" accept-charset="utf-8">
-
+		<!-- <c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" /> -->
+		<form:form name="commentForm" class="c_reply_insertBox" method="Post"
+			 accept-charset="utf-8">
+			<input type="hidden" name="classId" value="${challengeInfo.classId}">
 			<table>
 				<tr>
 
-					<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."
+					<td class="c_reply_textarea"><textarea class="boardContent" placeholder="글을 작성하세요."
 							name="boardContent"></textarea></td>
-					<td class="c_reply_insertButton"><button type="submit">입력</button></td>
+							<c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" />
+					<td class="c_reply_insertButton">
+					<button type="submit">입력</button></td>
 
 				</tr>
 			</table>
 
 		</form:form>
 	</div>
+
 
 
 	<!--댓글리스트-->
@@ -453,6 +506,7 @@ function insertReply() {
 										+ '개';
 								htmls += '</div>';
 								htmls += '<table class="reply_table">';
+								
 								$(this.boardList).each(function() {
 												//댓글 리스트 
 												
@@ -511,29 +565,46 @@ function insertReply() {
 	                getlist(1);
 	            });
 </script>
+
+
+
 <script>
+$('.c_reply_insertBox').submit(function(e) {
+	e.preventDefault();
+})
 
 //댓글 등록하기
-$('.c_reply_insertButton').click(function(){
-	
-	$.ajax({
-        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
-        type: 'POST',
-        cache: false,
-        dateType: 'text',
-        data: $("#commentForm").serialize(),
-        success: function(result) {
-            if(result=="success")
-            {
-            	getlist(1);
-                $("#boardContent").val("");
-            }
-        }
-      	
-        
-	});
-	
+$('.c_reply_insertButton button').click(function(){
+		const header = $('meta[name="_csrf_header"]').attr('th:content');
+		const token = $('meta[name="_csrf"]').attr('th:content');
+		const boardContent = document.querySelector(".boardContent");
+		
+		$.ajax({
+	        url: '${CONTEXT_PATH}/iruri/c_detail_reply_insert',
+	        type: 'POST',
+	        cache: false,
+	        dateType: 'text',
+	        data: {
+	        	classId: ${challengeInfo.classId},
+	        	boardContent: boardContent.value
+	        },
+	        beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+	        success: function(data) {
+	            if(data=="success")
+	            {
+	            	getlist(1);
+	                
+	            }
+	        }
+    
+		});
+		
+		boardContent.value = '';
+
 });
+
 </script>
 
 

@@ -1,11 +1,16 @@
 package com.iruri.ex.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.nio.file.Files;
 import java.security.Principal; 
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
@@ -41,6 +48,7 @@ import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Log4j
 @Controller
@@ -181,9 +189,21 @@ public class ChallengeController {
 
     // 챌린지 개설 폼 작성 후 입력 (챌린지 등록)
     @PostMapping("/iruri/insert_challenge")
-    public String c_make_form2(IClassVO iClassVO, @CurrentUser IUserVO vo) {
+    public String c_make_form2(MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo) {
         log.info("challenge_make_form()...");
 
+        log.info("upload File Name: " + uploadFile.getOriginalFilename());
+        log.info("upload File Size: " +uploadFile.getSize());            
+        
+        String uploadFolder = "C:\\upload";
+        File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
+        
+        try {
+            uploadFile.transferTo(saveFile);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        
         // classTitle 챌린지명      
         // classLevel 운동강도
         // startdate, enddate 운동 기간 
@@ -193,9 +213,9 @@ public class ChallengeController {
         // classContent 상세정보
         // classImage 대표이미지
         
-        iClassVO.setIUserVO(vo);
-        challengeService.insertChallenge(iClassVO);
-        log.info("iClassVO: " + iClassVO);
+        // iClassVO.setIUserVO(vo);
+        // challengeService.insertChallenge(iClassVO);
+        // log.info("iClassVO: " + iClassVO);
 
         return "redirect:challengeList";
     }
@@ -269,21 +289,76 @@ public class ChallengeController {
         return mav;
     }
     
-    //댓글 작성
+    // 인증모달 - 인증글 작성
+    @ResponseBody
+    @PostMapping("/uploadAjaxAction")
+    public String uploadAjaxPost(MultipartFile uploadFile) {
+        log.info(uploadFile);
+        
+        String uploadFolder = "C:\\upload";
+
+            log.info("upload File Name: " + uploadFile.getOriginalFilename());
+            log.info("upload File Size: " +uploadFile.getSize());            
+            
+            String uploadFileName = uploadFile.getOriginalFilename();
+
+            // IE has file path
+            uploadFileName = uploadFileName
+                    .substring(uploadFileName.lastIndexOf("\\") + 1);
+            log.info("only file name: " + uploadFileName);
+            
+            // 이름 중복방지 난수
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
+            
+            
+            try {
+                File saveFile = new File(uploadFolder, uploadFileName);
+                uploadFile.transferTo(saveFile);
+                
+                if(checkImageType(saveFile)) {
+                    FileOutputStream thumbnail = new FileOutputStream(
+                            new File(uploadFolder, "s_" + uploadFileName));
+                    
+                    Thumbnailator.createThumbnail(
+                            uploadFile.getInputStream(), thumbnail, 270, 270);
+                    
+                    thumbnail.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+        
+        return "SUCCESS";
+    }
     
+    private boolean checkImageType(File file) {
+        
+        try {
+            String contentType = Files.probeContentType(file.toPath());
+            
+            return contentType.startsWith("image");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    //댓글 작성
     @ResponseBody
     @PostMapping("/iruri/c_detail_reply_insert")
-    public String c_detail_reply_insert(BoardVO boardVO, @CurrentUser IUserVO vo) {
+    public String c_detail_reply_insert(BoardVO boardVO, @RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
         log.info("challenge reply insert()..");
         
         boardVO.setIUserVO(vo);
-        challengeService.challengeReplyInsert(boardVO);
-        log.info("boardVO :" + boardVO);
         
-        return "redirect:challenge_detail_after";
+        challengeService.challengeReplyInsert(boardVO, classId);
+        
+        log.info("challengeReplyInsert()..");
+        
+        return "success";
     }
- 
- 
   
     
     //댓글부분

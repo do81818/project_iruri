@@ -78,7 +78,7 @@ public interface ChallengeService {
     List<BoardVO> challengeReplyList(Criteria criteria, int classId);
 
     //챌린지 댓글 입력
-    void challengeReplyInsert(BoardVO boardVO);
+    void challengeReplyInsert(BoardVO boardVO, int classId);
 
     //댓글 유저 
     BoardVO getUserId(IUserVO iUserVO);
