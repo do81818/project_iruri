@@ -4,77 +4,89 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.UserChallengeMapper">
 
-	<resultMap type="com.iruri.ex.vo.IClassVO" id="UserChallengeMap">
-		<result property="classId" column="CLASS_ID"/>
-		<result property="classTitle" column="CLASS_TITLE"/>
-		<result property="classContent" column="CLASS_CONTENT"/>
-		<result property="classGoal" column="CLASS_GOAL"/>
-		<result property="classExerciseCount" column="CLASS_EXERCISECOUNT"/>
-		<result property="classStartDate" column="CLASS_STARTDATE"/>
-		<result property="classEndDate" column="CLASS_ENDDATE"/>
-		<result property="classImage" column="CLASS_IMAGE"/>
-		<result property="classLike" column="CLASS_LIKE"/>
-		<result property="classState" column="CLASS_STATE"/>
-		<result property="classHit" column="CLASS_HIT"/>
-		<result property="classJoinMember" column="CLASS_JOINMEMBER"/>
-		<result property="classTrainerInfo" column="CLASS_TRAINERINFO"/>
-		<result property="classTotalMember" column="CLASS_TOTALMEMBER"/>
-		<result property="classPrice" column="CLASS_PRICE"/>
-		<result property="classNeed" column="CLASS_NEED"/>
-		<result property="categoryId" column="CATEGORY_ID"/>
-		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>	
-		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
-		<collection property="exerciseDateList" resultMap="exerciseDateMap">
+	<resultMap type="com.iruri.ex.vo.IClassVO"
+		id="UserChallengeMap">
+		<result property="classId" column="CLASS_ID" />
+		<result property="classTitle" column="CLASS_TITLE" />
+		<result property="classContent" column="CLASS_CONTENT" />
+		<result property="classGoal" column="CLASS_GOAL" />
+		<result property="classExerciseCount"
+			column="CLASS_EXERCISECOUNT" />
+		<result property="classStartDate" column="CLASS_STARTDATE" />
+		<result property="classEndDate" column="CLASS_ENDDATE" />
+		<result property="classImage" column="CLASS_IMAGE" />
+		<result property="classLike" column="CLASS_LIKE" />
+		<result property="classState" column="CLASS_STATE" />
+		<result property="classHit" column="CLASS_HIT" />
+		<result property="classJoinMember" column="CLASS_JOINMEMBER" />
+		<result property="classTrainerInfo" column="CLASS_TRAINERINFO" />
+		<result property="classTotalMember" column="CLASS_TOTALMEMBER" />
+		<result property="classPrice" column="CLASS_PRICE" />
+		<result property="classNeed" column="CLASS_NEED" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="classLevel" column="CLASS_LEVEL" />
+		<result property="rnum" column="rnum" />
+		<association property="iUserVO" column="USER_ID"
+			javaType="com.iruri.ex.vo.IUserVO"
+			resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+		<collection property="exerciseDateList"
+			resultMap="exerciseDateMap">
 		</collection>
-		<collection property="exerciseKindList" resultMap="exerciseKindMap">
+		<collection property="exerciseKindList"
+			resultMap="exerciseKindMap">
 		</collection>
 		<collection property="likeListList" resultMap="likeListMap">
 		</collection>
 
 	</resultMap>
-	
+
 	<resultMap type="com.iruri.ex.vo.BuyVO" id="UserBuyMap">
-	<result property="buyId" column="BuyId"/>
-	<result property="buyRealPay" column="Buyrealpay"/>
-	<result property="buyPoint" column="BuyPoint"/>
-	<result property="buyDate" column="BuyDate"/>
-	<result property="payId" column="PayId"/>
-	<result property="classId" column="ClassId"/>
-	<result property="rnum" column="rnum"/>
-	<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+		<result property="buyId" column="BuyId" />
+		<result property="buyRealPay" column="Buyrealpay" />
+		<result property="buyPoint" column="BuyPoint" />
+		<result property="buyDate" column="BuyDate" />
+		<result property="payId" column="PayId" />
+		<result property="classId" column="ClassId" />
+		<result property="rnum" column="rnum" />
+		<association property="iUserVO" column="USER_ID"
+			javaType="com.iruri.ex.vo.IUserVO"
+			resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
-	
-    
-		<resultMap type="com.iruri.ex.vo.PayVO" id="UserPayMap">
-	<result property="payId" column="PayId"/>
-	<result property="payState" column="PayState"/>
-	<result property="payWay" column="PayWay"/>
-	<result property="buyId" column="BuyId"/>
-	<result property="rnum" column="rnum"/>
+
+
+	<resultMap type="com.iruri.ex.vo.PayVO" id="UserPayMap">
+		<result property="payId" column="PayId" />
+		<result property="payState" column="PayState" />
+		<result property="payWay" column="PayWay" />
+		<result property="buyId" column="BuyId" />
+		<result property="rnum" column="rnum" />
 	</resultMap>
 
 
 
-	<resultMap type="com.iruri.ex.vo.ExerciseDateVO" id="exerciseDateMap">
-		<result property="exerciseDate" column="EXERCISE_DATE"/>
-		<result property="classId" column="CLASS_ID"/>
+	<resultMap type="com.iruri.ex.vo.ExerciseDateVO"
+		id="exerciseDateMap">
+		<result property="exerciseDate" column="EXERCISE_DATE" />
+		<result property="classId" column="CLASS_ID" />
 	</resultMap>
-	
-	<resultMap type="com.iruri.ex.vo.ExerciseKindVO" id="exerciseKindMap">
-		<result property="exerciseKind" column="EXERCISE_KIND"/>
-		<result property="classId" column="CLASS_ID"/>
+
+	<resultMap type="com.iruri.ex.vo.ExerciseKindVO"
+		id="exerciseKindMap">
+		<result property="exerciseKind" column="EXERCISE_KIND" />
+		<result property="classId" column="CLASS_ID" />
 	</resultMap>
-	
-		<resultMap type="com.iruri.ex.vo.LikeListVO" id="likeListMap">
-		<result property="likeListId" column="LIKELIST_ID"/>
-		<result property="classId" column="CLASS_ID"/>
-		<result property="boardId" column="BOARD_ID"/>
-		<result property="rnum" column="rnum"/>	
-		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+
+	<resultMap type="com.iruri.ex.vo.LikeListVO" id="likeListMap">
+		<result property="likeListId" column="LIKELIST_ID" />
+		<result property="classId" column="CLASS_ID" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="rnum" column="rnum" />
+		<association property="iUserVO" column="USER_ID"
+			javaType="com.iruri.ex.vo.IUserVO"
+			resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
-	
-		<select id="challengecount" parameterType="int" resultType="int">
+
+	<select id="challengecount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -83,11 +95,12 @@
 			WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 			and category_id = 1 and class_enddate >= sysdate
 			
-		]]> 
+		]]>
 	</select>
-	
-	
-			<select id="userchallengelist" parameterType="int" resultMap="UserChallengeMap">
+
+
+	<select id="userchallengelist" parameterType="int"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 		SELECT
 			*
@@ -96,11 +109,12 @@
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 1 and class_enddate >= sysdate
 		
-		]]> 
+		]]>
 	</select>
-	
-	
-				<select id="userlikelist"  parameterType="HashMap" resultMap="UserChallengeMap">
+
+
+	<select id="userlikelist" parameterType="HashMap"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 			
 		SELECT *
@@ -124,11 +138,12 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		
 
 
-		]]> 
+		]]>
 	</select>
-	
-		
-		<select id="userendlist"  parameterType="int" resultMap="UserChallengeMap">
+
+
+	<select id="userendlist" parameterType="int"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 		
 		
@@ -152,10 +167,10 @@ FROM
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 
-		]]> 
+		]]>
 	</select>
-	
-					<select id="likecount"  parameterType="int" resultType="int">
+
+	<select id="likecount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -163,11 +178,11 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				WHERE
 			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 1	and class_enddate >= sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-						<select id="endcount"  parameterType="int" resultType="int">
+
+
+	<select id="endcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -175,11 +190,11 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 1 and class_enddate < sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-						<select id="userlikecount"  parameterType="int" resultType="int">
+
+
+	<select id="userlikecount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -187,12 +202,12 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				WHERE
 			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 1	and class_enddate >= sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-	
-							<select id="userendcount"  parameterType="int" resultType="int">
+
+
+
+	<select id="userendcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -200,13 +215,13 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 1 and class_enddate < sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-	
-	
-			<select id="classcount" parameterType="int" resultType="int">
+
+
+
+
+	<select id="classcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -215,10 +230,10 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 			and category_id = 2 and class_enddate >= sysdate
 			
-		]]> 
+		]]>
 	</select>
-	
-						<select id="classlikecount"  parameterType="int" resultType="int">
+
+	<select id="classlikecount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -226,11 +241,11 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				WHERE
 			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate >= sysdate
-		]]> 
+		]]>
 	</select>
-		
-		
-								<select id="classendcount"  parameterType="int" resultType="int">
+
+
+	<select id="classendcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -238,12 +253,13 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 			iclass
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 2 and class_enddate < sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-	
-				<select id="userclasslist" parameterType="int" resultMap="UserChallengeMap">
+
+
+
+	<select id="userclasslist" parameterType="int"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 		SELECT
 			*
@@ -252,38 +268,69 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 2 and class_enddate >= sysdate
 		
-		]]> 
+		]]>
 	</select>
-	
-	
-					<select id="userclasslikelist_kind" parameterType="int" resultMap="UserChallengeMap">
+
+
+	<select id="userclasslikelist_kind" parameterType="int"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 SELECT
-    *
+    i.*, B.user_nickname, e.exercise_kind, d.exercise_date
 	FROM
-	    iclass i, exercise_kind e
+	    iclass i, exercise_kind e, iuser B, exercise_date d
 	WHERE
-	    i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
-		
-		]]> 
+	    i.class_Id = d.class_id and i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
+		and i.user_id = b.user_id
+		]]>
 	</select>
-	
-	
-	
-						<select id="userclasslikelist_date" parameterType="int" resultMap="UserChallengeMap">
+
+
+
+	<select id="userclasslikelist_date" parameterType="int"	resultMap="UserChallengeMap">
+		<![CDATA[
+		SELECT
+	    *
+		FROM
+		    iclass i, exercise_date e
+		WHERE
+		    i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
+		]]>
+	</select>
+
+
+	<select id="userclassendlist_date" parameterType="int"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 SELECT
     *
 	FROM
 	    iclass i, exercise_date e
 	WHERE
-	    i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
+	    i.class_Id = e.class_id and i.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate < sysdate
 		
-		]]> 
+		]]>
 	</select>
-	
-	
-				<select id="class_likecount"  parameterType="int" resultType="int">
+
+
+	<select id="userclassendlist_kind" parameterType="int"
+		resultMap="UserChallengeMap">
+		<![CDATA[
+SELECT
+    *
+	FROM
+	    iclass i, exercise_kind e, iuser B
+	WHERE
+	    i.class_Id = e.class_id and i.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate < sysdate and i.user_id = b.user_id
+		]]>
+	</select>
+
+
+
+	<select id="class_likecount" parameterType="int"
+		resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
@@ -291,14 +338,15 @@ SELECT
 			iclass
 				WHERE
 			 		 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate >= sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-	
 
-	
-					<select id="userclasslikelist" parameterType="HashMap"  resultMap="UserChallengeMap">
+
+
+
+
+	<select id="userclasslikelist" parameterType="HashMap"
+		resultMap="UserChallengeMap">
 		<![CDATA[
 			SELECT *
 FROM
@@ -306,60 +354,60 @@ FROM
     SELECT ROWNUM rn, c.*
    FROM
    (SELECT
-    *
+    A.*, B.user_nickname, e.exercise_kind, d.exercise_date
 	FROM
-	    iclass 
+	    iclass A, iuser B,exercise_kind e, exercise_date d
 	WHERE
-	 class_id IN ( select class_id from likelist where user_id = #{userId}) and category_id = 2	and class_enddate>= sysdate
-   
+	 A.class_id = d.class_id and A.class_Id = e.class_id and A.class_id in ( select class_id from likelist where user_id = #{userId}) and category_id = 2 and class_enddate>= sysdate and a.user_id = b.user_id
    )C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
  
 		
-		]]> 
+		]]>
 	</select>
-	
-	
-	
-	
-				<select id="class_endcount"  parameterType="int" resultType="int">
+
+
+
+
+	<select id="class_endcount" parameterType="int" resultType="int">
 		<![CDATA[
 		SELECT
 			count(*)
 				from iclass where class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
 					and category_id = 2 and class_enddate < sysdate
-		]]> 
+		]]>
 	</select>
-	
-	
-	
 
-	
-					<select id="userclassendlist" parameterType="HashMap"  resultMap="UserChallengeMap">
+
+
+
+	<select id="userclassendlist" parameterType="HashMap"
+		resultMap="UserChallengeMap">
 		<![CDATA[
-			SELECT *
+SELECT *
 FROM
 (
     SELECT ROWNUM rn, c.*
    FROM
-   (select * 
-		from iclass where class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
-		and category_id = 2 and class_enddate < sysdate
-   
+   (SELECT
+    A.*, B.user_nickname, e.exercise_kind
+	FROM
+	    iclass A, iuser B,exercise_kind e
+        where A.class_Id = e.class_id and A.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+		and category_id = 2 and class_enddate < sysdate and A.user_id = B.user_id
    )C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
- 
 		
-		]]> 
+		]]>
 	</select>
-	
 
-	
 
-   
+
+
+
 
 </mapper>

@@ -122,5 +122,14 @@ public List<IClassVO> userclassendlist(Criteria cri,int userId){
 	return userchallengeMapper.userclassendlist(cri,userId);
 }
 
+@Override
+public List<IClassVO> userclassendlist_kind(int userId){
+	return userchallengeMapper.userclassendlist_kind(userId);
+}
+
+@Override
+public List<IClassVO> userclassendlist_date(int userId){
+	return userchallengeMapper.userclassendlist_date(userId);
+}
 
 }

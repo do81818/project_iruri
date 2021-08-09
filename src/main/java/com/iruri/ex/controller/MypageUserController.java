@@ -496,13 +496,14 @@ public class MypageUserController {
 			    
 			    // 관심클래스 요일 list
 			    List<IClassVO> userclasslikelist_date = userchallengeService.userclasslikelist_date(vo.getUserId());
-			    log.info(userclasslikelist_date);
-			    model.addAttribute(userclasslikelist_date);
+			    log.info("like운동요일!!!!!!!!!!"+userclasslikelist_date);
+			    model.addAttribute("userclasslikelist_date",userclasslikelist_date);
 			    
-			    // 지난클래스 종류 list
-			    
-			    
+			 
 			    // 지난클래스 요일 list
+			    List<IClassVO> userclassendlist_date = userchallengeService.userclassendlist_date(vo.getUserId());
+			    log.info("end운동요일!!!!!!!!!!"+userclassendlist_date);
+			    model.addAttribute(userclassendlist_date);
 			    
 			    
 			    // 트레이너 이름
@@ -535,12 +536,22 @@ public class MypageUserController {
 			  int total = userchallengeService.class_likecount(userId);
 			  log.info("토탇" +total);
 			  
-			  List<IClassVO> userclasslikelistvo = userchallengeService.userclasslikelist(cri,userId);
-			  result.put("list", userclasslikelistvo);
-			  log.info("리스트"+userclasslikelistvo);
+	
 			  
 			  result.put("pageMaker", new PageVO(cri,total));
 			  
+			    // 관심클래스 종류 list
+			    List<IClassVO> userclasslikelist_kind = userchallengeService.userclasslikelist_kind(vo.getUserId());
+			   
+			    
+			    result.put("jebal", userclasslikelist_kind);
+			    log.info(" 제발리스트좋아하는(종류)"+userclasslikelist_kind);
+			  
+				  // 운동 종류가 포함된 likelist
+				  List<IClassVO> userclasslikelistvo = userchallengeService.userclasslikelist(cri,userId);
+				  result.put("list", userclasslikelistvo);
+				  log.info(" like리스트"+userclasslikelistvo);
+				  
 			  return ResponseEntity.ok(result);
 			  
 			  }
@@ -570,6 +581,12 @@ public class MypageUserController {
 				  log.info("엔드리스트"+userclassendlistvo);
 				  
 				  result.put("pageMaker", new PageVO(cri,total));
+				  
+				    // 관심클래스 종류 list
+				    List<IClassVO> userclassendlist_kind = userchallengeService.userclassendlist_kind(vo.getUserId());
+				 
+				    result.put("jebal", userclassendlist_kind);
+				    log.info(" 제발리스트지난(종류)"+userclassendlist_kind);
 				  
 				  return ResponseEntity.ok(result);
   

@@ -296,10 +296,11 @@ float: right;
   color: white;
   height: 25px;
   line-height: 25px;
-  padding: 2px 10px;
-  border-radius: 10px;
+  padding: 2px 6px;
+  border-radius: 20px;
   background-color: var(--iruri-light-blue-color);
-  margin-left: 1px;
+  margin-right:4px;
+  margin-bottom: 5px
 }
 
 .m_cl_data_tag_red_content {
@@ -316,7 +317,7 @@ float: right;
   
 
 .m_cl_list_price {
-  font-size: 18px;
+  font-size: 30px;
 
   margin-top: 18px;
   margin-left: 45px;

@@ -51,4 +51,8 @@ int class_likecount(int userId);
 int class_endcount(int userId);
 
 List<IClassVO> userclassendlist(@Param("cri") Criteria cri,@Param("userId") int userId);
+
+List<IClassVO> userclassendlist_kind(int userId);
+
+List<IClassVO> userclassendlist_date(int userId);
 }

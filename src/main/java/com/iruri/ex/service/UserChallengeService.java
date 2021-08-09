@@ -52,4 +52,8 @@ public interface UserChallengeService {
 
 	List<IClassVO> userclassendlist(Criteria cri, int userId);
 
+	List<IClassVO> userclassendlist_kind(int userId);
+
+	List<IClassVO> userclassendlist_date(int userId);
+
 }

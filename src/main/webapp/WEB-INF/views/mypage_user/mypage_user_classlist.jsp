@@ -147,55 +147,71 @@
 										</c:forEach>
 
 								</div>
-								
-<script>
-		$('.m_r_heart_label').on('click', function(e) {
-            let forStr = e.currentTarget.htmlFor
-            let classId = forStr.substring(5);
 
-            $.ajax({
-                url: '${CONTEXT_PATH}/userclass/heart',
-                type: 'GET',
-                cache: false,
-                dateType: 'json',
-                data: {
-                    classId: classId,
-                }
-            });
-        });
-		
-		const m_c_recommend_img = document.querySelectorAll('.m_c_recommend_img');
-		console.log(m_c_recommend_img);
-		
-		m_c_recommend_img.forEach(function(item) {
-			let heartClassId = item.querySelector('.m_c_heart .m_r_heart_label').htmlFor.substring(5);;
-		
-			console.dir(heartClassId);
-			
-			$.ajax({
-                url: '${CONTEXT_PATH}/userclass/heartList',
-                type: 'GET',
-                cache: false,
-                dateType: 'json',
-                data: {
-                    classId: heartClassId,
-                },
-                success: function(result) {
+								<script>
+									$('.m_r_heart_label')
+											.on(
+													'click',
+													function(e) {
+														let forStr = e.currentTarget.htmlFor
+														let classId = forStr
+																.substring(5);
 
-                    if (result !== 0) {
-                        $('#heart' + heartClassId).attr('checked', true);
-                    }
-                }
-            })
-			
-		});
-		
-		</script>
-								
-								
+														$
+																.ajax({
+																	url : '${CONTEXT_PATH}/userclass/heart',
+																	type : 'GET',
+																	cache : false,
+																	dateType : 'json',
+																	data : {
+																		classId : classId,
+																	}
+																});
+													});
+
+									const m_c_recommend_img = document
+											.querySelectorAll('.m_c_recommend_img');
+									console.log(m_c_recommend_img);
+
+									m_c_recommend_img
+											.forEach(function(item) {
+												let heartClassId = item
+														.querySelector('.m_c_heart .m_r_heart_label').htmlFor
+														.substring(5);
+												;
+
+												console.dir(heartClassId);
+
+												$
+														.ajax({
+															url : '${CONTEXT_PATH}/userclass/heartList',
+															type : 'GET',
+															cache : false,
+															dateType : 'json',
+															data : {
+																classId : heartClassId,
+															},
+															success : function(
+																	result) {
+
+																if (result !== 0) {
+																	$(
+																			'#heart'
+																					+ heartClassId)
+																			.attr(
+																					'checked',
+																					true);
+																}
+															}
+														})
+
+											});
+								</script>
+
+
 								<div class="m_cl_main_tab">
 										<p class="m_cl_like_last">
-												<a href="">관심클래스</a>
+												<a href="">관심클래스 </a>
 										</p>
 								</div>
 
@@ -227,8 +243,7 @@
 						<script>
 							function classlikelist(page) {
 
-								$
-										.ajax({
+								$.ajax({
 											url : 'http://localhost:8282/ex/ajax/classlikelist.json',
 											type : 'GET',
 											cache : false,
@@ -240,9 +255,20 @@
 											success : function(result) {
 												console.log(result);
 												var list = result['list'];
+												var jebal = result['jebal'];
 												var pagination = result['pageMaker'];
 												var htmls = "";
 												var htmls2 = "";
+
+												for (let j = 0; j < list.length; j++) {
+													for (let i = 0; i < jebal.length; i++) {
+														if (list[j].classId === jebal[i].classId) {
+														
+														}
+															list[j] = jebal[i];
+														}
+													}
+												
 
 												if (list.length < 1) {
 													htmls += '<div class="m_cl_list_not">';
@@ -250,8 +276,7 @@
 													htmls += '</div>';
 
 												} else {
-													$(list)
-															.each(
+													$(list).each(
 																	function() {
 																		htmls += '<div class="m_cl_list_detail">';
 																		htmls += '<div class="m_cl_list_img">';
@@ -259,7 +284,7 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_trainer_name">'
-																		htmls += +this.iUserVO.userNickname
+																		htmls += this.iuserVO.userNickname;
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_list_title">';
@@ -283,18 +308,33 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_data_tag_blue">';
-																		htmls += '<i class="m_cl_iruri_level_icon">${userclasslikelist_date.exerciseDate[0].exerciseDate}</i>';
+																		for (var i = 0; i < this.exerciseDateList.length; i++) {
+																			htmls += this.exerciseDateList[i].exerciseDate;
+																					
+																		}
+																		htmls += '</div>';
+																		
+																		
+
+																		/* 		htmls += '<div class="m_cl_data_tag_red">';	
+																				for(var i = 0; i < this.exerciseKindList.length; i++) {
+																					
+																				
+																				htmls += 	'<i class="m_cl_iruri_level_icon"></i>' + this.exerciseKindList[i].exerciseKind;																						
+																				  }
+																				htmls += '</div>'; */
+
+																		htmls += '<div class="pt_icon">';
+																		for (var i = 0; i < this.exerciseKindList.length; i++) {
+																			htmls += '<div class="pt_icon-red">'
+																					+ this.exerciseKindList[i].exerciseKind
+																					+ '</div>';
+																		}
+																		htmls += '</div>';
 
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_cl_data_tag_red">';
-																		htmls += '<i class="m_cl_iruri_level_icon">${userclasslikelist_kind.exerciseKind[0].exerciseKind}</i>';
-
-																		htmls += '</div>';
-
-																		htmls += '</div>';
-
-																		htmls += '<div class="m_cl_list_price">';
+																		htmls += '<div class="m_cl_list_price">₩';
 																		htmls += +this.classPrice;
 																		+'원)';
 																		htmls += '</div>';
@@ -307,11 +347,12 @@
 																		htmls += '</div>';
 
 																	});
-								
-								
-													 if (pagination['prev']) {
-							                             htmls2 += '<a class="arrow prev" href="javascript:list('+ (pagination['startPage']-1) +'"></a>';
-							         				} 
+
+													if (pagination['prev']) {
+														htmls2 += '<a class="arrow prev" href="javascript:list('
+																+ (pagination['startPage'] - 1)
+																+ '"></a>';
+													}
 
 													// 번호를 표시하는 부분
 													for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
@@ -336,26 +377,31 @@
 																+ ')"></a>';
 
 													}
-													
 
 												}
 												$(".m_cl_list").html(htmls);
-												$(".m_page_nation").html(htmls2);
-												
-												$('.m_heart_label').on('click', function(e) {
-					                                let forStr = e.currentTarget.htmlFor
-					                                let classId = forStr.substring(5);
+												$(".m_page_nation")
+														.html(htmls2);
 
-					                                $.ajax({
-					                                    url: '${CONTEXT_PATH}/userclass/heart',
-					                                    type: 'GET',
-					                                    cache: false,
-					                                    dateType: 'json',
-					                                    data: {
-					                                        classId: classId,
-					                                    }
-					                                });
-					                            }); 
+												$('.m_heart_label')
+														.on(
+																'click',
+																function(e) {
+																	let forStr = e.currentTarget.htmlFor
+																	let classId = forStr
+																			.substring(5);
+
+																	$
+																			.ajax({
+																				url : '${CONTEXT_PATH}/userclass/heart',
+																				type : 'GET',
+																				cache : false,
+																				dateType : 'json',
+																				data : {
+																					classId : classId,
+																				}
+																			});
+																});
 
 											}
 
@@ -370,8 +416,9 @@
 
 						<script>
 							function classendlist(page) {
-							
-								$.ajax({
+
+								$
+										.ajax({
 											url : 'http://localhost:8282/ex/ajax/classendlist.json',
 											type : 'GET',
 											cache : false,
@@ -383,9 +430,18 @@
 											success : function(result) {
 												console.log(result);
 												var endlist = result['endlist'];
+												var jebal = result['jebal'];
 												var pagination1 = result['pageMaker'];
 												var htmls = "";
 												var htmls2 = "";
+
+												for (let j = 0; j < endlist.length; j++) {
+													for (let i = 0; i < jebal.length; i++) {
+														if (endlist[j].classId === jebal[i].classId) {
+															endlist[j] = jebal[i];
+														}
+													}
+												}
 
 												if (endlist.length < 1) {
 													htmls += '<div class="m_cl_list1_not">하트를 누른 챌린지가 없습니다.</div>';
@@ -400,7 +456,7 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_trainer_name">';
-																		htmls += this.classTrainerInfo;
+																		htmls += this.iuserVO.userNickname;
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_list_title">';
@@ -428,21 +484,23 @@
 
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_cl_data_tag_red">';
-																		htmls += '<i class="m_cl_iruri_level_icon"></i>';
+																		/* 																		htmls += '<div class="m_cl_data_tag_red">';
+																		 htmls += '<i class="m_cl_iruri_level_icon"></i>'; */
 
+																		htmls += '<div class="pt_icon">';
+																		for (var i = 0; i < this.exerciseKindList.length; i++) {
+																			htmls += '<div class="pt_icon-red">'
+																					+ this.exerciseKindList[i].exerciseKind
+																					+ '</div>';
+																		}
 																		htmls += '</div>';
 
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_cl_list_price">';
+																		htmls += '<div class="m_cl_list_price">₩';
 																		htmls += +this.classPrice;
 																		+'원)';
 																		htmls += '</div>';
-
-																		
-																		
-																	
 
 																		htmls += '</div>';
 
@@ -479,9 +537,8 @@
 
 												}
 												$(".m_c_list1").html(htmls);
-												$(".m_page_nation1").html(htmls2);
-												
-												
+												$(".m_page_nation1").html(
+														htmls2);
 
 											}
 
@@ -521,12 +578,10 @@
                                                                             class="m_cl_heart_label"></label> </div> </div> -->
 
 						<!-- 팝업창 -->
-						<div
-				
-                                                                                class="modal"
-								max-width:="max-width:" 400px;="400px;" min-width:="min-width:"
-								500px;="500px;" margin:="margin:" auto;="auto;"
-								background-color:="background-color:" #eee;="#eee;">
+						<div class="modal" max-width:="max-width:" 400px;="400px;"
+								min-width:="min-width:" 500px;="500px;" margin:="margin:"
+								auto;="auto;" background-color:="background-color:"
+								#eee;="#eee;">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 										<div class="alertWindow">
 												<div class="alertWindow_close">
@@ -556,12 +611,10 @@
 						</div>
 
 						<!-- 클래스취소 -->
-						<div
-								
-                        class="class_cancel"
-								max-width:="max-width:" 400px;="400px;" min-width:="min-width:"
-								500px;="500px;" margin:="margin:" auto;="auto;"
-								background-color:="background-color:" #eee;="#eee;">
+						<div class="class_cancel" max-width:="max-width:" 400px;="400px;"
+								min-width:="min-width:" 500px;="500px;" margin:="margin:"
+								auto;="auto;" background-color:="background-color:"
+								#eee;="#eee;">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 										<div class="alertWindow_class">
 												<div class="alertWindow_close">
