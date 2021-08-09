@@ -7,16 +7,20 @@ import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.security.Principal; 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -248,6 +252,7 @@ public class ChallengeController {
     
     
     //챌린지 참여 버튼 클릭(참여전 -> 참여후)
+    @ResponseBody
     @PostMapping("iruri/insert_user_challenge")
     public String insertUserChallenge(IClassVO iClassVO, @CurrentUser IUserVO vo) {
 
@@ -257,17 +262,23 @@ public class ChallengeController {
     //유저가 챌린지 신청 기록이 있는지 
     @GetMapping("/iruri/challengeJoinCheck")
     @ResponseBody
-    public int joinCheck(@RequestParam("buyId") int buyId, @CurrentUser IUserVO vo) {
+    public void joinCheck(@RequestParam("classId") int classId, @CurrentUser IUserVO vo, HttpServletResponse response) throws IOException {
         
-        return challengeService.getUserJoinChallengeList(buyId, vo.getUserId());
+        int check = challengeService.getUserJoinChallengeListCheck(classId, vo.getUserId());
+    
+        if(check == 0) {
+            response.sendRedirect("/ex/iruri/challenge_detail_before?classId=" + classId);            
+        } else {
+            response.sendRedirect("/ex/iruri/challenge_detail_after?classId=" + classId);
+        }
     }
     
     //챌린지 참여하면 buy에 추가하기
-    @GetMapping("/iruri/challengeJoinComplete")
-    @ResponseBody
-    public int joinList(@RequestParam("buyId") int buyId, @CurrentUser IUserVO vo) {
-        return challengeService.getUserJoinChallengeList(buyId, vo.getUserId());
-    }
+//    @GetMapping("/iruri/challengeJoinComplete")
+//    @ResponseBody
+//    public void joinList(@CurrentUser IUserVO vo) {
+//        challengeService.userJoinChallenge(buyId, vo.getUserId());
+//    }
     
     //챌린지 상세-참여 후 
     @GetMapping("/iruri/challenge_detail_after")
@@ -277,29 +288,21 @@ public class ChallengeController {
         //챌린지 정보
         mav.addObject("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
         
-        
-        //참여인원 update
-        //challengeService.upJoinMember(iClassVO.getClassId());
-        //log.info("challenge up join member()..");
-        
-        //유저챌린지목록(buy table) insert
-        //buyVO.setIUserVO(vo);
-        //challengeService.userJoinChallenge(buyVO);
-        
+
         return mav;
     }
     
+    
     // 인증모달 - 인증글 작성
     @ResponseBody
-    @PostMapping("/uploadAjaxAction")
-    public String uploadAjaxPost(MultipartFile uploadFile) {
-        log.info(uploadFile);
+    @PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void uploadAjaxPost(MultipartFile uploadFile, BoardVO boardVO, @CurrentUser IUserVO iUservo) {
         
         String uploadFolder = "C:\\upload";
 
             log.info("upload File Name: " + uploadFile.getOriginalFilename());
             log.info("upload File Size: " +uploadFile.getSize());            
-            
+
             String uploadFileName = uploadFile.getOriginalFilename();
 
             // IE has file path
@@ -310,7 +313,10 @@ public class ChallengeController {
             // 이름 중복방지 난수
             UUID uuid = UUID.randomUUID();
             uploadFileName = uuid.toString() + "_" + uploadFileName;
-            
+
+            boardVO.setBoardFile(uploadFileName);
+            boardVO.setCategoryId(5);
+            boardVO.setIUserVO(iUservo);
             
             try {
                 File saveFile = new File(uploadFolder, uploadFileName);
@@ -324,12 +330,12 @@ public class ChallengeController {
                             uploadFile.getInputStream(), thumbnail, 270, 270);
                     
                     thumbnail.close();
+                    
+                    challengeService.insertChallengeCertify(boardVO);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             } 
-        
-        return "SUCCESS";
     }
     
     private boolean checkImageType(File file) {

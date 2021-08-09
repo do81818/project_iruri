@@ -111,25 +111,18 @@ public class ChallengeServiceImpl implements ChallengeService {
     
     //챌린지 참여 기록 체크
     @Override
-    public int getUserJoinChallengeList(int buyId, int userId) {
+    public int getUserJoinChallengeListCheck(int classId, int userId) {
         log.info("challenge_userLikeListCheck()..");
         
-        int check = challengeMapper.userJoinChallengeList(buyId,  userId);
+        int check = challengeMapper.userJoinChallengeList(classId, userId);
         
-        return check;
-    }
-    
-    
-
-    @Override
-    public int getUserJoinChallengeListCheck(int buyId, int userId, int classId) {
-        log.info("challenge_userLikeListCheck()..");
+        log.info(check);
         
-        int check = challengeMapper.userJoinChallengeList(buyId,  userId);
-        
-        if(check == 0) {
-            userJoinChallenge(buyId, userId);
-            upJoinMember(classId);
+        if(check == 0) { // 안참여한거 
+            // userJoinChallenge(buyId, userId);
+            // upJoinMember(classId);
+            
+            return 0;
         }
         
         return check;
@@ -155,6 +148,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     
     
     /*----------관심수-----------*/
+    
     
     @Override
     public int getUserHeartList(int classId, int userId) {
@@ -247,6 +241,13 @@ public class ChallengeServiceImpl implements ChallengeService {
         return challengeMapper.readUserId(iUserVO);
     }
     
+    // 인증글 추가
+    @Override
+    public void insertChallengeCertify(BoardVO boardVO) {
+        log.info("insertChallengeCertify() .. " + boardVO);
+        
+        challengeMapper.insertChallengeCertify(boardVO);
+    }
 
 
 

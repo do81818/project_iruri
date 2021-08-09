@@ -276,7 +276,7 @@
 	   	<![CDATA[
 	   		SELECT count(*) 
 	   		FROM BUY
-	   		WHERE user_id = #{iUserVO.userId} and class_id = #{classId}
+	   		WHERE user_id = #{userId} and class_id = #{classId}
 	   	]]>
 	</select>
 	   	
@@ -430,7 +430,35 @@
 			]]>
 		</insert>
 		
-	
+		<insert id="insertChallengeCertify">
+		<![CDATA[
+			insert into board
+			(
+			board_id, 
+			board_title, 
+			board_content, 
+			board_file, 
+			board_date, 
+			board_state,
+			board_hit, 
+			board_like, 
+			board_groupId, 
+			category_id, 
+			user_id)
+			values
+			((SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
+			#{boardTitle},
+			#{boardContent},
+			#{boardFile},
+			sysdate, 
+			'show',
+			0,
+			0,
+			#{boardGroupId},
+			5,
+			#{iUserVO.userId})
+		]]>
+		</insert>
 		
 		
 </mapper>

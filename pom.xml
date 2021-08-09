@@ -215,11 +215,7 @@
 			<version>2.9.6</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>2.9.5</version>
-		</dependency>
+		
 
 		<!-- 자바객체를 Json으로 -->
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

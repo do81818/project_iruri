@@ -178,12 +178,12 @@
 						</ul>
 						<div class="c_certify_name">
 							<p>제목</p>
-							<input type="text" class="inputbox_cetify1">
+							<input type="text" name="boardTitle" class="inputbox_cetify1">
 						</div>
 
 						<div class="c_certify_content">
 							<p>내용</p>
-							<textarea cols="30" rows="50" class="inputbox_certify2"></textarea>
+							<textarea cols="30" rows="50" name="boardContent" class="inputbox_certify2"></textarea>
 						</div>
 
 						<div class="c_certify_img">
@@ -221,22 +221,23 @@
 				return true;
 			}
 			
+			
 			$('.c_certify_modal_submit').on('click', function(e) {
+				var boardTitle = document.querySelector('input[name="boardTitle"]');
+				var boardContent = document.querySelector('textarea[name="boardContent"]');
 				
 				var formData = new FormData();
 				var inputFile = document.querySelector('input[name="uploadFile"]');
 				var files = inputFile.files;
-				
-				console.log(inputFile);
-				console.log(files[0]);
 				
 				if(!checkExtension(files[0].size)) {
 					return false;
 				}
 				
 				formData.append('uploadFile', files[0]);					
-				
-				console.log(formData);
+				formData.append('boardTitle', boardTitle.value);
+				formData.append('boardContent', boardContent.value);
+				formData.append('boardGroupId', ${challengeInfo.classId});
 				
 				const header = $('meta[name="_csrf_header"]').attr('th:content');
 				const token = $('meta[name="_csrf"]').attr('th:content');
@@ -249,8 +250,9 @@
 					processData: false,
 					contentType: false,
 					data: formData,
+					dataType: 'json',
 					success: function(result) {
-						console.log("uploaded");
+						console.log(result);
 					}
 				});
 			});

@@ -40,11 +40,9 @@ public interface ChallengeService {
     //챌린지 상세페이지 정보
     IClassVO getChallengeInfo(int classId);
     
-    //유저의 buylist
-    int getUserJoinChallengeList(int buyId, int userId);
-    
     //챌린지 참여 기록 체크
-    int getUserJoinChallengeListCheck(int buyId, int userId, int classId);
+    int getUserJoinChallengeListCheck(int classId, int userId);
+    
     
     //유저 챌린지 참여 등록(buy insert)
     void userJoinChallenge(int buyId, int userId);
@@ -54,7 +52,7 @@ public interface ChallengeService {
     
     
     /*----------관심수-----------*/
-    //유저의 likelist
+    //유저의 likelist를 체크해서 존재하면 하트를 유지
     int getUserHeartList(int classId, int userId);
     
     //유저가 그 클래스에 좋아요 한 기록이 있는지 
@@ -83,6 +81,8 @@ public interface ChallengeService {
     //댓글 유저 
     BoardVO getUserId(IUserVO iUserVO);
 
+    // 인증글 추가
+    void insertChallengeCertify(BoardVO boardVO);
 
 
 
