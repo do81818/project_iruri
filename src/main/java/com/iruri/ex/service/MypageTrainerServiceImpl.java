@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.iruri.ex.mapper.MypageTrainerMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BuyVO;
-
+import com.iruri.ex.vo.ProfitVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,17 +19,6 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     @Autowired
     private MypageTrainerMapper mypageTrainerMapper;
     
-    @Override
-    public int getTotal_mypageTrainerProfit(Criteria cri, int userId) {
-        log.info("MypageTrainerServiceImpl");
-        return mypageTrainerMapper.getTotalCount_mypageTrainerProfit(cri, userId);
-    }
-    @Override
-    public List<BuyVO> mypageTrainerProfit(Criteria cri, int userId){
-        log.info("MypageTrainerServiceImpl");
-        return mypageTrainerMapper.getListWithPaging_mypageTrainerProfit(cri, userId);
-        
-    }
     
     // 운영중인 클래스 갯수
     public int countMypageTrainerClass(int userId) {
@@ -45,6 +34,18 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     @Override
     public int monthProfit(int userId) {
         return mypageTrainerMapper.monthProfit(userId);
+    }
+    
+    @Override
+    public int getTotal_mypageTrainerProfit(Criteria cri, int userId) {
+        log.info("MypageTrainerServiceImpl");
+        return mypageTrainerMapper.getTotalCount_mypageTrainerProfit(cri, userId);
+    }
+    
+    // 트레이너 수익리스트
+    @Override
+    public List<ProfitVO> profitList(Criteria cri, int userId) {
+        return mypageTrainerMapper.profitList(cri, userId);
     }
    
 

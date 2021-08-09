@@ -62,7 +62,6 @@
 						htmls += 		'</div>';
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
 						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
-
 						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
 						htmls +=		'<div class="pt_icon">';
 						htmls +=			'<div class="pt_icon-blue">';
@@ -72,13 +71,11 @@
 						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">'+ this.classTime+'분/${dates.exerciseDate}';
 						htmls +=			'</div>';
 						htmls +=		'</div>';
-
 						htmls +=		'<div class="pt_icon">';
 										for(var i = 0; i < this.exerciseKindList.length; i++) {
 						htmls +=			'<div class="pt_icon-red">' + this.exerciseKindList[i].exerciseKind + '</div>';																							
 										}
 						htmls +=		'</div>';
-
 						htmls +=		'<div class="pt_price">₩' + this.classPrice + '</div>';
 						
 						htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
@@ -143,11 +140,8 @@
 						htmls +=			'<img class="pt_image">';
 						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
 						htmls += 		'</div>';
-
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-
 						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
-
 						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
 						htmls +=		'<div class="pt_icon">';
 						htmls +=			'<div class="pt_icon-blue">';
@@ -157,12 +151,10 @@
 						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
 						htmls +=			'</div>';
 						htmls +=		'</div>';
-
 						htmls +=		'<div class="pt_icon">';
 						htmls +=			'<div class="pt_icon-red">댄스</div>';
 						htmls +=			'<div class="pt_icon-red">피트니스</div>';
 						htmls +=		'</div>';
-
 						htmls +=		'<div class="pt_price">₩' + this.classPrice + '</div>';
 						
 						htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
@@ -211,7 +203,6 @@
 		// 4.EmpUser 꺼내오기
         EmpUser empUser = (EmpUser) auth.getPrincipal();
         System.out.println(empUser.getEmp());
-
         empUser = (EmpUser) userDetails;
         System.out.println(empUser.getEmp());
          -->

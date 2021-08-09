@@ -208,7 +208,6 @@ FROM
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
-
 	]]> 
 
 	</select>

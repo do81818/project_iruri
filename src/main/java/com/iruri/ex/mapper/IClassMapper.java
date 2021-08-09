@@ -19,6 +19,10 @@ public interface IClassMapper {
     // 현재 운영중인 클래스
     List<IClassVO> selectAllCurrent(int userId);
     
+    
+    // 현재 운영중인 클래스
+    List<IClassVO> classListDate(int userId);
+    
     // 종료된 클래스
     List<IClassVO> selectAllEnd(int userId);
     
