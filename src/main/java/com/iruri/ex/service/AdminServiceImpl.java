@@ -195,5 +195,34 @@ public class AdminServiceImpl implements AdminService {
         return mapper.getUserExInfoAll(userId, cri);
     }
 
+    // 트레이너정보_수익관리 리스트
+    @Override
+    public List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri){
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        return mapper.getTrainerMoneyList(userId, month, pageNum, amount);
+    }
+
+    // 트레이너 정보_수익관리 리스트 갯수
+    @Override
+    public int countTrainerMoneyList(int userId, int month) {
+        try {
+            int count = mapper.countTrainerMoneyList(userId, month);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    
+    // 트레이너정보_수익관리 월별 수익 합계
+    @Override
+    public int trainerMoneyMonthTotal(int userId, int month) {
+        try {
+            int monthTotal = mapper.trainerMoneyMonthTotal(userId, month);
+            return monthTotal;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
     
 }
