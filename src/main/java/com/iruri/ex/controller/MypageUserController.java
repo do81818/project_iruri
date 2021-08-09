@@ -26,6 +26,7 @@ import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
 import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.BoardService;
+import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserInfoService;
 import com.iruri.ex.service.IUserService;
@@ -58,6 +59,8 @@ public class MypageUserController {
 	IUserUpdateService iuserupdateService;
 	@Autowired
 	UserChallengeService userchallengeService;
+	@Autowired
+	ChallengeService challengeService;
 
 		
 	// 마이페이지의 메인
@@ -502,6 +505,10 @@ public class MypageUserController {
 			    // 지난클래스 요일 list
 			    
 			    
+			    // 트레이너 이름
+			    List<IClassVO> userptClassList = iClassService.mainPagePtClassLIst();
+			    model.addAttribute(userptClassList);
+			    
 			    mav.setViewName("mypage_user/mypage_user_classlist");
 				 
 			      return mav;
@@ -565,15 +572,39 @@ public class MypageUserController {
 				  result.put("pageMaker", new PageVO(cri,total));
 				  
 				  return ResponseEntity.ok(result);
-				  
-				  
-				  
-				  
+  
 				  
 				  
 				  }
 		  
+				  
+//		  챌린지 관심수 
+		  @GetMapping("/userchallenge/heart")
+		  @ResponseBody
+		  public int heart(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+			  return challengeService.getUserLikeListCheck(classId, vo.getUserId());
+		  }
 		  
+		  @GetMapping("/userchallenge/heartList")
+		  @ResponseBody
+		  public int heartList(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+			  return challengeService.getUserHeartList(classId, vo.getUserId());
+		  }
+		  
+		  
+		  
+//		  클래스 관심수 
+		  @GetMapping("/userclass/heart")
+		  @ResponseBody
+		  public int clheart(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+			  return challengeService.getUserLikeListCheck(classId, vo.getUserId());
+		  }
+		  
+		  @GetMapping("/userclass/heartList")
+		  @ResponseBody
+		  public int clheartList(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+			  return challengeService.getUserHeartList(classId, vo.getUserId());
+		  }
 		  
 		  
 		 

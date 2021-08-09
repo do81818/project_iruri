@@ -136,18 +136,63 @@
 																${userclasslist.classStartDate}~${userclasslist.classEndDate}
 														</span>
 
-														<div class="m_cl_heart">
+														<div class="m_c_heart">
 																<input type="checkbox"
 																		id="heart${userclasslist.classId}"> <label
 																		for="heart${userclasslist.classId}"
-																		class="m_cl_heart_label"></label>
+																		class="m_r_heart_label"></label>
 														</div>
 												</div>
 
 										</c:forEach>
 
 								</div>
+								
+<script>
+		$('.m_r_heart_label').on('click', function(e) {
+            let forStr = e.currentTarget.htmlFor
+            let classId = forStr.substring(5);
 
+            $.ajax({
+                url: '${CONTEXT_PATH}/userclass/heart',
+                type: 'GET',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    classId: classId,
+                }
+            });
+        });
+		
+		const m_c_recommend_img = document.querySelectorAll('.m_c_recommend_img');
+		console.log(m_c_recommend_img);
+		
+		m_c_recommend_img.forEach(function(item) {
+			let heartClassId = item.querySelector('.m_c_heart .m_r_heart_label').htmlFor.substring(5);;
+		
+			console.dir(heartClassId);
+			
+			$.ajax({
+                url: '${CONTEXT_PATH}/userclass/heartList',
+                type: 'GET',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    classId: heartClassId,
+                },
+                success: function(result) {
+
+                    if (result !== 0) {
+                        $('#heart' + heartClassId).attr('checked', true);
+                    }
+                }
+            })
+			
+		});
+		
+		</script>
+								
+								
 								<div class="m_cl_main_tab">
 										<p class="m_cl_like_last">
 												<a href="">관심클래스</a>
@@ -213,8 +258,8 @@
 																		htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_cl_trainer_name">';
-																		htmls += this.classTrainerInfo;
+																		htmls += '<div class="m_cl_trainer_name">'
+																		htmls += +this.iUserVO.userNickname
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_list_title">';
@@ -255,7 +300,7 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_c_list_heart">';
-																		htmls += '<input type="checkbox" id="heart' + this.classId + '">';
+																		htmls += '<input type="checkbox" id="heart' + this.classId + '"checked>';
 																		htmls += '<label for="heart' + this.classId + '" class="m_heart_label"></label>';
 																		htmls += '</div>';
 
@@ -296,6 +341,21 @@
 												}
 												$(".m_cl_list").html(htmls);
 												$(".m_page_nation").html(htmls2);
+												
+												$('.m_heart_label').on('click', function(e) {
+					                                let forStr = e.currentTarget.htmlFor
+					                                let classId = forStr.substring(5);
+
+					                                $.ajax({
+					                                    url: '${CONTEXT_PATH}/userclass/heart',
+					                                    type: 'GET',
+					                                    cache: false,
+					                                    dateType: 'json',
+					                                    data: {
+					                                        classId: classId,
+					                                    }
+					                                });
+					                            }); 
 
 											}
 
@@ -380,10 +440,9 @@
 																		+'원)';
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_c_list_heart">';
-																		htmls += '<input type="checkbox" id="heart' + this.classId + '">';
-																		htmls += '<label for="heart' + this.classId + '" class="m_heart_label"></label>';
-																		htmls += '</div>';
+																		
+																		
+																	
 
 																		htmls += '</div>';
 
@@ -421,6 +480,8 @@
 												}
 												$(".m_c_list1").html(htmls);
 												$(".m_page_nation1").html(htmls2);
+												
+												
 
 											}
 

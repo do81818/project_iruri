@@ -168,7 +168,7 @@
               <p>몸무게</p>
               <input class="inputbox_size2" name="userWeight" type="text">
       
-              <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
+              <button class="alertWindow_submit" type="submit">신체정보 변경</button>
             </form>
           </div>
         </div>

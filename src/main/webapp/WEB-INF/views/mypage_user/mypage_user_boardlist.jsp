@@ -170,10 +170,10 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
         </c:if>
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-        	<c:if test="${pageMaker.makeQuery(num) == ${num}">
-        	 <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
-        	             <a class="pageNumLink" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
-        	</c:if> 
+        	<%-- <c:if test="${pageMaker.makeQuery(num) == ${num}"> --%>
+        	<%--  <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
+        	             <%-- <a class="pageNumLink" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
+        <%-- 	</c:if>  --%>
 
               <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
         </c:forEach>

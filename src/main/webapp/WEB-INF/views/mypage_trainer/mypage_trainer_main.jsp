@@ -10,134 +10,193 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %>  <!-- 경로를 확인해 주세요 --><!-- ../include/static.jsp  -->
-
     <title>이루리 트레이너 마이페이지</title> <!-- 페이지 이름을 적어주세요 -->
     <script src=""></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-    
-	<script type="text/javascript">
-		window.onload = function end(){
-			$.ajax({
-				url : 'http://localhost:8282/ex/mypage/trainerclassend',
-				type : 'GET',
-				cache : false,
-				dataType : 'json',
-				success : function(vo){
-					
-					var htmls = ''; 
-					
-					if(vo.length < 1) {
-						htmls = '현재 등록된 클래스가 없습니다.';
-					} else {
-						const PTList = document.querySelector('.class_list');
-						
-						vo.forEach(function(listItem) {
-							console.log(listItem.classStartDate);
-							
-							htmls +=	'<div class="pt_card">';
-							htmls += 		'<div class="pt_image_and_mark">';
-							htmls +=			'<img src="../image/360-250.png" class="pt_image">';
-							htmls +=			'<div class="pt_mark">1:1</div>';
-							htmls += 		'</div>';
+    <link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/component/paging.css">
+   
+	<script>
+	$(document).ready(function(){
+		current(1);
+	});
 	
-							htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-	
-							htmls +=		'<div class="pt_title">';
-							htmls +=		 listItem.classTitle;
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
-	
-							htmls +=		'<div class="pt_icon">';
-							htmls +=			'<div class="pt_icon-blue">';
-							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + listItem.classLevel;
-							htmls +=			'</div>';
-							htmls +=			'<div class="pt_icon-blue">';
-							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
-							htmls +=			'</div>';
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_icon">';
-							htmls +=			'<div class="pt_icon-red">댄스</div>';
-							htmls +=			'<div class="pt_icon-red">피트니스</div>';
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_price">₩' + listItem.classPrice + '</div>';
-							
-							htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
-							htmls +=		'수정</button>';
-							htmls += 	'</div>';
-						});
-						
-						PTList.innerHTML = htmls; 
-						
+	function current(page){
+		$.ajax({
+			url : 'http://localhost:8282/ex/ajax/mypage/trainerCurrent.json',
+			type : 'GET',
+			cache : false,
+			dataType : 'json',
+			data:{
+				pageNum: page,
+			},
+			success : function(result){
+				var list = result['list'];
+				console.log(list);
+				 var jebal = result['jebal'];
+				console.log(jebal); 
+				var pagination = result['pageMaker'];
+				var htmls = ''; 
+				var htmls2 = '';
+				
+				 for(let j = 0; j < list.length; j++) {
+					for(let i = 0; i < jebal.length; i++) {
+						if(list[j].classId === jebal[i].classId) {
+							list[j] = jebal[i];
+						}												
 					}
+				 } 
+				
+				if(list.length < 1) {
+					htmls = '현재 등록된 클래스가 없습니다.';
+				} else {			 
 					
-				}
-			});
-		}
+					$(list).each(function() {
+						//this.exerciseKindList = '';
+						//console.log(this.exerciseKindList);
+						
+						// src="../image/360-250.png"
+						htmls +=	'<div class="pt_card">';
+						htmls += 		'<div class="pt_image_and_mark">';
+						htmls +=			'<img class="pt_image">';
+						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
+						htmls += 		'</div>';
+						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
+						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
+
+						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
+						htmls +=		'<div class="pt_icon">';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + this.classLevel;
+						htmls +=			'</div>';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">'+ this.classTime+'분/${dates.exerciseDate}';
+						htmls +=			'</div>';
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_icon">';
+										for(var i = 0; i < this.exerciseKindList.length; i++) {
+						htmls +=			'<div class="pt_icon-red">' + this.exerciseKindList[i].exerciseKind + '</div>';																							
+										}
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_price">₩' + this.classPrice + '</div>';
+						
+						htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
+						htmls +=		'수정</button>';
+						htmls += 	'</div>';
+					});
+					
+					 /* ------------------ 페이징 부분 --------------------- */
+                    
+			         if (pagination['prev']) {
+                        htmls2 += '<a class="arrow prev" href="javascript:current('+ (pagination['startPage']-1) +')"></a>';
+    				} 
+    				// 번호를 표시하는 부분
+    				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+    					if (page !== idx) {
+    					   htmls2 += '<a class="pageNumLink" href="javascript:current('+ idx + ')">' + (idx) + "</a>";
+    					} else {
+    					   htmls2 += '<a class="pageNumLink active" href="javascript:current('+ idx + ')">' + (idx) + "</a>";
+    					}
+    				}
+    				
+    				if (pagination['next']) {
+                       htmls2 += '<a class="arrow next" href="javascript:current('+ (pagination['endPage']+1) +')"></a>';
+   						
+   					}	// if(list.length < 1) else 끝
+                     
+                        $(".class_list").html(htmls);
+         				$(".page_nation").html(htmls2);
+                     }
+                            
+			}
+		});       
+	};
+	
 	</script>
-	<script type="text/javascript">
-		window.onload = function current(){
-			$.ajax({
-				url : 'http://localhost:8282/ex/mypage/trainercurrent',
-				type : 'GET',
-				cache : false,
-				dataType : 'json',
-				success : function(vo){
-					
-					var htmls = ''; 
-					
-					if(vo.length < 1) {
-						htmls = '현재 등록된 클래스가 없습니다.';
-					} else {
-						const PTList = document.querySelector('.class_list');
+   
+   <script>	
+	function end(page){
+		$.ajax({
+			url : 'http://localhost:8282/ex/ajax/mypage/trainerEnd.json',
+			type : 'GET',
+			cache : false,
+			dataType : 'json',
+			data:{
+				pageNum: page,
+			},
+			success : function(result){
+				var list = result['list'];
+				console.log(list);
+				var pagination = result['pageMaker'];
+				var htmls = ''; 
+				var htmls2 = '';
+				
+				if(list.length < 1) {
+					htmls = '현재 등록된 클래스가 없습니다.';
+				} else {
+				
+					$(list).each(function() {
+						// src="../image/360-250.png"
+						htmls +=	'<div class="pt_card">';
+						htmls += 		'<div class="pt_image_and_mark">';
+						htmls +=			'<img class="pt_image">';
+						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
+						htmls += 		'</div>';
+
+						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
+
+						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
+
+						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
+						htmls +=		'<div class="pt_icon">';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + this.classLevel;
+						htmls +=			'</div>';
+						htmls +=			'<div class="pt_icon-blue">';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
+						htmls +=			'</div>';
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_icon">';
+						htmls +=			'<div class="pt_icon-red">댄스</div>';
+						htmls +=			'<div class="pt_icon-red">피트니스</div>';
+						htmls +=		'</div>';
+
+						htmls +=		'<div class="pt_price">₩' + this.classPrice + '</div>';
 						
-						vo.forEach(function(listItem) {
-							console.log(listItem.classStartDate);
-							
-							htmls +=	'<div class="pt_card">';
-							htmls += 		'<div class="pt_image_and_mark">';
-							htmls +=			'<img src="../image/360-250.png" class="pt_image">';
-							htmls +=			'<div class="pt_mark">1:1</div>';
-							htmls += 		'</div>';
-	
-							htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-	
-							htmls +=		'<div class="pt_title">';
-							htmls +=		 listItem.classTitle;
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_date">' + listItem.classStartDate + '~' + listItem.classEndDate + '</div>';
-							htmls +=		'<div class="pt_icon">';
-							htmls +=			'<div class="pt_icon-blue">';
-							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + listItem.classLevel;
-							htmls +=			'</div>';
-							htmls +=			'<div class="pt_icon-blue">';
-							htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">50분/월수금';
-							htmls +=			'</div>';
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_icon">';
-							htmls +=			'<div class="pt_icon-red">댄스</div>';
-							htmls +=			'<div class="pt_icon-red">피트니스</div>';
-							htmls +=		'</div>';
-	
-							htmls +=		'<div class="pt_price">₩' + listItem.classPrice + '</div>';
-							
-							htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
-							htmls +=		'수정</button>';
-							htmls += 	'</div>';
-						});
-						
-						PTList.innerHTML = htmls; 
-						
-					}
+						htmls +=		'<button class="pt_update_button" type="button" onclick=""​>';
+						htmls +=		'수정</button>';
+						htmls += 	'</div>';
+					});
 					
-				}
-			});
-		}
+					 /* ------------------ 페이징 부분 --------------------- */
+                    
+			         if (pagination['prev']) {
+                        htmls2 += '<a class="page_nation prev" href="javascript:end('+ (pagination['startPage']-1) +')"></a>';
+    				} 
+    				// 번호를 표시하는 부분
+    				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+    					if (page !== idx) {
+    					   htmls2 += '<a class="pageNumLink" href="javascript:end('+ idx + ')">' + (idx) + "</a>";
+    					} else {
+    					   htmls2 += '<a class="pageNumLink active" href="javascript:end('+ idx + ')">' + (idx) + "</a>";
+    					}
+    				}
+    				
+    				if (pagination['next']) {
+                       htmls2 += '<a class="page_nation next" href="javascript:end('+ (pagination['endPage']+1) +')"></a>';
+   											
+   					}	// if(list.length < 1) else 끝
+                     
+                        $(".class_list").html(htmls);
+         				$(".page_nation").html(htmls2);
+                     }
+                            
+			}
+		});       
+	};
 	</script>
-	
 
 	</head>
 			
@@ -199,30 +258,37 @@
 						<li class="class_MenuBar_text"><a href="#">프로필관리</a></li>
 					</ul>
 				</div>
-
+				
+				<script>
+					$(document).ready(function() {
+						$('.classbarUl_blue a').css('color', '#02a3ff');
+						
+						$('.classbarUl_blue a').on('click', function() {
+							$('.classbarUl_blue a').css('color', '#02a3ff');
+							$('.classbarUl a').css('color', '#999');
+						})
+						
+						$('.classbarUl a').on('click', function() {
+							$('.classbarUl_blue a').css('color', '#999');
+							$('.classbarUl a').css('color', '#02a3ff');
+						})
+					});
+				</script>
 				<!-- 클래스 메뉴 -->
 				<div class="classbar">
 					<ul>
-						<li class="classbarUl_blue"><a href="javascript:void(0);" onclick="current()">운영중인 클래스</a></li>
-						<li class="classbarUl"><a href="javascript:void(0);" onclick="end()">종료한 클래스</a></li>
+						<li class="classbarUl_blue"><a href="javascript:void(0);" onclick="current(1)">운영중인 클래스</a></li>
+						<li class="classbarUl"><a href="javascript:void(0);" onclick="end(1)">종료한 클래스</a></li>
 					</ul>
 				</div>
 
 				<!-- 클래스 목록  -->
 				<div class="class_list"></div>
 				
-				<!-- 페이징 -->
-				<div class="page_nation">
-					<a class="arrow prev" href="#"></a> 
-					<a href="#" class="active">1</a>
-					<a href="#">2</a> 
-					<a href="#">3</a> 
-					<a href="#">4</a> 
-					<a href="#">5</a>
-					<a class="arrow next" href="#"></a>
-				</div>
-
-
+				<!--페이징-->
+				<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+				<div class="page_nation"></div>
+				
 
 			</div>
 

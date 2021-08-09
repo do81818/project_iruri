@@ -548,6 +548,14 @@ td {
     clear: both;
 }
 
+.c_after_reply {
+     height: auto;
+    padding: 0 0 85px 0;
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
 .reply_count {
     position: relative;
     display: inline-block;

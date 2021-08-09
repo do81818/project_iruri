@@ -27,10 +27,10 @@ BUY_ID	NUMBER		No	4
 @ToString
 public class PayVO {
 	
-    private int PayId;
-    private String PayState;
-    private String PayWay;
-    private int BuyId;
+    private int payId;
+    private String payState;
+    private String payWay;
+    private int buyId;
     private int rnum;
    
     

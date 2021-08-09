@@ -23,7 +23,7 @@
 		<result property="classNeed" column="CLASS_NEED"/>
 		<result property="categoryId" column="CATEGORY_ID"/>
 		<result property="classLevel" column="CLASS_LEVEL"/>
-		<result property="rnum" column="rnum"/>		
+		<result property="rnum" column="rnum"/>	
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 		<collection property="exerciseDateList" resultMap="exerciseDateMap">
 		</collection>
@@ -68,10 +68,10 @@
 	
 		<resultMap type="com.iruri.ex.vo.LikeListVO" id="likeListMap">
 		<result property="likeListId" column="LIKELIST_ID"/>
-		<result property="userId" column="USER_ID"/>
 		<result property="classId" column="CLASS_ID"/>
 		<result property="boardId" column="BOARD_ID"/>
 		<result property="rnum" column="rnum"/>	
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
 	</resultMap>
 	
 		<select id="challengecount" parameterType="int" resultType="int">

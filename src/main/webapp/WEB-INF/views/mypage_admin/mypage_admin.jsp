@@ -25,35 +25,6 @@
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
 
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-<script>
-	$(document).ready(function(){
-		/* window.onload = function(){ */
-		var actionForm = $("#actionForm");
-        $(".pageNumLink").on("click", function(e) {
-            e.preventDefault();
-            var targetPage = $(this).attr("href");
-            
-            actionForm.find("input[name='pageNum']").val(targetPage);
-            actionForm.submit();
-        });
-        
-        $(".prev").on("click", function(e) {
-            e.preventDefault();
-            var targetPage = $(this).attr("href");
-            
-            actionForm.find("input[name='pageNum']").val(targetPage);
-            actionForm.submit();
-        });
-        
-        $(".next").on("click", function(e) {
-            e.preventDefault();
-            var targetPage = $(this).attr("href");
-            
-            actionForm.find("input[name='pageNum']").val(targetPage);
-            actionForm.submit();
-        });
-	});
-</script>
 </head>
 <body>
 	<div class="iruri__wrapper">
@@ -105,11 +76,7 @@
 			<div class="page_nation">
 				<!-- ajax 페이징 구현 -->
 			</div>
-			<form id="actionForm" action="${CONTEXT_PATH_ADMIN}/main"
-				method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-			</form>
+			
 		</div>
 	</div>
 
@@ -137,7 +104,7 @@
 
                          if (list.length < 1) {
                              htmls += '<tr>';
-                             htmls += '<td colspan="3" class="table_No_date">'
+                             htmls += '<td colspan="5" class="table_No_date">'
                                      + '등록된 신고알림이 없습니다.' + '</td>';
                              htmls += '</tr>'
                          } else {
@@ -145,24 +112,22 @@
 	                                 function() {
 	                                     htmls += '<tr>';
 	                                     htmls += '<td class="table_No_date">'
-	                                             + this.reportId
+	                                             + this.reportVo.reportId
 	                                             + '</td>';
 	
-	                                     if (this.reportUserRoll == "ROLE_USER") {
-	                                         htmls += '<td class="table_indigo_text">'
-	                                                 + '일반회원'
-	                                                 + '</td>';
-	                                     } else if (this.reportUserRoll == "ROLE_PAYUSER") {
-	                                         htmls += '<td class="table_indigo_text">'
-	                                                 + '유료회원'
-	                                                 + '</td>';
+                                         htmls += '<td class="table_indigo_text">';
+	                                     if (this.authVo.authContent == "ROLE_USER") {
+	                                    	 htmls += '일반회원';
+	                                     } else if (this.authVo.authContent == "ROLE_PAYUSER") {
+	                                    	 htmls += '유료회원';
 	                                     }
+                                         htmls += '</td>';
 	                                     htmls += '<td class="table_indigo_text">'
 	                                         	+ '<a href="#" target="_blank">'
-	                                             + this.reportUserNickName
+	                                             + this.iuserVo.userNickname
 	                                             + '</td>';
 	                                     htmls += '<td class="table_blue_text">'
-	                                             + this.reportContent
+	                                             + this.reportVo.reportContent
 	                                             + '</td>';
 	                                     htmls += '<td class="table_No_date">'
 	                                             + '<a class="a_buttonBox" href="#" target="_blank">'
@@ -174,7 +139,7 @@
                          
                          /* ------------------ 페이징 부분 --------------------- */
                          if (pagination['prev']) {
-                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +'"></a>';
+                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
          				} 
 
          				// 번호를 표시하는 부분
@@ -202,9 +167,7 @@
                              
             }
 
-            $(document).ready(function() {
-                getlist(1);
-            });
+            
         </script>
         
 

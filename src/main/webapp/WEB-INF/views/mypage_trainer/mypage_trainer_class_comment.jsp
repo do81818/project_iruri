@@ -9,13 +9,11 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <%@ include file="../include/static.jsp" %>  <!-- 경로를 확인해 주세요 --><!-- ../include/static.jsp  -->
+    <%@ include file="../include/static.jsp" %> 
     <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
-    <script src="" defer></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-	
+    <script src=""></script> <!-- js -->
 	</head>
 			
-	
   <body>
 	<div class="iruri__wrapper">
 

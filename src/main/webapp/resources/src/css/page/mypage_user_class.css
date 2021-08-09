@@ -91,6 +91,7 @@ top: 240px;
 
 /*추천 챌린지 하트*/
 
+.m_cl_heart .m_r_cl_heart_label
 .m_cl_heart .m_cl_heart_label {
   width: 48px;
   height: 43px;

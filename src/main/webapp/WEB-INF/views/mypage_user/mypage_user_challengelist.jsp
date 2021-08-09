@@ -52,7 +52,7 @@
 	   speed: 300,
 	   slidesPreView :2,
 	   slidesPerGroup : 2,
-	   loop:true,
+/* 	   loop:true,
 	   
 	   navigation: {
 		   nextEl: '.swiper-button-next',
@@ -66,7 +66,7 @@
 
    });  */
 
-   var swiper = new Swiper(".mySwiper", {
+/*    var swiper = new Swiper(".mySwiper", {
      slidesPerView: 2,
      spaceBetween: 30,
      freeMode: true,
@@ -74,7 +74,7 @@
        el: ".swiper-pagination",
        clickable: true,
      },
-   });
+   }); */ 
 
    
    </script>
@@ -162,9 +162,8 @@
                  ${userchallengelist.classStartDate}~ ${userchallengelist.classEndDate}
               </span>
 
-
               <div class="m_c_heart">
-                  <input type="checkbox" id="heart${userchallengelist.classId}"><label for="heart${userchallengelist.classId}" class="m_heart_label"></label>
+                  <input type="checkbox" id="heart${userchallengelist.classId}"><label for="heart${userchallengelist.classId}" class="m_r_heart_label"></label>
               </div>
           </div>
 
@@ -173,6 +172,49 @@
 <img class="m_right" role="button"src="/ex/resources/src/img/icon/arrow_blue_right.png">
       </div>
 
+		<script>
+		$('.m_r_heart_label').on('click', function(e) {
+            let forStr = e.currentTarget.htmlFor
+            let classId = forStr.substring(5);
+
+            $.ajax({
+                url: '${CONTEXT_PATH}/userchallenge/heart',
+                type: 'GET',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    classId: classId,
+                }
+            });
+        });
+		
+		const m_c_recommend_img = document.querySelectorAll('.m_c_recommend_img');
+		console.log(m_c_recommend_img);
+		
+		m_c_recommend_img.forEach(function(item) {
+			let heartClassId = item.querySelector('.m_c_heart .m_r_heart_label').htmlFor.substring(5);;
+		
+			console.dir(heartClassId);
+			
+			$.ajax({
+                url: '${CONTEXT_PATH}/userchallenge/heartList',
+                type: 'GET',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    classId: heartClassId,
+                },
+                success: function(result) {
+
+                    if (result !== 0) {
+                        $('#heart' + heartClassId).attr('checked', true);
+                    }
+                }
+            })
+			
+		});
+		
+		</script>
 <!-- 챌린지 취소 버튼 (모달) -->
       
       
@@ -569,14 +611,21 @@
 								htmls += '</div>';
 								
 								
-								htmls += '<div class="m_c_list_heart">';
-								htmls += '<input type="checkbox" id="heart'+this.classId+'">';
+								
+
+                                htmls += '<div class="m_c_list_heart">';
+
+                                
+								
+								
+								
+								htmls += '<input type="checkbox" id="heart'+this.classId+'" checked>';
 								htmls += '<label for="heart'+this.classId+'" class="m_heart_label"></label>';
 								htmls += '</div>';
-
+								
+								 
 								htmls += '</div>';
 										
-								
 								
 							});
 							
@@ -601,6 +650,21 @@
 						}		
 							$(".m_c_list").html(htmls);
 							$(".m_page_nation").html(htmls2);
+							
+                           $('.m_heart_label').on('click', function(e) {
+                                let forStr = e.currentTarget.htmlFor
+                                let classId = forStr.substring(5);
+
+                                $.ajax({
+                                    url: '${CONTEXT_PATH}/userchallenge/heart',
+                                    type: 'GET',
+                                    cache: false,
+                                    dateType: 'json',
+                                    data: {
+                                        classId: classId,
+                                    }
+                                });
+                            }); 
 					
 							
 						}

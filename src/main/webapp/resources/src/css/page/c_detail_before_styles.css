@@ -218,6 +218,26 @@ ul li {
     position: relative;
     top: 150px;
 }
+
+.c_date_end {
+    background-color: var(--iruri-light-gray-color);
+    color: var(--iruri-yellow-color);
+    width: 240px;
+    height: 55px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 55px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 27px;
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top: 150px;
+}
+
+
 /*상세정보, 인증하기 , 커뮤니티*/
 
 .c_menu {
@@ -455,6 +475,9 @@ ul li {
 
 
 /* 댓글갯수 */
+table {
+	width : 100%;
+}
 
 table,
 tr,

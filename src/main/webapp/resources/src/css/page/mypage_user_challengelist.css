@@ -193,6 +193,7 @@ top: 240px;
 
 /*추천 챌린지 하트*/
 
+.m_c_heart .m_r_heart_label,
 .m_c_heart .m_heart_label {
 width: 48px;
 height: 43px;
@@ -461,13 +462,13 @@ display: none;
 }
 
 .m_c_list_heart input[type=checkbox]+label {
-display: inline-block;
-cursor: pointer;
-background: url('/ex/resources/src/img/icon/heart_gray.png') center/43px 43px no-repeat;
+    display: inline-block;
+    cursor: pointer;
+    background: url("/ex/resources/src/img/icon/heart_gray.png") center/43px 43px no-repeat;
 }
 
 .m_c_list_heart input[type=checkbox]:checked+label {
-background-image: url('/ex/resources/src/img/icon/heart_red.png');
+    background-image: url("/ex/resources/src/img/icon/heart_red.png");
 }
 
 
