@@ -64,6 +64,8 @@ public class ChallengeController {
     IClassService iClassService;
     @Autowired
     ChallengeService challengeService;
+    @Autowired
+    ImageController imageController;
 
    
     
@@ -192,22 +194,47 @@ public class ChallengeController {
     }
 
     // 챌린지 개설 폼 작성 후 입력 (챌린지 등록)
-    @PostMapping("/iruri/insert_challenge")
-    public String c_make_form2(MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo) {
+    @PostMapping(value = "/iruri/insert_challenge", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String c_make_form2(@RequestParam("imageCheck") String imageCheck, MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo) {
         log.info("challenge_make_form()...");
 
         log.info("upload File Name: " + uploadFile.getOriginalFilename());
         log.info("upload File Size: " +uploadFile.getSize());            
         
-        String uploadFolder = "C:\\upload";
-        File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
-        
-        try {
-            uploadFile.transferTo(saveFile);
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        if(imageCheck == "customImage") {
+            String uploadFolder = "C:\\upload";
+            String uploadFileName = uploadFile.getOriginalFilename();
+            
+            uploadFileName = uploadFileName
+                    .substring(uploadFileName.lastIndexOf("\\") + 1); 
+            
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
+
+            iClassVO.setClassImage(uploadFileName);
+
+            try {
+                File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
+                uploadFile.transferTo(saveFile);
+                
+                if(imageController.checkImageType(saveFile)) {
+                    FileOutputStream thumbnail = new FileOutputStream(
+                            new File(uploadFolder, "s_" + uploadFileName));
+                    
+                    Thumbnailator.createThumbnail(
+                            uploadFile.getInputStream(), thumbnail, 537, 490);
+                    
+                    thumbnail.close();
+                    
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        } else {
+            iClassVO.setClassImage("default.png");
         }
         
+        // default.png 기본 이미지
         // classTitle 챌린지명      
         // classLevel 운동강도
         // startdate, enddate 운동 기간 
@@ -217,9 +244,9 @@ public class ChallengeController {
         // classContent 상세정보
         // classImage 대표이미지
         
-        // iClassVO.setIUserVO(vo);
-        // challengeService.insertChallenge(iClassVO);
-        // log.info("iClassVO: " + iClassVO);
+        iClassVO.setIUserVO(vo);
+        challengeService.insertChallenge(iClassVO);
+        log.info("iClassVO: " + iClassVO);
 
         return "redirect:challengeList";
     }
@@ -253,10 +280,22 @@ public class ChallengeController {
     
     //챌린지 참여 버튼 클릭(참여전 -> 참여후)
     @ResponseBody
-    @PostMapping("iruri/insert_user_challenge")
-    public String insertUserChallenge(IClassVO iClassVO, @CurrentUser IUserVO vo) {
+    @PostMapping("/iruri/insert_user_challenge")
+    public void insertUserChallenge(BuyVO buyVO, @CurrentUser IUserVO vo,
+           @RequestParam("classId") int classId, 
+            HttpServletResponse response) throws IOException {
+        
+        //참여인원 update
+        challengeService.upJoinMember(classId);
+        log.info("challenge up join member()..");
+        
+        //유저챌린지목록(buy table) insert
+        buyVO.setIUserVO(vo);
+        challengeService.userJoinChallenge(buyVO, vo.getUserId());
+        log.info("insert user Join Challenge()..");
 
-        return"redirect:challenge_detail_after";
+ 
+        response.sendRedirect("/ex/iruri/challenge_detail_after?classId=" + classId);
     }
 
     //유저가 챌린지 신청 기록이 있는지 
@@ -273,17 +312,11 @@ public class ChallengeController {
         }
     }
     
-    //챌린지 참여하면 buy에 추가하기
-//    @GetMapping("/iruri/challengeJoinComplete")
-//    @ResponseBody
-//    public void joinList(@CurrentUser IUserVO vo) {
-//        challengeService.userJoinChallenge(buyId, vo.getUserId());
-//    }
-    
+
     //챌린지 상세-참여 후 
     @GetMapping("/iruri/challenge_detail_after")
-    public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, BuyVO buyVO, 
-            BoardVO boardVO, @CurrentUser IUserVO vo) {
+    public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, 
+             @CurrentUser IUserVO vo) {
         mav.setViewName("challenge/challenge_detail_after");
         //챌린지 정보
         mav.addObject("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
@@ -292,6 +325,21 @@ public class ChallengeController {
         return mav;
     }
     
+    
+    //인증글 리스트
+    @ResponseBody
+    @GetMapping("/ajax/certifyImgList")
+    public ResponseEntity<HashMap<String, Object>> certify_img_list(@RequestParam("pageNum") int pageNum,
+            @RequestParam("classId") int classId){
+        HashMap<String, Object> result = new HashMap<>();
+        Criteria cri = new Criteria(pageNum, 8);
+        log.info(classId);
+        int total = challengeService.getTotal_challengeImg(cri, classId);
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("imgList", challengeService.challengeImgList(cri, classId));
+        
+        return ResponseEntity.ok(result);
+    }
     
     // 인증모달 - 인증글 작성
     @ResponseBody
@@ -322,7 +370,7 @@ public class ChallengeController {
                 File saveFile = new File(uploadFolder, uploadFileName);
                 uploadFile.transferTo(saveFile);
                 
-                if(checkImageType(saveFile)) {
+                if(imageController.checkImageType(saveFile)) {
                     FileOutputStream thumbnail = new FileOutputStream(
                             new File(uploadFolder, "s_" + uploadFileName));
                     
@@ -338,18 +386,7 @@ public class ChallengeController {
             } 
     }
     
-    private boolean checkImageType(File file) {
-        
-        try {
-            String contentType = Files.probeContentType(file.toPath());
-            
-            return contentType.startsWith("image");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        return false;
-    }
+
     
     //댓글 작성
     @ResponseBody
@@ -365,7 +402,7 @@ public class ChallengeController {
         
         return "success";
     }
-  
+ 
     
     //댓글부분
     @ResponseBody
@@ -385,30 +422,7 @@ public class ChallengeController {
     
     
     
-    // 챌린지 상세 - 참여 후
-    /*
-    @GetMapping("/iruri/challenge_detail_after")
-    public String c_detail_after(IClassVO iClassVO, BuyVO buyVO, Model model,@CurrentUser IUserVO vo) {
-
-        log.info("challenge_detail_after()..");
-        
-        //참여인원 update
-        challengeService.upJoinMember(iClassVO.getClassId());
-        log.info("challenge up join member()..");
-        
-        //유저챌린지목록(buy table) insert
-        buyVO.setIUserVO(vo);
-       
-        challengeService.userJoinChallenge(buyVO);
-        log.info("insert user Join Challenge()..");
-      
-        //챌린지 정보
-        model.addAttribute("challengeInfo", challengeService.getChallengeInfo(iClassVO.getClassId()));
-
-        return "challenge/challenge_detail_after";
-    }
-    */
-    
+   
     /*-------------관심수-------------*/
     //유저가 좋아요 한 기록이 있는지
     @GetMapping("/iruri/heart")

@@ -160,12 +160,14 @@
 
 
 
-                                    <div class="c_parti_modal_button">
+                                    <form class="c_parti_modal_button">
 
                                         <button class="c_parti_modal_cancle" type="reset">취소</button>
                                         <button class="c_parti_modal_submit" type="submit">
-                                        <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>
-                                    </div>
+                                        <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a>
+       
+                                        </button>
+                                    </form>
                                 </div>
                                 
                             </div>
@@ -218,7 +220,7 @@
     <div class="c_certify" id="certify">
         <div class="c_container">
             <div class="c_certify_total">
-                총 77 개
+                <span>총 77 개</span>
             </div>
 
 
@@ -280,23 +282,40 @@
     
     
 <script>
+/*
+$(document).ready(function() {
+	$('.c_parti_modal_button').submit(function(e) {
+		e.preventDefault();
+	});
+});
+*/
+
+	
 $('.c_parti_modal_submit').click(function(){
+	const header = $('meta[name="_csrf_header"]').attr('th:content');
+	const token = $('meta[name="_csrf"]').attr('th:content');
+
 	$.ajax({
 		url: '${CONTEXT_PATH}/iruri/insert_user_challenge',
 		type: 'POST',
 		cache: false,
 		dateType: 'json',
 		data: {
-		
-		}.
+			classId: ${challengeInfo.classId},
+		},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
 		success: function(result){
-			}
-		
-	
-		})
-	
-	})
+			console.log(result);
+		}
+			});
 
+		});
+
+</script>	
+	
+<script>
 //댓글 ajax, 페이징
 		function getlist(page) {
 			
