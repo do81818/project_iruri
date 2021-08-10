@@ -1,14 +1,11 @@
 package com.iruri.ex.vo;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
+
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

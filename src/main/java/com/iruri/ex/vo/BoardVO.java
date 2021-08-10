@@ -40,14 +40,17 @@ public class BoardVO {
     private String boardContent;
     private String boardFile;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date boardDate;
+    private Timestamp boardDate;
     private String boardState;
     private int boardHit;
     private int boardLike;
     private int boardGroupId;
     private int categoryId;
-    private int userId;
-    private int rnum;
+    private IUserVO iUserVO;
+    private int rn;
+    private int classId;
+  
+    private List<IClassVO> iClassList;
 
 
     

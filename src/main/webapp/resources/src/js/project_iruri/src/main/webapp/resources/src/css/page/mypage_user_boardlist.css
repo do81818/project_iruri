@@ -1,0 +1,198 @@
+/* ------------------------------------------------ */
+/* 콘텐츠 */
+/* 회원정보 */
+.container content {
+  position: relative;
+}
+
+
+
+
+
+  /* 게시판리스트 박스 */
+.m_board_box{
+  margin: 30px;
+  height: 77px;
+  border-radius: 30px;
+  padding: 10px 80px;
+  padding-right:400px;
+  background-color:var(--iruri-blue-color);
+  display: flex;
+
+
+  }
+
+
+.m_board_box>#m_boardlist_box{
+  flex: 30%;
+  padding-top: 20px;
+}
+.m_board_box>#m_confirmlist_box{
+  flex: 30%;
+  padding-top: 20px;
+}
+.m_board_box>#m_commentlist_box{
+  flex: 30%;
+  padding-top: 20px;
+}
+
+
+#m_now_boardlist{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 18px;
+  color:var(--iruri-gray-color);
+
+}
+
+#m_now_boardlistnb{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 30px;
+  color:var(--iruri-yellow-color);
+  position: relative;
+  top: -20px;
+  text-align: center;
+
+  
+}
+
+#m_now_confirmlist{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 18px;
+    color:var(--iruri-gray-color);
+    
+}
+    
+#m_now_confirmlistnb{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 30px;
+  color:var(--iruri-yellow-color);
+  position: relative;
+  top: -20px;
+  text-align: center;
+ 
+  
+    }
+
+#m_now_commentlist{
+        font-family: 'Cafe24SsurroundAir';
+        font-size: 18px;
+        color:var(--iruri-gray-color);
+        
+}
+        
+#m_now_commentlistnb{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 30px;
+  color:var(--iruri-yellow-color);
+  position: relative;
+  top: -20px;
+  text-align: center;
+
+  
+        
+}
+
+
+/* 게시글 list (인증글)  */
+.m_userboardlist{
+  margin: 10px;
+  padding: 20px 80px;
+ 
+  display: flex;
+}
+.m_userboardlist>#m_confirm_list_type{
+  flex: 0.2;
+}
+.m_userboardlist>#m_board_list_img{
+  flex: 1;
+}
+.m_userboardlist>#m_board_list_content{
+  flex: 4;
+  padding-left: 40px;
+}
+
+#m_confirm_list_type{
+  padding: 9px 13px;
+
+  /* font-weight: bold; */
+  font-size:11px;
+border-radius: 20px;
+background-color: var(--iruri-red-color);
+color: var(--iruri-light-gray-color);
+width: 37px;
+height: 30px;
+text-align: center;
+}
+
+#m_board_list_img>#img{
+  float: right;
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+
+ 
+}
+#m_board_list_title{
+  font-weight: bold;
+font-size: 20px;
+color: var(--iruri-indigo-color);
+margin-bottom: 20px;
+}
+
+#m_board_list_content{
+  font-size: 18px;
+line-height: 27px;
+color:var(--iruri-dark-gray-color);
+margin-bottom: 10px;
+
+}
+#m_board_list_date{
+  font-size: 16px;
+color:var(--iruri-gray-color);
+}
+
+
+
+/* 게시글 */
+.m_userboardlist>#m_board_list_type{
+  flex: 0.2;
+}
+#m_board_list_type{
+  padding: 9px 15px;
+
+  /* font-weight: bold; */
+  font-size:11px;
+color: var(--iruri-yellow-color);
+border-radius: 20px;
+background-color:var(--iruri-blue-color);
+width: 35px;
+height: 30px;
+text-align: center;
+}
+
+
+
+/* 댓글 */
+.m_userboardlist>#m_comment_list_type{
+  flex: 0.1;
+}
+#m_comment_list_type{
+  padding: 9px 14px;
+  /* font-weight: bold; */
+  font-size:12px;
+color: var(--iruri-blue-color);
+border-radius: 20px;
+background-color:var(--iruri-yellow-color);
+width: 37px;
+height: 30px;
+}
+
+
+/* 페이징 */
+/*페이징*/
+
+
+
+
+
+

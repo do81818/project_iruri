@@ -62,6 +62,10 @@
                                 });
                             });
                         </script> 
+                        
+                        
+  
+                        
                 </head>
 
 
@@ -149,8 +153,17 @@
                                             </div>
 
 
+                                         
                                             <!--챌린지개설버튼-->
-                                            <button class="c_make_button">챌린지개설</button>
+											<!-- 비로그인 메뉴 -->
+						   					 <sec:authorize access="isAnonymous()">
+						   					 <div class="c_make_noLogin">챌린지개설</div>
+						           		     </sec:authorize>
+						           		     
+						           		     <!-- 로그인 메뉴 -->
+					    					<sec:authorize access="isAuthenticated()">
+											<button class="c_make_button">챌린지개설</button>
+					         				</sec:authorize>
 
                                     </div>
 
@@ -221,7 +234,8 @@
                                         function getlist(page) {
 
                                             var search = $("#keyword").val();
-                                            
+                                           
+                                          
                                             
 											// 1. ajax로 챌린지 리스트를 배열의 형태로 가져온다.
 											// 2. 1번을 어딘가에 보관한다.
@@ -274,7 +288,7 @@
                                                             htmls += '</div>';
 
                                                             htmls += '<div class="c_list_title">';
-                                                            htmls += '<a href="c_detail_before?classId='+ this.classId +'"target="_blank">';
+                                                            htmls += '<a href="challenge_detail_before?classId='+ this.classId +'"target="_blank">';
             												htmls += this.classTitle;
             												htmls += '</a>';
                                                             htmls += '</div>';
@@ -307,10 +321,11 @@
                                                                 '명)';
                                                             htmls += '</div>';
 
-                                                            htmls += '<div class="c_list_heart">';
-                                                            htmls += '<input type="checkbox" id="heart' + this.classId + '">';
-                                                            htmls += '<label for="heart' + this.classId + '" class="heart_label"></label>';
+                                                     
+            												htmls += '<div class="c_list_heart">';
+                                                            htmls += '<img class="heart_nologin_img" src="/ex/resources/src/img/icon/heart_gray.png" alt="">';
                                                             htmls += '</div>';
+            												
 
                                                             htmls += '</div>';
 
