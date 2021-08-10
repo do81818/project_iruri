@@ -13,7 +13,7 @@ $(document).ready(function() {
             $('.first').addClass('on');
         }
 
-        $(document).on("scroll", onScroll);
+        // $(document).on("scroll", onScroll);
 
         $('.c_menu a[href^="#"]').on('click', function(e) {
             e.preventDefault();
@@ -27,7 +27,7 @@ $(document).ready(function() {
             }, 600, 'swing', function() {
                 window.location.hash = target;
                 $(document).scrollTop($(document).scrollTop());
-                $(document).on("scroll", onScroll);
+                // $(document).on("scroll", onScroll);
             });
         });
 

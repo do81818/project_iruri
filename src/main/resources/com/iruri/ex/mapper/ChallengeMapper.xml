@@ -58,12 +58,12 @@
 	</resultMap>
 	
 	<resultMap type="com.iruri.ex.vo.BuyVO" id="buyMap">
-		<result property="buyId" column="BuyId"/>
-		<result property="buyRealPay" column="Buyrealpay"/>
-		<result property="buyPoint" column="BuyPoint"/>
-		<result property="buyDate" column="BuyDate"/>
-		<result property="payId" column="PayId"/>
-		<result property="classId" column="ClassId"/>
+		<result property="buyId" column="BUY_ID"/>
+		<result property="buyRealPay" column="BUY_REALPAY"/>
+		<result property="buyPoint" column="BUY_POINT"/>
+		<result property="buyDate" column="BUY_DATE"/>
+		<result property="payId" column="PAY_ID"/>
+		<result property="classId" column="CLASS_ID"/>
 		<result property="rnum" column="rnum"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
 	</resultMap>
@@ -81,7 +81,7 @@
 			<result property="boardGroupId" column="BOARD_GROUPID"/>
 			<result property="categoryId" column="CATEGORY_ID"/>
 			<result property="rn" column="rn"/>	
-			<result property="classId" column="ClassId"/>
+			<result property="classId" column="CLASS_ID"/>
 			<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
 
 	</resultMap>
@@ -286,17 +286,38 @@
 				<![CDATA[
 				INSERT ALL INTO 
 				
-				buy (buy_id,buy_realpay, buy_point, buy_date, user_id, pay_id, class_id)
+				buy (
+				buy_id,
+				buy_realpay, 
+				buy_point, 
+				buy_date, 
+				user_id, 
+				pay_id, 
+				class_id
+				)
 				
 				VALUES 
-				((SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM
-				buy),0,0,sysdate,#{iUserVO.userId},(SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM
-				pay), #{classId})
+				((SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy),
+				0,
+				0,
+				sysdate,
+				#{userId},
+				(SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM pay), 
+				#{buyVO.classId}				)
 			
 			    INTO 
-			    pay(pay_id, pay_state, pay_way, buy_id)
-				VALUES ((SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM
-				pay),'pay','챌린지',(SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy))
+			    pay(
+			    pay_id, 
+			    pay_state, 
+			    pay_way, 
+			    buy_id
+			    )
+				
+				VALUES ((SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM pay),
+				'pay',
+				'챌린지',
+				(SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy)
+				)
 			
 				SELECT * FROM DUAL
 				]]>
@@ -419,20 +440,17 @@
 					'show', 
 					0, 
 					0, 
-					(
-						select DISTINCT b.board_groupid 
-						from board b, iclass i
-	       	 			where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
-       	 			),
+					#{classId},
        	 			6, 
        	 			#{boardVO.iUserVO.userId}
 	       	 	)
 			]]>
 		</insert>
 		
+		<!-- 인증글 추가 -->
 		<insert id="insertChallengeCertify">
 		<![CDATA[
-			insert into board
+			INSERT INTO BOARD
 			(
 			board_id, 
 			board_title, 
@@ -445,7 +463,8 @@
 			board_groupId, 
 			category_id, 
 			user_id)
-			values
+			
+			VALUES
 			((SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
 			#{boardTitle},
 			#{boardContent},
@@ -459,6 +478,36 @@
 			#{iUserVO.userId})
 		]]>
 		</insert>
+		
+		<!-- 인증글 리스트 뽑아오기 -->
+		
+			<select id="getTotalCount_challengeImg" resultType="int">
+		<![CDATA[
+			  	select count(*) 
+			  	from board b, iclass i
+	       	 	where b.category_id=5 and b.board_groupid=i.class_id and i.class_id=#{classId}
+		]]>
+		</select>
+		
+		<select id="getListWithPaging_challengeImg" resultMap="iClassMap">
+			<![CDATA[
+			
+				SELECT *
+				FROM
+				(
+				    SELECT ROWNUM rn, c.*
+				    FROM
+				    (
+				        SELECT B.*, u.user_nickname 
+				        FROM board B, iclass A, iuser u
+         				where B.category_id=5 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+         				order by B.board_date desc
+				    ) C
+				    WHERE rownum <= #{pageNum} * #{amount} 
+				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+			]]>
+      
+			</select>
 		
 		
 </mapper>

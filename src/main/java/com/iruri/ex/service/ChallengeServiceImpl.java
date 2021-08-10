@@ -134,15 +134,16 @@ public class ChallengeServiceImpl implements ChallengeService {
     public void upJoinMember(int classId) {
         
         challengeMapper.upJoinMember(classId);
+        log.info("upJoinMember()..");
         
     }
 
     
     //유저 챌린지 참여 후 likelist insert
     @Override
-    public void userJoinChallenge(int buyId, int userId) {
+    public void userJoinChallenge(BuyVO buyVO, int userId) {
         log.info("userJoinChallenge()..");
-        challengeMapper.insertUserJoinChallenge(buyId, userId);
+        challengeMapper.insertUserJoinChallenge(buyVO, userId);
         
     }
     
@@ -247,6 +248,24 @@ public class ChallengeServiceImpl implements ChallengeService {
         log.info("insertChallengeCertify() .. " + boardVO);
         
         challengeMapper.insertChallengeCertify(boardVO);
+    }
+
+    
+    //인증글 리스트
+    @Override
+    public int getTotal_challengeImg(Criteria cri, int classId) {
+        log.info("getTotal_challengeImg()..");
+        return challengeMapper.getTotalCount_challengeImg(cri, classId);
+    }
+
+    @Override
+    public List<BoardVO> challengeImgList(Criteria cri, int classId) {
+        log.info("challengeImgList()..");
+        
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        
+        return challengeMapper.getListWithPaging_challengeImg(pageNum, amount, classId);
     }
 
 
