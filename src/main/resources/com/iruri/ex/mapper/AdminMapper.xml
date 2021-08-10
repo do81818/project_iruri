@@ -490,7 +490,7 @@
 	</select>
 	
 	<!-- 트레이너정보_수익관리 월별 수익 합계 -->
-	<select id="trainerMoneyMonthTotal" resultType="Integer">
+	<select id="trainerMoneyMonthTotal" parameterType="int" resultType="Integer">
 		<![CDATA[
 		select sum(a.money_input + a.buy_point - a.money_output)
 		from (
@@ -508,5 +508,20 @@
 		    ) a
 		]]>
 	</select>
+	
+	<!-- 블랙리스트/일반 회원으로 등록(전환) -->
+	<update id = "updateBlackList">
+		update iuser set user_blacklist = #{number} where user_id = #{userId}
+	</update>
+	
+	<!-- 블랙리스트 회원 이유 등록 -->
+	<update id = "updateBlackListReason">
+		update iuser set user_blacklist_reason = '#{reason}' where user_id = #{userId}
+	</update>
+	
+	
+	
+	
+	
 
 </mapper>
