@@ -69,4 +69,13 @@ public interface AdminService {
 	// 일반/유료회원정보 운동정보 리스트보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
 	
+	// 트레이너정보_수익관리 리스트
+	List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri1);
+    
+    // 트레이너 정보_수익관리 리스트 갯수
+    int countTrainerMoneyList(int userId, int month);
+    
+    // 트레이너정보_수익관리 월별 수익 합계
+    int trainerMoneyMonthTotal(int userId, int month);
+	
 }

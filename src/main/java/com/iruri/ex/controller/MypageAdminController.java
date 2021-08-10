@@ -238,13 +238,17 @@ public class MypageAdminController {
     //  트레이너정보 상세보기_수익관리
     @ResponseBody
     @GetMapping("ajax/trainer/info")
-    public ResponseEntity<HashMap<String, Object>> restTrainerDetail(@RequestParam("userId") int userId, @RequestParam("pageNum") int pageNum) {
+    public ResponseEntity<HashMap<String, Object>> restTrainerDetail(@RequestParam("userId") int userId, 
+            @RequestParam("month") int month, @RequestParam("pageNum") int pageNum) {
         log.info(userId);
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 10);
-        int total = adminService.countUserBasicInfoPoint(userId);
+        int total = adminService.countTrainerMoneyList(userId, month);
         result.put("pageMaker", new PageVO(cri, total));
-        result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
+        result.put("list", adminService.getTrainerMoneyList(userId, month, cri));
+        result.put("month", month);
+        log.info(month);
+        result.put("monthTotal", adminService.trainerMoneyMonthTotal(userId, month));
         log.info(result);
         return ResponseEntity.ok(result);
     }

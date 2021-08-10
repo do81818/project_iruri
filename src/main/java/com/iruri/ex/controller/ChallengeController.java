@@ -1,27 +1,13 @@
 package com.iruri.ex.controller;
 
-import java.net.http.HttpRequest;
-import java.security.Principal; 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,11 +20,8 @@ import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.BuyVO;
-import com.iruri.ex.vo.ExerciseDateVO;
-import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.LikeListVO;
 
 import lombok.extern.log4j.Log4j;
 
