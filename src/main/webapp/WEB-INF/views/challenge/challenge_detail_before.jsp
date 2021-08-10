@@ -48,62 +48,7 @@
 	});
 	
 	</script>
-	
-	<script>
-	function join_c(){
-		
-		$.ajax({
-			url: '${CONTEXT_PATH}/iruri/challengeJoinComplete',
-			typel: 'GET',
-			cache: false,
-            dateType: 'json',
-            data: {
-                buyId: buyId,
-            },
-            success: function(result) {
 
-                if (result !== 0) {
-                    $('.c_parti_modal_submit').attr('checked', true);
-                }
-                htmls += '<form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">';
-                htmls += '<ul>';
-                htmls += '<li>챌린지에 참여 하시겠습니까?</li>';
-                htmls += '<li>챌린지 시작일 전 까지만 취소가 가능합니다.</li>';
-                htmls += '<li>챌린지 시작일 후에는 취소하실 수 없습니다.</li>';
-
-                htmls += '</ul>';
-
-
-
-                htmls += '<div class="c_parti_modal_button">';
-
-                htmls += '<button class="c_parti_modal_cancle" type="reset">취소</button>';
-                htmls += '<button class="c_parti_modal_submit" type="submit">';
-                htmls += '<a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>';
-                htmls += '</div>';
-                htmls += '</form>';
-            }
-		});
-	
-	$(".c_parti_modal_content").html(htmls);
-	$('.c_parti_modal_submit').on('click', function(e){
-		let froStr = e.currentTarget.htmlFor
-		let buyId = forStr.substring(5);
-		
-		$.ajax({
-			   url: '${CONTEXT_PATH}/iruri/challengeJoinCheck',
-               type: 'GET',
-               cache: false,
-               dateType: 'json',
-               data: {
-                   buyId: buyId,
-               }
-		});
-	});
-	}
-	
-	
-	</script>
  
  
   </head>
@@ -204,8 +149,8 @@
                     <div id="c_parti_modal">
                         <div class="c_parti_modal_start">
                             <div class="c_parti_modal_content">
-                            <!--  
-                                <form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">
+                            
+                                <div class="c_parti_modal_div">
                                     <ul>
                                         <li>챌린지에 참여 하시겠습니까?</li>
                                         <li>챌린지 시작일 전 까지만 취소가 가능합니다.</li>
@@ -221,8 +166,8 @@
                                         <button class="c_parti_modal_submit" type="submit">
                                         <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>
                                     </div>
-                                </form>
-                                -->
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="modal_layer"></div>
@@ -335,6 +280,23 @@
     
     
 <script>
+$('.c_parti_modal_submit').click(function(){
+	$.ajax({
+		url: '${CONTEXT_PATH}/iruri/insert_user_challenge',
+		type: 'POST',
+		cache: false,
+		dateType: 'json',
+		data: {
+		
+		}.
+		success: function(result){
+			}
+		
+	
+		})
+	
+	})
+
 //댓글 ajax, 페이징
 		function getlist(page) {
 			

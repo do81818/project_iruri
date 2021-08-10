@@ -130,27 +130,34 @@ text-align: left;
 /*추천챌린지 이미지*/
 
 .m_c_recommend {
+  display: inline-block;
+  clear: both;
+  /* width: 1200px; */
+  margin: 0 auto;
+}
+      
+/* .swiper-wrapper {
 display: inline-block;
 clear: both;
-/* width: 1200px; */
+width: 1200px;
 margin: 0 auto;
-}
+}  */
 
-.m_c_recommend .m_left{
+.m_left{
 width: 40px;
 height: 40px;
 float: left;
 margin-right: 40px;
 margin-top: 170px;
 }
-.m_c_recommend .m_right{
+.m_right{
 width: 40px;
 height: 40px;
 float: right;
 margin-top: 170px;
 }
 
-.m_c_recommend_img {
+.m_c_recommend_img  {
 width: 490px;
 height: 400px;
 background-color: var(--iruri-indigo-color);
@@ -158,7 +165,8 @@ margin-bottom: 34px;
 padding: 20px;
 float: left;
 margin-right: 30px;
-border-radius: 30px;
+border-radius: 30px; 
+
 }
 
 .m_c_recommend_title {
@@ -185,6 +193,7 @@ top: 240px;
 
 /*추천 챌린지 하트*/
 
+.m_c_heart .m_r_heart_label,
 .m_c_heart .m_heart_label {
 width: 48px;
 height: 43px;
@@ -223,6 +232,20 @@ color: var(--iruri-blue-color);
 display: inline-block;
 margin: 0 20px;
 text-decoration: none;
+position: relative;
+
+}
+.m_c_like_last1 a {
+margin-bottom: 23px;
+text-align: left;
+margin-left: 65px;
+font-family: 'Cafe24Ssurround', sans-serif;
+font-size: 20px;
+color: var(--iruri-blue-color);
+
+text-decoration: none;
+position: relative;
+top:600px;
 }
 
 
@@ -312,6 +335,10 @@ float: right;
 /*챌린지 리스트*/
 
 .m_c_list {
+width: 1200px;
+margin: 0 auto;
+}
+.m_c_list1 {
 width: 1200px;
 margin: 0 auto;
 }
@@ -435,13 +462,13 @@ display: none;
 }
 
 .m_c_list_heart input[type=checkbox]+label {
-display: inline-block;
-cursor: pointer;
-background: url('/ex/resources/src/img/icon/heart_gray.png') center/43px 43px no-repeat;
+    display: inline-block;
+    cursor: pointer;
+    background: url("/ex/resources/src/img/icon/heart_gray.png") center/43px 43px no-repeat;
 }
 
 .m_c_list_heart input[type=checkbox]:checked+label {
-background-image: url('/ex/resources/src/img/icon/heart_red.png');
+    background-image: url("/ex/resources/src/img/icon/heart_red.png");
 }
 
 
@@ -470,8 +497,7 @@ width: 16px;
 .m_page_nation {
 display: flex;
 width: 100%;
-margin-top: 80px;
-margin-bottom: 110px;
+margin-bottom: 60px;
 justify-content: center;
 }
 
@@ -513,3 +539,55 @@ background-color: var(--iruri-red-color);
 color: var(--iruri-yellow-color);
 border-radius: 18px;
 }
+
+
+
+
+/* 페이징2 */
+.m_page_nation1 {
+display: flex;
+width: 100%;
+margin-top: 80px;
+margin-bottom: 110px;
+justify-content: center;
+}
+
+.m_page_nation1 a {
+display: block;
+margin: 0 10px;
+float: left;
+width: 36px;
+height: 36px;
+line-height: 36px;
+text-align: center;
+font-size: 16px;
+color: var(--iruri-gray-color);
+text-decoration: none;
+}
+
+.m_page_nation1 .m_arrow_prev {
+position: relative;
+top: 9px;
+background: transparent url('/ex/resources/src/img/icon/arrow_red_left.png') no-repeat center center;
+width: 14px;
+height: 14px;
+background-size: cover;
+margin-right: 7px;
+}
+
+.m_page_nation1 .m_arrow_next {
+position: relative;
+top: 9px;
+background: transparent url('/ex/resources/src/img/icon/arrow_red_right.png') no-repeat center center;
+width: 14px;
+height: 14px;
+background-size: cover;
+margin-left: 7px;
+}
+
+.m_page_nation1 #mactiveForm {
+background-color: var(--iruri-red-color);
+color: var(--iruri-yellow-color);
+border-radius: 18px;
+}
+

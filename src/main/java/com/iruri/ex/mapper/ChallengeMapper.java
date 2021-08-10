@@ -50,7 +50,7 @@ public interface ChallengeMapper {
     IClassVO readChallengeInfo(int classId);
     
     //유저가 챌린지 참여한 기록이 있는지
-    int userJoinChallengeList(@Param("buyId") int buyId, @Param("userId") int userId);
+    int userJoinChallengeList(@Param("classId") int classId, @Param("userId") int userId);
     
     //챌린지 참여 인원
     void upJoinMember(int classId);
@@ -82,11 +82,13 @@ public interface ChallengeMapper {
 
 
     //댓글 입력
-    void challengeReplyInsert(BoardVO boardVO);
+    void challengeReplyInsert(@Param("boardVO") BoardVO boardVO, @Param("classId") int classId);
 
     //댓글 userId
     BoardVO readUserId(IUserVO iUserVO);
     
+    // 인증글 추가
+    void insertChallengeCertify(BoardVO boardVO);
   
   
 }
