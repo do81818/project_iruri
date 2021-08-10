@@ -1,11 +1,10 @@
 @import url("../css/style.css");
 
-
 @font-face {
     font-family: 'NanumBarunGothic';
     src: url('../font/NanumBarunGothic.ttf')
     format("truetype");
-  }
+ }
 
   @font-face {
     font-family: 'Cafe24Ssurround';
@@ -66,184 +65,200 @@
     text-decoration: none;
     color: inherit;
   }
-/* ------------------------------------------------------------ */
+
+
 /* 콘텐츠 */
 .content {
-  position: relative;
-}
+    position: relative;
+  }
 
-.imformation_box{
-  margin: 40px;
-  padding: 30px 33px;
-  font-family: 'Cafe24SsurroundAir';
-  display: flex;
-}   
-
-.imformation_box>#user_info {
-  flex: 13;
+  .imformation_box{
+    margin: 40px;
+    padding: 30px 33px;
+    font-family: 'Cafe24SsurroundAir';
+    display: flex;
+  }   
   
+  .imformation_box>#user_info {
+    flex: 13;
+    
+  }
+  .imformation_box>#challenge {
+    flex: 3;
+    
+  }
+  .imformation_box>#buy {
+    flex: 3;
+  }
+
+  .nickname {
+    align-content: left;
+    font-family: 'Cafe24Ssurround';
+    color: var(--iruri-blue-color);
+    font-size: 28px;
+    padding-bottom: 40px;
+  }
+
+  .infobutton {
+    font-family: 'NanumBarunGothic';
+    color: var(--iruri-blue-color);
+    padding: 7px 13px;
+    font-size: 13px;
+    border-radius: 14px;
+    background-color:white;
+    border: 2px solid var(--iruri-blue-color);
+
+  }
+
+  .user_detail{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    line-height: 25px;
+    color: var( --iruri-gray--color);
+
+  }
+
+  .count{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-light-blue-color);
+    padding-top: 40px;
+    
+
+  }
+
+  .buy_text{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    color: var(--iruri-light-blue-color);
+    
+  }
+
+  .class_MenuBar {
+    height: 77px;
+    padding: 30px 32px; 
+    border-radius: 30px;
+    background-color: #ffeb00;
+    text-align: center;
+    
+  }
+
+  .class_MenuBar>ul {
+    
+    position: relative;
+    display: flex;
+  }
+
+  .class_MenuBar_text_now {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    
+    color: var(--iruri--indigo-color);
+    margin-right: 42px;
+    border-bottom: 3px solid var(--iruri-red-color);
+    
+  }
+
+  .class_MenuBar_text {
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 20px;
+    color: var(--iruri-gray-color);
+    margin-right: 42px;
+  }
+
+
+  .classbar{
+    height: 94px;
+    padding: 30px 32px;
+    
+
+
+  }
+  .classbar>ul {
+    display: flex;
+  }
+
+
+  .classbarUl{    
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 18px;
+    color: var(--iruri-gray-color);
+    margin-right: 55px;
+  }
+  .classbarUl_blue{    
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 18px;
+    color: var(--iruri-light-blue-color);
+    margin-right: 55px;
+  }
+
+
+  .class_list{
+  	width: 100%; /* container_content에 명시된 width 값의 100% 를 사용 */
+    display: flex;
+    flex-wrap: wrap; /* flex 요소의 자식 요소들이 강제로 한줄에 배치되게 할 것인지, 또는 가능한 영역 내에서 벗어나지 않고 여러행으로 나누어 표현 할 것인지 결정하는 속성*/
+    margin-bottom: 100px;
+
+  }
+
+  .pt_card{
+  	padding-top: auto;
+  	margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+
+  .pt_image{
+    width:360px;
+    height: 250px;
+    border-radius: 30px;
+    margin-bottom: 28px;
+    z-index: -1;
+    position: relative;
+  }
+
+  .trainer_name{
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    font-size: 16px;
+    color: var(--iruri-red-color);
+  }
+
+  .pt_title{
+    height: 66px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    font-size: 26px;
+    Line-height: 37px;
+    color: var(--iruri-blue-color);
+    margin-bottom: 28px;
+
+  }
+
+  .pt_date{
+    font-size:18px;
+    color: var(--iruri-gray-color); 
+    margin-bottom: 18px;
+
+  }
+
+  .pt_icon {
+    font-family: "NanumBarunGothic";
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
-.imformation_box>#challenge {
-  flex: 3;
-  
-}
-.imformation_box>#buy {
-  flex: 3;
-}
-
-.nickname {
-  align-content: left;
-  font-family: 'Cafe24Ssurround';
-  color: var(--iruri-blue-color);
-  font-size: 28px;
-  padding-bottom: 40px;
+  .pt_icon-red {
+    background-color: var(--iruri-red-color);
+    padding: 4px 5px;
+    display: inline-block;
+    font-size: 13px;
+    color: white;
+    border-radius: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
-.infobutton {
-  font-family: 'NanumBarunGothic';
-  color: var(--iruri-blue-color);
-  padding: 7px 13px;
-  font-size: 13px;
-  border-radius: 14px;
-  background-color:white;
-  border: 2px solid var(--iruri-blue-color);
-
-}
-
-.user_detail{
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 16px;
-  line-height: 25px;
-  color: var( --iruri-gray--color);
-
-}
-
-.count{
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 50px;
-  color: var(--iruri-light-blue-color);
-  padding-top: 40px;
-  
-
-}
-
-.buy_text{
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 20px;
-  color: var(--iruri-light-blue-color);
-  
-}
-
-.class_MenuBar {
-  height: 77px;
-  padding: 30px 32px; 
-  border-radius: 30px;
-  background-color: #ffeb00;
-  text-align: center;
-  
-}
-
-.class_MenuBar>ul {
-  
-  position: relative;
-  display: flex;
-}
-
-.class_MenuBar_text_now {
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 20px;
-  
-  color: var(--iruri--indigo-color);
-  margin-right: 42px;
-  border-bottom: 3px solid var(--iruri-red-color);
-  
-}
-
-.class_MenuBar_text {
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 20px;
-  color: var(--iruri-gray-color);
-  margin-right: 42px;
-}
-
-
-.classbar{
-  height: 94px;
-  padding: 30px 32px;
-  
-
-
-}
-.classbar>ul {
-  display: flex;
-}
-
-
-.classbarUl{    
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 18px;
-  color: var(--iruri-gray-color);
-  margin-right: 55px;
-}
-.classbarUl_blue{    
-  font-family: 'Cafe24SsurroundAir';
-  font-size: 18px;
-  color: var(--iruri-light-blue-color);
-  margin-right: 55px;
-}
-
-
-.class_list{
-  display: flex;
-  margin-bottom: 100px;
-
-}
-
-.pt_card{
-  margin-left: auto;
-  margin-right: auto;
-  
-}
-
-.pt_image{
-  width:360px;
-  height: 250px;
-  border-radius: 30px;
-  margin-bottom: 28px;
-  z-index: -1;
-  position: relative;
-}
-
-.trainer_name{
-  font-family: 'Cafe24SsurroundAir', sans-serif;
-  font-size: 16px;
-  color: var(--iruri-red-color);
-}
-
-.pt_title{
-  height: 66px;
-  font-family: 'Cafe24SsurroundAir', sans-serif;
-  font-size: 26px;
-  Line-height: 37px;
-  color: var(--iruri-blue-color);
-  margin-bottom: 28px;
-
-}
-
-.pt_date{
-  font-size:18px;
-  color: var(--iruri-gray-color); 
-  margin-bottom: 18px;
-
-}
-
-.pt_icon {
-  font-family: "NanumBarunGothic";
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
-.pt_icon-red {
-  background-color: var(--iruri-red-color);
+.pt_icon-blue {
+  background-color: var(--iruri-light-blue-color);
   padding: 4px 5px;
   display: inline-block;
   font-size: 13px;
@@ -253,144 +268,133 @@
   margin-bottom: 5px;
 }
 
-.pt_icon-blue {
-background-color: var(--iruri-light-blue-color);
-padding: 4px 5px;
-display: inline-block;
-font-size: 13px;
-color: white;
-border-radius: 10px;
-margin-right: 5px;
-margin-bottom: 5px;
-}
-
 .pt_icon_image{
-width: 14px;
-height: 14px;
-margin-right: 5px;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
 
 
 }
 
 .pt_price{
-font-size: 30px;
-color: var(--iruri-indigo-color); 
-margin-top: 24px;
-display: inline;
+  font-size: 30px;
+  color: var(--iruri-indigo-color); 
+  margin-top: 24px;
+  display: inline;
 
 }
 
 .pt_update_button{
-font-size: 14px;
-color: var(--iruri-gray-color);
-padding: 8px 9px;
-border: 1px solid;
-border-color: var(--iruri-gray-color);
-border-radius: 5px;
-background-color:white;
-float: right;
+  font-size: 14px;
+  color: var(--iruri-gray-color);
+  padding: 8px 9px;
+  border: 1px solid;
+  border-color: var(--iruri-gray-color);
+  border-radius: 5px;
+  background-color:white;
+  float: right;
 
 }
 
 .pt_mark{
-position:absolute;
-top: 15px; 
-left: 19px;
-padding: 5px 6px;
-font-size: 16px;
-color: white;
-background-color: var(--iruri-red-color);
-font-weight: bold;
-border-radius:10px;
-display: inline;
+  position:absolute;
+  top: 15px; 
+  left: 19px;
+  padding: 5px 6px;
+  font-size: 16px;
+  color: white;
+  background-color: var(--iruri-red-color);
+  font-weight: bold;
+  border-radius:10px;
+  display: inline;
 
 }
 
 .pt_image_and_mark{
-position: relative;
+  position: relative;
 
 }
 
 
 .content_list{
-  padding: 0px 25px;
-  margin: 20px 0px;
-  border-bottom: 1px solid var(--iruri-light-gray-color);
+    padding: 0px 25px;
+    margin: 20px 0px;
+    border-bottom: 1px solid var(--iruri-light-gray-color);
 }
 
 .class_title_and_ing{
-  display: flex;
-  margin-bottom: 20px;
-  margin-top: 40px;
-  
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    
 }
 
 .ing_red{
-  height: 25px;
-  padding: 5px 10px;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-  background-color: var(--iruri-red-color);
-  border-radius:15px;
-  margin-right: 10px;
-  margin-top: 4px;
-  align-items: center;
+    height: 25px;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    background-color: var(--iruri-red-color);
+    border-radius:15px;
+    margin-right: 10px;
+    margin-top: 4px;
+    align-items: center;
 }
 
 .ing_gray{
-  height: 25px;
-  padding: 5px 10px;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-  background-color: var(--iruri-gray-color);
-  border-radius:15px;
-  margin-right: 10px;
-  margin-top: 4px;
-  align-items: center
+    height: 25px;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    background-color: var(--iruri-gray-color);
+    border-radius:15px;
+    margin-right: 10px;
+    margin-top: 4px;
+    align-items: center
 
 }
 
 .class_title{
-  font-family: 'Cafe24SsurroundAir', sans-serif;
-  font-size: 20px;
-  Line-height: 37px;
-  color: var(--iruri-blue-color);
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    font-size: 20px;
+    Line-height: 37px;
+    color: var(--iruri-blue-color);
 }
 
 .class_nickname_and_day{
-  display: flex;
-  margin-bottom: 20px;
-  
+    display: flex;
+    margin-bottom: 20px;
+    
 }
 
 .class_nickname{
-  font-size: 15px;
-  font-weight: bold;
-  color: black;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
 }
 
 .write_day{
-  font-size: 15px;
-  
-  color: var(--iruri-light-gray-color);
+    font-size: 15px;
+    
+    color: var(--iruri-light-gray-color);
 }
 
 .and_class{
-  padding: 0px 10px ;
+    padding: 0px 10px ;
 }
 
 .content_text{
-  font-size: 15px;
-  color:var(--iruri-dark-gray-color);
-  margin-bottom: 20px;
-  line-height: 27px;
+    font-size: 15px;
+    color:var(--iruri-dark-gray-color);
+    margin-bottom: 20px;
+    line-height: 27px;
 }
 
 .month{
-padding-left: 35px;
-
+  padding-left: 35px;
+  
 
 }
 
@@ -566,7 +570,6 @@ padding-left: 35px;
 
 
 
-
 /* 프로필관리 */
 .pt_mypage_profile_update{
   width: 660px;
@@ -644,4 +647,3 @@ padding-left: 35px;
   .classbar a:active {
    color: var(--iruri-light-blue-color);
    }
-

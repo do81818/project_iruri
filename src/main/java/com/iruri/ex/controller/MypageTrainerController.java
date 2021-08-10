@@ -33,14 +33,13 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 public class MypageTrainerController {
-
+    
     @Autowired
     IUserService iUserService;
     @Autowired
     IClassService iClassService;
     @Autowired
     MypageTrainerService mypageTrainerService;
-
     // 마이페이지로 이동
     @RequestMapping("/mypage/trainer")
     public String mypageT(@CurrentUser IUserVO vo, Model model) {
@@ -92,12 +91,8 @@ public class MypageTrainerController {
         result.put("pageMaker", new PageVO(cri, total));
 
         List<IClassVO> classList = iClassService.classList(vo.getUserId());
-        
         result.put("jebal", classList);
 
-       // List<IClassVO> classListDate = iClassService.classListDate(vo.getUserId());
-        
-       // result.put("classListDate", classListDate);
         
         return ResponseEntity.ok(result);
     }
@@ -120,11 +115,11 @@ public class MypageTrainerController {
         log.info("토탈: " + total);
 
         List<IClassVO> list = iClassService.mypageTrainerClassListEnd(cri, userId);
-        
+
         result.put("list", list);
-        
+
         log.info("리스트: " + list);
-        
+
         result.put("pageMaker", new PageVO(cri, total));
 
         return ResponseEntity.ok(result);

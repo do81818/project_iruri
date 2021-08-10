@@ -32,7 +32,7 @@
 			success : function(result){
 				var list = result['list'];
 				console.log(list);
-				 var jebal = result['jebal'];
+				var jebal = result['jebal'];
 				console.log(jebal); 
 				var pagination = result['pageMaker'];
 				var htmls = ''; 
@@ -68,7 +68,10 @@
 						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_level.png" class="pt_icon_image">' + this.classLevel;
 						htmls +=			'</div>';
 						htmls +=			'<div class="pt_icon-blue">';
-						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">'+ this.classTime+'분/${dates.exerciseDate}';
+						htmls +=				'<img src="${RESOURCES_PATH}/src/img/icon/ex_time.png" class="pt_icon_image">'+ this.classTime+'분/${dates.exerciseDate}';		
+												for(var i = 0; i < this.exerciseDateList.length; i++) {
+						htmls +=			 		this.exerciseDateList[i].exerciseDate 																							
+												}
 						htmls +=			'</div>';
 						htmls +=		'</div>';
 						htmls +=		'<div class="pt_icon">';

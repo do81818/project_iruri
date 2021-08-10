@@ -53,7 +53,5 @@ public interface IClassService {
     // ExerciseDateVO selectExerciseDate(int userId);
    
     //운동종류
-    List<ExerciseKindVO> selectExerciseKind(int userId);
-
-    List<IClassVO> classListDate(int userId);
+    //List<ExerciseKindVO> selectExerciseKind(int userId);
 }

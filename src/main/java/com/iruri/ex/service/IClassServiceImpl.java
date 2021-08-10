@@ -32,15 +32,6 @@ public class IClassServiceImpl implements IClassService {
         return vo;
     }
     
-    @Override
-    public List<IClassVO> classListDate(int userId) {
-        List<IClassVO> vo = iClassMapper.classListDate(userId);
-        if(vo == null) {
-            return null;
-        }
-        return vo;
-    }
-    
     
     // 현재 종료된 클래스 조회
     @Override
@@ -163,18 +154,6 @@ public class IClassServiceImpl implements IClassService {
         return iClassMapper.getTotalCount_mypageTrainerClassListEnd(cri, userId);
     }
 
-
-  
-   
-    //운동종류
-    @Override
-    public List<ExerciseKindVO> selectExerciseKind(int userId) {
-        List<ExerciseKindVO> kind = iClassMapper.selectExerciseKind(userId);
-        if(kind == null) {
-            return null;
-        }
-        return kind;
-    }
 
  
 }

@@ -73,9 +73,10 @@
 		SELECT
 			*
 		FROM 
-			iclass, exercise_kind
+			iclass, exercise_kind, exercise_date
 		WHERE
-			iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			iclass.class_id =  exercise_date.class_id and iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			order by exercise_date.exercise_date desc
 		]]>
 	</select>
 
