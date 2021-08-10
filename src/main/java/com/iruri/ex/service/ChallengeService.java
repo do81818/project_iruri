@@ -45,7 +45,7 @@ public interface ChallengeService {
     
     
     //유저 챌린지 참여 등록(buy insert)
-    void userJoinChallenge(int buyId, int userId);
+    void userJoinChallenge(BuyVO buyVO, int userId);
     
     //챌린지 참여인원
     public void upJoinMember(int classId);
@@ -83,6 +83,10 @@ public interface ChallengeService {
 
     // 인증글 추가
     void insertChallengeCertify(BoardVO boardVO);
+
+    //인증글 리스트 페이징
+    int getTotal_challengeImg(Criteria cri, int classId);
+    List<BoardVO> challengeImgList(Criteria cri, int classId);
 
 
 
