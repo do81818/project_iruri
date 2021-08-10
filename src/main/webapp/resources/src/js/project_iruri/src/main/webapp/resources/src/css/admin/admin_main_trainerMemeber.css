@@ -1,0 +1,158 @@
+@import url("./admin_main_basic.css");
+
+/* ---------------- 테이블 가로 크기 및 기본 폰트, 선 ------------------ */
+.management_trainerMember table th:nth-of-type(1) {
+    padding-left: 45px;
+    width: 10%;
+    padding: 20px 0;
+}
+
+.management_trainerMember table th:nth-of-type(2) {
+    width: 20%;
+}
+
+.management_trainerMember table th:nth-of-type(4) {
+    width: 45%;
+}
+
+/* ---------------- 전체회원 테이블 디테일 ------------------ */
+
+.totalTrainerMemberList td,
+.trainerMemberBlacklist td {
+    padding: 22px 0;
+}
+
+.totalTrainerMemberList>form {
+    width: 240px;
+    height: 44px;
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 20px;
+    display: flex;
+    padding: 10px 20px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.totalTrainerMemberList>form>input {
+    display: flex;
+    color: var(--iruri-indigo-color);
+    font-size: 16px;
+    width: 170px;
+    margin-right: 10px;
+    outline: none;
+    border: none;
+}
+
+.totalTrainerMemberList>form>button {
+    display: flex;
+    align-content: right;
+    vertical-align: middle;
+    margin-top: 2px;
+    width: 18px;
+    height: 18px;
+    background: transparent url('/ex/resources/src/img/icon/search.png');
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+}
+
+/* ------------------ 트레이너 등록 ------------------- */
+
+table, tr, td {
+    border: none;
+    padding: 10px 0;
+    text-align: left;
+}
+
+.insert_trainerMember {
+    width: 660px;
+    margin: 0 auto;
+    margin-top: 46px;
+}
+
+.insert_trainerMember tr>td:nth-of-type(1) {
+    width: 135px;
+}
+
+.insert_trainerMember tr>td>input {
+    border: 1px solid var(--iruri-light-gray-color);
+    border-radius: 5px;
+    height: 44px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--iruri-indigo-color);
+    outline: none;
+}
+.insert_trainerMember tr>td>input::placeholder{
+    color: var(--iruri-gray-color);
+    font-size: 14px;
+}
+
+.insert_trainerMember tr>td>input:focus,
+.insert_trainerMember tr>td>select:focus {
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0 0 8px rgba(2,163,255,0.3);
+}
+
+.insert_trainerMember tr>td>input:focus::placeholder {
+    color: transparent;
+}
+
+
+.insert_trainerMember tr>td>span {
+    display: inline-block;
+    text-align: center;
+    line-height: 44px;
+    font-size: 16px;
+    color: var(--iruri-dark-gray-color);
+}
+
+.insert_trainerMember tr>td>select {
+    font-size: 16px;
+    padding: 0 13px;
+    color: var(--iruri-dark-gray-color);
+    background-image: url('/ex/resources/src/img/icon/arrow_select.png');
+    background-size: 14px auto;
+    background-repeat: no-repeat;
+    background-position: 93% center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+}
+/* 
+.insert_trainerMember tr>td>span>img {
+    width: 14px;
+    position: relative;
+    left: 15px;
+    top: 1px;
+} */
+
+.__box {
+    position: right;
+    margin-left: 2%;
+    height: 44px;
+    border: 1px solid var(--iruri-light-gray-color);
+    border-radius: 5px;
+}
+
+.trainerMemberInsertLabel {
+    font-size: 16px ;
+    color: var(--iruri-blue-color);
+}
+
+.insert_trainerMember {
+    text-align: center;
+}
+
+.insert_trainerMember button{
+    margin-top: 60px;
+    height: 55px;
+    width: 320px;
+    font-size: 16px;
+    color: white;
+    background-color: var(--iruri-blue-color);
+    border-radius: 27px;
+    margin-bottom: 120px;
+}

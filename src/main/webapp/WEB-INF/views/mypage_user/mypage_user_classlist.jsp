@@ -126,17 +126,18 @@
 										<c:forEach var="userclasslist" items="${userclasslist}"
 												varStatus="status">
 
-												<div class="m_c_recommend_img">
+												<div class="m_cl_recommend_img">
 														<button class="m_cl_cancel_class_bt">클래스취소</button>
-														<div class="m_c_recommend_title">
-																${userclasslist.classTitle}<br>
+														<div class="m_cl_recommend_title">
+																${userclasslist.classTitle}
+																
 														</div>
 
-														<span class="m_c_recommend_date">
+														<span class="m_cl_recommend_date">
 																${userclasslist.classStartDate}~${userclasslist.classEndDate}
 														</span>
 
-														<div class="m_c_heart">
+														<div class="m_cl_heart">
 																<input type="checkbox"
 																		id="heart${userclasslist.classId}"> <label
 																		for="heart${userclasslist.classId}"
@@ -169,14 +170,14 @@
 																});
 													});
 
-									const m_c_recommend_img = document
-											.querySelectorAll('.m_c_recommend_img');
-									console.log(m_c_recommend_img);
+									const m_cl_recommend_img = document
+											.querySelectorAll('.m_cl_recommend_img');
+									console.log(m_cl_recommend_img);
 
-									m_c_recommend_img
+									m_cl_recommend_img
 											.forEach(function(item) {
 												let heartClassId = item
-														.querySelector('.m_c_heart .m_r_heart_label').htmlFor
+														.querySelector('.m_cl_heart .m_r_heart_label').htmlFor
 														.substring(5);
 												;
 
@@ -263,12 +264,10 @@
 												for (let j = 0; j < list.length; j++) {
 													for (let i = 0; i < jebal.length; i++) {
 														if (list[j].classId === jebal[i].classId) {
-														
-														}
 															list[j] = jebal[i];
 														}
 													}
-												
+												}
 
 												if (list.length < 1) {
 													htmls += '<div class="m_cl_list_not">';
@@ -339,7 +338,7 @@
 																		+'원)';
 																		htmls += '</div>';
 
-																		htmls += '<div class="m_c_list_heart">';
+																		htmls += '<div class="m_cl_list_heart">';
 																		htmls += '<input type="checkbox" id="heart' + this.classId + '"checked>';
 																		htmls += '<label for="heart' + this.classId + '" class="m_heart_label"></label>';
 																		htmls += '</div>';

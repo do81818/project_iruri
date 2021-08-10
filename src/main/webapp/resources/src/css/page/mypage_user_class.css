@@ -67,6 +67,7 @@ margin-right: 30px;
 border-radius: 30px;
 }
 
+
 .m_cl_recommend_title {
 height: 73px;
 margin-bottom: 10px;
@@ -74,9 +75,10 @@ margin-bottom: 10px;
 font-family: 'Cafe24Ssurround', sans-serif;
 color: var(--iruri-green-color);
 font-size: 32px;
-float: left;
+
 position: relative;
 top: 260px;
+margin-right: 100px;
 }
 
 .m_cl_recommend_date {
@@ -91,13 +93,13 @@ top: 240px;
 
 /*추천 챌린지 하트*/
 
-.m_cl_heart .m_r_cl_heart_label
-.m_cl_heart .m_cl_heart_label {
-  width: 48px;
-  height: 43px;
-  position: relative;
-  top: 220px;
-  float: right;
+.m_cl_heart .m_r_heart_label,
+.m_cl_heart .m_heart_label {
+width: 48px;
+height: 43px;
+position: relative;
+top: 220px;
+float: right;
 }
 
 input[type=checkbox] {
@@ -326,12 +328,13 @@ float: right;
 
 /*챌린지 리스트 하트*/
 
-.m_cl_list_heart .m_cl_heart_label {
-  width: 43px;
-  height: 43px;
-  position: relative;
-  bottom: 40px;
-  float: right;
+.m_cl_list_heart .m_heart_label {
+width: 43px;
+height: 43px;
+position: relative;
+bottom: 60px;
+float: right;
+margin-bottom: 30px;
 }
 
 input[type=checkbox] {
