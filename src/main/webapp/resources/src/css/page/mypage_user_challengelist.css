@@ -129,21 +129,33 @@ text-align: left;
 
 /*추천챌린지 이미지*/
 
-.m_c_recommend {
-  display: inline-block;
-  clear: both;
-  /* width: 1200px; */
+ .m_c_recommend {
+  width: 1200px;
+  height: 540px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+
+}
+
+.m_c_slides {
+position: relative;
+ width: 490px;
+  height: 520px;
+  left:0;
+  transition: left 0.5s ease-in-out;
+  margin-left: 25px;
 }
       
-/* .swiper-wrapper {
+.swiper-wrapper {
 display: inline-block;
 clear: both;
 width: 1200px;
 margin: 0 auto;
-}  */
+} 
 
-.m_left{
+/* .m_left{
 width: 40px;
 height: 40px;
 float: left;
@@ -155,40 +167,62 @@ width: 40px;
 height: 40px;
 float: right;
 margin-top: 170px;
+} */
+.m_left{
+  width: 40px;
+  height: 40px;
+  margin-right: 40px;
+  position: absolute;
+  left: 0;
+  top: 200px;
+  
+}
+.m_right{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: 200px;
 }
 
 .m_c_recommend_img  {
-width: 490px;
+position: absolute;
+width: 450px;
 height: 400px;
 background-color: var(--iruri-indigo-color);
 margin-bottom: 34px;
 padding: 20px;
-float: left;
-margin-right: 30px;
+
+margin-right: 100px;
 border-radius: 30px; 
+margin-left: 60px;
 
 }
 
 .m_c_recommend_title {
+position: relative;
 height: 73px;
 margin-bottom: 10px;
-
+display: flex;
 font-family: 'Cafe24Ssurround', sans-serif;
 color: var(--iruri-green-color);
 font-size: 32px;
 float: left;
-position: relative;
-top: 260px;
+flex-direction: column;
+top: 240px;
 }
 
 .m_c_recommend_date {
 font-size: 20px;
-
+position: relative;
 color: var(--iruri-light-gray-color);
 float: left;
 position: relative;
-top: 240px;
+top: 220px;
 }
+ 
+
+
 
 
 /*추천 챌린지 하트*/
@@ -198,7 +232,7 @@ top: 240px;
 width: 48px;
 height: 43px;
 position: relative;
-top: 220px;
+top: 180px;
 float: right;
 }
 

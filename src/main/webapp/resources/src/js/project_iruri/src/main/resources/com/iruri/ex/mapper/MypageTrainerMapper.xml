@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.MypageTrainerMapper">
+<!-- iclass  -->
+	<resultMap type="com.iruri.ex.vo.IClassVO" id="iClassMap">
+		<result property="classId" column="CLASS_ID"/>
+		<result property="classTitle" column="CLASS_TITLE"/>
+		<result property="classContent" column="CLASS_CONTENT"/>
+		<result property="classGoal" column="CLASS_GOAL"/>
+		<result property="classExerciseCount" column="CLASS_EXERCISECOUNT"/>
+		<result property="classStartDate" column="CLASS_STARTDATE"/>
+		<result property="classEndDate" column="CLASS_ENDDATE"/>
+		<result property="classImage" column="CLASS_IMAGE"/>
+		<result property="classLike" column="CLASS_LIKE"/>
+		<result property="classState" column="CLASS_STATE"/>
+		<result property="classHit" column="CLASS_HIT"/>
+		<result property="classJoinMember" column="CLASS_JOINMEMBER"/>
+		<result property="classTrainerInfo" column="CLASS_TRAINERINFO"/>
+		<result property="classTotalMember" column="CLASS_TOTALMEMBER"/>
+		<result property="classPrice" column="CLASS_PRICE"/>
+		<result property="classNeed" column="CLASS_NEED"/>
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="classLevel" column="CLASS_LEVEL"/>
+		<result property="rnum" column="rnum"/>
+		<result property="classTime" column="CLASS_TIME"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+	</resultMap>
+	
+<!-- money -->
+	<resultMap type="com.iruri.ex.vo.MoneyVO" id="moneyMap">
+		<result property="moneyId" column="MONEY_ID"/>
+		<result property="moneyDate" column="MONEY_DATE"/>
+		<result property="moneyInput" column="MONEY_INPUT"/>
+		<result property="moneyOutput" column="MONEY_OUTPUT"/>
+		<result property="payId" column="PAY_ID"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+	</resultMap>
+	
+<!-- pay -->
+    <resultMap type="com.iruri.ex.vo.PayVO" id="payMap">
+		<result property="payId" column="PAY_ID"/>
+		<result property="payState" column="PAY_STATE"/>
+		<result property="payWay" column="PAY_WAY"/>
+		<result property="buyId" column="BUY_ID"/>
+	</resultMap>
+	
+<!-- buy -->
+	<resultMap type="com.iruri.ex.vo.BuyVO" id="buyMap">
+		<result property="buyId" column="BUY_ID"/>
+		<result property="buyRealpay" column="BUY_REALPAY"/>
+		<result property="buyPoint" column="BUY_POINT"/>
+		<result property="buyDate" column="BUY_DATE"/>
+		<result property="payId" column="PAY_ID"/>
+		<result property="classId" column="CLASS_ID"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+		
+		<collection property="iClassList" resultMap="iClassMap">
+		</collection>
+		
+		<collection property="moneyList" resultMap="moneyMap">
+		</collection>
+		
+		<collection property="payList" resultMap="payMap">
+		</collection>
+	
+	</resultMap>
+	
+	<!-- 현재 진행중인 클래스(+페이징)  -->
+	
+	<select id="countMypageTrainerClass" resultType="int">
+	<![CDATA[
+		select count(*) from iClass where user_id = #{userId} and CLASS_ENDDATE >= sysdate
+	]]>
+	</select>
+
+	<!-- 트레이너의 총수익 뽑기  -->
+	<select id="trainerProfit" resultType="int">
+		<![CDATA[
+	SELECT (select sum(buy_realpay + buy_point)
+from buy where class_id in (select class_id from iclass where user_id = #{userId}))
+-
+(select sum(money_output) from money where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id = #{userId})))) FROM DUAL
+		]]>
+	</select>
+
+	<!-- 트레이너의 월별 수익 뽑기  -->
+	<select id="monthProfit" resultType="int">
+		<![CDATA[
+		select (select sum(buy_realpay + buy_point) 
+from buy where class_id in (select class_id from iclass where user_id= #{userId}) 
+and buy_date BETWEEN (SELECT TRUNC(SYSDATE, 'MM') FROM DUAL) 
+and (SELECT LAST_DAY(SYSDATE) FROM DUAL)
+-
+(select sum(money_output) from money where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id=#{userId}) 
+and buy_date BETWEEN (SELECT TRUNC(SYSDATE, 'MM') FROM DUAL) 
+and (SELECT LAST_DAY(SYSDATE) FROM DUAL)
+)))) as thisMonthProfit from dual
+		]]>
+	</select>
+	
+
+	
+	
+	
+
+
+</mapper>

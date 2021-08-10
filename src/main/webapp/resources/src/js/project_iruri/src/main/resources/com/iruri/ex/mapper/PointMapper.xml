@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.PointMapper">
+
+	<resultMap type="com.iruri.ex.vo.PointVO" id="pointMap">
+		<result property="pointId" column="POINT_ID"/>
+		<result property="pointChangedate" column="POINT_CHANGEDATE"/>
+		<result property="pointSavedate" column="POINT_SAVEDATE"/>
+		<result property="pointState" column="POINT_STATE"/>
+		<result property="pointValue" column="POINT_VALUE"/>
+		<result property="pointContent" column="POINT_CONTENT"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="rnum" column="rnum"/>	
+		
+	</resultMap>
+	
+	
+	<select id="savepoint" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			sum(point_value)
+		FROM
+			ipoint
+		WHERE
+			user_id = #{userId} and point_state='save'
+		
+			
+		]]> 
+	</select>
+	
+		<select id="appointedpoint" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			sum(point_value)
+		FROM
+			ipoint
+		WHERE
+			user_id = #{userId} and point_state='appointed'
+		
+			
+		]]> 
+	</select>
+	
+	
+			<select id="usepoint" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			sum(point_value)
+		FROM
+			ipoint
+		WHERE
+			user_id = #{userId} and point_state='use'
+		
+			
+		]]> 
+	</select>
+
+
+			<select id="totalpoint" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT DISTINCT 
+		((select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'save') - (select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'use')) as total_point
+			FROM ipoint 
+			WHERE user_id = #{userId}
+		
+			
+		]]> 
+	</select>
+	
+	
+	
+	
+		<select id="pointList" parameterType="hashmap" resultMap="pointMap">
+		<![CDATA[
+  	SELECT *  FROM (
+    	SELECT ROWNUM AS RNUM, A.* FROM (
+        	SELECT * FROM IPOINT where user_id = #{userId} order by POINT_SAVEDATE asc
+             ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+         ) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
+			
+		]]> 
+	</select>
+	
+		<select id="total" resultType="int">
+	<![CDATA[
+		select count(*) from board where user_id = #{userId}
+	]]>
+	</select>
+	
+
+
+
+</mapper>

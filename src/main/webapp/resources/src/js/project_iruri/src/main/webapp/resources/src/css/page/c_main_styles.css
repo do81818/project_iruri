@@ -1,0 +1,622 @@
+@charset "utf-8";
+
+/*----------공통사항---------*/
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url('../font/NanumBarunGothic.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('../font/Cafe24Ssurround.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('../font/Cafe24SsurroundAir.ttf');
+    /* format('truetype'); */
+}
+
+ :root {
+    /* font-size */
+    --header-gnb-font-size: 22px;
+    --header-side-nav-font-size: 12px;
+    --footer-title-font-size: 20px;
+    --footer-normal-font-size: 13px;
+    /* colors */
+    --iruri-red-color: #ff0000;
+    --iruri-yellow-color: #ffeb00;
+    --iruri-blue-color: #185abd;
+    --iruri-light-blue-color: #02a3ff;
+    --iruri-green-color: #80ff48;
+    --iruri-indigo-color: #0a1931;
+    --iruri-dark-gray-color: #666;
+    --iruri-gray-color: #999;
+    --iruri-light-gray-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NanumBarunGothic', sans-serif;
+}
+
+.c_container {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+
+/*---------------------------------------------*/
+
+
+/*챌린지 메인 카테고리 글씨*/
+
+.c_category {
+    line-height: 134px;
+    clear: both;
+    height: 134px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 28px;
+    color: var(--iruri-blue-color);
+}
+
+
+/*추천챌린지 글씨*/
+
+.c_text {
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 20px;
+    color: var(--iruri-blue-color);
+    clear: both;
+    width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 17px;
+}
+
+
+/*추천챌린지 이미지*/
+
+.c_recommend {
+    display: inline-block;
+    clear: both;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.c_recommend_img {
+    width: 565px;
+    height: 440px;
+    background: url("/ex/resources/src/img/icon/565-440.png") no-repeat;
+    margin-bottom: 94px;
+    padding: 45px;
+    float: left;
+    margin-right: 35px;
+    border-radius: 30px;
+}
+
+.c_recommend_title {
+    height: 73px;
+    margin-bottom: 15px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    color: var(--iruri-green-color);
+    font-size: 32px;
+    float: left;
+    position: relative;
+    top: 240px;
+}
+
+.c_recommend_date {
+    font-size: 20px;
+    color: var(--iruri-light-gray-color);
+    float: left;
+    position: relative;
+    top: 240px;
+}
+
+
+/*추천 챌린지 하트*/
+
+.c_heart .heart_label {
+    width: 48px;
+    height: 43px;
+    position: relative;
+    top: 220px;
+    float: right;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+.c_heart input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    background: url("/ex/resources/src/img/icon/heart_gray.png") center/48px 43px no-repeat;
+}
+
+.c_heart input[type=checkbox]:checked+label {
+    background-image: url("/ex/resources/src/img/icon/heart_red.png");
+}
+
+
+/*전체챌린지, 관심챌린지, 지난챌린지 글씨*/
+
+.c_main_tab {
+    margin-bottom: 53px;
+    text-align: center;
+}
+
+.c_like_last {
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 24px;
+    color: var(--iruri-blue-color);
+    display: inline-block;
+    margin: 0 20px;
+    text-decoration: none;
+}
+
+.c_like_last label {
+    display: inline-block;
+    margin-right: 55px;
+    cursor: pointer;
+    color: var(--iruri-gray-color);
+}
+
+.c_like_last input[type="radio"] {
+    display: none;
+}
+
+.c_like_last input:checked+label {
+    color: var(--iruri-blue-color);
+}
+
+
+/*관심챌린지 없을때 문구*/
+
+.c_list_not {
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 24px;
+    color: var(--iruri-blue-color);
+    display: inline-block;
+    margin: 0 20px;
+    text-decoration: none;
+    position: relative;
+    left : 450px;
+}
+
+
+/*챌린지 검색창*/
+
+.c_search {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    /*height: 50px;*/
+    margin-bottom: 53px;
+    clear: both;
+    text-align: center;
+}
+
+
+/*인풋박스 (검색창)*/
+
+.c_search_box {
+    display: inline-block;
+    border-radius: 24px;
+    border: 1px solid var(--iruri-light-gray-color);
+    padding: 14px 20px;
+    width: 487px;
+    height: 48px;
+    box-sizing: border-box;
+    padding-left: 40px;
+    margin-right: 20px;
+}
+
+
+/*검색할때 안에 글씨쓰는곳*/
+
+.c_search_box input[type=text] {
+    font-size: 16.5px;
+    color: var(--iruri-indigo-color);
+    width: 390px;
+    height: 25 px;
+    resize: none;
+    font-family: 'NanumBarunGothic';
+    outline: none;
+    border: none;
+    position: relative;
+    right: 20px;
+    bottom: 3.5px;
+}
+
+
+/*돋보기 아이콘*/
+
+.search_icon {
+    display: inline-block;
+    cursor: pointer;
+    width: 19px;
+    height: 19px;
+    background: url("/ex/resources/src/img/icon/search.png") no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+
+/*챌린지 정렬(셀렉트박스)*/
+
+.select_wrap {
+    display: inline-block;
+}
+
+.select {
+    text-align: center;
+    width: 126px;
+    height: 48px;
+    color: var(--iruri-blue-color);
+    padding: 11px 7px;
+    background: white url("/ex/resources/src/img/icon/select_box_arrow.png") right/16px 16px no-repeat scroll;
+    border-bottom: 1px solid var(--iruri-blue-color);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.select_ul {
+    display: none;
+    margin-top: 11px;
+    list-style-type: none;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    border: 1px solid var(--iruri-blue-color);
+    padding: 11px 7px;
+    box-shadow: 7px 7px 13px rgba(0, 0, 0, 0.3);
+    width: 126px;
+    text-align: left;
+    background-color: white;
+    position: absolute;
+}
+
+.select_ul li {
+    list-style-type: none;
+    padding: 11px 13px;
+    z-index: 2;
+}
+
+.select_ul li:hover,
+.select_ul li.selected {
+    background-color: var(--iruri-yellow-color);
+    color: var(--iruri-blue-color);
+}
+
+
+/*챌린지 개설버튼*/
+
+.c_make_button {
+    width: 140px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    font-size: 16px;
+    line-height: 48px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.c_make_noLogin{
+	width: 140px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--iruri-light-gray-color);
+    color: var(--iruri-yellow-color);
+    font-size: 16px;
+    line-height: 48px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+
+/*챌린지 리스트*/
+
+.c_list {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.c_list_detail {
+    display: inline-block;
+    width: 360px;
+    margin-bottom: 100px;
+    margin-left: 18.5px;
+    margin-right: 18.5px;
+}
+
+.c_list_detail .c_list_img img {
+    display: inline-block;
+    text-align: center;
+    width: 360px;
+    height: 250px;
+    border-radius: 30px;
+    background: url("/ex/resources/src/img/icon/360-250.png") no-repeat;
+    margin-bottom: 28px;
+}
+
+.c_list_title {
+    height: 66px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 26px;
+    line-height: 37px;
+    color: var(--iruri-blue-color);
+    margin-bottom: 28px;
+}
+
+.c_list_date {
+    font-size: 18px;
+    color: var(--iruri-gray-color);
+    margin-bottom: 18px;
+}
+
+.data_tags {
+    margin-right: 2px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.data_tag_blue {
+    display: inline-block;
+    font-size: 13px;
+    color: white;
+    height: 25px;
+    line-height: 25px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-right: 3px;
+    background-color: var(--iruri-light-blue-color);
+}
+
+.c_list_person {
+    font-size: 17px;
+    color: var(--iruri-gray-color);
+    margin-top: 18px;
+}
+
+
+/*챌린지 리스트 하트*/
+
+.c_list_heart .heart_label {
+    width: 43px;
+    height: 43px;
+    position: relative;
+    bottom: 40px;
+    float: right;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+.c_list_heart input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    background: url("/ex/resources/src/img/icon/heart_gray.png") center/43px 43px no-repeat;
+}
+
+.c_list_heart input[type=checkbox]:checked+label {
+    background-image: url("/ex/resources/src/img/icon/heart_red.png");
+}
+
+.c_list_heart .heart_nologin_img{
+	width: 43px;
+    height: 43px;
+    position: relative;
+    bottom: 40px;
+    float: right;
+    display: inline-block;
+}
+
+/*아이콘*/
+
+.iruri_level_icon {
+    background: url("/ex/resources/src/img/icon/ex_level.png") no-repeat;
+    display: inline-block;
+    background-size: cover;
+    height: 15px;
+    width: 15px;
+}
+
+.iruri_time_icon {
+    background: url("/ex/resources/src/img/icon/ex_time.png") no-repeat;
+    display: inline-block;
+    background-size: cover;
+    height: 15px;
+    width: 16px;
+}
+
+
+/*페이징*/
+
+.page_nation {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 110px;
+    justify-content: center;
+}
+
+.page_nation a {
+    display: block;
+    margin: 0 10px;
+    float: left;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    text-decoration: none;
+}
+
+.page_nation .prev {
+    position: relative;
+    top: 9px;
+    background: transparent url("/ex/resources/src/img/icon/icon_page_arrow_left.png") no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-right: 7px;
+}
+
+.page_nation .next {
+    position: relative;
+    top: 9px;
+    background: transparent url("/ex/resources/src/img/icon/icon_page_arrow_right.png") no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-left: 7px;
+}
+
+.page_nation a.active {
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    border-radius: 18px;
+}
+
+
+/*챌린지 개설 경고문 모달*/
+
+.c_make_modal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.c_make_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    position: fixed;
+    padding: 44px 70px;
+    width: 700px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+}
+
+.c_modal_close>img {
+    float: right;
+    width: 28px;
+    cursor: pointer;
+}
+
+.c_make_modal_start>form {
+    width: 100%;
+}
+
+.c_make_modal_title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.c_make_modal_label {
+    line-height: 35px;
+    margin-right: 25px;
+}
+
+.c_make_modal input[type=checkbox] {
+    display: none;
+}
+
+.c_make_modal input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 30px;
+    background: url("/ex/resources/src/img/icon/check_no.png") left/22px no-repeat;
+}
+
+.c_make_modal input[type=checkbox]:checked+label {
+    background-image: url("/ex/resources/src/img/icon/check_yes.png");
+}
+
+.c_make_modal_ul {
+    margin: 0 80px;
+}
+
+.input_check li {
+    list-style: none;
+    margin: 0 0 25px 25px;
+    position: relative;
+    top: 15px;
+}
+
+
+/*취소, 개설 버튼*/
+
+.modal_button {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.modal_button button {
+    width: 190px;
+    height: 55px;
+    border-radius: 27px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-right: 22px;
+}
+
+.c_make_modal_cancle {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+.c_make_modal_submit {
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+}
+
+.c_make_modal_submit:disabled {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
