@@ -8,6 +8,7 @@ import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.ProfitVO;
+import com.iruri.ex.vo.trainerUserManagementVO;
 
 public interface MypageTrainerService {
     // 운영중인 클래스 갯수
@@ -22,5 +23,7 @@ public interface MypageTrainerService {
     // 트레이너 수익 리스트
     int getTotal_mypageTrainerProfit(Criteria cri, int userId);
     List<ProfitVO> profitList(Criteria cri, int userId);
+
+    List<trainerUserManagementVO> trainerUserManagement(int userId);
     
 }

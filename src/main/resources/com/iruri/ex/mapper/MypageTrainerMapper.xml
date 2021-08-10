@@ -77,9 +77,36 @@
 		<result property="rnum" column="rnum"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
+
+	
+	<!-- trainerUserManagementVO -->
+	<resultMap type="com.iruri.ex.vo.trainerUserManagementVO" id="trainerUserManagementMap">
+		<result property="classId" column="CLASS_ID"/>
+		<result property="classTitle" column="CLASS_TITLE"/>
+		<result property="classEndDate" column="CLASS_ENDDATE"/>
+		<result property="classState" column="CLASS_STATE"/>
+		<result property="classJoinMember" column="CLASS_JOINMEMBER"/>
+		<result property="rnum" column="rnum"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+	</resultMap>
+	
+	<!-- 회원관리 리스트  -->
+	<select id="trainerUserManagement" resultMap="trainerUserManagementMap">
+	<![CDATA[
+		select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate, c.class_state 
+from iuser, 
+(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, 
+iclass.class_joinmember, iclass.class_enddate, iclass.class_state 
+from buy,iclass,pay
+where buy.class_id = iclass.class_id and iclass.user_id=#{userId} and pay.buy_id = buy.buy_id
+and pay.pay_state='pay'
+order by buy.user_id)c 
+where c.user_id = iuser.user_id
+order by class_id desc
+	]]>
+	</select>
 	
 	<!-- 현재 진행중인 클래스(+페이징)  -->
-	
 	<select id="countMypageTrainerClass" resultType="int">
 	<![CDATA[
 		select count(*) from iClass where user_id = #{userId} and CLASS_ENDDATE >= sysdate
@@ -125,7 +152,7 @@ order by buy.buy_date desc
 	]]>
 	</select>
 	
-		<!-- 트레이너의 월별 수익 뽑기 + 페이징 -->
+	<!-- 트레이너의 월별 수익 뽑기 + 페이징 -->
 	<select id="profitList" parameterType="HashMap" resultMap="ProfitMap">
 		<![CDATA[
 				SELECT *

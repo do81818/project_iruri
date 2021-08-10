@@ -9,6 +9,7 @@ import com.iruri.ex.mapper.MypageTrainerMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.ProfitVO;
+import com.iruri.ex.vo.trainerUserManagementVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -46,6 +47,12 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     @Override
     public List<ProfitVO> profitList(Criteria cri, int userId) {
         return mypageTrainerMapper.profitList(cri, userId);
+    }
+
+    @Override
+    public List<trainerUserManagementVO> trainerUserManagement(int userId) {
+        
+        return mypageTrainerMapper.trainerUserManagement(userId);
     }
    
 

@@ -26,6 +26,7 @@ import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.MoneyVO;
+import com.iruri.ex.vo.trainerUserManagementVO;
 import com.iruri.ex.vo.ProfitVO;
 
 import lombok.extern.log4j.Log4j;
@@ -54,13 +55,13 @@ public class MypageTrainerController {
         // -> 리턴한 뷰에서 모델을 인식할 수 있다.
         model.addAttribute("user", vo);
 
-        
-        List<IClassVO> classList = iClassService.classList(vo.getUserId());
-        // model.addAttribute("classList", classList);
-        
-        log.info(classList.get(0).getExerciseKindList().size());
-         
-
+        /*
+         * List<IClassVO> classList = iClassService.classList(vo.getUserId()); //
+         * model.addAttribute("classList", classList);
+         * 
+         * log.info(classList.get(0).getExerciseKindList().size());
+         * 
+         */
         return "mypage_trainer/mypage_trainer_main";
     }
 
@@ -177,18 +178,41 @@ public class MypageTrainerController {
 
         return ResponseEntity.ok(result);
     }
-
+    // 회원관리 ajax
+    @RequestMapping("/ajax/mypage/userManagement")
+    public String userManagementAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("userManagementAjax() ... ");
+        // 유저정보 받기
+        int userId = vo.getUserId();
+        
+        Criteria cri = new Criteria(pageNum, 10);
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int total = mypageTrainerService.getTotal_mypageTrainerProfit(cri, userId);
+        
+        //List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(cri, userId);
+   
+      //  model.addAttribute("trainerUserManagement", trainerUserManagement);
+        
+        return ResponseEntity.ok(result);
+    }
     // 회원관리
     @RequestMapping("/mypage/trainer/userManagement")
-    public String userManagement(Principal principal, Model model) {
+    public String userManagement(@CurrentUser IUserVO vo, Model model) {
         log.info("userManagement() ... ");
 
         // 유저정보 받기
-        IUserVO vo = iUserService.selectOne(principal.getName());
         model.addAttribute("user", vo);
+        
         int userId = vo.getUserId();
         
-
+        List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(userId);
+   
+        model.addAttribute("trainerUserManagement", trainerUserManagement);
+        
         return "mypage_trainer/mypage_trainer_user_management";
     }
+    
+   
+    
 }
