@@ -21,13 +21,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class trainerUserManagementVO {
+    
     private int classId;
     private String classTitle;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date classEndDate;
     private String classState;
     private int classJoinMember;
-    private IUserVO iUserVO; // userId
     private int rnum;
-
+    
+    private List<IUserVO> iUserList;
+    private List<ICommentVO> iCommentList;
+    
 }
+
+

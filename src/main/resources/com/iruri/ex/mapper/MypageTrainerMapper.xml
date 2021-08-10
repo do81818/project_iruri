@@ -87,24 +87,42 @@
 		<result property="classState" column="CLASS_STATE"/>
 		<result property="classJoinMember" column="CLASS_JOINMEMBER"/>
 		<result property="rnum" column="rnum"/>
+		
+		<collection property="iUserList" resultMap="iUserMap">
+		</collection>
+		
+		<collection property="iCommentList" resultMap="iCommentMap">
+		</collection>
+	
+	</resultMap>
+	
+	<!-- IUserVO -->
+	<resultMap type="com.iruri.ex.vo.IUserVO" id="iUserMap">
+		<result property="userId" column="user_id"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userNickname" column="user_nickname"/>
+		<result property="userName" column="user_name"/>
+		<result property="userPhone" column="user_phone"/>
+		<result property="userSigndate" column="user_signdate"/>
+		<result property="userPoint" column="user_point"/>
+		<result property="userBlackList" column="user_blacklist"/>
+		<result property="userBlaskListReason" column="user_blacklist_reason"/>
+	</resultMap>
+	
+	<!-- ICommentVO -->
+	<resultMap type="com.iruri.ex.vo.ICommentVO" id="iCommentMap">
+		<result property="commentId" column="user_id"/>
+		<result property="commentDate" column="user_email"/>
+		<result property="commentContent" column="user_pw"/>
+		<result property="userNickname" column="user_nickname"/>
+		<result property="userPhone" column="user_name"/>
+		<result property="classId" column="user_phone"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
 	
-	<!-- 회원관리 리스트  -->
-	<select id="trainerUserManagement" resultMap="trainerUserManagementMap">
-	<![CDATA[
-		select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate, c.class_state 
-from iuser, 
-(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, 
-iclass.class_joinmember, iclass.class_enddate, iclass.class_state 
-from buy,iclass,pay
-where buy.class_id = iclass.class_id and iclass.user_id=#{userId} and pay.buy_id = buy.buy_id
-and pay.pay_state='pay'
-order by buy.user_id)c 
-where c.user_id = iuser.user_id
-order by class_id desc
-	]]>
-	</select>
+	
+	
 	
 	<!-- 현재 진행중인 클래스(+페이징)  -->
 	<select id="countMypageTrainerClass" resultType="int">
@@ -166,6 +184,52 @@ FROM
         where buy.class_id=iclass.class_id and iclass.user_id = #{userId}
         order by buy.buy_date desc
     ) C
+     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+		]]>
+	</select>
+	
+	
+	<!-- 회원관리 페이징 -->
+	<select id="getTotal_trainerUserManagement" resultType="int">
+	<![CDATA[
+		select count(*)
+from (
+select ids.class_id
+from (
+select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate 
+from iuser, 
+(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, iclass.class_joinmember, iclass.class_enddate 
+from buy,iclass,pay
+where buy.class_id = iclass.class_id and iclass.user_id= #{userId} and pay.buy_id = buy.buy_id
+and pay.pay_state='pay'
+order by buy.user_id)c 
+where c.user_id = iuser.user_id) ids
+group by ids.class_id) li
+	]]>
+	</select>
+	
+	<!-- 회원관리 + 페이징 -->
+	<select id="trainerUserManagement" parameterType="HashMap" resultMap="trainerUserManagementMap">
+		<![CDATA[
+				SELECT *
+FROM
+(
+    SELECT ROWNUM rn, bc.*
+    FROM
+    (
+        select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate, c.class_state 
+from iuser, 
+(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, 
+iclass.class_joinmember, iclass.class_enddate, iclass.class_state 
+from buy,iclass,pay
+where buy.class_id = iclass.class_id and iclass.user_id=#{userId} and pay.buy_id = buy.buy_id
+and pay.pay_state='pay'
+order by buy.user_id)c 
+where c.user_id = iuser.user_id
+order by class_id desc
+    ) bc
      WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}

@@ -24,6 +24,9 @@ public interface MypageTrainerService {
     int getTotal_mypageTrainerProfit(Criteria cri, int userId);
     List<ProfitVO> profitList(Criteria cri, int userId);
 
-    List<trainerUserManagementVO> trainerUserManagement(int userId);
+    // 회원관리
+    int getTotal_trainerUserManagement(Criteria cri, int userId);
+    List<trainerUserManagementVO> trainerUserManagement(Criteria cri, int userId);
+    
     
 }

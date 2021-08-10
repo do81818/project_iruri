@@ -37,6 +37,7 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
         return mypageTrainerMapper.monthProfit(userId);
     }
     
+    // 수익
     @Override
     public int getTotal_mypageTrainerProfit(Criteria cri, int userId) {
         log.info("MypageTrainerServiceImpl");
@@ -48,11 +49,16 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     public List<ProfitVO> profitList(Criteria cri, int userId) {
         return mypageTrainerMapper.profitList(cri, userId);
     }
+    
+    // 회원관리
+    @Override
+    public List<trainerUserManagementVO> trainerUserManagement(Criteria cri, int userId) {
+        return mypageTrainerMapper.trainerUserManagement(cri, userId);
+    }
 
     @Override
-    public List<trainerUserManagementVO> trainerUserManagement(int userId) {
-        
-        return mypageTrainerMapper.trainerUserManagement(userId);
+    public int getTotal_trainerUserManagement(Criteria cri, int userId) {
+        return mypageTrainerMapper.getTotal_trainerUserManagement(cri, userId);
     }
    
 

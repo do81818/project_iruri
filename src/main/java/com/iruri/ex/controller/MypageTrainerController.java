@@ -178,24 +178,7 @@ public class MypageTrainerController {
 
         return ResponseEntity.ok(result);
     }
-    // 회원관리 ajax
-    @RequestMapping("/ajax/mypage/userManagement")
-    public String userManagementAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
-        log.info("userManagementAjax() ... ");
-        // 유저정보 받기
-        int userId = vo.getUserId();
-        
-        Criteria cri = new Criteria(pageNum, 10);
-        HashMap<String, Object> result = new HashMap<>();
-        
-        int total = mypageTrainerService.getTotal_mypageTrainerProfit(cri, userId);
-        
-        //List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(cri, userId);
-   
-      //  model.addAttribute("trainerUserManagement", trainerUserManagement);
-        
-        return ResponseEntity.ok(result);
-    }
+    
     // 회원관리
     @RequestMapping("/mypage/trainer/userManagement")
     public String userManagement(@CurrentUser IUserVO vo, Model model) {
@@ -206,11 +189,35 @@ public class MypageTrainerController {
         
         int userId = vo.getUserId();
         
-        List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(userId);
+       // List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(userId);
    
-        model.addAttribute("trainerUserManagement", trainerUserManagement);
+      //  model.addAttribute("trainerUserManagement", trainerUserManagement);
         
         return "mypage_trainer/mypage_trainer_user_management";
+    }
+    
+    
+    // 회원관리 ajax
+    @ResponseBody
+    @GetMapping("/ajax/mypage/userManagement")
+    public ResponseEntity<HashMap<String, Object>> userManagementAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("userManagementAjax() ... ");
+        
+        Criteria cri = new Criteria(pageNum, 3);
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        int total = mypageTrainerService.getTotal_trainerUserManagement(cri, userId);
+        
+        List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(cri, userId);
+       
+        result.put("trainerUserManagement", trainerUserManagement);
+        
+        log.info("oo"+trainerUserManagement);
+        
+        result.put("pageMaker", new PageVO(cri, total));
+
+        return ResponseEntity.ok(result);
     }
     
    
