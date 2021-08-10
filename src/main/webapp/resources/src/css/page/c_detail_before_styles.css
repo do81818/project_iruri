@@ -578,7 +578,7 @@ td {
     padding: 44px 40px;
 }
 
-.c_parti_modal_content>form>ul {
+.c_parti_modal_content>.c_parti_modal_div>ul {
     list-style: none;
     font-size: 16px;
     line-height: 25px;

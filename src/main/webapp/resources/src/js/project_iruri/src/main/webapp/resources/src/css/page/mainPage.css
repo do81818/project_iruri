@@ -1,0 +1,240 @@
+.title__plus {
+  width: 50px;
+  height: 25px;
+  background-image: url(/ex/resources/src/img/icon/plus.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+}
+
+/* 배너 */
+.mainPage__banner {
+  width: 1200px;
+  margin: 0 auto;
+  max-height: 680px;
+}
+
+/* 챌린지 */
+.mainPage__challenge {
+  background-color: var(--iruri-blue-color);
+  padding: 55px 0 50px;
+}
+
+.challenge__info {
+  width: 1250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.challenge__title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 36px;
+  font-family: var(--Cafe24Ssurround);
+  color: var(--iruri-green-color);
+}
+
+.challenge__subTitle {
+  font-family: var(--Cafe24SsurroundAir);
+  color: white;
+  padding: 15px 0 30px;
+  font-size: 24px;
+}
+
+.challenge__btn {
+  background-color: inherit;
+  width: 45px;
+  height: 40px;
+  position: relative;
+  bottom: 4px;
+}
+
+.challenge__btn.prev {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_left.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+}
+
+.challenge__btn.next {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_right.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 15px;
+}
+
+.challenge__wrap {
+  width: 1250px;
+  height: 575px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.challenge__slides {
+  position: relative;
+  width: 360px;
+  height: 540px;
+  transition: left 0.5s ease-in-out;
+  left: 0;
+  margin-left: 25px;
+}
+
+.challenge__slides .cardConteiner {
+  position: absolute;
+  width: 360px;
+  height: 536px;
+}
+
+/* PT 클래스 */
+.mainPage__ptClass {
+  background-color: var(--iruri-yellow-color);
+  padding: 55px 0 50px;
+}
+
+.ptClass__info {
+  width: 1250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.ptClass__title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 36px;
+  font-family: var(--Cafe24Ssurround);
+  color: var(--iruri-blue-color);
+}
+
+.ptClass__subTitle {
+  font-family: var(--Cafe24SsurroundAir);
+  color: var(--iruri-indigo-color);
+  padding: 15px 0 30px;
+  font-size: 24px;
+}
+
+.ptClass__btn {
+  background-color: inherit;
+  width: 45px;
+  height: 40px;
+  position: relative;
+  bottom: 4px;
+}
+
+.ptClass__btn.prev {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_left.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+}
+
+.ptClass__btn.next {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_right.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 15px;
+}
+
+.ptClass__wrap {
+  width: 1250px;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.ptClass__slides {
+  position: relative;
+  width: 360px;
+
+  height: 567.5px;
+  transition: left 0.5s ease-in-out;
+  left: 0;
+  margin-left: 25px;
+}
+
+.ptClass__slides .cardConteiner {
+  position: absolute;
+  width: 360px;
+  height: 565.5px;
+}
+
+/* 운동영상 */
+.mainPage__exerciseVideo {
+  padding: 55px 0 50px;
+}
+
+.exerciseVideo__info {
+  width: 1250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.exerciseVideo__title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 36px;
+  font-family: var(--Cafe24Ssurround);
+  color: var(--iruri-blue-color);
+}
+
+.exerciseVideo__subTitle {
+  font-family: var(--Cafe24SsurroundAir);
+  color: var(--iruri-indigo-color);
+  padding: 15px 0 30px;
+  font-size: 24px;
+}
+
+.exerciseVideo__btn {
+  background-color: inherit;
+  width: 45px;
+  height: 40px;
+  position: relative;
+  bottom: 4px;
+}
+
+.exerciseVideo__btn.prev {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_left.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+}
+
+.exerciseVideo__btn.next {
+  background-image: url(/ex/resources/src/img/icon/arrow_red_right.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 15px;
+}
+
+.exerciseVideo__wrap {
+  width: 1250px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.exerciseVideo__slides {
+  position: relative;
+  width: 360px;
+
+  height: 525px;
+  transition: left 0.5s ease-in-out;
+  left: 0;
+  margin-left: 25px;
+}
+
+.exerciseVideo__slides .cardConteiner {
+  position: absolute;
+  width: 360px;
+  height: 502px;
+}

@@ -1,0 +1,361 @@
+ .container content {
+    position: relative;
+  }
+  
+  .m_information_box{
+    margin: 30px;
+    padding: 30px 33px;
+    font-family: 'Cafe24SsurroundAir';
+    display: flex;
+  }  
+  .m_information_box>#m_userinformation_box{
+    flex: 5;
+  } 
+  .m_information_box>#m_userboard_box{
+    flex: 4;
+  } 
+  .m_information_box>#m_userpoint_box{
+    flex: 4;
+  } 
+  .m_information_box>#m_userchanllenge_box{
+    flex: 3;
+  } 
+  .m_information_box>#um_serclass_box{
+    flex: 3;
+  } 
+  /* userinformation_box */
+  .m_information_box>#m_userinformation_box>#m_nickname{
+    font-family: 'Cafe24Ssurround';
+    font-size:28px;
+    color:var(--iruri-blue-color);
+  }
+  button.m_information_change{
+    /* -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none; */
+    font-size: 12px;
+    color: var(--iruri-blue-color);
+    padding:7px 13px;
+    border: 1px solid var(--iruri-blue-color);
+    background-color: white;
+    border-radius: 14px;
+    font-family: 'Cafe24SsurroundAir';
+  }
+  .m_information_box>#m_userinformation_box>#m_useremail{
+    padding-top: 40px;
+  }
+  
+  /* userboard_box */
+  #m_userboard_box>#m_userboard{
+    padding-left: 80px;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    color: var(--iruri-gray-color); 
+  }
+  #m_userboard_box>#m_userboard_number{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-light-blue-color);
+    padding-left: 70px;
+    padding-top: 40px;
+  }
+  /* userpoint_box */
+  #m_userpoint_box>#m_userpoint{
+    padding-left: 60px;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    color: var(--iruri-gray-color); 
+  }
+  #m_userpoint_box>#m_userpoint_number{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-light-blue-color);
+    padding-left:30px;
+    padding-top: 40px;
+  }
+  /* userchallenge */
+  #m_userchanllenge_box>#m_userchanllenge{
+    padding-left: 35px;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 15px;
+    color: var(--iruri-gray-color);
+  }
+  #m_userchanllenge_box>#m_userchanllenge_number{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-light-blue-color);
+    padding-left:65px;
+    padding-top: 40px;
+  }
+  
+  /* userclass */
+  #m_userclass_box>#m_userclass{
+    padding-left:  60px;
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+  }
+  #m_userclass_box>#m_userclass_number{
+    font-family: 'Cafe24SsurroundAir';
+    font-size: 50px;
+    color: var(--iruri-light-blue-color);
+    padding-left:100px;
+    padding-top: 40px;
+  }
+  
+  .border1{
+    border:0.5px solid var(--iruri-light-gray-color);
+  }
+
+/* -----------신체정보-------------- */
+/* bodyinformation_box */
+.m_body_box{
+  margin: 30px;
+  padding: 30px 33px;
+  padding-bottom: 1px;
+  font-family: 'Cafe24SsurroundAir';
+  display: flex;
+}
+
+.m_body_box>.m_userbody_box{
+  flex: 6;
+}
+.m_body_box>.m_height_box{
+  flex: 9;
+}
+.m_height_box>ul{
+  position: relative;
+  display: flex;
+}
+.m_body_box>.m_bmi_box{
+  flex: 5;
+}
+
+.m_userbody_box>#m_title{
+  font-family: 'Cafe24Ssurround';
+  font-size:20px;
+  color:var(--iruri-blue-color);
+} 
+button.m_update{
+  /* font-size: 9px;
+  color: var(--iruri-blue-color);
+  padding:6px 11px;
+  border: 1px solid var(--iruri-blue-color);
+  border-radius: 12px; */
+  background-color: white;
+  font-size: 11px;
+  color: var(--iruri-blue-color);
+  padding: 6px 13px;
+  border: 1px solid var(--iruri-blue-color);
+  border-radius: 14px;
+  font-family: 'Cafe24SsurroundAir';
+}
+.m_userbody_box>ul{
+  font-size: 14px;
+  padding-top: 28px;
+
+  
+}
+button#addData{
+  border:0;
+  outline: 0;
+  background-color: white;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color: var(--iruri-indigo-color);
+  padding-left: 50px;
+
+}
+button#addData1{
+  border:0;
+  outline: 0;
+  background-color: white;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color: var(--iruri-indigo-color);
+  padding-left: 35px;
+
+
+}
+.m_gender{
+  padding-top: 10px;
+ font-size: 14px;
+ color: var(--iruri-gray-color);
+ position: relative;
+ top: 30px;
+ left: 1px;
+}
+.m_usergender{
+  padding-top: 10px;
+ font-size: 14px;
+ position: relative;
+ top: -64px;
+ left: 145px;
+  color:var(--iruri-blue-color)
+}
+
+/* #monthheight{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color: var(--iruri-indigo-color);
+  padding-left: 3px;
+} */
+/* #yearheight{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color: var(--iruri-indigo-color);
+  padding-left: 10px;
+} */
+
+#m_bmi{
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color:var(--iruri-gray-color);
+}
+#m_bmiimage{
+  padding-top: 20px;
+  padding-left: 20px;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color:var(--iruri-gray-color);
+  position: relative;
+ top: -82px;
+ left: 100px;
+}
+#m_bminumber{
+  padding-top: 40px;
+  padding-left: 10px;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 50px;
+  color: var(--iruri-light-blue-color);
+}
+
+#m_bmicontent{
+  padding-top: 20px;
+  padding-left: 20px;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 12px;
+  color:var(--iruri-gray-color);
+
+}
+
+.border1{
+  border:0.5px solid var(--iruri-light-gray-color)
+}
+
+/* 캘린더.. */
+#cal_tab>.calendar{
+  margin: 20px;
+  padding: 0px;
+  border-collapse:collapse;
+}
+.cal_top{
+  padding:30px 33px;
+  text-align: center;
+  font-size: 30px;
+  margin: 20px;
+  padding: 30px 33px;
+  
+}
+.cal{
+  text-align: center; 
+  font-family:'Cafe24Ssurround';
+}
+.m_myschedule{
+  text-align:center;
+  text-align: left;
+  font-size: 20px;
+  font-family:'Cafe24Ssurround';
+  margin-left: 60px;
+  color: var(--iruri-dark-gray-color);
+}
+.m_myschedule_ch{
+  padding: 5px 6px;
+  font-size: 12px;
+  color: white;
+  background-color:var(--iruri-blue-color);
+  font-weight: bold;
+  border-radius:10px;
+ height: 20px;
+ font-family:'Cafe24SsurroundAir';
+margin-left: 1014px;
+ margin-right: 48px;
+
+
+}
+
+.m_myschedule_cl{
+  padding: 5px 6px;
+  margin-top: 5px;
+  font-size: 12px;
+  color: white;
+  background-color:var(--iruri-yellow-color);
+  font-weight: bold;
+  border-radius:10px;
+ height: 20px;
+ font-family:'Cafe24SsurroundAir';
+ margin-left: 1014px;
+ margin-right: 48px;
+ 
+}
+table.calendar{
+  border: 1px solid black;
+  display: inline-table;
+  text-align: left;
+}
+table.calendar td{
+  vertical-align: top;
+  border: 0.5px solid black;
+  margin: 0px;
+  padding:0px;
+  width: 200px;
+}
+table.calendar tr th{
+  background-color:var(--iruri-blue-color);
+ text-align:center;
+  font-size: 12px;
+  color:var(--iruri-yellow-color);
+  height: 20px;
+  vertical-align:bottom;
+
+}
+
+.cal-schedule{
+  margin: 15px;
+  padding: 0px;
+  font-family: 'Cafe24SsurroundAir';
+  font-size: 15px;
+
+}
+.cal_top>#cal_top_month{
+  font-size: 25px;
+  font-family: 'Cafe24Ssurround';
+  color:var(--iruri-blue-color);
+}
+
+
+.cal_top>#moveNextMonth{
+  font-size: 20px;
+  font-family: 'Cafe24SsurroundAir';
+  color:var(--iruri-red-color);
+  margin-left: 15px;
+}
+.cal_top>#movePrevMonth{
+  font-size: 20px;
+  font-family: 'Cafe24SsurroundAir';
+  color:var(--iruri-red-color);
+  margin-right: 15px;
+}
+/* #nectMonth>.cal_tit{
+  margin-left: 10px;
+} */
+
+
+canvas#myChart{
+  position: relative;
+  top: 5px;
+ left: 40px;
+
+}
+
