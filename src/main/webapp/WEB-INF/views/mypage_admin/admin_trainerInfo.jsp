@@ -17,7 +17,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+
 <%@ include file="../include/static.jsp"%>
+
 <!-- 경로를 확인해 주세요 -->
 <title>관리자페이지</title>
 <!-- 페이지 이름을 적어주세요 -->
@@ -85,16 +89,22 @@
 			<tr>
 				<td>블랙리스트여부</td>
 				<td>
-					<form class="memberInfo_balackListForm">
+					<form name="memberInfo_balackListForm"
+						class="memberInfo_balackListForm">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<c:choose>
 							<c:when test="${info.iuserVo.userBlackList == true }">
-								<input id="memberInfo_balackList" type="checkbox" checked>
-								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								<input id="memberInfo_balackList" type="checkbox" checked
+									name="number" value="false" onclick="javascript:updateBlackList()">
+								<label for="memberInfo_balackList">
+									<span></span>블랙리스트
 								</label>
 							</c:when>
 							<c:otherwise>
-								<input id="memberInfo_balackList" type="checkbox">
-								<label for="memberInfo_balackList"> <span></span>블랙리스트
+								<input id="memberInfo_balackList" type="checkbox" name="number"
+									value="true" onclick="javascript:updateBlackList()">
+								<label for="memberInfo_balackList" >
+									<span></span>블랙리스트
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -102,39 +112,77 @@
 						<div>
 							<c:choose>
 								<c:when test="${info.iuserVo.userBlaskListReason eq null }">
-									<textarea id="memberInfo_balackList_reason"
+									<textarea id="memberInfo_balackList_reason" name="reason"
 										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
 								</c:when>
 								<c:otherwise>
 									<textarea id="memberInfo_balackList_reason"
 										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
-										value="${info.iuserVo.userBlaskListReason}"></textarea>
+										name="reason" value="${info.iuserVo.userBlaskListReason}"></textarea>
 								</c:otherwise>
 							</c:choose>
 
 							<span id="nowByte" class="table_blue_text">0</span> <span
 								class="table_gray_text"> / 3000byte</span>
-							<button>입력</button>
+							<button onclick="updateBlackList(); return false;">입력</button>
 						</div>
 					</form>
 				</td>
 			</tr>
 		</table>
 
+		<script>
+	/* 
+	function updateBlackListLink(){
+	    console.log("updateBlackListLink()..");
+	    document.memberInfo_balackListForm.action="${CONTEXT_PATH_ADMIN}/ajax/update/blacklist";
+	    document.memberInfo_balackListForm.method="post";
+	    
+	    document.memberInfo_balackListForm.submit();
+	}
+	
+	let number = document.getElementId("memberInfo_balackList").value;
+	 */
+	 
+	function updateBlackList() {
+	     var userId = ${info.iuserVo.userId};
+	   	 var number = $('#memberInfo_balackList').val();
+	   	 var reason = $('#memberInfo_balackList_reason').val();
+	   	
+	     console.log("updateBlackList()..");
+	     console.log(userId);
+	     console.log(number);
+	     console.log(reason);
+	     
+	     /* var formData = $("form.memberInfo_balackListForm").deserializing(); */
+		     
+		    $.ajax({
+		        url : '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
+	            type : 'POST',
+	            cache : false,
+	            dataType : 'json',
+	            data : {
+	                'userId': userId,
+	                'number': number,
+	                'reason': reason,
+	            },
+	            contentType: 'application/json',
+	            success : function(result) {
+	                console.log(result);
+	                
+	                /* var info = result['info']; */
+	                
+	            },
+		     timeout: 5000
+		    });
+	 }
+	 
+	</script>
+
 		<!---------------------- 수익관리 테이블 -------------------------->
 		<div class="admin_trainerInfo_money">
 			<div class="admin_trainerInfo_moneyTitle">
-				<%-- <div>
-                    <h3>수익관리</h3>
-                    <a><img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_left.png"></a>
-                    <p>1월</p>
-                    <a><img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_right.png"></a>
-                </div>
-                <form>
-                    <p>출금예상금액
-                    <input type="hidden" value="1,200,000" disable><span>1,200,000</span>원</p>
-                    <button>지급</button>
-                </form> --%>
+				<!-- ajax로 월표시, 총 수익금 구현 -->
 
 			</div>
 			<table class="trainerInfo_moneyTable admin_table">
@@ -182,19 +230,27 @@
                 
                 
                 htmls += '<div>'
-	                + '<h3>수익관리</h3>'
-	                + '<a class="prevMonth" href="javascript:getlist('+ pagination['startPage'] + ',' + (month-1) +')">'
-	                + '<img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_left.png"></a>'
-	                + '<p>'
+	                + '<h3>수익관리</h3>';
+	                if((todayMonth + month) > 1) {
+		                htmls += '<a class="prevMonth" href="javascript:getlist('+ pagination['startPage'] + ',' + (month-1) +')">'
+		                	+ '<img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_left.png"></a>';
+            		}
+                htmls += '<p>'
 	                + (todayMonth + month)
 	                + '월</p>';
-               htmls += '<a class="nextMonth" href="javascript:getlist('+ pagination['endPage'] + ',' + (month+1) +')">';
-			   		+ '<img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_right.png"></a>';
+	                if(todayMonth > (todayMonth + month)) {
+		               htmls += '<a class="nextMonth" href="javascript:getlist('+ pagination['startPage'] + ',' + (month+1) +')">'
+					   		+ '<img src="${RESOURCES_PATH}/src/img/icon/arrow_red_bold_right.png"></a>';
+	                }
                 htmls += '</div>'
 	                + '<form><p>출금예상금액'
-	                + '<input type="hidden" value="' + monthTotal + '" disable><span>'+ monthTotal + '</span>원</p>'
-	                + '<button>지급</button>'
-	                + '</form>';
+	                + '<input type="hidden" value="' + monthTotal + '" disable><span>'+ priceToString(monthTotal) + '</span>원</p>';
+	                if(todayMonth > (todayMonth + month)) {
+	                	htmls += '<button class="disabled" disabled>지급완료</button>';
+	                } else {
+	                    htmls += '<button disabled>지급대기</button>';
+	                }
+                htmls += '</form>';
 
                htmls1 += "<tr><th>날짜</th><th>구분</th><th>내용</th><th>금액</th></tr>";
 	
@@ -236,20 +292,20 @@
                              
                              /* ------------------ 페이징 부분 --------------------- */
                              if (pagination['prev']) {
-                                 htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1, month) +')"></a>';
+                                 htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) + ',' + month +')"></a>';
              				} 
 
              				// 번호를 표시하는 부분
              				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
              					if (page !== idx) {
-             					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx, month) + "</a>";
+             					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ',' + month +')">' + (idx) + "</a>";
              					} else {
-             					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx, month) + "</a>";
+             					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ',' + month +')">' + (idx) + "</a>";
              					}
              				}
 
              				if (pagination['next']) {
-                                htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1, month) +')"></a>';
+                                htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) + ',' + month +')"></a>';
             						
             				}			
              			}	// if(list.length < 1) else 끝
@@ -261,25 +317,10 @@
                      });
                 }
 	
-	$(document).ready(function(){
-	$(".nextMonth").onlick(function(){
-        if(month > 0){
-            $(".nextMonth").css('display', 'none');
-        } else {
-            $(".nextMonth").css('display', 'inline');
-        }
-    });
-    
-    $(".prevMonth").onlick(function(){
-        if(month < 0){
-            $(".nextMonth").css('display', 'inline');
-        }
-    });
-	})
-    
-	
-	
 	</script>
+
+
+
 
 
 	<div class="iruri__wrapper">

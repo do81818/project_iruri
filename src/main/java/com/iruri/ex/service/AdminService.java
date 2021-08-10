@@ -2,6 +2,8 @@ package com.iruri.ex.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.AuthVO;
 import com.iruri.ex.vo.IUserVO;
@@ -77,5 +79,11 @@ public interface AdminService {
     
     // 트레이너정보_수익관리 월별 수익 합계
     int trainerMoneyMonthTotal(int userId, int month);
+    
+    // 블랙리스트/일반회원 등록(전환)
+    void updateBlackList(int userId, int number);
+    
+    // 블랙리스트 이유 등록
+    void updateBlackListReason(int userId, String reason);
 	
 }

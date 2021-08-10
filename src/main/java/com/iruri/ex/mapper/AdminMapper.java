@@ -83,5 +83,12 @@ public interface AdminMapper {
 	Integer countTrainerMoneyList(int userId, int month);
 	
 	// 트레이너정보_수익관리 월별 수익 합계
-	Integer trainerMoneyMonthTotal(int userId, int month);
+	Integer trainerMoneyMonthTotal(@Param("userId") int userId, @Param("month") int month);
+	
+	// 블랙리스트/일반회원 등록(전환)
+	void updateBlackList(@Param("userId") int userId, @Param("number") int number);
+	
+	// 블랙리스트 이유 등록
+    void updateBlackListReason(@Param("userId") int userId, @Param("reason") String reason);
+	
 }

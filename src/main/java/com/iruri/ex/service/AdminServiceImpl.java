@@ -224,5 +224,15 @@ public class AdminServiceImpl implements AdminService {
             return 0;
         }
     }
+
+    @Override
+    public void updateBlackList(int userId, int number) {
+        mapper.updateBlackList(userId, number);
+    }
+
+    @Override
+    public void updateBlackListReason(int userId, String reason) {
+        mapper.updateBlackListReason(userId, reason);
+    }
     
 }
