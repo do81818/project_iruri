@@ -45,6 +45,4 @@ public class IUserVO {
     private String googleId;
     
     private List<AuthVO> authList;
-    private List<GradeVO> gradeList;
-    private List<IClassVO> classList;
 }

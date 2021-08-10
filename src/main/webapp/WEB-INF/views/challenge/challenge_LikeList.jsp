@@ -27,7 +27,7 @@
 <script>
 	$(document).ready(function(){
 		/* window.onload = function(){ */
-		var Form = $("#actionForm");
+		var actionForm = $("#actionForm");
         $(".pageNumLink").on("click", function(e) {
             e.preventDefault();
             var targetPage = $(this).attr("href");
@@ -154,16 +154,7 @@
 
 
 					<!--챌린지개설버튼-->
-					<!--챌린지개설버튼-->
-						<!-- 비로그인 메뉴 -->
-	   					 <sec:authorize access="isAnonymous()">
-	   					 <div class="c_make_noLogin">챌린지개설</div>
-	           		     </sec:authorize>
-	           		     
-	           		     <!-- 로그인 메뉴 -->
-    					<sec:authorize access="isAuthenticated()">
-						<button class="c_make_button">챌린지개설</button>
-         				</sec:authorize>
+					<button class="c_make_button">챌린지개설</button>
 
 				</div>
 
@@ -284,7 +275,7 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
-												htmls += '<a href="challenge_detail_before?classId='+this.classId+'">';
+												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
 												htmls += this.classTitle;
 												htmls += '</a>';
 												htmls += '</div>';
@@ -317,37 +308,10 @@
 														+ '명)';
 												htmls += '</div>';
 
-												htmls += '<sec:authorize access="isAuthenticated()">';
 												htmls += '<div class="c_list_heart">';
-												
-												var heartClassId = this.classId;
-
-                                                $.ajax({
-                                                    url: '${CONTEXT_PATH}/iruri/heartList',
-                                                    type: 'GET',
-                                                    cache: false,
-                                                    dateType: 'json',
-                                                    data: {
-                                                        classId: heartClassId,
-                                                    },
-                                                    success: function(result) {
-
-                                                        if (result !== 0) {
-                                                            $('#heart' + heartClassId).attr('checked', true);
-                                                        }
-                                                    }
-                                                })
-												
-                                                htmls += '<input type="checkbox" id="heart' + this.classId + '">';
-                                                htmls += '<label for="heart' + this.classId + '" class="heart_label"></label>';
-                                                htmls += '</div>';
-												htmls += '</sec:authorize>'
-												
-												htmls += '<sec:authorize access="isAnonymous()">';
-												htmls += '<div class="c_list_heart">';
-                                                htmls += '<img class="heart_nologin_img" src="/ex/resources/src/img/icon/heart_gray.png" alt="">';
-                                                htmls += '</div>';
-												htmls += '</sec:authorize>'
+												htmls += '<input type="checkbox" id="heart3">';
+												htmls += '<label for="heart3" class="heart_label"></label>';
+												htmls += '</div>';
 
 												htmls += '</div>';
 												

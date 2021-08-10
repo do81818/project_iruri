@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.ExerciseDateVO;
-import com.iruri.ex.vo.ExerciseKindVO;
 
 @Mapper
 public interface IClassMapper {
+    
     // 모든 클래스
     List<IClassVO> selectAll(int userId);
+    
 
     // 현재 운영중인 클래스
     List<IClassVO> selectAllCurrent(int userId);
@@ -61,13 +61,5 @@ public interface IClassMapper {
     List<IClassVO> getListWithPaging_mypageTrainerClassListEnd(@Param("cri") Criteria cri, @Param("userId") int userId);
     int getTotalCount_mypageTrainerClassListEnd(Criteria cri, @Param("userId") int userId);
     
-    //운동요일
-    List<ExerciseDateVO> selectExerciseDate(int userId);
-   
-    //운동종류
-    List<ExerciseKindVO> selectExerciseKind(int userId);
-    
-    // PT클래스 개설
-    void insertPtClass(IClassVO vo);
     
 }

@@ -3,14 +3,12 @@ package com.iruri.ex.service;
 import java.util.List;
 
 import com.iruri.ex.page.Criteria;
-import com.iruri.ex.vo.ExerciseDateVO;
-import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 
 public interface IClassService {
 
     // 현재 운영중인 클래스 
-    List<IClassVO> classList(int userId);
+    List<IClassVO> classCurrentList(int userId);
 
     // 종료된 클래스 
     List<IClassVO> classEndList(int userId);
@@ -48,13 +46,4 @@ public interface IClassService {
     // 종료된 클래스(+페이징)
     int getTotal_mypageTrainerClassListEnd(Criteria cri, int userId);
     List<IClassVO> mypageTrainerClassListEnd(Criteria cri, int userId);
-    
-    //운동요일
-    // ExerciseDateVO selectExerciseDate(int userId);
-   
-    //운동종류
-    List<ExerciseKindVO> selectExerciseKind(int userId);
-    
-    // PT클래스 개설
-    void insertPtClass(IClassVO vo);
 }

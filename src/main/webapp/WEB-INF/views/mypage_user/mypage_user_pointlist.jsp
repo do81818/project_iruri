@@ -49,7 +49,7 @@
           </div>
           <div id = "m_userclass_box">
             <div id="m_userclass"><a href="../html/classlist.html">참여중인클래스</a></div>
-            <div id="m_userclass_number">${userclasscount}</div>
+            <div id="m_userclass_number"></div>
           </div>
         </div>
          

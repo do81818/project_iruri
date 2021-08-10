@@ -83,7 +83,8 @@
 
 			<script>
 				function getlist(page) {
-					$.ajax({
+					$
+							.ajax({
 								url : '${CONTEXT_PATH_ADMIN}/ajax/trainer/list.json',
 								type : 'GET',
 								cache : false,
@@ -109,21 +110,19 @@
 										htmls += '</tr>'
 									} else {
 										$(list)
-												.each(function() {
-														    
-															htmls += '<tr class="list_impact" onclick="link('
-																	+ this.iuserVo.userId
-																	+ ')">';
+												.each(
+														function() {
+															htmls += '<tr class="list_impact">';
 															htmls += '<td class="table_No_date">'
 																	+ this.iuserVo.userId
 																	+ '</td>';
-															htmls += '<td class="table_indigo_text">';
 															if (this.authVo.authContent == "ROLE_TRAINER") {
-															    htmls += '트레이너';
+																htmls += '<td class="table_indigo_text">'
+																		+ '트레이너'
+																		+ '</td>';
 															} else {
 																htmls += 00;
 															}
-															htmls += '</td>';
 
 															htmls += '<td class="table_indigo_text">'
 																	+ this.iuserVo.userNickname
@@ -131,14 +130,8 @@
 															htmls += '<td class="table_blue_text">'
 																	+ this.iuserVo.userEmail
 																	+ '</td>';
-															
-															var avgGrade = this.avgGrade - this.iuserVo.userId;
-															if(avgGrade < 0) {
-																avgGrade = 0;
-															}
-															
 															htmls += '<td class="table_red_text">'
-																	+ (avgGrade).toFixed(1)
+																	+ this.avgGrade
 																	+ '</td>'
 																	+ '</tr>';
 														});
@@ -186,10 +179,6 @@
 				$(document).ready(function() {
 					getlist(1);
 				});
-				
-				function link(userId){
-				    location.href='${CONTEXT_PATH_ADMIN}/trainer/info?userId='+ userId;
-				}
 			</script>
 
 		</div>

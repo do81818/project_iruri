@@ -67,7 +67,7 @@
 		<!---------------------- 신고알림 탭 -------------------------->
 		<div class="report_memberList">
 			<table class="admin_table">
-
+				
 				<!-- ajax로 신고알림 리스트 구현 -->
 
 			</table>
@@ -76,104 +76,101 @@
 			<div class="page_nation">
 				<!-- ajax 페이징 구현 -->
 			</div>
-
+			
 		</div>
 	</div>
 
 	<script>
-		function getlist(page) {
-			$
-					.ajax({
-						url : '${CONTEXT_PATH_ADMIN}/ajax/reportList.json',
-						type : 'GET',
-						cache : false,
-						dataType : 'json',
-						data : {
-							pageNum : page,
-						},
-						success : function(result) {
-							console.log(result);
-							var list = result['list'];
-							var pagination = result['pageMaker'];
-							var htmls = "";
-							var htmls2 = "";
+            function getlist(page) {
+                $.ajax({
+                     url : '${CONTEXT_PATH_ADMIN}/ajax/reportList.json',
+                     type : 'GET',
+                     cache : false,
+                     dataType : 'json',
+                     data : {
+                          pageNum : page,
+                      },
+                     success : function(result) {
+                         console.log(result);
+                         var list = result['list'];
+                         var pagination = result['pageMaker'];
+                         var htmls = "";
+                         var htmls2 = "";
 
-							htmls += "<tr><th>No.</th><th>회원분류</th><th>닉네임</th><th>신고사유</th><th>게시글</th></tr>";
+                         
+                        htmls += "<tr><th>No.</th><th>회원분류</th><th>닉네임</th><th>신고사유</th><th>게시글</th></tr>";
+                         
+                         /* --------------------- 신고알림리스트 부분 --------------------- */
 
-							/* --------------------- 신고알림리스트 부분 --------------------- */
+                         if (list.length < 1) {
+                             htmls += '<tr>';
+                             htmls += '<td colspan="5" class="table_No_date">'
+                                     + '등록된 신고알림이 없습니다.' + '</td>';
+                             htmls += '</tr>'
+                         } else {
+                             $(list).each(
+	                                 function() {
+	                                     htmls += '<tr>';
+	                                     htmls += '<td class="table_No_date">'
+	                                             + this.reportVo.reportId
+	                                             + '</td>';
+	
+                                         htmls += '<td class="table_indigo_text">';
+	                                     if (this.authVo.authContent == "ROLE_USER") {
+	                                    	 htmls += '일반회원';
+	                                     } else if (this.authVo.authContent == "ROLE_PAYUSER") {
+	                                    	 htmls += '유료회원';
+	                                     }
+                                         htmls += '</td>';
+	                                     htmls += '<td class="table_indigo_text">'
+	                                         	+ '<a href="#" target="_blank">'
+	                                             + this.iuserVo.userNickname
+	                                             + '</td>';
+	                                     htmls += '<td class="table_blue_text">'
+	                                             + this.reportVo.reportContent
+	                                             + '</td>';
+	                                     htmls += '<td class="table_No_date">'
+	                                             + '<a class="a_buttonBox" href="#" target="_blank">'
+	                                             + '게시글보기'
+	                                             + '</a>'
+	                                             + '</td>';
+	                                 });
+                         
+                         
+                         /* ------------------ 페이징 부분 --------------------- */
+                         if (pagination['prev']) {
+                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
+         				} 
 
-							if (list.length < 1) {
-								htmls += '<tr>';
-								htmls += '<td colspan="5" class="table_No_date">'
-										+ '등록된 신고알림이 없습니다.' + '</td>';
-								htmls += '</tr>'
-							} else {
-								$(list)
-										.each(
-												function() {
-													htmls += '<tr>';
-													htmls += '<td class="table_No_date">'
-															+ this.reportVo.reportId
-															+ '</td>';
+         				// 번호를 표시하는 부분
+         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+         					if (page !== idx) {
+         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					} else {
+         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					}
+         				}
 
-													htmls += '<td class="table_indigo_text">';
-													if (this.authVo.authContent == "ROLE_USER") {
-														htmls += '일반회원';
-													} else if (this.authVo.authContent == "ROLE_PAYUSER") {
-														htmls += '유료회원';
-													}
-													htmls += '</td>';
-													htmls += '<td class="table_indigo_text">'
-															+ '<a href="#" target="_blank">'
-															+ this.iuserVo.userNickname
-															+ '</td>';
-													htmls += '<td class="table_blue_text">'
-															+ this.reportVo.reportContent
-															+ '</td>';
-													htmls += '<td class="table_No_date">'
-															+ '<a class="a_buttonBox" href="#" target="_blank">'
-															+ '게시글보기'
-															+ '</a>'
-															+ '</td>';
-												});
+         				if (pagination['next']) {
+                            htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+        						
+        				}			
+         			}	// if(list.length < 1) else 끝
+                     
+                        $(".admin_table").html(htmls);
+         				$(".page_nation").html(htmls2);
+                     }
+                     
 
-								/* ------------------ 페이징 부분 --------------------- */
-								if (pagination['prev']) {
-									htmls2 += '<a class="arrow prev" href="javascript:getlist('
-											+ (pagination['startPage'] - 1)
-											+ ')"></a>';
-								}
+                 });
+                             
+                             
+            }
 
-								// 번호를 표시하는 부분
-								for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
-									if (page !== idx) {
-										htmls2 += '<a class="pageNumLink" href="javascript:getlist('
-												+ idx + ')">' + (idx) + "</a>";
-									} else {
-										htmls2 += '<a class="pageNumLink active" href="javascript:getlist('
-												+ idx + ')">' + (idx) + "</a>";
-									}
-								}
+            
+        </script>
+        
 
-								if (pagination['next']) {
-									htmls2 += '<a class="arrow next" href="javascript:getlist('
-											+ (pagination['endPage'] + 1)
-											+ ')"></a>';
-
-								}
-							} // if(list.length < 1) else 끝
-
-							$(".admin_table").html(htmls);
-							$(".page_nation").html(htmls2);
-						}
-
-					});
-
-		}
-		$(document).ready(function() {
-			getlist(1);
-		})
-	</script>
 
 	<div class="iruri__wrapper">
 		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->

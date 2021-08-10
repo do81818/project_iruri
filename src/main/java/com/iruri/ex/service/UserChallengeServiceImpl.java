@@ -28,11 +28,6 @@ public int challengecount(int userId) {
 	return userchallengeMapper.challengecount(userId);
 }
 
-@Override
-public int userlikecount(int userId) {
-	return userchallengeMapper.userlikecount(userId);
-}
-
 
 @Override
 public List<IClassVO> userchallengelist(int userId){
@@ -45,8 +40,8 @@ public List<IClassVO> userlikelist(Criteria cri, int userId){
 }
 
 @Override
-public List<IClassVO> userendlist(Criteria cri,int userId){
-	return userchallengeMapper.userendlist(cri,userId);
+public List<IClassVO> userendlist(int userId){
+	return userchallengeMapper.userendlist(userId);
 }
   
 
@@ -61,75 +56,5 @@ public int endcount(int userId) {
 }
 
 
-@Override
-public int userendcount(int userId) {
-	return userchallengeMapper.userendcount(userId);
-}
-
-
-@Override
-public int classcount(int userId) {
-	return userchallengeMapper.classcount(userId);
-}
-
-@Override
-public int classlikecount(int userId) {
-	return userchallengeMapper.classlikecount(userId);
-}
-
-@Override
-public int classendcount(int userId) {
-	return userchallengeMapper.classendcount(userId);
-	
-}
-
-
-@Override
-public List<IClassVO> userclasslist(int userId){
-	return userchallengeMapper.userclasslist(userId);
-}
  
-
-@Override
-public List<IClassVO> userclasslikelist_kind(int userId){
-	return userchallengeMapper.userclasslikelist_kind(userId);
-}
-
-@Override
-public List<IClassVO> userclasslikelist(Criteria cri,int userId){
-	return userchallengeMapper.userclasslikelist(cri,userId);
-}
-
-
-@Override
-public int class_likecount(int userId){
-	return userchallengeMapper.class_likecount(userId);
-}
-
-@Override
-public List<IClassVO> userclasslikelist_date(int userId){
-	return userchallengeMapper.userclasslikelist_date(userId);
-}
-
-
-@Override
-public int class_endcount(int userId){
-	return userchallengeMapper.class_endcount(userId);
-}
-
-@Override
-public List<IClassVO> userclassendlist(Criteria cri,int userId){
-	return userchallengeMapper.userclassendlist(cri,userId);
-}
-
-@Override
-public List<IClassVO> userclassendlist_kind(int userId){
-	return userchallengeMapper.userclassendlist_kind(userId);
-}
-
-@Override
-public List<IClassVO> userclassendlist_date(int userId){
-	return userchallengeMapper.userclassendlist_date(userId);
-}
-
 }

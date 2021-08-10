@@ -43,12 +43,7 @@ public class AdminServiceImpl implements AdminService {
     // 신고알림 리스트 갯수
     @Override
     public int countReportId() {
-        try {
-            int count = mapper.countReportId();
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countReportId();
     }
 
     // 일반/유료회원 전체 리스트
@@ -60,12 +55,7 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 리스트 갯수
     @Override
     public int countNormalMember() {
-        try {
-            int count = mapper.countNormalMember();
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countNormalMember();
     }
 
     // 일반/유료회원 블랙리스트
@@ -77,12 +67,7 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 블랙리스트 갯수
     @Override
     public int countNormalBlackMember() {
-        try {
-            int count = mapper.countNormalBlackMember();
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countNormalBlackMember();
     }
 
     // 트레이너회원 리스트
@@ -91,33 +76,13 @@ public class AdminServiceImpl implements AdminService {
         log.info(mapper.getTrainerMemberList(cri));
         return mapper.getTrainerMemberList(cri);
     }
-//    public List<IUserVO> getTrainerMemberList3(Criteria cri) {
-//        log.info(mapper.getTrainerMemberList3(cri));
-//        return mapper.getTrainerMemberList3(cri);
-//    }
-    
+
     // 트레이너회원 리스트 갯수
     @Override
     public int countTrainerMemberList() {
-        try {
-            int count = mapper.countTrainerMemberList();
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countTrainerMemberList();
     }
 
-    // 트레이너 별 등급(평점)
-    @Override
- 	public double getTrainerGrade(int userId) {
-    	String str = mapper.getTrainerGrade(userId);
-    	double grade = 0.0;
-    	if(str != null) {
-    		grade = Double.parseDouble(str); 
-    	}
- 		return grade;
- 	}
-    
     // 트레이너회원 블랙리스트
     @Override
     public List<TableJoinVO> getTrainerBlackList(Criteria cri) {
@@ -127,12 +92,7 @@ public class AdminServiceImpl implements AdminService {
     // 트레이너회원 블랙리스트 갯수
     @Override
     public int countTrainerBlackList() {
-        try {
-            int count = mapper.countTrainerBlackList();
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countTrainerBlackList();
     }
 
     // 트레이너 등록
@@ -156,6 +116,7 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 포인트리스트 보기
     @Override
     public List<PointVO> getUserBasicInfoPoint(int userId, Criteria cri) {
+        
         int pageNum = cri.getPageNum();
         int amount = cri.getAmount();
         return mapper.getUserBasicInfoPoint(userId, pageNum, amount);
@@ -164,29 +125,13 @@ public class AdminServiceImpl implements AdminService {
     // 일반/유료회원 포인트리스트 갯수
     @Override
     public int countUserBasicInfoPoint(int userId) {
-        try {
-            int count = mapper.countUserBasicInfoPoint(userId);
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
+        return mapper.countUserBasicInfoPoint(userId);
     }
 
     // 일반/유료회원 현재 보유포인트
     @Override
     public int getUserBasicInfoPointTotal(int userId) {
-        try {
-//            String totalPoint = String.valueOf(mapper.getUserBasicInfoPointTotal(userId));
-//            int point = Integer.parseInt(totalPoint);
-//            log.info(point);
-//            return point;
-            int totalPoint = mapper.getUserBasicInfoPointTotal(userId);
-            log.info(totalPoint);
-            return totalPoint;
-        } catch (Exception e) {
-            log.info(e);
-            return 0;
-        }
+        return mapper.getUserBasicInfoPointTotal(userId);
     }
 
     // 일반/유료회원정보 운동정보 리스트보기 _all
@@ -195,44 +140,4 @@ public class AdminServiceImpl implements AdminService {
         return mapper.getUserExInfoAll(userId, cri);
     }
 
-    // 트레이너정보_수익관리 리스트
-    @Override
-    public List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri){
-        int pageNum = cri.getPageNum();
-        int amount = cri.getAmount();
-        return mapper.getTrainerMoneyList(userId, month, pageNum, amount);
-    }
-
-    // 트레이너 정보_수익관리 리스트 갯수
-    @Override
-    public int countTrainerMoneyList(int userId, int month) {
-        try {
-            int count = mapper.countTrainerMoneyList(userId, month);
-            return count;
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-    
-    // 트레이너정보_수익관리 월별 수익 합계
-    @Override
-    public int trainerMoneyMonthTotal(int userId, int month) {
-        try {
-            int monthTotal = mapper.trainerMoneyMonthTotal(userId, month);
-            return monthTotal;
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    @Override
-    public void updateBlackList(int userId, int number) {
-        mapper.updateBlackList(userId, number);
-    }
-
-    @Override
-    public void updateBlackListReason(int userId, String reason) {
-        mapper.updateBlackListReason(userId, reason);
-    }
-    
 }

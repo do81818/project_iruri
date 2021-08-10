@@ -9,11 +9,6 @@ var iruri_red_color = '#ff0000';
 //     }
 // }
 
-/*
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
-*/
 
 // 라디오버튼으로 특정 div 만 보이게하기
 function display_click() {

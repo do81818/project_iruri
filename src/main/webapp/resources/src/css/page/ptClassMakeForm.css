@@ -4,7 +4,6 @@
   width: 1200px;
   margin: 0 auto;
   padding: 44px 70px;
-  font-family: var(--NanumBarunGothic);
 }
 
 .ptForm {
@@ -24,6 +23,8 @@
 }
 
 .ptForm > div {
+  border: 1px solid black;
+
   display: flex;
 }
 
@@ -52,113 +53,16 @@
   font-size: 14px;
 }
 
-.exerciseList,
-.exerciseLevel,
-.exerciseDate,
-.exercisePerson,
-.ptClassthumbnail {
+.exerciseList {
   display: flex;
   gap: 30px;
 }
 
-.ptClassthumbnail {
-  justify-content: space-between;
-  width: 100%;
-  gap: 20px;
-}
-
-.exerciseList label,
-.exerciseLevel label,
-.exerciseDate label,
-.exercisePerson label,
-.ptClassthumbnail label,
-.ptClassthumbnail div,
-.defaultThumbnail label {
+.exerciseList label {
   display: flex;
   align-items: center;
 }
 
-.exerciseList label span,
-.exerciseLevel label span,
-.exerciseDate label span,
-.exercisePerson label span,
-.ptClassthumbnail label span,
-.defaultThumbnail label span {
+.exerciseList label span {
   padding-left: 5px;
-}
-
-.exerciseTerm input,
-.exerciseTime input,
-.exercisePrice input {
-  width: 200px !important;
-}
-
-.ptClassFormInsert .iruri-check-no-icon,
-.ptClassFormInsert .iruri-check-yes-icon {
-  width: 22px;
-  height: 22px;
-  background-size: cover;
-}
-
-.ptClassFormInsert input[type="radio"] {
-  display: none;
-}
-
-.ptClassFormInsert textarea {
-  resize: none;
-  outline: none;
-  font-size: 14px;
-  color: var(--iruri-indigo-color);
-  width: 525px;
-  height: 300px;
-  border: 1px solid var(--iruri-light-gray-color);
-  border-radius: 5px;
-  margin-bottom: 24px;
-  padding: 3px 20px;
-}
-
-.thumbnail .thumbnailWrap {
-  display: flex;
-  flex-direction: column;
-  width: 525px;
-}
-
-.ptClassthumbnail,
-.defaultThumbnail {
-  margin-bottom: 24px;
-}
-
-.ptClassFormInsert .file_upload {
-  width: 119px;
-  height: 40px;
-}
-
-.ptClassFormInsert .c_img_list {
-  width: 100%;
-}
-.ptClassFormInsert .thumbnail .c_img_list > div {
-  display: grid;
-  grid-template-columns: repeat(4, 123px);
-  grid-template-rows: repeat(2, 123px);
-  gap: 5px;
-}
-
-.iruri-fileUpload-icon {
-  width: 95%;
-  height: 95%;
-  cursor: pointer;
-  background: url(/ex/resources/src/img/icon/img_upload.png) center center no-repeat;
-  background-size: contain;
-}
-
-.ptClassFormInsert .button {
-  justify-content: space-evenly;
-}
-
-.ptClassFormInsert .button button {
-  margin: 0;
-}
-
-.exercisePrice {
-  margin-bottom: 24px;
 }

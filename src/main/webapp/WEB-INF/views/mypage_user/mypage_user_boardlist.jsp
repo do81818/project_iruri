@@ -12,7 +12,37 @@
      <%@ include file="../include/static.jsp" %> 
     <title>마이페이지 보드리스트</title> 
       <script src="${RESOURCES_PATH}/src/js/mypage_user_main.js" defer></script>
-
+      <script>
+   $(document).ready(function(){
+      /* window.onload = function(){ */
+      var actionForm = $("#actionForm");
+        $(".pageNumLink").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".prev").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+        
+        $(".next").on("click", function(e) {
+            e.preventDefault();
+            var targetPage = $(this).attr("href");
+            
+            actionForm.find("input[name='pageNum']").val(targetPage);
+            actionForm.submit();
+        });
+   });
+   
+   
+   </script>
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -49,7 +79,7 @@
         </div>
         <div id = "m_userclass_box">
           <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-          <div id="m_userclass_number">${userclasscount}</div>
+          <div id="m_userclass_number"></div>
         </div>
       </div>
        
@@ -170,12 +200,8 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
         </c:if>
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-        	<%-- <c:if test="${pageMaker.makeQuery(num) == ${num}"> --%>
-        	<%--  <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
-        	             <%-- <a class="pageNumLink" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
-        <%-- 	</c:if>  --%>
-
-              <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
+        
+            <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
         </c:forEach>
         
         <c:if test="${pageMaker.next && pageMaker.endPage > 0}">

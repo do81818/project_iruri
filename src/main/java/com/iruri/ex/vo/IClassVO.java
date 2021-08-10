@@ -35,7 +35,6 @@ CATEGORY_ID
 USER_ID
 CLASS_LEVEL
 */
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -69,17 +68,11 @@ public class IClassVO {
     private String classLevel;
     private int rnum;
     private int classTime;
-    private int userId;
-
 
     
     private List<ExerciseDateVO> exerciseDateList;
     private List<ExerciseKindVO> exerciseKindList;
     private List<LikeListVO> likeListList;
-    private List<BuyVO> buyList;
-    private List<BoardVO> boardList;
-
-  
 
     
 }

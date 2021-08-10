@@ -73,9 +73,9 @@
 		SELECT
 			*
 		FROM 
-			iclass, exercise_kind
+			iclass
 		WHERE
-			iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			user_id = #{userId} and CLASS_ENDDATE >= sysdate
 		]]>
 	</select>
 
@@ -164,7 +164,8 @@ WHERE c.class_id = e.class_id
 
 	<select id="getListWithPaging_mypageTrainerClassList" parameterType="HashMap" resultMap="iClassMap">
 	 <![CDATA[
-SELECT *
+	
+		SELECT *
 FROM
 (
     SELECT ROWNUM rn, c.*
@@ -172,12 +173,13 @@ FROM
     (
         SELECT B.*
         FROM iclass B
-        WHERE B.user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE >= sysdate
-        ORDER BY B.class_id DESC, B.class_startdate DESC
+        WHERE user_id = #{userId} and B.category_id = 2 and CLASS_ENDDATE >= sysdate
+        ORDER BY B.class_startdate DESC
     ) C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+
 	]]> 
 
 	</select>
@@ -213,89 +215,5 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 
 	</select>
 	
-	
-	<!-- 요일 -->
-	<select id="selectExerciseDate" resultMap="exerciseDateMap">
-		<![CDATA[
-		select * from exercise_date 
-		where class_id in
-		(SELECT class_id FROM iclass WHERE user_id = #{userId})
-		order by class_id
-		]]>
-	</select>
-	
-	<!-- 운동종류  -->
-	<select id="selectExerciseKind" resultMap="exerciseKindMap">
-		<![CDATA[
-		select * from exercise_kind 
-		where class_id in
-		(SELECT class_id FROM iclass WHERE user_id = #{userId})
-		order by class_id
-		]]>
-	</select>
-	
-	<insert id="insertPtClass">
-		<![CDATA[
-INSERT ALL INTO iclass
-(
-	CLASS_ID, 
-	CLASS_TITLE,
-    CLASS_NEED, 
-    CLASS_LEVEL,
-	CLASS_STARTDATE, 
-    CLASS_ENDDATE, 
-	CLASS_TIME,
-    CLASS_TOTALMEMBER, 
-    CLASS_PRICE, 
-	CLASS_GOAL, 
-	CLASS_CONTENT, 
-    CLASS_TRAINERINFO, 
-    CLASS_IMAGE,
-    CLASS_STATE,
-    CATEGORY_ID,
-    USER_ID
-) 
-VALUES
-(
-	(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass), 
-	#{classTitle},
-    #{classNeed}, 
-    #{classLevel},
-	#{classStartDate}, 
- 	#{classEndDate},
- 	#{classTime},
-    #{classTotalMember}, 
-    #{classPrice}, 
-	#{classGoal}, 
-	#{classContent}, 
- 	#{classTrainerInfo}, 
- 	'/123', 
-    'show',
-    #{categoryId}, 
-    #{iUserVO.userId}
-)
-          
-SELECT *  FROM DUAL
-		]]>
-	</insert>
-	
-	<!-- INTO EXERCISE_KIND
-(
-	exercise_kind, 
-	CLASS_ID
-)
-VALUES 
-(
-	'요가' ,
-	(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass)
-)
-    INTO EXERCISE_KIND(exercise_kind, CLASS_ID)
-    VALUES ('필라테스',(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass))
-    
-    
-    INTO EXERCISE_date(exercise_date, CLASS_ID)
-    VALUES ('화',(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass))
-    INTO EXERCISE_date(exercise_date, CLASS_ID)
-    VALUES ('목',(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass))  -->
 
 </mapper>

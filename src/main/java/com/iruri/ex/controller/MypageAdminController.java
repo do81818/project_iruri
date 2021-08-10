@@ -1,18 +1,13 @@
 package com.iruri.ex.controller;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +42,7 @@ public class MypageAdminController {
 	@ResponseBody
 	@GetMapping("ajax/reportList")
 	public ResponseEntity<HashMap<String, Object>> restAfter(@RequestParam("pageNum") int pageNum) {
-		log.info("restAfter()...");
+
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
 		int total = adminService.countReportId();
@@ -162,6 +157,7 @@ public class MypageAdminController {
 	}
 	
 	//insertNewTrainer_Admin() ResponseEntity 관리자 트레이너 등록하기
+	
 	@PostMapping("trainer/regist/insert")
 	public String insertNewTrainer_Admin(@RequestParam("userName") String userName,@RequestParam("email1") String email1,@RequestParam("email2") String email2,
 			@RequestParam("userPhone") String userPhone, @RequestParam("userPw") String userPw) {
@@ -205,12 +201,19 @@ public class MypageAdminController {
 	    log.info(userId);
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
+		log.info("1"+userId);
 		int total = adminService.countUserBasicInfoPoint(userId);
+		log.info("2"+userId);
 		result.put("pageMaker", new PageVO(cri, total));
 		result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
 		log.info(result);
 		return ResponseEntity.ok(result);
 	}
+	
+	
+	
+	
+	
 	
 	
 	// showMemberDetailExercise_Admin() ModelAndView 관리자 유저운동정보 상세보기
@@ -219,82 +222,13 @@ public class MypageAdminController {
 
 		return "mypage_admin/admin_memberExerciseInfo";
 	}
-	
-	
+
 	// showProfileTrainer_Admin() ModelAndView 트레이너 프로필 보기
 	@GetMapping("trainer/info")
-	public ModelAndView showProfileTrainer_Admin(ModelAndView mav, @RequestParam("userId") int userId) {
+	public String showProfileTrainer_Admin(Locale locale, Model model) {
 
-        log.info("showProfileTrainer_Admin()...");
-        mav.setViewName("mypage_admin/admin_trainerInfo");
-        mav.addObject("info", adminService.getUserBasicInfo(userId));
-        // 트레이너 평점
-        mav.addObject("grade",adminService.getTrainerGrade(userId));
-        log.info(mav);
-        return mav;
-    }
-	
-
-    //  트레이너정보 상세보기_수익관리
-    @ResponseBody
-    @GetMapping("ajax/trainer/info")
-    public ResponseEntity<HashMap<String, Object>> restTrainerDetail(@RequestParam("userId") int userId, 
-            @RequestParam("month") int month, @RequestParam("pageNum") int pageNum) {
-        log.info(userId);
-        HashMap<String, Object> result = new HashMap<>();
-        Criteria cri = new Criteria(pageNum, 10);
-        int total = adminService.countTrainerMoneyList(userId, month);
-        result.put("pageMaker", new PageVO(cri, total));
-        result.put("list", adminService.getTrainerMoneyList(userId, month, cri));
-        result.put("month", month);
-        log.info(month);
-        result.put("monthTotal", adminService.trainerMoneyMonthTotal(userId, month));
-        log.info(adminService.trainerMoneyMonthTotal(userId, month));
-        log.info(result);
-        return ResponseEntity.ok(result);
-    }
-	
-	
-    // updateBlackList_Admin() ModelAndView 관리자 블랙리스트 수정
-    @ResponseBody
-    @PostMapping("ajax/update/blacklist")
-    public ResponseEntity<HashMap<String, Object>> restUpdateBlacklist(@RequestParam("userId") int userId, @RequestParam("number") String numberStr, @RequestParam("reason") String reason) {
-        HashMap<String, Object> result = new HashMap<>();
-        log.info("restUpdateBlacklist()..");
-        int number = 0;
-        if(numberStr.equals("true")) {
-            number = 1;
-        } else {
-            number = 0;
-        }
-        adminService.updateBlackList(userId, number);
-        log.info("1");
-        if(reason != null) {
-            adminService.updateBlackListReason(userId, reason);
-        }
-        result.put("info", adminService.getUserBasicInfo(userId));
-        log.info(result);
-        return ResponseEntity.ok(result);
-    }
-           
-//    public void restUpdateBlacklist(HttpServletResponse response, @RequestParam("userId") int userId, @RequestParam("number") String numberStr, ModelAndView mav) throws IOException {
-//        int number = 0;
-//        if(numberStr.equals("true")) {
-//            number = 1;
-//        } else {
-//            number = 0;
-//        }
-//        adminService.updateBlackList(userId, number);
-//        log.info("restUpdateBlacklist()..");
-//        
-//        response.sendRedirect("/ex/mypage/admin/trainer/info?userId=" + userId);       
-//        
-//    }
-	
-	
-	
-	
-	
+		return "mypage_admin/admin_trainerInfo";
+	}
 
 	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
 	@GetMapping("paylist")
@@ -303,32 +237,9 @@ public class MypageAdminController {
 		return "mypage_admin/admin_managementMoney";
 	}
 
-	
+	// updateBlackList_Admin() ModelAndView 관리자 블랙리스트 수정
 	// insertPoint_Admin() ModelAndView 관리자 포인트 등록
 	
 	// deleteTrainer_Admin() ResponseEntity 관리자 트레이너 탈퇴 전환
 	// showPayDetail_Admin() ModelAndView 관리자 수익 상세 보기
-	
-	
-	
-	// test
-//    @GetMapping("test")
-//    public ModelAndView test(ModelAndView mav, @RequestParam("userId") int userId) {
-//        log.info("test()...");
-//        mav.setViewName("mypage_admin/test");
-//        
-//        return mav;
-//    }
-//    
-//    @ResponseBody
-//    @GetMapping("ajax/test")
-//    public ResponseEntity<HashMap<String, Object>> restTest(@RequestParam("userId") int userId, @RequestParam("pageNum") int pageNum) {
-//        log.info(userId);
-//        HashMap<String, Object> result = new HashMap<>();
-//        Criteria cri = new Criteria(pageNum, 10);
-//        result.put("pageMaker", new PageVO(cri, 20));
-//        result.put("list", adminService.test(userId, cri));
-//        log.info(result);
-//        return ResponseEntity.ok(result);
-//    }
 }

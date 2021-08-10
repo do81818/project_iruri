@@ -15,8 +15,8 @@
 		<result property="boardLike" column="BOARD_LIKE"/>
 		<result property="boardGroupId" column="BOARD_GROUPID"/>
 		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="userId" column="USER_ID"/>
 		<result property="rnum" column="rnum"/>	
-		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 		
 	</resultMap>
 	

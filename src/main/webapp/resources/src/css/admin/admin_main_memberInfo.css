@@ -170,6 +170,7 @@ td {
     border-radius: 20px;
 }
 
+
 /* ---------------- 포인트 적립/사용 ------------------- */
 .admin_memberInfo_pointTitle {
     display: flex;
@@ -376,14 +377,8 @@ td {
     margin-left: 10px;
     position: relative;
     top: -5px;
-    cursor: Default;
 }
 
-.admin_trainerInfo_moneyTitle>form button.disabled{
-	background-color: var(--iruri-light-gray-color);
-	color: white;
-	cursor: Default;
-}
 
 
 

@@ -2,7 +2,6 @@ package com.iruri.ex.vo;
 
 
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -39,9 +38,5 @@ public class BuyVO {
 	private int payId;
 	private int classId;
 	private int rnum;
-	
-	private List<IClassVO> iClassList;
-    private List<PayVO> payList;
-    private List<MoneyVO> moneyList;
 	
 }

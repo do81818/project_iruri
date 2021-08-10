@@ -26,7 +26,4 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.iruri.ex" />
-	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-	</beans:bean>
 </beans:beans>
