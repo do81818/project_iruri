@@ -75,6 +75,7 @@ public class IClassVO {
     
     private List<ExerciseDateVO> exerciseDateList;
     private List<ExerciseKindVO> exerciseKindList;
+    
     private List<LikeListVO> likeListList;
     private List<BuyVO> buyList;
     private List<BoardVO> boardList;

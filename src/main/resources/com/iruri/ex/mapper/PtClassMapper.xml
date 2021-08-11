@@ -96,17 +96,31 @@ WHERE
 ]]>
 	</select>
 	
-	<select id="getTotalClass" resultType="int">
+	<!-- 전체 클래스 토탈 넘버 -->
+	<select id="getTotalClassAll" resultType="int">
 <![CDATA[
-SELECT 
-	COUNT(*)
-FROM 
-	iclass
-WHERE 
-	category_id = 2 and class_enddate >= sysdate
+SELECT COUNT(*)
+FROM iclass ic,
+(
+    SELECt exkind.*, exdate.exercise_date
+    FROM
+    (
+        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+        FROM exercise_kind
+        GROUP BY class_id
+    ) exkind,
+    (
+        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+        FROM exercise_date
+        GROUP BY class_id
+    ) exdate
+    WHERE exkind.class_id = exdate.class_id
+) exercise
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
 ]]>
 	</select>
 	
+	<!-- 전체 클래스 리스트 -->
 	<select id="getClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
 <![CDATA[
 	SELECT *
@@ -137,6 +151,40 @@ FROM
     WHERE   ROWNUM <= #{pageNum} * #{amount}
 )
 WHERE RNUM > (#{pageNum}-1) * #{amount}
+]]>
+	</select>
+	
+	<!-- 구매한 클래스 토탈 넘버 -->
+	<select id="getTotalClassBuy" resultType="int">
+<![CDATA[
+SELECT COUNT(*)
+FROM pay,
+(
+    SELECT classlist.*, buy.buy_id
+    FROM buy,
+    (
+        SELECT ic.*, exercise.exercise_kind, exercise.exercise_date
+        FROM iclass ic,
+        (    
+            SELECt exkind.*, exdate.exercise_date
+            FROM
+            (
+                SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                FROM exercise_kind
+                GROUP BY class_id
+            ) exkind,
+            (
+                SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                FROM exercise_date
+                GROUP BY class_id
+            ) exdate
+            WHERE exkind.class_id = exdate.class_id
+        ) exercise
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+    ) classlist
+    WHERE classlist.class_id = buy.class_id and buy.user_id = #{userId}
+) buylist
+WHERE buylist.buy_id = pay.buy_id and pay_state = 'pay'
 ]]>
 	</select>
 

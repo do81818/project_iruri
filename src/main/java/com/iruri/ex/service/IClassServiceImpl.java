@@ -22,7 +22,7 @@ public class IClassServiceImpl implements IClassService {
     private IClassMapper iClassMapper;
 
 
-    // 현재 운영중인 클래스 조회
+    // 현재 운영중인 클래스 조회(복사해서 사용하기위해 -> jsp에서 jebal로 사용)
     @Override
     public List<IClassVO> classList(int userId) {
         List<IClassVO> vo = iClassMapper.selectAllCurrent(userId);
@@ -153,19 +153,5 @@ public class IClassServiceImpl implements IClassService {
         log.info("getTotal_mypageTrainerClassListEnd()..");
         return iClassMapper.getTotalCount_mypageTrainerClassListEnd(cri, userId);
     }
-
-
-  
-   
-    //운동종류
-    @Override
-    public List<ExerciseKindVO> selectExerciseKind(int userId) {
-        List<ExerciseKindVO> kind = iClassMapper.selectExerciseKind(userId);
-        if(kind == null) {
-            return null;
-        }
-        return kind;
-    }
-
 
 }

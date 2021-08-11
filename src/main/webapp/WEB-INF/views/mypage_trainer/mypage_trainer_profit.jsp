@@ -10,8 +10,72 @@
 <html lang="ko">
   <head>
   <%@ include file="../include/static.jsp" %>
-    <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
+    <title>마이페이지 트레이너 수익관리</title> <!-- 페이지 이름을 적어주세요 -->
     <script src=""></script> <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
+  	<link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/component/paging.css">
+  	<script type="text/javascript">
+		$(document).ready(function(){
+			profit(1);
+		});
+		function profit(page){
+			$.ajax({
+				url : 'http://localhost:8282/ex/ajax/mypage/trainerProfit.json',
+				type : 'GET',
+				cache : false,
+				dataType : 'json',
+				data:{
+					pageNum: page,
+				},
+				success : function(result){
+					var profitList = result['profitList'];
+					console.log(profitList);
+					var pagination = result['pageMaker'];
+					var htmls = ''; 
+					var htmls2 = '';
+					
+					if(profitList.length < 1) {
+						htmls = '현재 트레이너님의 수익은 없습니다.';
+					} else {
+					
+					$(profitList).each(function() {
+						htmls +=	'<table class="pt_class_profit">';
+						htmls +=		'<tr>';
+						htmls +=			'<td class="pt_class_profit_date">'+this.buyDate+'</td>';
+						htmls +=			'<td>';
+						htmls +=				'<a class="pt_class_profit_title" href="#">'+this.classTitle +'</a>';
+						htmls +=			'</td>';
+						htmls +=			'<td class="pt_class_profit_money">'+this.buyRealpay +'</td>';
+						htmls +=		'</tr>';
+						htmls +=	'</table>';
+
+				});
+					if (pagination['prev']) {
+						htmls2 += '<a class="arrow prev" href="javascript:profit('+ (pagination['startPage']-1) +')"></a>';
+					} 
+					// 번호를 표시하는 부분
+					for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+						if (page !== idx) {
+							htmls2 += '<a class="pageNumLink" href="javascript:profit('+ idx + ')">' + (idx) + "</a>";
+						} else {
+							htmls2 += '<a class="pageNumLink active" href="javascript:profit('+ idx + ')">' + (idx) + "</a>";
+						}
+					}
+					
+					if (pagination['next']) {
+						htmls2 += '<a class="arrow next" href="javascript:profit('+ (pagination['endPage']+1) +')"></a>';
+						
+					}
+						$(".pt_class_profit_list").html(htmls);
+						$(".page_nation").html(htmls2);
+					}
+				}
+			});
+
+		};
+		
+	</script>
+  
   </head>
   <body>
     <div class="iruri__wrapper">
@@ -52,10 +116,10 @@
 				<!-- 관리메뉴 -->
 				<div class="class_MenuBar">
 					<ul>
-						<li class="class_MenuBar_text_now"><a href="#">클래스관리</a></li>
+						<li class="class_MenuBar_text"><a href="#">클래스관리</a></li>
 						<li class="class_MenuBar_text"><a href="#">회원관리</a></li>
 						<li class="class_MenuBar_text"><a href="#">클래스댓글조회</a></li>
-						<li class="class_MenuBar_text"><a href="#">수익관리</a></li>
+						<li class="class_MenuBar_text_now"><a href="#">수익관리</a></li>
 						<li class="class_MenuBar_text"><a href="#">프로필관리</a></li>
 					</ul>
 				</div>
@@ -81,118 +145,11 @@
                     </tr>
 
                 </table>
-
-                <table class="pt_class_profit">
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-                    <br>
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                    <tr>
-                        <td class="pt_class_profit_date">07.06</td>
-                        <td>
-                            <a class="pt_class_profit_title" href="#">
-                                스쿼트, 런지, 플랭크 30일 클래스
-                            </a>
-                        </td>
-                        <td class="pt_class_profit_money">150,000</td>
-                    </tr>
-
-                </table>
+                
+                
+                <div class="pt_class_profit_list"></div>
 
                 <div class="page_nation">
-                    <a class="arrow prev" href="#"></a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a class="arrow next" href="#"></a>
                 </div>
 
             </div>

@@ -39,18 +39,27 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
           <ul class="ptClassNav">
             <li>
-              <a href="#"> 전체 클래스 </a>
+              <a href="#" id="all" onclick="ajaxClassList(1, 'all')"> 전체 클래스 </a>
             </li>
             <li>
-              <a href="#"> 구매한 클래스 </a>
+              <a href="#" id="buy" onclick="ajaxClassList(1, 'buy')"> 구매한 클래스 </a>
             </li>
             <li>
-              <a href="#"> 관심 클래스 </a>
+              <a href="#" id="interest" onclick="ajaxClassList(1, 'interest')"> 관심 클래스 </a>
             </li>
             <li>
-              <a href="#"> 지난 클래스 </a>
+              <a href="#" id="past" onclick="ajaxClassList(1, 'past')"> 지난 클래스 </a>
             </li>
           </ul>
+
+          <script>
+            const ptClassNavList = document.querySelectorAll(".ptClassNav a");
+            ptClassNavList.forEach(item => {
+              item.addEventListener("click", function (e) {
+                e.preventDefault();
+              });
+            });
+          </script>
 
           <div class="ptClassFilter">
             <div>
@@ -267,40 +276,111 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
           </div>
 
           <!-- 클래스 리스트 -->
-          <div class="ptClassList">
-            <div class="c_list_detail">
-              <div class="c_list_img">
-                <div class="ptListPerson">1:1</div>
-                <img src="/ex/resources/src/img/icon/360-250.png" />
-              </div>
+          <div class="ptClassList"></div>
 
-              <div class="ptListSubTitle">트레이너 지오</div>
-              <div class="c_list_title ptListTitle">스쿼트, 런지, 플랭크 <br />30일 챌린지30일 챌린지30일 챌린지</div>
+          <div class="page_nation"></div>
 
-              <div class="c_list_date">2021.03.01 ~ 2021.04.01</div>
+          <script>
+            function ajaxClassList(page, type) {
+              $.ajax({
+                url: "${CONTEXT_PATH}/ajax/class",
+                type: "GET",
+                cache: false,
+                dataType: "json",
+                data: {
+                  pageNum: page,
+                  type: type,
+                },
+                success: function (result) {
+                  console.log(result);
 
-              <div class="data__tags">
-                <div class="data__tag-blue">
-                  <i class="iruri-time-icon"></i>
-                  <span>EASY</span>
-                </div>
+                  const list = result["list"];
+                  const pagination = result["pageMaker"];
+                  let listHtmls = "";
+                  let pagingHtmls = "";
 
-                <div class="data__tag-blue">
-                  <i class="iruri-level-icon"></i>
-                  <span>월수금/50분</span>
-                </div>
-              </div>
-              <div class="data__tags">
-                <div class="data__tag-red">댄스</div>
-                <div class="data__tag-red">피트니스</div>
-              </div>
+                  if (list.length < 1) {
+                    alert("현재 등록된 챌린지가 없습니다.");
+                  } else {
+                    $(list).each(function () {
+                      listHtmls +=
+                        //
+                        `<div class="c_list_detail">
+                            <div class="c_list_img">
+                              <div class="ptListPerson">1:${"${this.classTotalMember}"}</div>
+                              <img src="${CONTEXT_PATH}/iruri/display?fileName=${"${this.classImage}"}" />
+                            </div>
 
-              <div class="ptListBuyData">
-                <div class="ptListPrice">\ 59,000</div>
-                <i class="iruri-heart-gray-icon"></i>
-              </div>
-            </div>
-          </div>
+                            <div class="ptListSubTitle">트레이너 ${"${this.iuserVO.userNickname}"}</div>
+                            <div class="c_list_title ptListTitle">${"${this.classTitle}"}</div>
+
+                            <div class="c_list_date">${"${this.classStartDate}"} ~ ${"${this.classEndDate}"}</div>
+
+                            <div class="data__tags">
+                              
+                              <div class="data__tag-blue">
+                                <i class="iruri-time-icon"></i>
+                                <span>${"${this.classLevel}"}</span>
+                              </div>
+
+                              <div class="data__tag-blue">
+                                <i class="iruri-level-icon"></i>`;
+
+                      let dateStr = "";
+                      for (let date in this.exerciseDateList) {
+                        dateStr += this.exerciseDateList[date].exerciseDate;
+                      }
+
+                      listHtmls += `<span>${"${dateStr}"}/${"${this.classTime}분"}</span>`;
+
+                      listHtmls +=
+                        //
+                        `</div>
+                            </div>
+                            <div class="data__tags">`;
+
+                      for (let kind in this.exerciseKindList) {
+                        listHtmls += `<div class="data__tag-red">${"${this.exerciseKindList[kind].exerciseKind}"}</div>`;
+                      }
+
+                      listHtmls +=
+                        //
+                        `</div>
+
+                            <div class="ptListBuyData">
+                              <div class="ptListPrice">\ ${"${this.classPrice}"}</div>
+                              <i class="iruri-heart-gray-icon"></i>
+                            </div>
+                          </div>`;
+                    });
+
+                    if (pagination["prev"]) {
+                      pagingHtmls += '<a class="arrow prev" href="javascript:ajaxClassList(' + (pagination["startPage"] - 1) + "," + type + ')"></a>';
+                    }
+                    // 번호를 표시하는 부분
+                    for (var idx = pagination["startPage"]; idx <= pagination["endPage"]; idx++) {
+                      if (page !== idx) {
+                        pagingHtmls += '<a class="pageNumLink" href="javascript:AllClass(' + idx + "," + type + ')">' + idx + "</a>";
+                      } else {
+                        pagingHtmls += '<a class="pageNumLink active" href="javascript:AllClass(' + idx + "," + type + ')">' + idx + "</a>";
+                      }
+                    }
+
+                    if (pagination["next"]) {
+                      pagingHtmls += '<a class="arrow next" href="javascript:AllClass(' + (pagination["endPage"] + 1) + "," + type + ')"></a>';
+                    }
+                  }
+
+                  $(".ptClassList").html(listHtmls);
+                  $(".page_nation").html(pagingHtmls);
+                },
+              });
+            }
+
+            $(document).ready(() => {
+              ajaxClassList(1, "all");
+            });
+          </script>
         </div>
       </main>
 

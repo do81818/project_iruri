@@ -49,10 +49,4 @@ public interface IClassService {
     int getTotal_mypageTrainerClassListEnd(Criteria cri, int userId);
     List<IClassVO> mypageTrainerClassListEnd(Criteria cri, int userId);
     
-    //운동요일
-    // ExerciseDateVO selectExerciseDate(int userId);
-   
-    //운동종류
-    List<ExerciseKindVO> selectExerciseKind(int userId);
-    
 }

@@ -47,4 +47,5 @@ public class IUserVO {
     private List<AuthVO> authList;
     private List<GradeVO> gradeList;
     private List<IClassVO> classList;
+    private List<ICommentVO> iCommentList;
 }

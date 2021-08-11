@@ -68,14 +68,16 @@
 	</select>
 
 	<!--현재 운영중인 클래스 정보 뽑아오기 -->
+	<!--  현재 운영중인 클래스 조회(복사해서 사용하기위해 -> jsp에서 jebal로 사용) -->
 	<select id="selectAllCurrent" resultMap="iClassMap">
 		<![CDATA[
 		SELECT
 			*
 		FROM 
-			iclass, exercise_kind
+			iclass, exercise_kind, exercise_date
 		WHERE
-			iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			iclass.class_id =  exercise_date.class_id and iclass.class_id =  exercise_kind.class_id and user_id = #{userId} and CLASS_ENDDATE >= sysdate
+			order by exercise_date.exercise_date desc
 		]]>
 	</select>
 
@@ -161,7 +163,7 @@ WHERE c.class_id = e.class_id
 	]]>
 	</select>
 
-
+	<!-- 현재 진행중인 클래스(+페이징), 조인구문이 빠짐-> 위에서 조인해서 복사해서 사용 -->
 	<select id="getListWithPaging_mypageTrainerClassList" parameterType="HashMap" resultMap="iClassMap">
 	 <![CDATA[
 SELECT *
@@ -208,7 +210,6 @@ FROM
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
-
 	]]> 
 
 	</select>

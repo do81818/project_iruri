@@ -1,6 +1,6 @@
 package com.iruri.ex.controller;
 
-import java.security.Principal; 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
@@ -20,26 +19,23 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.MypageTrainerService;
-import com.iruri.ex.vo.BuyVO;
-import com.iruri.ex.vo.ExerciseDateVO;
-import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.MoneyVO;
+import com.iruri.ex.vo.ProfitVO;
+import com.iruri.ex.vo.trainerUserManagementVO;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
 public class MypageTrainerController {
-
+    
     @Autowired
     IUserService iUserService;
     @Autowired
     IClassService iClassService;
     @Autowired
     MypageTrainerService mypageTrainerService;
-
     // 마이페이지로 이동
     @RequestMapping("/mypage/trainer")
     public String mypageT(@CurrentUser IUserVO vo, Model model) {
@@ -54,13 +50,13 @@ public class MypageTrainerController {
         // -> 리턴한 뷰에서 모델을 인식할 수 있다.
         model.addAttribute("user", vo);
 
-        
-        List<IClassVO> classList = iClassService.classList(vo.getUserId());
-        // model.addAttribute("classList", classList);
-        
-        log.info(classList.get(0).getExerciseKindList().size());
-         
-
+        /*
+         * List<IClassVO> classList = iClassService.classList(vo.getUserId()); //
+         * model.addAttribute("classList", classList);
+         * 
+         * log.info(classList.get(0).getExerciseKindList().size());
+         * 
+         */
         return "mypage_trainer/mypage_trainer_main";
     }
 
@@ -147,20 +143,15 @@ public class MypageTrainerController {
         
         // 트레이너 월별 수익
         int monthProfit = mypageTrainerService.monthProfit(userId);
-        
         model.addAttribute("monthProfit", monthProfit);
-        log.info("ㅇㅇ"+monthProfit);
-        
-        System.out.println("ㅇㅇㅇ"+monthProfit);
-        
+
         return "mypage_trainer/mypage_trainer_profit";
     }
     
     // 수익 ajax
     @ResponseBody
     @GetMapping("/ajax/mypage/trainerProfit")
-    public ResponseEntity<HashMap<String, Object>> mypageTrainerProfit(@CurrentUser IUserVO vo,
-            @RequestParam("pageNum") int pageNum) {
+    public ResponseEntity<HashMap<String, Object>> mypageTrainerProfit(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
         log.info("mypageTrainerProfit");
         // 10개의 리스트
         Criteria cri = new Criteria(pageNum, 10);
@@ -173,16 +164,60 @@ public class MypageTrainerController {
         int total = mypageTrainerService.getTotal_mypageTrainerProfit(cri, userId);
         log.info("토탈: " + total);
 
-        List<BuyVO> profitList = mypageTrainerService.mypageTrainerProfit(cri, userId);
-
-        result.put("list", profitList);
+        // 트레이너 수익 리스트 테스트
+        List<ProfitVO> profitList = mypageTrainerService.profitList(cri, userId);
+        result.put("profitList", profitList);
 
         log.info("리스트: " + profitList);
-
+        
         result.put("pageMaker", new PageVO(cri, total));
 
         return ResponseEntity.ok(result);
     }
     
-
+    // 회원관리
+    @RequestMapping("/mypage/trainer/userManagement")
+    public String userManagement(@CurrentUser IUserVO vo, Model model) {
+        log.info("userManagement() ... ");
+        
+        // 유저정보 받기
+        model.addAttribute("user", vo);
+        
+        int userId = vo.getUserId();
+        
+       // List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(userId);
+   
+      //  model.addAttribute("trainerUserManagement", trainerUserManagement);
+        
+        return "mypage_trainer/mypage_trainer_user_management";
+    }
+    
+    
+    // 회원관리 ajax
+    @ResponseBody
+    @GetMapping("/ajax/mypage/userManagement")
+    public ResponseEntity<HashMap<String, Object>> userManagementAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("userManagementAjax() ... ");
+        
+        Criteria cri = new Criteria(pageNum, 3);
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        int total = mypageTrainerService.getTotal_trainerUserManagement(cri, userId);
+        
+        List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(cri, userId);
+       
+        result.put("trainerUserManagement", trainerUserManagement);
+        
+        log.info("oo"+trainerUserManagement);
+        
+        result.put("pageMaker", new PageVO(cri, total));
+        
+        List<trainerUserManagementVO> list2 = mypageTrainerService.trainerUserManagementList2(vo.getUserId());
+        result.put("list2", list2);
+        return ResponseEntity.ok(result);
+    }
+    
+   
+    
 }
