@@ -54,7 +54,15 @@
 				<td>
 					<form>
 						<input type="text" disabled value="${info.iuserVo.userId}"></input>
-						<button>탈퇴회원으로 전환</button>
+						<c:choose>
+							<c:when test="${info.authVo.authContent == 'ROLE_TRAINER'}">
+								<button id="Member_withdrawButton" type="button">탈퇴회원으로
+									전환</button>
+							</c:when>
+							<c:when test="${info.authVo.authContent == 'ROLE_LEAVE'}">
+								<button id="Member_withdrawButton" type="button" disabled>탈퇴회원</button>
+							</c:when>
+						</c:choose>
 					</form>
 				</td>
 			</tr>
@@ -91,45 +99,34 @@
 				<td>
 					<form name="memberInfo_balackListForm"
 						class="memberInfo_balackListForm">
-						<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
+						<input type="hidden" name="userId" value="${info.iuserVo.userId}" />
+						<c:set var="userBlackList" value="${info.iuserVo.userBlackList}"
+							scope="session" />
 						<c:choose>
-							<c:when test="${info.iuserVo.userBlackList == true }">
-								<input id="memberInfo_balackList" type="checkbox" checked
-									name="number" value="false" >
-								<label for="memberInfo_balackList" onclick="javascript:updateBlackList();return false">
-									<span></span>블랙리스트
-								</label>
+							<c:when test="${userBlackList == true}">
+								<input id="memberInfo_balackList" class="memberInfo_balackList"
+									type="checkbox" checked name="number" value="noneBlack">
+								<label for="memberInfo_balackList"><span></span>블랙리스트 </label>
 							</c:when>
 							<c:otherwise>
-								<input id="memberInfo_balackList" type="checkbox" name="number"
-									value="true">
-								<label for="memberInfo_balackList" onclick="javascript:updateBlackList();return false">
-									<span></span>블랙리스트
+								<input id="memberInfo_balackList" class="memberInfo_balackList"
+									type="checkbox" name="number" value="black">
+								<label for="memberInfo_balackList"> <span></span>블랙리스트
 								</label>
 							</c:otherwise>
 						</c:choose>
-
 						<div>
-							<c:choose>
-								<c:when test="${info.iuserVo.userBlaskListReason eq null }">
-									<textarea id="memberInfo_balackList_reason" name="reason"
-										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
-								</c:when>
-								<c:otherwise>
-									<textarea id="memberInfo_balackList_reason"
-										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
-										name="reason">${info.iuserVo.userBlaskListReason}</textarea>
-								</c:otherwise>
-							</c:choose>
-
+							<textarea id="memberInfo_balackList_reason" name="reason"
+								onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성">${info.iuserVo.userBlaskListReason}</textarea>
 							<span id="nowByte" class="table_blue_text">0</span> <span
 								class="table_gray_text"> / 3000byte</span>
-							<button onclick="updateBlackList(); return false;">입력</button>
+							<button id="memberInfo_balackListForm_button" type="button">입력</button>
 						</div>
 					</form>
 				</td>
 			</tr>
 		</table>
+		<!-- onclick="javascript:updateBlackList();" -->
 
 		<script type="text/javascript">
 	/* 
@@ -142,49 +139,167 @@
 	}
 	
 	let number = document.getElementId("memberInfo_balackList").value;
-	 */
-	 
-	var updateBlackList = function() {
+	*/
+	
+	 $(document).ready(function(){
 	     
-	     var userId = ${info.iuserVo.userId};
-	   	 var number = $('#memberInfo_balackList').val();
-	   	 var reason = $('#memberInfo_balackList_reason').val();
+	     document.getElementById("memberInfo_balackList").addEventListener("click", function() {
+	   	     updateBlackList_number();
+	   	    }, false); 
+	   	 document.getElementById("memberInfo_balackListForm_button").addEventListener("click", function() {
+	   	     updateBlackList_reason();
+	   	    }, false);
+	   	 
+	   	document.getElementById("Member_withdrawButton").addEventListener("click", function() {
+	   	 var str = "탈퇴회원으로 전환하시겠습니까?";
+ 		   
+		    check(str);
+	   	    }, false);
+	   	 
+	   	
+	   	function withdrawMember(){
+	   	    
+	   	    let userId = ${info.iuserVo.userId};
+	   		
+		   	const header = $('meta[name="_csrf_header"]').attr('th:content');
+	        const token = $('meta[name="_csrf"]').attr('th:content');
+         
+	   		console.log("leaveMember()..");
+		    console.log("userId", userId);
+		    
+		    $.ajax({
+			     url: '${CONTEXT_PATH_ADMIN}/ajax/update/withdraw',
+			     type: 'POST',
+			     data: {
+			         userId: userId
+			     },
+			     dataType: 'json',
+			     beforeSend: function(xhr) {
+	           		xhr.setRequestHeader(header, token);
+	       		 },
+	       		 success : function(result) {
+	       		  	console.log("성공");
+	       		  	var htmls = "";
+	       		  	$("#Member_withdrawButton").attr('disabled','disabled');
+	       		 	$("#Member_withdrawButton").css({"color": "#cccccc", "border":"1px solid #cccccc"});
+	       		    $("#Member_withdrawButton").html('탈퇴회원');
+	       		    
+	       		 }
+			 });
+	   	    
+	   	}
+	   	
+	   	function check(str) {
+
+	   	 if (confirm(str) == true){    //확인
+	   	  withdrawMember();
+	   	 } else {   //취소
+	   	     return false;
+	   	 }
+	   	}
+	   	 
+	   	function updateBlackList_number() {
+	   	    
+	   	let userId = ${info.iuserVo.userId};
+	   	let number = $('input[name=number]').val();
+	   	let reason = $('#memberInfo_balackList_reason').val();
+	   	 
+	   	 if(reason != "") {
+	   	     
+	   	 } else {
+	   	     reason = 1;
+	   	 }
 	   	
 	     console.log("updateBlackList()..");
-	     console.log(userId);
-	     console.log(number);
-	     console.log(reason);
+	     console.log("userId", userId);
+	     console.log("number", number);
+	     console.log("reason", reason);
 	     
 	     const header = $('meta[name="_csrf_header"]').attr('th:content');
          const token = $('meta[name="_csrf"]').attr('th:content');
          
-	     /* var formData = $('form.memberInfo_balackListForm').serialize(); 
+	     /* var formData = $('form[name="memberInfo_balackListForm"]').serialize(); 
 	     
-		 console.log(formData);		 */
+		 console.log(formData); */
 		 
-		    $.ajax({
-		        url : '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
-	            type : 'POST',
-	            beforeSend: function(xhr) {
-	                xhr.setRequestHeader(header, token);
-	            },
-	            processData: false,
-	            contentType: 'application/json',
-	            dataType : 'json',
-	            data : {
-	              userId: userId,
-	              number: number,
-	              reason: reason,
-	            },
-	            success : function(result) {
-	                console.log(result);
-	                
-	                /* var info = result['info']; */
-	                
-	            },
-		     timeout: 5000
-		    });
-	 }
+		 
+		 $.ajax({
+		     url: '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
+		     type: 'POST',
+		     data: {
+		         userId: userId,
+		         number: number,
+		         reason: reason,
+		     },
+		     dataType: 'json',
+		     beforeSend: function(xhr) {
+           		xhr.setRequestHeader(header, token);
+       		 },
+       		 success : function(result) {
+       		  	console.log("성공");
+       		 if(number == 'noneBlack'){
+          		 $('input[name=number]').val('black');
+		  	    alert('블랙리스트가 해지되었습니다.');
+		  	} else if (number == 'black') {
+		  	  $('input[name=number]').val('noneBlack');
+		  		alert('블랙리스트 처리되었습니다.');
+		  	}
+       		  	
+       		 }
+		 });
+		 
+	   	}
+	   	
+	   	function updateBlackList_reason() {
+	   	    
+		   	let userId = ${info.iuserVo.userId};
+		   	let number = $('input[name=number]').val();
+		   	let reason = $('#memberInfo_balackList_reason').val();
+		   	 
+		   	 if(reason != "") {
+		   	     
+		   	 } else {
+		   	     reason = 1;
+		   	 }
+		   	
+		     console.log("updateBlackList()..");
+		     console.log("userId", userId);
+		     console.log("number", number);
+		     console.log("reason", reason);
+		     
+		     const header = $('meta[name="_csrf_header"]').attr('th:content');
+	         const token = $('meta[name="_csrf"]').attr('th:content');
+	         
+		     /* var formData = $('form[name="memberInfo_balackListForm"]').serialize(); 
+		     
+			 console.log(formData); */
+			 
+			 
+			 $.ajax({
+			     url: '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
+			     type: 'POST',
+			     data: {
+			         userId: userId,
+			         number: number,
+			         reason: reason,
+			     },
+			     dataType: 'json',
+			     beforeSend: function(xhr) {
+	           		xhr.setRequestHeader(header, token);
+	       		 },
+	       		 success : function(result) {
+	       		  	console.log("성공");
+	       		  	
+	       		  	if(reason !== '1') {
+	       		  	    alert('블랙리스트 사유가 등록되었습니다.')
+	       		  	}
+	       		 }
+			 });
+			 
+		   	}
+	   	
+	 })
+	
 	 
 	</script>
 

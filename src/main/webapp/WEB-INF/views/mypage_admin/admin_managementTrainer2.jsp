@@ -120,6 +120,8 @@
 															htmls += '<td class="table_indigo_text">';
 															if (this.authList[0].authContent == "ROLE_TRAINER") {
 															    htmls += '트레이너';
+															} else if (this.authList[0].authContent == "ROLE_LEAVE") {
+															    htmls += '탈퇴회원';
 															} else {
 																htmls += 00;
 															}

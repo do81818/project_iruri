@@ -117,11 +117,14 @@
 															htmls += '<td class="table_No_date">'
 																	+ this.iuserVo.userId
 																	+ '</td>';
-															htmls += '<td class="table_indigo_text">';
 															if (this.authVo.authContent == "ROLE_TRAINER") {
+															    htmls += '<td class="table_indigo_text">';
 															    htmls += '트레이너';
+															} else if (this.authVo.authContent == "ROLE_LEAVE") {
+															    htmls += '<td class="table_No_date">';
+															    htmls += '탈퇴회원';
 															} else {
-																htmls += 00;
+																htmls += '00';
 															}
 															htmls += '</td>';
 

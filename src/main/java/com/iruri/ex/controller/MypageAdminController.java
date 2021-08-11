@@ -250,28 +250,30 @@ public class MypageAdminController {
     }
 	
 	
-    // updateBlackList_Admin() ModelAndView 관리자 블랙리스트 수정
+    // restUpdateBlacklist()  관리자 블랙리스트 수정
     @ResponseBody
     @PostMapping("ajax/update/blacklist")
-    public ResponseEntity<HashMap<String, Object>> restUpdateBlacklist(@RequestParam("userId") int userId, @RequestParam("numberStr") String numberStr, @RequestParam("reason") String reason) {
+    public ResponseEntity<HashMap<String, Object>> restUpdateBlacklist(@RequestParam("userId") int userId, @RequestParam("number") String numberStr, @RequestParam("reason") String reason) {
         HashMap<String, Object> result = new HashMap<>();
         log.info("restUpdateBlacklist()..");
         int number = 0;
-        if(numberStr.equals("true")) {
+        if(numberStr.equals("black")) {
             number = 1;
         } else {
             number = 0;
         }
         adminService.updateBlackList(userId, number);
         log.info("1");
-        if(reason != null) {
+        if(!(reason.equals("1"))) {
             adminService.updateBlackListReason(userId, reason);
         }
         result.put("info", adminService.getUserBasicInfo(userId));
         log.info(result);
         return ResponseEntity.ok(result);
     }
-           
+    
+    
+    // get방식으로 블랙리스트 처리
 //    public void restUpdateBlacklist(HttpServletResponse response, @RequestParam("userId") int userId, @RequestParam("number") String numberStr, ModelAndView mav) throws IOException {
 //        int number = 0;
 //        if(numberStr.equals("true")) {
@@ -286,11 +288,20 @@ public class MypageAdminController {
 //        
 //    }
 	
+    
+    // updateWithdrawMember() 탈퇴회원으로 전환
+    @ResponseBody
+    @PostMapping("ajax/update/withdraw")
+    public ResponseEntity<HashMap<String, Object>> restUpdateWithdrawMember(@RequestParam("userId") int userId) {
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("restUpdateWithdrawMember()..");
+        adminService.updateWithdrawMember(userId);
+        result.put("info", adminService.getUserBasicInfo(userId));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
 	
-	
-	
-	
-
+    
 	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
 	@GetMapping("paylist")
 	public String showPayList_Admin(Locale locale, Model model) {
