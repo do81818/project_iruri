@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.BoardMapper">
+
+	<resultMap type="com.iruri.ex.vo.BoardVO" id="boardMap">
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardContent" column="BOARD_CONTENT"/>
+		<result property="boardFile" column="BOARD_FILE"/>
+		<result property="boardDate" column="BOARD_DATE"/>
+		<result property="boardState" column="BOARD_STATE"/>
+		<result property="boardHit" column="BOARD_HIT"/>
+		<result property="boardLike" column="BOARD_LIKE"/>
+		<result property="boardGroupId" column="BOARD_GROUPID"/>
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="rnum" column="rnum"/>	
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
+		
+	</resultMap>
+	
+	
+	<select id="boardcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			board
+		WHERE
+			user_id = #{userId} 
+		
+			
+		]]> 
+	</select>
+	
+	
+		<select id="boardconfirmcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			board
+		WHERE
+			user_id = #{userId} and category_Id = 5
+		
+			
+		]]> 
+	</select>
+	
+			<select id="myboardcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			board
+		WHERE
+			user_id = #{userId} and category_Id = 7
+		
+			
+		]]> 
+	</select>
+	
+				<select id="commentcount" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT
+			count(*)
+		FROM
+			board
+		WHERE
+			user_id = #{userId} and (category_Id = 6 or category_id = 8)
+		
+			
+		]]> 
+	</select>
+	
+	<select id="commentList" parameterType="hashmap" resultMap="boardMap">
+		<![CDATA[
+  	SELECT *  FROM (
+    	SELECT ROWNUM AS RNUM, A.* FROM (
+        	SELECT * FROM board where user_id = #{userId} order by board_date asc
+             ) A WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+         ) WHERE RNUM > (#{criteria.pageNum}-1) * #{criteria.amount}	
+			
+		]]> 
+	</select>
+	
+		<select id="total" resultType="int">
+	<![CDATA[
+		select count(*) from board where user_id = #{userId}
+	]]>
+	</select>
+	
+	
+
+
+
+</mapper>

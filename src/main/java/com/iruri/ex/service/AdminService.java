@@ -2,6 +2,8 @@ package com.iruri.ex.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.AuthVO;
 import com.iruri.ex.vo.IUserVO;
@@ -68,5 +70,20 @@ public interface AdminService {
 
 	// 일반/유료회원정보 운동정보 리스트보기 _all
 	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
+	
+	// 트레이너정보_수익관리 리스트
+	List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri1);
+    
+    // 트레이너 정보_수익관리 리스트 갯수
+    int countTrainerMoneyList(int userId, int month);
+    
+    // 트레이너정보_수익관리 월별 수익 합계
+    int trainerMoneyMonthTotal(int userId, int month);
+    
+    // 블랙리스트/일반회원 등록(전환)
+    void updateBlackList(int userId, int number);
+    
+    // 블랙리스트 이유 등록
+    void updateBlackListReason(int userId, String reason);
 	
 }
