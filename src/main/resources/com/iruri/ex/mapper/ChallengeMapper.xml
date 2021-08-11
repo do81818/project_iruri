@@ -421,7 +421,7 @@
 				(
 					board_id, 
 					board_title, 
-					board_content, 
+					BOARD_CONTENT, 
 					board_date,
 					board_state, 
 					board_hit, 
@@ -436,13 +436,13 @@
 					(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
 					'테스트',
 					#{boardVO.boardContent},
-					sysdate, 
-					'show', 
-					0, 
-					0, 
+					sysdate,
+					'show',
+					0,
+					0,
 					#{classId},
-       	 			6, 
-       	 			#{boardVO.iUserVO.userId}
+					6,
+					#{boardVO.iUserVO.userId}
 	       	 	)
 			]]>
 		</insert>
@@ -478,6 +478,44 @@
 			#{iUserVO.userId})
 		]]>
 		</insert>
+		
+		<!-- 인증글 수정 -->
+		<update id="modifyChallengeCertify">
+		<![CDATA[
+			UPDATE board
+			SET
+			 
+			board_title = #{boardTitle}, 
+			board_content = #{boardContent}, 
+			board_file = #{boardFile}
+		
+			
+			WHERE
+			(
+			board_groupid = #{boardGroupId} and
+			category_id = 5 and
+			user_id = #{iUserVO.userId} and
+			board_Id = #{boardId}
+		
+			)
+		]]>
+		</update>
+		
+		<!-- 인증글 삭제 -->
+		<delete id="deleteChallengeCertify">
+		<![CDATA[
+			DELETE FROM board
+
+			WHERE
+			(
+			board_groupid = #{boardGroupId} and
+			category_id = 5 and
+			user_id = #{iUserVO.userId} and
+			board_Id = #{boardId}
+	
+			)
+		]]>
+		</delete>
 		
 		<!-- 인증글 리스트 뽑아오기 -->
 		

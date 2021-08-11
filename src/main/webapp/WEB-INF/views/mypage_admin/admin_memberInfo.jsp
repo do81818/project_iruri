@@ -62,6 +62,7 @@
 				<td><c:choose>
 						<c:when test="${info.authVo.authId eq '1' }">일반회원</c:when>
 						<c:when test="${info.authVo.authId eq '2' }">유료회원</c:when>
+						<c:when test="${info.authVo.authId eq '3' }">탈퇴회원</c:when>
 					</c:choose></td>
 			</tr>
 			<tr>
@@ -83,41 +84,152 @@
 			<tr>
 				<td>블랙리스트여부</td>
 				<td>
-					<form class="memberInfo_balackListForm">
+					<form name="memberInfo_balackListForm"
+						class="memberInfo_balackListForm">
+						<input type="hidden" name="userId" value="${info.iuserVo.userId}" />
+						<c:set var="userBlackList" value="${info.iuserVo.userBlackList}"
+							scope="session" />
 						<c:choose>
-							<c:when test="${info.iuserVo.userBlackList == true }">
-								<input id="memberInfo_balackList" type="checkbox" checked>
-								<label for="memberInfo_balackList"> <span></span>블랙리스트
-								</label>
+							<c:when test="${userBlackList == true}">
+								<input id="memberInfo_balackList" class="memberInfo_balackList" type="checkbox" checked
+									name="number" value="noneBlack">
+								<label for="memberInfo_balackList"><span></span>블랙리스트 </label>
 							</c:when>
 							<c:otherwise>
-								<input id="memberInfo_balackList" type="checkbox">
+								<input id="memberInfo_balackList" class="memberInfo_balackList" type="checkbox" name="number"
+									value="black">
 								<label for="memberInfo_balackList"> <span></span>블랙리스트
 								</label>
 							</c:otherwise>
 						</c:choose>
-
 						<div>
-							<c:choose>
-								<c:when test="${info.iuserVo.userBlaskListReason eq null }">
-									<textarea id="memberInfo_balackList_reason"
-										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"></textarea>
-								</c:when>
-								<c:otherwise>
-									<textarea id="memberInfo_balackList_reason"
-										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
-										value="${info.iuserVo.userBlaskListReason}"></textarea>
-								</c:otherwise>
-							</c:choose>
-
+							<textarea id="memberInfo_balackList_reason" name="reason"
+								onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성">${info.iuserVo.userBlaskListReason}</textarea>
 							<span id="nowByte" class="table_blue_text">0</span> <span
 								class="table_gray_text"> / 3000byte</span>
-							<button>입력</button>
+							<button id="memberInfo_balackListForm_button" type="button">입력</button>
 						</div>
 					</form>
 				</td>
 			</tr>
 		</table>
+		
+		<script type="text/javascript">
+	
+		 $(document).ready(function(){
+	     
+	     document.getElementById("memberInfo_balackList").addEventListener("click", function() {
+	         updateBlackList_number();
+	   	    }, false); 
+	   	 document.getElementById("memberInfo_balackListForm_button").addEventListener("click", function() {
+	   	  updateBlackList_reason();
+	   	    }, false);
+		 
+	   	
+	   	function updateBlackList_number() {
+	   	    
+	   	let userId = ${info.iuserVo.userId};
+	   	let number = $('input[name=number]').val();
+	   	let reason = $('#memberInfo_balackList_reason').val();
+	   	 
+	   	 if(reason != "") {
+	   	     
+	   	 } else {
+	   	     reason = 1;
+	   	 }
+	   	
+	     console.log("updateBlackList()..");
+	     console.log("userId", userId);
+	     console.log("number", number);
+	     console.log("reason", reason);
+	     
+	     const header = $('meta[name="_csrf_header"]').attr('th:content');
+         const token = $('meta[name="_csrf"]').attr('th:content');
+         
+	     /* var formData = $('form[name="memberInfo_balackListForm"]').serialize(); 
+	     
+		 console.log(formData); */
+		 
+		 
+		 $.ajax({
+		     url: '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
+		     type: 'POST',
+		     data: {
+		         userId: userId,
+		         number: number,
+		         reason: reason,
+		     },
+		     dataType: 'json',
+		     beforeSend: function(xhr) {
+           		xhr.setRequestHeader(header, token);
+       		 },
+       		 success : function(result) {
+       		  	console.log("성공");
+
+       		 	if(number == 'noneBlack'){
+              		 $('input[name=number]').val('black');
+    		  	    alert('블랙리스트가 해지되었습니다.');
+    		  	} else if (number == 'black') {
+    		  	  $('input[name=number]').val('noneBlack');
+    		  		alert('블랙리스트 처리되었습니다.');
+    		  	}
+       		 }
+		 });
+		 
+	   	}
+	   	
+	   	function updateBlackList_reason() {
+	   	    
+		   	let userId = ${info.iuserVo.userId};
+		   	let number = $('input[name=number]').val();
+		   	let reason = $('#memberInfo_balackList_reason').val();
+		   	 
+		   	 if(reason != "") {
+		   	     
+		   	 } else {
+		   	     reason = 1;
+		   	 }
+		   	
+		     console.log("updateBlackList()..");
+		     console.log("userId", userId);
+		     console.log("number", number);
+		     console.log("reason", reason);
+		     
+		     const header = $('meta[name="_csrf_header"]').attr('th:content');
+	         const token = $('meta[name="_csrf"]').attr('th:content');
+	         
+		     /* var formData = $('form[name="memberInfo_balackListForm"]').serialize(); 
+		     
+			 console.log(formData); */
+			 
+			 
+			 $.ajax({
+			     url: '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
+			     type: 'POST',
+			     data: {
+			         userId: userId,
+			         number: number,
+			         reason: reason,
+			     },
+			     dataType: 'json',
+			     beforeSend: function(xhr) {
+	           		xhr.setRequestHeader(header, token);
+	       		 },
+	       		 success : function(result) {
+	       		  	console.log("성공");
+	       		  	
+	       		  	if(reason !== '1') {
+	       		  	    alert('블랙리스트 사유가 등록되었습니다.')
+	       		  	}
+	       		 }
+			 });
+			 
+		   	}
+	   	
+	 })
+	
+	 
+	</script>
 
 		<!---------------------- 포인트 적립/사용 테이블 -------------------------->
 		
@@ -151,7 +263,13 @@
 		</div>
 	</div>
 	
-	<script>
+	<script type="text/javascript">
+	
+	$(document).ready(function() {
+	    console.log( "ready!" );
+        getlist(1);
+    });
+	
 	function getlist(page) {
 	    $.ajax({
             url : '${CONTEXT_PATH_ADMIN}/ajax/member/info',
@@ -164,11 +282,12 @@
              },
             success : function(result) {
                 console.log(result);
-                var list = result['list'];
+                var list = result['pointlist'];
                 var pagination = result['pageMaker'];
                 var htmls = "";
                 var htmls2 = "";
 
+                console.log(list);
                 
                htmls += "<tr><th>날짜</th><th>상태</th><th>적립/사용내용</th><th>포인트</th></tr>";
 	
@@ -234,10 +353,7 @@
                                  
                 }
 	
-	$(document).ready(function() {
-	    console.log( "ready!" );
-        getlist(1);
-    });
+	
 	
 	</script>
 

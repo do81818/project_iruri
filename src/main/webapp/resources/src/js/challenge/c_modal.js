@@ -20,6 +20,10 @@ $(function() {
         $("#c_certify_modal").fadeOut();
     });
 
+    $(".c_certify_modal_submit").click(function() {
+        $("#c_certify_modal").fadeOut();
+    });
+
 });
 
 
@@ -102,8 +106,18 @@ $(function() {
 function certify_details_modal(boardId) {
 
 
-
     if (boardId === 'close') {
+        $(".c_myCertify_modal").fadeOut();
+        return false;
+    }
+
+    if (boardId === 'modify') {
+        $(".c_myCertify_modal").fadeOut();
+        $("#c_certify_modify_modal").fadeIn();
+        return false;
+    }
+    
+    if (boardId === 'delete') {
         $(".c_myCertify_modal").fadeOut();
         return false;
     }
@@ -113,10 +127,20 @@ function certify_details_modal(boardId) {
         return item.boardId === boardId;
     });
     board = board[0];
+
+    console.log("board", board);
+
+	fetch('/ex/auth/loginCheck?userId=' + board.iuserVO.userId)
+	.then(data => data.text())
+	.then(html => console.log(html));
 	
-    const template = `
+	fetch('/ex/auth/loginCheck?userId=' + board.iuserVO.userId)
+	.then(data => data.text())
+	.then(btns => {
+		let template = `
     	<div class="c_myCertify_modal_start">
             <div>
+            	<input type="hidden" name="boardId" value="${board.boardId}">
                 <div class="myCertify_img">
                     <img src="display?fileName=${board.boardFile}" alt="">
                 </div>
@@ -126,21 +150,20 @@ function certify_details_modal(boardId) {
                 <div class="myCertify_title">${board.boardTitle}</div>
                 <div class="myCertify_content">${board.boardContent}</div>
 
-                <div class="modal_button">
-                    <button class="c_myCertify_modal_submit2" type="submit">수정</button>
-                    <button class="c_myCertify_modal_submit2" type="submit">삭제</button>
-                    <button class="c_myCertify_modal_submit" onclick="certify_details_modal('close')">확인</button>
+                <div class="modal_button">`;
+        template += btns
+        template +=            `<button class="c_myCertify_modal_submit" onclick="certify_details_modal('close')">확인</button>
                 </div>
             </div>
         </div>
 
         <div class="modal_layer"></div>`;
+	
+	    $(".c_myCertify_modal").html(template);
+	});
 
+	    $(".c_myCertify_modal").fadeIn();
 
-    $(".c_myCertify_modal").html(template);
-    $(".c_myCertify_modal").fadeIn();
-    
-   
 }
 
 //댓글 삭제 확인 모달//
@@ -170,9 +193,9 @@ $(function() {
 
 
 //인증글 수정 모달//
-// $(function() {
-// 	$(".c_myCertify_modal_submit2").click(function(){
-// 		$(".c_myCertify_modal").fadeOut();
-// 		$("#c_certify_modal").fadeIn();
-// 	});
-//});
+$(function() {
+    $(".c_modal_close img").click(function() {
+        $("#c_certify_modify_modal").fadeOut();
+    });
+
+});

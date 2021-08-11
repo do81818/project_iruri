@@ -110,13 +110,19 @@
 								$(list)
 										.each(
 												function() {
-													htmls += '<tr class="list_impact">';
+												    
+												    htmls += '<tr class="list_impact" onclick="link('
+														+ this.iuserVo.userId
+														+ ')">';
 													htmls += '<td class="table_No_date">'
 															+ this.iuserVo.userId
 															+ '</td>';
-													htmls += '<td class="table_indigo_text">'
 													if (this.authVo.authContent == "ROLE_TRAINER") {
-														htmls += '트레이너'
+													    htmls += '<td class="table_indigo_text">';
+													    htmls += '트레이너';
+													} else if (this.authVo.authContent == "ROLE_LEAVE") {
+													    htmls += '<td class="table_No_date">';
+													    htmls += '탈퇴회원';
 													} else {
 														htmls += '00';
 													}
@@ -128,9 +134,16 @@
 													htmls += '<td class="table_blue_text">'
 															+ this.iuserVo.userEmail
 															+ '</td>';
+															
+													var avgGrade = this.avgGrade - this.iuserVo.userId;
+													if(avgGrade < 0) {
+														avgGrade = 0;
+													}
+													
 													htmls += '<td class="table_red_text">'
-															+ this.avgGrade
-															+ '</td>';
+															+ (avgGrade).toFixed(1)
+															+ '</td>'
+															+ '</tr>';
 													htmls += '</tr>';
 												});
 
@@ -171,6 +184,10 @@
 		$(document).ready(function() {
 			getlist(1);
 		});
+		
+		function link(userId){
+		    location.href='${CONTEXT_PATH_ADMIN}/trainer/info?userId='+ userId;
+		}
 	</script>
 
 	<div class="iruri__wrapper">

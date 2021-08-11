@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.IUserVO;
 
 public interface UserChallengeService {
 	
@@ -55,5 +56,13 @@ public interface UserChallengeService {
 	List<IClassVO> userclassendlist_kind(int userId);
 
 	List<IClassVO> userclassendlist_date(int userId);
+	
+	
+	// 챌린지 삭제
+	void challenge_delete(int userId, int classId);
+	// 클래스 삭제
+	void class_delete_insert(int userId, int classId);
+
+	void class_delete_update(int userId, int classId);
 
 }

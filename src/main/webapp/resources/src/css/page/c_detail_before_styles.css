@@ -78,10 +78,10 @@ div {
 
 /*챌린지 상세페이지 대표 이미지*/
 
-.c_detail_img {
+.c_detail_img img{
     width: 537px;
     height: 490px;
-    background: url('/ex/resources/src/img/icon/537-490.png') no-repeat;
+    background: no-repeat;
     border-radius: 50px;
     margin-right: 50px;
     float: left;
@@ -427,6 +427,18 @@ ul li {
 
 .c_certify_img_list div:nth-of-type(4n) {
     margin: 0 0 36px 0;
+}
+
+.c_list_not_img {
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 24px;
+    color: var(--iruri-yellow-color);
+    display: inline-block;
+    margin: 0 20px;
+    text-decoration: none;
+    position: relative;
+    left : 450px;
 }
 
 

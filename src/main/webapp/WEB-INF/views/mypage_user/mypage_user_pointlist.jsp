@@ -130,8 +130,10 @@
         </c:if>
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+        	
         
             <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+            
         </c:forEach>
         
         <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
