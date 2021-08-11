@@ -164,6 +164,17 @@ $(function(){
     
 });
 
+$(function(){ 
+    $(".m_information_change").click(function(){
+    $(".modal_ch").fadeIn();
+    });
+    
+    $("img").click(function(){
+      $(".modal_ch").fadeOut();
+    });
+    
+});
+
 // 신체정보 업데이트 모달//
     $(function(){ 
         $(".m_update").click(function(){
