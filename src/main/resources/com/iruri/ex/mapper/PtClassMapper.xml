@@ -106,5 +106,38 @@ WHERE
 	category_id = 2 and class_enddate >= sysdate
 ]]>
 	</select>
+	
+	<select id="getClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+	SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, classlist.*
+    FROM
+    (
+        SELECT ic.*, exercise_kind, exercise_date
+        FROM iclass ic,
+        (
+            SELECt exkind.*, exdate.exercise_date
+            FROM
+            (
+                SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                FROM exercise_kind
+                GROUP BY class_id
+            ) exkind,
+            (
+                SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                FROM exercise_date
+                GROUP BY class_id
+            ) exdate
+            WHERE exkind.class_id = exdate.class_id
+        ) exercise
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+    ) classlist
+    WHERE   ROWNUM <= #{pageNum} * #{amount}
+)
+WHERE RNUM > (#{pageNum}-1) * #{amount}
+]]>
+	</select>
 
 </mapper>

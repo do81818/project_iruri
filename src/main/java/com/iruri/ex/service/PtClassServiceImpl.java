@@ -1,5 +1,6 @@
 package com.iruri.ex.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.PtClassMapper;
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.IClassVO;
 
 import lombok.extern.log4j.Log4j;
@@ -49,5 +51,20 @@ public class PtClassServiceImpl implements PtClassService {
     public int getTotalClass(Criteria cri) {
         return ptClassMapper.getTotalClass(cri);
     }
+    
+    @Override
+    public List<IClassVO> getClassList(Criteria cri) {
+        List<IClassVO> classList = ptClassMapper.getClassList(cri);
+        
+        List<ExerciseDateVO> dateList = new ArrayList<ExerciseDateVO>();
+        
+        for(int i = 0; i < classList.size(); i++) {
+            String date = classList.get(i).getExerciseDateList().get(0).getExerciseDate();
+            log.info(date);
+            String[] dateArr = date.split(",");
+        }
+        
+        return classList;
+    };
 
 }

@@ -63,7 +63,8 @@ public class PtClassController {
         int total = ptClassService.getTotalClass(cri);
         log.info(total);
         
-        result.put("test", total); // 임시 에러방지 (이거 지우고 리스트부터 시작)
+        result.put("list", ptClassService.getClassList(cri));
+        
         
         return ResponseEntity.ok(result);
     }
