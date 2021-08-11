@@ -421,7 +421,7 @@
 				(
 					board_id, 
 					board_title, 
-					board_content, 
+					BOARD_CONTENT, 
 					board_date,
 					board_state, 
 					board_hit, 
