@@ -281,7 +281,7 @@ SELECT
 	    iclass i, exercise_kind e, iuser B, exercise_date d
 	WHERE
 	    i.class_Id = d.class_id and i.class_Id = e.class_id and i.class_id IN ( select class_id from likelist where user_id = #{userId}) and i.category_id = 2	and class_enddate>= sysdate
-		and i.user_id = b.user_id
+		and i.user_id = b.user_id order by d.exercise_date desc
 		]]>
 	</select>
 
@@ -318,12 +318,12 @@ SELECT
 		resultMap="UserChallengeMap">
 		<![CDATA[
 SELECT
-    *
+     i.*, B.user_nickname, e.exercise_kind, d.exercise_date
 	FROM
-	    iclass i, exercise_kind e, iuser B
+	    iclass i, exercise_kind e, iuser B, exercise_date d
 	WHERE
-	    i.class_Id = e.class_id and i.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
-					and category_id = 2 and class_enddate < sysdate and i.user_id = b.user_id
+	    i.class_Id = d.class_Id and i.class_Id = e.class_id and i.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+					and category_id = 2 and class_enddate < sysdate and i.user_id = b.user_id order by d.exercise_date desc
 		]]>
 	</select>
 
@@ -354,11 +354,11 @@ FROM
     SELECT ROWNUM rn, c.*
    FROM
    (SELECT
-    A.*, B.user_nickname, e.exercise_kind, d.exercise_date
+    A.*, B.user_nickname
 	FROM
-	    iclass A, iuser B,exercise_kind e, exercise_date d
+	    iclass A, iuser B
 	WHERE
-	 A.class_id = d.class_id and A.class_Id = e.class_id and A.class_id in ( select class_id from likelist where user_id = #{userId}) and category_id = 2 and class_enddate>= sysdate and A.user_id = b.user_id
+	 A.class_id in ( select class_id from likelist where user_id = #{userId}) and category_id = 2 and class_enddate>= sysdate and A.user_id = b.user_id
    )C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
@@ -383,8 +383,7 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 
 
 
-	<select id="userclassendlist" parameterType="HashMap"
-		resultMap="UserChallengeMap">
+	<select id="userclassendlist" parameterType="HashMap" resultMap="UserChallengeMap">
 		<![CDATA[
 SELECT *
 FROM
@@ -392,11 +391,11 @@ FROM
     SELECT ROWNUM rn, c.*
    FROM
    (SELECT
-    A.*, B.user_nickname, e.exercise_kind
+    A.*, B.user_nickname
 	FROM
-	    iclass A, iuser B,exercise_kind e
-        where A.class_Id = e.class_id and A.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
-		and category_id = 2 and class_enddate < sysdate and A.user_id = B.user_id
+	    iclass A, iuser B
+       WHERE A.class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+		and category_id = 2 and class_enddate < sysdate and A.user_id = B.user_id 
    )C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
@@ -405,7 +404,18 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>
 	</select>
 
+	<select id="challenge_delete" parameterType="HashMap" >
+			<![CDATA[
+UPDATE pay SET pay_state = 'cancle'
+		WHERE pay_id in (select distinct pay.pay_id  from pay, buy, iclass where buy.user_id = #{userId} 
+			and iclass.class_enddate > sysdate and iclass.category_id = 1 and buy.buy_id = pay.buy_id and buy.class_id = #{classId})
+			
+			
+			
+			]]>
 
+
+	</select>
 
 
 

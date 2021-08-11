@@ -59,6 +59,6 @@ public interface UserChallengeService {
 	
 	
 	// 챌린지 삭제
-	void challenge_delete(IUserVO iuservo);
+	void challenge_delete(int userId, int classId);
 
 }

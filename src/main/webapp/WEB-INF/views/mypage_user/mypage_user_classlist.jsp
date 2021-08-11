@@ -485,8 +485,10 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_data_tag_blue">';
-																		htmls += '<i class="m_cl_iruri_level_icon"></i>';
-
+																		for (var i = 0; i < this.exerciseDateList.length; i++) {
+																			htmls += this.exerciseDateList[i].exerciseDate;
+																					
+																		}
 																		htmls += '</div>';
 
 																		/* 																		htmls += '<div class="m_cl_data_tag_red">';

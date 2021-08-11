@@ -49,6 +49,7 @@
 	});
 </script>
 
+
 <script>
 /* new Swiper('.swiper-container', { speed: 300, slidesPreView :2,
 slidesPerGroup : 2, /* loop:true, navigation: { nextEl:
@@ -142,7 +143,7 @@ true, }, }); */
 												<c:forEach var="userchallengelist"
 														items="${userchallengelist}" varStatus="status">
 														<li class="m_c_recommend_img">
-																<button class="m_cl_cancel_challenge_bt">챌린지취소</button>
+																<button class="m_cl_cancel_challenge_bt" id="${userchallengelist.classId}">챌린지취소</button>
 																<div class="m_c_recommend_title">
 																		${userchallengelist.classTitle}<br>
 																</div>
@@ -167,7 +168,24 @@ true, }, }); */
 
 								</div>
 
+								<script>
+								$(document).ready(function hihi(){
+									$(".m_cl_cancel_challenge_bt").click(function(){
+											var hihi = $(this).attr('id');
+											console.log(hihi);
+										
+											$('input[name="hihi"]').attr('value',hihi);
+									
+									});
+									
+								
+									});
+								/* document.getElementById('hihi').value = hihi(); */
+								
+								
+								
 
+								</script>
 
 
 
@@ -195,6 +213,8 @@ true, }, }); */
 
 									const m_c_recommend_img = document
 											.querySelectorAll('.m_c_recommend_img');
+									
+									
 
 									m_c_recommend_img
 											.forEach(function(item) {
@@ -209,6 +229,7 @@ true, }, }); */
 															data : {
 																classId : heartClassId,
 															},
+															
 															success : function(
 																	result) {
 
@@ -221,12 +242,12 @@ true, }, }); */
 																					true);
 																}
 															}
+															
 														})
 
 											});
 								</script>
 								<!-- 챌린지 취소 버튼 (모달) -->
-
 
 
 
@@ -246,232 +267,7 @@ true, }, }); */
 								</p>
 
 
-								<%--     <div class="m_c_list">
-   <c:forEach var="userlikelist" items="${userlikelist}" varStatus="status">
-      <div class="m_c_list_detail">
-          <img class="m_c_list_img" src="/ex/resources/src/img/icon/360-250.png">
- 
-        </div>
-          
-          <div class="m_c_list_title">
-              ${userlikelist.classTitle}
-          </div>
 
-          <div class="m_c_list_date">
-              ${userlikelist.classStartDate}~${userlikelist.classEndDate}
-          </div>
-
-          <div class="m_data_tags">
-              <div class="m_data_tag_blue">
-                  <i class="m_iruri_level_icon"></i> ${userlikelist.classLevel}
-              </div>
-              <div class="m_data_tag_blue">
-                  <i class="m_iruri_time_icon"></i>  주${userlikelist.classExerciseCount}일
-              </div>
-              
-          </div>
-
-          <div class="m_c_list_price">
-            참여중인 인원 ${userlikelist.classJoinMember}명 (최대인원 ${userlikelist.classTotalMember}명)
-          </div>
-
-          <div class="m_c_list_heart">
-              <input type="checkbox" id="heart${userlikelist.classId}"><label for="heart${userlikelist.classId}" class="m_heart_label"></label>
-          </div>
-    </div>
-
-
-</c:forEach>
-
-
-
-<!--     <div class="m_c_list_detail">
-      <div class="m_c_list_img">
-
-    </div>
-      
-      <div class="m_c_list_title">
-          스쿼트, 런지, 플랭크<br> 30일 챌린지
-      </div>
-
-      <div class="m_c_list_date">
-          2021.03.01~2021.04.01
-      </div>
-
-      <div class="m_data_tags">
-          <div class="m_data_tag_blue">
-              <i class="m_iruri_level_icon"></i> easy
-          </div>
-          <div class="m_data_tag_blue">
-              <i class="m_iruri_time_icon"></i> 주 5회 이상
-          </div>
-          
-      </div>
-
-      <div class="m_c_list_price">
-        참여중인 인원 00명 (최대인원 20명)
-      </div>
-
-        <div class="m_c_list_heart">
-            <input type="checkbox" id="heart4"><label for="heart4" class="m_heart_label"></label>
-        </div>
-  </div>
-
-  <div class="m_c_list_detail">
-    <div class="m_c_list_img">
-
-  </div>
-    
-    <div class="m_c_list_title">
-        스쿼트, 런지, 플랭크<br> 30일 챌린지
-    </div>
-
-    <div class="m_c_list_date">
-        2021.03.01~2021.04.01
-    </div>
-
-    <div class="m_data_tags">
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_level_icon"></i> easy
-        </div>
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_time_icon"></i> 주 5회 이상
-        </div>
-        
-    </div>
-
-    <div class="m_c_list_price">
-      참여중인 인원 00명 (최대인원 20명)
-    </div>
-
-    <div class="m_c_list_heart">
-        <input type="checkbox" id="heart5"><label for="heart5" class="m_heart_label"></label>
-    </div>
-</div>
- -->
- <div class="m_page_nation">
-        <a class="m_arrow_prev" href="#"></a>
-        <a href="#" class="m_active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a class="m_arrow_next" href="#"></a>
-    </div>
-  </div> --%>
-
-
-
-
-								<!-- 지난챌린지 -->
-
-
-
-								<!-- <div class="m_c_list"> -->
-								<%-- <c:forEach var="userendlist" items="${userendlist}">
-
-
-  <div class="m_c_list_detail">
-    <div class="m_c_list_img">
-
-  </div>
-    
-    <div class="m_c_list_title">
-        ${userendlist.classTitle}
-    </div>
-
-    <div class="m_c_list_date">
-        ${userendlist.classStartDate}~${userendlist.classEndDate}
-    </div>
-
-    <div class="m_data_tags">
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_level_icon"></i> ${userendlist.classLevel}
-        </div>
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_time_icon"></i> 주 ${userendlist.classExerciseCount} 일
-        </div>
-        
-    </div>
-
-    <div class="m_c_list_price">
-      참여중인 인원 ${userendlist.classJoinMember}명 (최대인원 ${userendlist.classTotalMember}명)
-    </div>
-
-  </div>
-  
-</c:forEach>
- --%>
-
-								<!--   <div class="m_c_list_detail">
-    <div class="m_c_list_img">
-
-  </div>
-    
-    <div class="m_c_list_title">
-        스쿼트, 런지, 플랭크<br> 30일 챌린지
-    </div>
-
-    <div class="m_c_list_date">
-        2021.03.01~2021.04.01
-    </div>
-
-    <div class="m_data_tags">
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_level_icon"></i> easy
-        </div>
-        <div class="m_data_tag_blue">
-            <i class="m_iruri_time_icon"></i> 주 5회 이상
-        </div>
-        
-    </div>
-
-    <div class="m_c_list_price">
-      참여중인 인원 00명 (최대인원 20명)
-    </div>
-
-</div>
-
-<div class="m_c_list_detail">
-  <div class="m_c_list_img">
-
-</div>
-  
-  <div class="m_c_list_title">
-      스쿼트, 런지, 플랭크<br> 30일 챌린지
-  </div>
-
-  <div class="m_c_list_date">
-      2021.03.01~2021.04.01
-  </div>
-
-  <div class="m_data_tags">
-      <div class="m_data_tag_blue">
-          <i class="m_iruri_level_icon"></i> easy
-      </div>
-      <div class="m_data_tag_blue">
-          <i class="m_iruri_time_icon"></i> 주 5회 이상
-      </div>
-      
-  </div>
-
-  <div class="m_c_list_price">
-    참여중인 인원 00명 (최대인원 20명)
-  </div>
-
-</div>
- -->
-								<!--   <div class="m_page_nation">
-      <a class="m_arrow_prev" href="#"></a>
-      <a href="#" class="m_active">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a class="m_arrow_next" href="#"></a>
-  </div> 
-
-</div> -->
 
 
 
@@ -513,7 +309,7 @@ true, }, }); */
 														</div>
 														<div class="alertWindow_insert">
 																<h2 class="alertWindow_title">정보수정</h2>
-																<form action="#">
+																<form action="update">
 																		<p>비밀번호</p>
 																		<input class="inputbox_size1" type="text" />
 
@@ -534,7 +330,7 @@ true, }, }); */
 								</div>
 
 
-								<!-- 챌린지취소  -->
+							<!-- 챌린지취소  -->
 						<div class="challenge_cancel" max-width:="max-width:" 400px;="400px;"
 								min-width:="min-width:" 500px;="500px;" margin:="margin:"
 								auto;="auto;" background-color:="background-color:"
@@ -547,7 +343,9 @@ true, }, }); */
 														</div>
 														<div class="alertWindow_insert">
 																<h2 class="alertWindow_title">챌린지 취소</h2>
-																<form action="#">
+																<form method="GET" id="challenge_delete" action="challenge_delete">
+																		<input type="hidden" name="hihi" value="hihi">
+																		
 																		<p class="alertWindow_content">
 																				정말로 챌린지를<br> 취소하시겠습니까?<br>챌린지는시작전에 다시신청
 																				가능합니다.
@@ -559,7 +357,8 @@ true, }, }); */
 										</div>
 								</div>
 
-						</div>
+						</div> 
+						
 						<script>
 							function likelist(page) {
 

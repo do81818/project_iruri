@@ -10,6 +10,7 @@ import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.mapper.UserChallengeMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.IUserInfoVO;
 import com.iruri.ex.vo.IUserVO;
 
 import lombok.extern.log4j.Log4j;
@@ -135,8 +136,9 @@ public List<IClassVO> userclassendlist_date(int userId){
 
 // 유저 챌린지 삭제
 @Override
-public void challenge_delete(int userId) {
-	return userchallengeMapper.challeng_delete(userId);
+public void challenge_delete(int userId, int classId) {
+	log.info("infoupdate");
+	userchallengeMapper.challenge_delete(userId, classId);
 }
 
 

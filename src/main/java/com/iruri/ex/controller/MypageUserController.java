@@ -626,21 +626,16 @@ public class MypageUserController {
 		  
 		  
 			// 신청한 챌린지 취소
-			@GetMapping("/challenge_delete")
-		    public String challenge_delete(Principal principal, IUserVO iuservo, Model model) {
+			@GetMapping("/mypage/challenge_delete")
+		    public String challenge_delete(@CurrentUser IUserVO iUserVO ,@RequestParam ("hihi") int classId, IUserVO iuservo, Model model) {
 		        log.info("test()..");
-
+		        log.info("히히" + classId);
+		        
 		        // 로그인한 유저의 정보 받아오기
-		        IUserVO vo = iUserService.selectOne(principal.getName());
-		        model.addAttribute("user",vo) ;
-
-
-		        // 모달 회원정보 업데이트
-		 		log.info("회원챌린지삭제().." + iuservo);	
+		        model.addAttribute("user", iUserVO) ;
 		 		
-		 		iuservo.setUserId(vo.getUserId());
-		 	    userchallengeService.challenge_delete(iuservo);
-		 	    
+		 	    userchallengeService.challenge_delete(iUserVO.getUserId(), classId);
+		 	   
 
 		        return "redirect:/mypage/challengelist";
 		        
