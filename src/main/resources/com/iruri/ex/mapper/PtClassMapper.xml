@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iruri.ex.mapper.PtClassMapper">
+
+	<!-- PT 클래스 생성 -->
+	<insert id="insertPtClass">
+		<![CDATA[
+INSERT ALL
+INTO iclass
+(
+	CLASS_ID, 
+	CLASS_TITLE,
+    CLASS_NEED, 
+    CLASS_LEVEL,
+	CLASS_STARTDATE, 
+    CLASS_ENDDATE, 
+	CLASS_TIME,
+    CLASS_TOTALMEMBER, 
+    CLASS_PRICE, 
+	CLASS_GOAL, 
+	CLASS_CONTENT, 
+    CLASS_TRAINERINFO, 
+    CLASS_IMAGE,
+    CLASS_STATE,
+    CATEGORY_ID,
+    USER_ID
+) 
+VALUES
+(
+	(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass), 
+	#{classTitle},
+    #{classNeed}, 
+    #{classLevel},
+	#{classStartDate}, 
+ 	#{classEndDate},
+ 	#{classTime},
+    #{classTotalMember}, 
+    #{classPrice}, 
+	#{classGoal}, 
+	#{classContent}, 
+ 	#{classTrainerInfo}, 
+ 	#{classImage}, 
+    'show',
+    2, 
+    #{iUserVO.userId}
+)
+		]]>
+
+		<foreach collection="exerciseDateList" item="date">
+INTO EXERCISE_DATE
+(
+	EXERCISE_DATE,
+	CLASS_ID
+)
+VALUES
+(
+	#{date.exerciseDate},
+	(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass)
+)
+		</foreach>
+		
+		<foreach collection="exerciseKindList" item="kind">
+INTO EXERCISE_KIND
+(
+	EXERCISE_KIND,
+	CLASS_ID
+)
+VALUES
+(
+	#{kind.exerciseKind},
+	(SELECT NVL(MAX(class_id), MAX(class_id)) + 1 FROM iclass)
+)
+		</foreach>		
+SELECT * FROM DUAL
+	</insert>
+	
+	<select id="recommendList" resultMap="com.iruri.ex.mapper.IClassMapper.iClassMap">
+<![CDATA[
+SELECT 
+*
+FROM
+(
+	SELECT 
+		ic.*, iu.user_nickname
+	FROM 
+		iclass ic, iuser iu
+	WHERE 
+		ic.user_id = iu.user_id and ic.category_id = 2 and ic.class_enddate >= sysdate
+	ORDER BY 
+		ic.class_like DESC
+)
+WHERE 
+	ROWNUM <= 2
+]]>
+	</select>
+	
+	<select id="getTotalClass" resultType="int">
+<![CDATA[
+SELECT 
+	COUNT(*)
+FROM 
+	iclass
+WHERE 
+	category_id = 2 and class_enddate >= sysdate
+]]>
+	</select>
+	
+	<select id="getClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+	SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, classlist.*
+    FROM
+    (
+        SELECT ic.*, exercise_kind, exercise_date
+        FROM iclass ic,
+        (
+            SELECt exkind.*, exdate.exercise_date
+            FROM
+            (
+                SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                FROM exercise_kind
+                GROUP BY class_id
+            ) exkind,
+            (
+                SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                FROM exercise_date
+                GROUP BY class_id
+            ) exdate
+            WHERE exkind.class_id = exdate.class_id
+        ) exercise
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+    ) classlist
+    WHERE   ROWNUM <= #{pageNum} * #{amount}
+)
+WHERE RNUM > (#{pageNum}-1) * #{amount}
+]]>
+	</select>
+
+</mapper>
