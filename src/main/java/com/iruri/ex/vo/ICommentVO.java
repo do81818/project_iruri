@@ -42,8 +42,6 @@ public class ICommentVO {
     
     private int userPhone;
     
-    private IUserVO iUserVO; // userId
-    
     private int classId;
 
 

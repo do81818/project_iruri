@@ -91,8 +91,7 @@
 		<collection property="iUserList" resultMap="iUserMap">
 		</collection>
 		
-		<collection property="iCommentList" resultMap="iCommentMap">
-		</collection>
+		
 	
 	</resultMap>
 	
@@ -108,6 +107,9 @@
 		<result property="userPoint" column="user_point"/>
 		<result property="userBlackList" column="user_blacklist"/>
 		<result property="userBlaskListReason" column="user_blacklist_reason"/>
+		
+		<collection property="iCommentList" resultMap="iCommentMap">
+		</collection>
 	</resultMap>
 	
 	<!-- ICommentVO -->
@@ -119,7 +121,6 @@
 		<result property="userPhone" column="user_phone"/>
 		
 		<result property="classId" column="class_id"/>
-		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
 	
 	

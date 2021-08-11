@@ -64,6 +64,8 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
 
     @Override
     public List<trainerUserManagementVO> trainerUserManagementList2(int userId) {
+        
+        
         return mypageTrainerMapper.trainerUserManagementList2(userId);
     }
 

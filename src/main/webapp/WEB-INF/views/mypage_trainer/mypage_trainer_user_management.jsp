@@ -92,7 +92,7 @@
 					htmls += '<tr>';
 					htmls += '<td class="pt_reply_box">';
 					htmls += '<p class="pt_reply_date">2021.07.03</p>';
-					htmls += '<p class="pt_reply_content">아침에 적당히 땀을 흘리며 근력운동을 하니 눈이 번쩍 뜨고 기분 좋았어요</p>';
+					htmls += '<p class="pt_reply_content">'+this.iuserList[0].icommentList[0].commentContent+'</p>';
 					htmls += '</td>';
 					htmls += '</tr>';
 					htmls += '</table>';

@@ -31,7 +31,6 @@ public class trainerUserManagementVO {
     private int rnum;
     
     private List<IUserVO> iUserList;
-    private List<ICommentVO> iCommentList;
     
 }
 
