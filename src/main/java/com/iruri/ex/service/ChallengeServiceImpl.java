@@ -37,26 +37,12 @@ public class ChallengeServiceImpl implements ChallengeService {
 	      return vo; 
 	  }
 	 
-    //챌린지 메인 리스트
-    /*
-    @Override
-    public List<IClassVO> challengeList() {
-        List<IClassVO> vo = iClassMapper.ChallengeSelectAll();
-        if(vo == null) {
-            return null;
-        }
-        return vo;
-    }
-    */
-   
-   
-  
+	/*----------챌린지 개설 폼-----------*/
     //챌린지 개설 폼 값 입력
     @Override
-    public void insertChallenge(IClassVO iClassVO) {
-        log.info("insertChallenge()..");
-        
+    public void insertChallenge(IClassVO iClassVO) {   
         log.info("insertChallenge: " + iClassVO);
+        
         challengeMapper.insertChallenge(iClassVO);
         
     }
@@ -122,17 +108,48 @@ public class ChallengeServiceImpl implements ChallengeService {
         log.info("getChallengeInfo()..");
         return challengeMapper.readChallengeInfo(classId);
     }
+    
+    //챌린지 참여 기록 체크
+    @Override
+    public int getUserJoinChallengeListCheck(int classId, int userId) {
+        log.info("challenge_userLikeListCheck()..");
+        
+        int check = challengeMapper.userJoinChallengeList(classId, userId);
+        
+        log.info(check);
+        
+        if(check == 0) { // 안참여한거 
+            // userJoinChallenge(buyId, userId);
+            // upJoinMember(classId);
+            
+            return 0;
+        }
+        
+        return check;
+    }
 
-    //챌린지 참여인원
+
+    //챌린지 참여인원 1증가
     @Override
     public void upJoinMember(int classId) {
         
         challengeMapper.upJoinMember(classId);
+        log.info("upJoinMember()..");
         
     }
 
     
+    //유저 챌린지 참여 후 likelist insert
+    @Override
+    public void userJoinChallenge(BuyVO buyVO, int userId) {
+        log.info("userJoinChallenge()..");
+        challengeMapper.insertUserJoinChallenge(buyVO, userId);
+        
+    }
+    
+    
     /*----------관심수-----------*/
+    
     
     @Override
     public int getUserHeartList(int classId, int userId) {
@@ -142,6 +159,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         return check;
     }
+    
     
     @Override
     public int getUserLikeListCheck(int classId, int userId) {
@@ -160,24 +178,28 @@ public class ChallengeServiceImpl implements ChallengeService {
         return check;
     }
 
+    //좋아요 리스트 삭제
     @Override
     public void challenge_likeDelete(int classId, int userId) {
         log.info("challenge_likeDelete()..");
         challengeMapper.challengeLikeDelete(classId, userId);
     }
 
+    //좋아요 리스트 추가
     @Override
     public void challenge_likeInsert(int classId, int userId) {
         log.info("challenge_likeInsert()..");
         challengeMapper.challengeLikeInsert(classId, userId);
     }
 
+    //좋아요 수 1증가
     @Override
     public void challenge_likeCountUp(int classId) {
         log.info("challenge_likeCountUp()..");
         challengeMapper.likeCountUp(classId);
     }
-
+    
+    //좋아요 수 1감소
     @Override
     public void challenge_likeCountDown(int classId) {
         log.info("challenge_likeCountDown()..");
@@ -185,13 +207,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     
-    //유저 챌린지 참여 후 likelist insert
-    @Override
-    public void userJoinChallenge(BuyVO buyVO) {
-        log.info("userJoinChallenge()..");
-        challengeMapper.insertUserJoinChallenge(buyVO);
-        
-    }
+  
 
 
     /*----------챌린지 커뮤니티-----------*/
@@ -211,7 +227,46 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         return challengeMapper.getListWithPaging_challengeReply(pageNum, amount,classId);
     }
+
+    //댓글 입력
+    @Override
+    public void challengeReplyInsert(BoardVO boardVO, int classId) {
+        log.info("challenge reply insert()..");
+        challengeMapper.challengeReplyInsert(boardVO, classId);
+    }
+
+    //댓글 userId
+    @Override
+    public BoardVO getUserId(IUserVO iUserVO) {
+        log.info("get userId : " + iUserVO.getUserId());
+        return challengeMapper.readUserId(iUserVO);
+    }
     
+    // 인증글 추가
+    @Override
+    public void insertChallengeCertify(BoardVO boardVO) {
+        log.info("insertChallengeCertify() .. " + boardVO);
+        
+        challengeMapper.insertChallengeCertify(boardVO);
+    }
+
+    
+    //인증글 리스트
+    @Override
+    public int getTotal_challengeImg(Criteria cri, int classId) {
+        log.info("getTotal_challengeImg()..");
+        return challengeMapper.getTotalCount_challengeImg(cri, classId);
+    }
+
+    @Override
+    public List<BoardVO> challengeImgList(Criteria cri, int classId) {
+        log.info("challengeImgList()..");
+        
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        
+        return challengeMapper.getListWithPaging_challengeImg(pageNum, amount, classId);
+    }
 
 
 

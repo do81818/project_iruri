@@ -270,9 +270,11 @@
 
 
                                                             htmls += '<div class="c_list_title">';
-                                                            htmls += '<a href="c_detail_before?classId=' + this.classId + '"target="_blank">';
+                                                            
+                                                            htmls += '<a href="${CONTEXT_PATH}/iruri/challengeJoinCheck?classId=' + this.classId + '"target="_blank">';
                                                             htmls += this.classTitle;
-                                                            htmls += '</a>';
+   	                                                        htmls += '</a>';                                                    		
+                                                            
                                                             htmls += '</div>';
 
                                                             htmls += '<div class="c_list_date">' +

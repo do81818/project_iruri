@@ -51,7 +51,7 @@
       </div>
       <div id = "m_userclass_box">
         <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-        <div id="m_userclass_number"></div>
+        <div id="m_userclass_number">${userclasscount} </div>
       </div>
     </div>
          <p class="border1"></p>
@@ -168,7 +168,7 @@
               <p>몸무게</p>
               <input class="inputbox_size2" name="userWeight" type="text">
       
-              <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
+              <button class="alertWindow_submit" type="submit">신체정보 변경</button>
             </form>
           </div>
         </div>

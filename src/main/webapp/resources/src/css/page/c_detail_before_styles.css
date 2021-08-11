@@ -356,6 +356,7 @@ ul li {
 
 /*인증글 총 수 */
 
+/*
 .c_certify_total {
     position: relative;
     display: inline-block;
@@ -370,31 +371,58 @@ ul li {
     border: 1px solid white;
     padding: 8px 16px;
 }
+*/
+
+.c_certify_total {
+    text-align: right;
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+.c_certify_total span {
+    margin-bottom: 8px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 17px;
+    border: 1px solid white;
+    padding: 8px 16px;
+    position: relative;
+    right: 9px;
+    bottom: 8px;
+}
 
 
 /*인증사진 리스트*/
 
 .c_certify_img_list {
+	max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
     padding-bottom: 85px;
-    display: inline-block;
+    display: grid;
+    grid-template-columns: repeat(4, 270px);
+    grid-template-rows: repeat(2, 270px);
+    justify-content: center;
+    gap: 35px;
+    margin-top: 8px;
 }
 
 .c_certify_img {
-    margin-bottom: 36px;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.c_certify_img_list div {
-    display: inline-block;
-    border: none;
     width: 270px;
     height: 270px;
+    margin-bottom: 36px;
+    cursor: pointer;
+    border: none;
     margin: 0 36px 36px 0;
 }
 
-.c_certify_img_list div img {
+.c_certify_img_list .c_certify_img img {
     border-radius: 30px;
+    width: 100%;
+    height: 100%;
 }
 
 .c_certify_img_list div:nth-of-type(4n) {
@@ -578,7 +606,7 @@ td {
     padding: 44px 40px;
 }
 
-.c_parti_modal_content>form>ul {
+.c_parti_modal_content>.c_parti_modal_div>ul {
     list-style: none;
     font-size: 16px;
     line-height: 25px;

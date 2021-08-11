@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}"
 	scope="application" />
@@ -77,7 +78,7 @@
 			</tr>
 			<tr>
 				<td>가입일</td>
-				<td>${info.iuserVo.userSigndate }</td>
+				<td><fmt:formatDate value="${info.iuserVo.userSigndate }" pattern="yyyy.MM.dd" /></td>
 			</tr>
 			<tr>
 				<td>블랙리스트여부</td>
@@ -119,6 +120,7 @@
 		</table>
 
 		<!---------------------- 포인트 적립/사용 테이블 -------------------------->
+		
 		<div class="admin_memberInfo_point">
 			<div class="admin_memberInfo_pointTitle">
 				<h3>포인트</h3>
@@ -126,12 +128,11 @@
 					현재보유포인트<span>${point}</span>
 				</p>
 				<form>
-					<input type="radio" id="memberInfo_point_rd1"
-						name="memberInfo_point_rds"> <label
-						for="memberInfo_point_rd1">적립</label> <input type="radio"
-						id="memberInfo_point_rd2" name="memberInfo_point_rds"> <label
-						for="memberInfo_point_rd2">사용</label> <input type="number"
-						maxlength="10">
+					<input type="radio" id="memberInfo_point_rd1" name="memberInfo_point_rds"> 
+						<label for="memberInfo_point_rd1">적립</label> 
+						<input type="radio"	id="memberInfo_point_rd2" name="memberInfo_point_rds"> 
+						<label for="memberInfo_point_rd2">사용</label> 
+						<input type="number" maxlength="10">
 					<button>포인트등록</button>
 				</form>
 
@@ -149,11 +150,9 @@
 
 		</div>
 	</div>
-
+	
 	<script>
 	function getlist(page) {
-	
-	    
 	    $.ajax({
             url : '${CONTEXT_PATH_ADMIN}/ajax/member/info',
             type : 'GET',
@@ -165,7 +164,7 @@
              },
             success : function(result) {
                 console.log(result);
-                var list = result['pointlist'];
+                var list = result['list'];
                 var pagination = result['pageMaker'];
                 var htmls = "";
                 var htmls2 = "";

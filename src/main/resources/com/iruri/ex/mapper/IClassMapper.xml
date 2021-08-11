@@ -235,5 +235,4 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>
 	</select>
 	
-
 </mapper>

@@ -50,7 +50,7 @@
                                     <div class="c_makeForm_insert">
 
                                         <c:url value="/iruri/insert_challenge" var="insertChallenge" />
-                                        <form:form name="aa" class="c_makeForm" method="POST" action="${insertChallenge}" accept-charset="utf-8">
+                                        <form:form name="aa" class="c_makeForm" method="POST" action="${insertChallenge}" accept-charset="utf-8" enctype="multipart/form-data">
 
                                             <h2 class="c_makeForm_title">챌린지 개설</h2>
 
@@ -91,7 +91,7 @@
                                                 <p>총모집인원</p>
                                                 <input type="text" id="c_text" class="inputbox_size2" name="classTotalMember" autocomplete="off" pattern="[0-9]+" placeholder="숫자로 입력해 주세요." required="required" />&nbsp명&nbsp
 
-                                                <input type="checkbox" id="cb6" name="classTotalMember" value="9999999" onclick="c_person_limit(this.form)" required="required" /><label for="cb6" class="cb_label">인원제한없음</label>
+                                                <input type="checkbox" id="cb6" name="classTotalMember" value="99999" onclick="c_person_limit(this.form)" /><label for="cb6" class="cb_label">인원제한없음</label>
                                             </div>
 
                                             <div class="c_goal">
@@ -106,88 +106,22 @@
 
                                             <div class="c_img_direct">
                                                 <p>대표이미지 설정</p>
-                                                <input type="radio" name="classImage" id="direct" required="required" />
+                                                <input type="radio" id="direct" name="imageCheck" value="customImage"/>
                                                 <label for="direct" class="rd_label">직접 이미지 올리기</label>
-                                                <input type="file" name="classImage" accept=".jpg, .png" id="upload">
+                                                <input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
                                                 <label for="upload" class="file_upload"></label>
-                                                <span style="color: #999;">* 650x500px 크기의 jpg.png</span>
+                                                <span style="color: #999;">* 최대 5MB 크기의 jpg.png</span>
                                             </div>
 
                                             <div class="c_img_basic">
                                                 <p></p>
-                                                <input type="radio" name="classImage" id="basic"><label for="basic" class="rd_label">기본 이미지 사용</label>
+                                                <input type="radio" id="basic" name="imageCheck" value="defaultImage" checked><label for="basic" class="rd_label">기본 이미지 사용</label>
                                             </div>
-
-                                            <!-- <div class="c_img_list">
-                                                <p></p>
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_1" required="required" />
-                                                    <label for="c_basic_img_1" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_2">
-                                                    <label for="c_basic_img_2" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_3">
-                                                    <label for="c_basic_img_3" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_4">
-                                                    <label for="c_basic_img_4" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <p></p>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_5">
-                                                    <label for="c_basic_img_5" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_6">
-                                                    <label for="c_basic_img_6" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_7">
-                                                    <label for="c_basic_img_7" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                                <div class="c_img_detail">
-                                                    <input type="radio" name="file_img" id="c_basic_img_8">
-                                                    <label for="c_basic_img_8" class="img_rd"> 
-								<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-								</label>
-                                                </div>
-
-                                            </div> -->
 
                                             <div class="button">
                                                 <p></p>
-                                                <button class="c_make_button_cancle" type="reset"><a href="challengeList">
-							챌린지등록 취소</a></button>
-                                                <button class="c_make_button_submit" type="submit">
-							<!-- <a href="challengeList">챌린지등록</a> -->
-								챌린지등록
-							</button>
+                                                <button class="c_make_button_cancle" type="reset"><a href="challengeList">챌린지등록 취소</a></button>
+                                                <button class="c_make_button_submit" type="submit"><a href="challengeList">챌린지등록</button>
                                             </div>
 
                                         </form:form>

@@ -154,9 +154,4 @@ public class IClassServiceImpl implements IClassService {
         return iClassMapper.getTotalCount_mypageTrainerClassListEnd(cri, userId);
     }
 
-
-    
-
-
- 
 }

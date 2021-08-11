@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
@@ -20,14 +19,10 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.MypageTrainerService;
-import com.iruri.ex.vo.BuyVO;
-import com.iruri.ex.vo.ExerciseDateVO;
-import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.MoneyVO;
-import com.iruri.ex.vo.trainerUserManagementVO;
 import com.iruri.ex.vo.ProfitVO;
+import com.iruri.ex.vo.trainerUserManagementVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -127,6 +122,7 @@ public class MypageTrainerController {
     }
 
     // 수익
+    
     @RequestMapping("/mypage/trainer/profit")
     public String mypageProfit(Principal principal, Model model) {
         log.info("profit() ... ");
@@ -183,7 +179,7 @@ public class MypageTrainerController {
     @RequestMapping("/mypage/trainer/userManagement")
     public String userManagement(@CurrentUser IUserVO vo, Model model) {
         log.info("userManagement() ... ");
-
+        
         // 유저정보 받기
         model.addAttribute("user", vo);
         

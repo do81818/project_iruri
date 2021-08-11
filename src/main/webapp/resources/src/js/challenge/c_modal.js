@@ -58,7 +58,7 @@ $(function() {
     /*$(".c_make_modal_submit").click(function c_make_form() {
         window.open('http://localhost:8282/ex/iruri/challenge_make_form');
     });*/
-    
+
     $(".c_make_modal_submit").click(function c_make_form() {
         location.href = 'http://localhost:8282/ex/iruri/challenge_make_form';
     });
@@ -98,19 +98,50 @@ $(function() {
 
 });
 
-
 //인증사진 상세 모달//
-$(function() {
-    $(".c_certify_img").click(function() {
-        $(".c_myCertify_modal").fadeIn();
-    });
+function certify_details_modal(boardId) {
 
-    $(".c_myCertify_modal_submit").click(function() {
+
+
+    if (boardId === 'close') {
         $(".c_myCertify_modal").fadeOut();
+        return false;
+    }
+
+    const boardList = JSON.parse(localStorage.getItem('boardList'));
+    let board = boardList.filter((item) => {
+        return item.boardId === boardId;
     });
+    board = board[0];
+	
+    const template = `
+    	<div class="c_myCertify_modal_start">
+            <div>
+                <div class="myCertify_img">
+                    <img src="display?fileName=${board.boardFile}" alt="">
+                </div>
+                <div class="myCertify_myInfo">
+                    <span class="myCertify_date"> ${board.boardDate} </span> <span class="myCertify_nickname"> ${board.iuserVO.userNickname} </span>
+                </div>
+                <div class="myCertify_title">${board.boardTitle}</div>
+                <div class="myCertify_content">${board.boardContent}</div>
 
-});
+                <div class="modal_button">
+                    <button class="c_myCertify_modal_submit2" type="submit">수정</button>
+                    <button class="c_myCertify_modal_submit2" type="submit">삭제</button>
+                    <button class="c_myCertify_modal_submit" onclick="certify_details_modal('close')">확인</button>
+                </div>
+            </div>
+        </div>
 
+        <div class="modal_layer"></div>`;
+
+
+    $(".c_myCertify_modal").html(template);
+    $(".c_myCertify_modal").fadeIn();
+    
+   
+}
 
 //댓글 삭제 확인 모달//
 $(function() {
@@ -134,5 +165,14 @@ $(function() {
     $(".reply_modify_modal_cancle").click(function() {
         $(".reply_modify_modal").fadeOut();
     });
-
 });
+
+
+
+//인증글 수정 모달//
+// $(function() {
+// 	$(".c_myCertify_modal_submit2").click(function(){
+// 		$(".c_myCertify_modal").fadeOut();
+// 		$("#c_certify_modal").fadeIn();
+// 	});
+//});

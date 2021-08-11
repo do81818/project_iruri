@@ -48,6 +48,7 @@
 	});
 	
 	</script>
+
  
  
   </head>
@@ -148,7 +149,8 @@
                     <div id="c_parti_modal">
                         <div class="c_parti_modal_start">
                             <div class="c_parti_modal_content">
-                                <form action="insert_user_challenge" method="POST" class="c_parti_modal_form" accept-charset="utf-8">
+                            
+                                <div class="c_parti_modal_div">
                                     <ul>
                                         <li>챌린지에 참여 하시겠습니까?</li>
                                         <li>챌린지 시작일 전 까지만 취소가 가능합니다.</li>
@@ -158,13 +160,16 @@
 
 
 
-                                    <div class="c_parti_modal_button">
+                                    <form class="c_parti_modal_button">
 
                                         <button class="c_parti_modal_cancle" type="reset">취소</button>
                                         <button class="c_parti_modal_submit" type="submit">
-                                        <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a></button>
-                                    </div>
-                                </form>
+                                        <a href="challenge_detail_after?classId=${challengeInfo.classId}">참여</a>
+       
+                                        </button>
+                                    </form>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="modal_layer"></div>
@@ -215,7 +220,7 @@
     <div class="c_certify" id="certify">
         <div class="c_container">
             <div class="c_certify_total">
-                총 77 개
+                <span>총 77 개</span>
             </div>
 
 
@@ -277,10 +282,45 @@
     
     
 <script>
+/*
+$(document).ready(function() {
+	$('.c_parti_modal_button').submit(function(e) {
+		e.preventDefault();
+	});
+});
+*/
+
+	
+$('.c_parti_modal_submit').click(function(){
+	const header = $('meta[name="_csrf_header"]').attr('th:content');
+	const token = $('meta[name="_csrf"]').attr('th:content');
+
+	$.ajax({
+		url: '${CONTEXT_PATH}/iruri/insert_user_challenge',
+		type: 'POST',
+		cache: false,
+		dateType: 'json',
+		data: {
+			classId: ${challengeInfo.classId},
+		},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
+		success: function(result){
+			console.log(result);
+		}
+			});
+
+		});
+
+</script>	
+	
+<script>
+//댓글 ajax, 페이징
 		function getlist(page) {
 			
 			    $.ajax({
-			        url: 'http://localhost:8282/ex/ajax/c_detail_before.json',
+			        url: 'http://localhost:8282/ex/ajax/c_detail_before_reply.json',
 			        type: 'GET',
 			        cache: false,
 			       	dateType:'json',
@@ -296,18 +336,18 @@
 			        },
 					success : function(result) {
 						console.log(result);
-				    	var list = result['list'];
+				    	var replyList = result['replyList'];
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
 
-						if (list.length < 1) {
+						if (replyList.length < 1) {
 							htmls += '<div class="c_list_not">';
 							htmls += '현재 등록된 댓글이 없습니다.';
 							htmls += '</div>';
 						} else {
 							
-							$(list).each(function() {
+							$(replyList).each(function() {
 								
 							
 								htmls += '<div class="reply_count">';
@@ -316,6 +356,7 @@
 										+ count 
 										+ '개';
 								htmls += '</div>';
+								
 								htmls += '<table class="reply_table">';
 								$(this.boardList).each(function() {
 												//댓글 리스트 
@@ -372,19 +413,12 @@
 	         				
 	                     }
 	                     
-	                 });
-	                             
-	                             
+	                 });                             
 	            }
-		
-	
+
 	            $(document).ready(function() {
 	                getlist(1);
 	            });
-							
-							
-
-	
 
 </script>
 

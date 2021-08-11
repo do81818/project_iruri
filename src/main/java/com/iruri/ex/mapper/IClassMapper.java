@@ -60,12 +60,4 @@ public interface IClassMapper {
     // 종료된 클래스(+페이징)
     List<IClassVO> getListWithPaging_mypageTrainerClassListEnd(@Param("cri") Criteria cri, @Param("userId") int userId);
     int getTotalCount_mypageTrainerClassListEnd(Criteria cri, @Param("userId") int userId);
-    
-    //운동요일
-    List<ExerciseDateVO> selectExerciseDate(int userId);
-   
-    //운동종류
-    List<ExerciseKindVO> selectExerciseKind(int userId);
-
-    
 }

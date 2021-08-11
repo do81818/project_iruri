@@ -27,7 +27,7 @@
 <script>
 	$(document).ready(function(){
 		/* window.onload = function(){ */
-		var actionForm = $("#actionForm");
+		var Form = $("#actionForm");
         $(".pageNumLink").on("click", function(e) {
             e.preventDefault();
             var targetPage = $(this).attr("href");
@@ -284,7 +284,7 @@
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';
-												htmls += '<a href="c_detail_before?classId='+this.classId+'">';
+												htmls += '<a href="challenge_detail_before?classId='+this.classId+'">';
 												htmls += this.classTitle;
 												htmls += '</a>';
 												htmls += '</div>';
@@ -319,6 +319,25 @@
 
 												htmls += '<sec:authorize access="isAuthenticated()">';
 												htmls += '<div class="c_list_heart">';
+												
+												var heartClassId = this.classId;
+
+                                                $.ajax({
+                                                    url: '${CONTEXT_PATH}/iruri/heartList',
+                                                    type: 'GET',
+                                                    cache: false,
+                                                    dateType: 'json',
+                                                    data: {
+                                                        classId: heartClassId,
+                                                    },
+                                                    success: function(result) {
+
+                                                        if (result !== 0) {
+                                                            $('#heart' + heartClassId).attr('checked', true);
+                                                        }
+                                                    }
+                                                })
+												
                                                 htmls += '<input type="checkbox" id="heart' + this.classId + '">';
                                                 htmls += '<label for="heart' + this.classId + '" class="heart_label"></label>';
                                                 htmls += '</div>';
