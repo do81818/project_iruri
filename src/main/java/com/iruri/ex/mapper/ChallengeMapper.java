@@ -13,6 +13,8 @@ import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
 
+import lombok.extern.log4j.Log4j;
+
 @Mapper
 public interface ChallengeMapper {
     
@@ -53,10 +55,10 @@ public interface ChallengeMapper {
     int userJoinChallengeList(@Param("classId") int classId, @Param("userId") int userId);
     
     //챌린지 참여 인원
-    void upJoinMember(int classId);
+    void upJoinMember(@Param("classId") int classId);
     
     //유저 챌린지 참여 등록(likelist insert)
-    void insertUserJoinChallenge(@Param("buyId") int buyId, @Param("userId") int userId);
+    void insertUserJoinChallenge(@Param("buyVO") BuyVO buyVO, @Param("userId") int userId);
     
     /*----------관심수-----------*/
     //유저가 그 클래스에 좋아요 한 기록이 있는지 
@@ -89,6 +91,11 @@ public interface ChallengeMapper {
     
     // 인증글 추가
     void insertChallengeCertify(BoardVO boardVO);
+
+
+    //인증글 리스트
+    int getTotalCount_challengeImg(Criteria cri, @Param("classId") int classId);
+    List<BoardVO> getListWithPaging_challengeImg(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("classId") int classId);
   
   
 }

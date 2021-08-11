@@ -52,7 +52,7 @@
 		<result property="moneyInput" column="money_input" />
 		<result property="moneyOutput" column="money_output" />
 		<result property="payId" column="pay_id" />
-		<result property="userId" column="user_id" />
+		<result property="payUserId" column="user_id" />
 	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.PayVO" id="payMap">
@@ -64,8 +64,8 @@
 
 	<resultMap type="com.iruri.ex.vo.BuyVO" id="buyMap">
 		<result property="buyId" column="buy_id" />
-		<result property="buyPoint" column="pay_id" />
-		<result property="class_id" column="pay_state" />
+		<result property="buyPoint" column="buy_point" />
+		<result property="classId" column="class_id" />
 	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.IClassVO" id="classMap">
@@ -92,7 +92,7 @@
 	
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
 		id="moneyJoinMap">
-		<result property="totalMoney" column="totalMoney" />
+		<result property="totalMoney" column="totalmoney" />
 		<collection property="iuserVo" resultMap="iUserMap" />
 		<collection property="moneyVo" resultMap="moneyMap" />
 		<collection property="payVo" resultMap="payMap" />
@@ -437,7 +437,7 @@
 
 
 	<!-- 트레이너정보_수익관리 리스트 -->
-	<select id="gettrainerMoneyList" resultMap="moneyJoinMap">
+	<select id="getTrainerMoneyList" resultMap="moneyJoinMap">
 		<![CDATA[
 		select *
 		from (
@@ -445,7 +445,7 @@
 			from (
 				select a.*, sum(a.total) over(order by rowId) totalMoney
 				from (
-				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+				    select m.money_id, m.money_date, m.money_input, m.money_output, u.user_nickname, b.buy_point, p.pay_state, c.class_title, (m.money_input - m.money_output) as total
 				    from money m
 				    inner join pay p
 				    on m.pay_id = p.pay_id
@@ -455,6 +455,7 @@
 				    on b.class_id = c.class_id and c.user_id = #{userId}
 				    inner join iuser u
 				    on m.user_id = u.user_id
+				    where m.money_date between (trunc(add_months(sysdate,#{month}), 'mm')) and last_day(add_months(sysdate,#{month}))
 				    ) a
 				    order by a.money_id desc
 				) li
@@ -465,5 +466,62 @@
 	</select>
 
 
+	<!-- 트레이너정보_수익관리 리스트 갯수 -->
+	<select id="countTrainerMoneyList" resultType="Integer">
+		<![CDATA[
+		select count(li.money_id)
+		from (
+		select a.*, sum(a.total) over(order by rowId) totalMoney
+		from (
+		    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+		    from money m
+		    inner join pay p
+		    on m.pay_id = p.pay_id
+		    INNER join buy b
+		    on p.buy_id = b.buy_id
+		    inner join iclass c
+		    on b.class_id = c.class_id and c.user_id = #{userId}
+		    inner join iuser u
+		    on m.user_id = u.user_id
+		    where m.money_date between (trunc(add_months(sysdate,#{month}), 'mm')) and last_day(add_months(sysdate,#{month}))
+		    ) a
+		) li
+		]]>
+	</select>
+	
+	<!-- 트레이너정보_수익관리 월별 수익 합계 -->
+	<select id="trainerMoneyMonthTotal" parameterType="int" resultType="Integer">
+		<![CDATA[
+		select sum(a.money_input + a.buy_point - a.money_output)
+		from (
+		    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+		    from money m
+		    inner join pay p
+		    on m.pay_id = p.pay_id
+		    INNER join buy b
+		    on p.buy_id = b.buy_id
+		    inner join iclass c
+		    on b.class_id = c.class_id and c.user_id = #{userId}
+		    inner join iuser u
+		    on m.user_id = u.user_id
+		    where m.money_date between (trunc(add_months(sysdate,#{month}), 'mm')) and last_day(add_months(sysdate,#{month}))
+		    ) a
+		]]>
+	</select>
+	
+	<!-- 블랙리스트/일반 회원으로 등록(전환) -->
+	<update id = "updateBlackList">
+		update iuser set user_blacklist = #{number} where user_id = #{userId}
+	</update>
+	
+	<!-- 블랙리스트 회원 이유 등록 -->
+	<update id = "updateBlackListReason">
+		update iuser set user_blacklist_reason = '#{reason}' where user_id = #{userId}
+	</update>
+	
+	
+	
+	
+	
 
 </mapper>
