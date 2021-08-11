@@ -85,17 +85,22 @@ public interface ChallengeMapper {
 
     //댓글 입력
     void challengeReplyInsert(@Param("boardVO") BoardVO boardVO, @Param("classId") int classId);
-
+    // , @Param("classId") int classId
     //댓글 userId
     BoardVO readUserId(IUserVO iUserVO);
     
     // 인증글 추가
     void insertChallengeCertify(BoardVO boardVO);
-
+    
+    // 인증글 수정
+    void modifyChallengeCertify(BoardVO boardVO);
 
     //인증글 리스트
     int getTotalCount_challengeImg(Criteria cri, @Param("classId") int classId);
     List<BoardVO> getListWithPaging_challengeImg(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("classId") int classId);
+
+
+    
   
   
 }

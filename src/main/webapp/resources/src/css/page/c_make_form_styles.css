@@ -210,6 +210,15 @@ body {
 }
 
 
+/*파일명 */
+.uploadResult_makeForm {
+    margin-bottom: 36px;
+    position: relative;
+    top: -15px;
+	left: 168px;
+    color: var(--iruri-gray-color);
+}
+
 /*인풋박스 사이즈들*/
 
 .c_makeForm .inputbox_size1 {
