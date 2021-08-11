@@ -17,8 +17,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta name="_csrf" th:content="${_csrf.token}">
-<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<%-- <meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}"> --%>
 
 <%@ include file="../include/static.jsp"%>
 
@@ -91,19 +91,19 @@
 				<td>
 					<form name="memberInfo_balackListForm"
 						class="memberInfo_balackListForm">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 						<c:choose>
 							<c:when test="${info.iuserVo.userBlackList == true }">
 								<input id="memberInfo_balackList" type="checkbox" checked
-									name="number" value="false" onclick="javascript:updateBlackList()">
-								<label for="memberInfo_balackList">
+									name="number" value="false" >
+								<label for="memberInfo_balackList" onclick="javascript:updateBlackList();return false">
 									<span></span>블랙리스트
 								</label>
 							</c:when>
 							<c:otherwise>
 								<input id="memberInfo_balackList" type="checkbox" name="number"
-									value="true" onclick="javascript:updateBlackList()">
-								<label for="memberInfo_balackList" >
+									value="true">
+								<label for="memberInfo_balackList" onclick="javascript:updateBlackList();return false">
 									<span></span>블랙리스트
 								</label>
 							</c:otherwise>
@@ -118,7 +118,7 @@
 								<c:otherwise>
 									<textarea id="memberInfo_balackList_reason"
 										onkeyup="fn_checkByte(this,3000)" placeholder="블랙리스트 사유작성"
-										name="reason" value="${info.iuserVo.userBlaskListReason}"></textarea>
+										name="reason">${info.iuserVo.userBlaskListReason}</textarea>
 								</c:otherwise>
 							</c:choose>
 
@@ -145,7 +145,8 @@
 	 */
 	 
 	var updateBlackList = function() {
-	     /* var userId = ${info.iuserVo.userId};
+	     
+	     var userId = ${info.iuserVo.userId};
 	   	 var number = $('#memberInfo_balackList').val();
 	   	 var reason = $('#memberInfo_balackList_reason').val();
 	   	
@@ -154,13 +155,13 @@
 	     console.log(number);
 	     console.log(reason);
 	     
-	      */
 	     const header = $('meta[name="_csrf_header"]').attr('th:content');
          const token = $('meta[name="_csrf"]').attr('th:content');
-
-              
-	     var formData = $('form.memberInfo_balackListForm').serialize();
-		     
+         
+	     /* var formData = $('form.memberInfo_balackListForm').serialize(); 
+	     
+		 console.log(formData);		 */
+		 
 		    $.ajax({
 		        url : '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
 	            type : 'POST',
@@ -168,9 +169,13 @@
 	                xhr.setRequestHeader(header, token);
 	            },
 	            processData: false,
-	            contentType: 'application/x-www-form-urlencoded',
+	            contentType: 'application/json',
 	            dataType : 'json',
-	            data : formData,
+	            data : {
+	              userId: userId,
+	              number: number,
+	              reason: reason,
+	            },
 	            success : function(result) {
 	                console.log(result);
 	                
