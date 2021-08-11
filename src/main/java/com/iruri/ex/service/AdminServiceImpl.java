@@ -234,5 +234,10 @@ public class AdminServiceImpl implements AdminService {
     public void updateBlackListReason(int userId, String reason) {
         mapper.updateBlackListReason(userId, reason);
     }
+
+    @Override
+    public void updateWithdrawMember(int userId) {
+        mapper.updateWithdrawMember(userId);
+    }
     
 }
