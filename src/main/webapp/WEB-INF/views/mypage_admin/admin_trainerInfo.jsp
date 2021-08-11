@@ -131,7 +131,7 @@
 			</tr>
 		</table>
 
-		<script>
+		<script type="text/javascript">
 	/* 
 	function updateBlackListLink(){
 	    console.log("updateBlackListLink()..");
@@ -145,7 +145,7 @@
 	 */
 	 
 	var updateBlackList = function() {
-	     var userId = ${info.iuserVo.userId};
+	     /* var userId = ${info.iuserVo.userId};
 	   	 var number = $('#memberInfo_balackList').val();
 	   	 var reason = $('#memberInfo_balackList_reason').val();
 	   	
@@ -154,42 +154,23 @@
 	     console.log(number);
 	     console.log(reason);
 	     
-	     
+	      */
 	     const header = $('meta[name="_csrf_header"]').attr('th:content');
          const token = $('meta[name="_csrf"]').attr('th:content');
 
-         $.ajax({
-             url: '${CONTEXT_PATH}/uploadAjaxAction',
-             type: 'POST',
-             beforeSend: function(xhr) {
-                 xhr.setRequestHeader(header, token);
-             },
-             processData: false,
-             contentType: false,
-             data: formData,
-             dataType: 'json',
-             success: function(result) {
-                 showUploadedFile(result);
-             }
- 
-	     
-	     /* var formData = $("form.memberInfo_balackListForm").deserializing(); */
+              
+	     var formData = $('form.memberInfo_balackListForm').serialize();
 		     
 		    $.ajax({
 		        url : '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
 	            type : 'POST',
-	            type: 'POST',
 	            beforeSend: function(xhr) {
 	                xhr.setRequestHeader(header, token);
 	            },
 	            processData: false,
-	            contentType: false,
+	            contentType: 'application/x-www-form-urlencoded',
 	            dataType : 'json',
-	            data : {
-	                'userId': userId,
-	                'number': number,
-	                'reason': reason,
-	            },
+	            data : formData,
 	            success : function(result) {
 	                console.log(result);
 	                
