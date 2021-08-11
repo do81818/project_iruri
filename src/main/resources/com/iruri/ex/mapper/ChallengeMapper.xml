@@ -436,13 +436,13 @@
 					(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
 					'테스트',
 					#{boardVO.boardContent},
-					sysdate, 
-					'show', 
-					0, 
-					0, 
+					sysdate,
+					'show',
+					0,
+					0,
 					#{classId},
-       	 			6, 
-       	 			#{boardVO.iUserVO.userId}
+					6,
+					#{boardVO.iUserVO.userId}
 	       	 	)
 			]]>
 		</insert>
