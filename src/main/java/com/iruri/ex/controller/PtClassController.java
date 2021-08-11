@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.page.PageVO;
 import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.PtClassService;
@@ -55,16 +56,17 @@ public class PtClassController {
     
     // 이루리 PT클래스 메인 클래스 리스트
     @GetMapping("/ajax/class")
-    public ResponseEntity<HashMap<String, Object>> iruriClass(@RequestParam("pageNum") int pageNum) {
+    public ResponseEntity<HashMap<String, Object>> iruriClass(
+            @RequestParam("type") String type, @RequestParam("pageNum") int pageNum,
+            @CurrentUser IUserVO iUserVO) {
         
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
         
-        int total = ptClassService.getTotalClass(cri);
-        log.info(total);
+        int total = ptClassService.getTotalClass(cri, type, iUserVO.getUserId());
         
         result.put("list", ptClassService.getClassList(cri));
-        
+        result.put("pageMaker", new PageVO(cri, total));
         
         return ResponseEntity.ok(result);
     }
