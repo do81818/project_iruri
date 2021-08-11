@@ -354,7 +354,7 @@ input[type=checkbox] {
     width: 360px;
     height: 250px;
     border-radius: 30px;
-    background: url("/ex/resources/src/img/icon/360-250.png") no-repeat;
+    background: no-repeat;
     margin-bottom: 28px;
 }
 

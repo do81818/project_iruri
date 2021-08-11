@@ -181,7 +181,7 @@ public class ChallengeController {
         log.info("upload File Name: " + uploadFile.getOriginalFilename());
         log.info("upload File Size: " +uploadFile.getSize());            
         
-        if(imageCheck == "customImage") {
+        if(imageCheck.equals("customImage")) {
             String uploadFolder = "C:\\upload";
             String uploadFileName = uploadFile.getOriginalFilename();
             
@@ -367,6 +367,52 @@ public class ChallengeController {
     }
     
 
+    // 인증모달 - 인증글 수정
+    @ResponseBody
+    @PostMapping(value = "/modifyAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void modifyAjaxPost(MultipartFile uploadFile, BoardVO boardVO, @CurrentUser IUserVO iUservo) {
+        
+            String uploadFolder = "C:\\upload";
+
+            log.info("upload File Name: " + uploadFile.getOriginalFilename());
+            log.info("upload File Size: " +uploadFile.getSize());            
+
+            String uploadFileName = uploadFile.getOriginalFilename();
+
+            // IE has file path
+            uploadFileName = uploadFileName
+                    .substring(uploadFileName.lastIndexOf("\\") + 1);
+            log.info("only file name: " + uploadFileName);
+            
+            // 이름 중복방지 난수
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
+
+            boardVO.setBoardFile(uploadFileName);
+            boardVO.setCategoryId(5);
+            boardVO.setIUserVO(iUservo);
+            
+            try {
+                File saveFile = new File(uploadFolder, uploadFileName);
+                uploadFile.transferTo(saveFile);
+                
+                if(imageController.checkImageType(saveFile)) {
+                    FileOutputStream thumbnail = new FileOutputStream(
+                            new File(uploadFolder, "s_" + uploadFileName));
+                    
+                    Thumbnailator.createThumbnail(
+                            uploadFile.getInputStream(), thumbnail, 270, 270);
+                    
+                    thumbnail.close();
+                    
+                    challengeService.modifyChallengeCertify(boardVO);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+    }
+    
+    
     
     //댓글 작성
     @ResponseBody

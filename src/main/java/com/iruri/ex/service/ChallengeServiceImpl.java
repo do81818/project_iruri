@@ -249,6 +249,14 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         challengeMapper.insertChallengeCertify(boardVO);
     }
+    
+    // 인증글 수정
+    @Override
+    public void modifyChallengeCertify(BoardVO boardVO) {
+        log.info("insertChallengeCertify() .. " + boardVO);
+        
+        challengeMapper.modifyChallengeCertify(boardVO);
+    }
 
     
     //인증글 리스트

@@ -154,7 +154,6 @@
 
 
 					<!--챌린지개설버튼-->
-					<!--챌린지개설버튼-->
 						<!-- 비로그인 메뉴 -->
 	   					 <sec:authorize access="isAnonymous()">
 	   					 <div class="c_make_noLogin">챌린지개설</div>
@@ -280,7 +279,7 @@
 												//챌린지 리스트
 												htmls += '<div class="c_list_detail">';
 												htmls += '<div class="c_list_img">';
-												htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+												htmls += '<img src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
 												htmls += '</div>';
 
 												htmls += '<div class="c_list_title">';

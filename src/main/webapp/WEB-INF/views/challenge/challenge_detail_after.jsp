@@ -35,7 +35,9 @@
                                         <!--챌린지 상세 대표이미지-->
                                         <div class="c_detail_start">
 
-                                            <div class="c_detail_img"></div>
+                                            <div class="c_detail_img">
+                                            <img src="${CONTEXT_PATH}/iruri/display?fileName=${challengeInfo.classImage}" alt="">
+                                            </div>
 
                                             <!--오른쪽 위 정보-->
                                             <div class="c_detail_info1">
@@ -113,12 +115,29 @@
 
 
                                     <!--인증사진 리스트-->
-                                    <div class="c_certify" id="certify">
+                                    <div class="c_certify_after" id="certify">
                                         <div class="c_container">
+                                        
+                                     
 					
 										</div>
-
+										
+								
                                      </div>
+                                     
+                                   		      <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+                                        <div class="page_nation_certify">
+
+										</div>
+
+									<!-- 인증하기 버튼 -->
+                                            <div class="c_certify_button_div">
+                                                <button class="c_certify_button">인증하기</button>
+                                            </div>
+                                        
+                                   
+                                        
+                                     
                                         
                                          <script>
                                     //인증글 ajax, 페이징
@@ -147,7 +166,7 @@
                                                 localStorage.setItem('boardList', JSON.stringify(aaa));
                                                 
                                                 if (imgList.length < 1) {
-                                                    htmls += '<div class="c_list_not">';
+                                                    htmls += '<div class="c_list_not_img">';
                                                     htmls += '현재 등록된 인증사진이 없습니다.';
                                                     htmls += '</div>';
                                                 } else {
@@ -181,7 +200,7 @@
                                                     /* ------------------ 페이징 부분 --------------------- */
 
                                                     if (pagination['prev']) {
-                                                        htmls2 += '<a class="arrow prev" href="javascript:list(' + (pagination['startPage'] - 1) + '"></a>';
+                                                        htmls2 += '<a class="arrow prev" href="javascript:getImagelist(' + (pagination['startPage'] - 1) + '"></a>';
                                                     }
                                                     // 번호를 표시하는 부분
                                                     for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
@@ -193,13 +212,13 @@
                                                     }
 
                                                     if (pagination['next']) {
-                                                        htmls2 += '<a class="arrow next" href="javascript:list(' + (pagination['endPage'] + 1) + ')"></a>';
+                                                        htmls2 += '<a class="arrow next" href="javascript:getImagelist(' + (pagination['endPage'] + 1) + ')"></a>';
                                                     }
                                                 } // if(list.length < 1) else 끝
 
-                                                $(".c_certify").html(htmls);
+                                                $(".c_certify_after").html(htmls);
                                                 
-                                                $(".page_nation").html(htmls2);
+                                                $(".page_nation_certify").html(htmls2);
                                                 
                                             }
                                         });
@@ -210,15 +229,7 @@
                                 </script>
                                         
 
-                                        <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-                                        <div class="page_nation_certify">
-
-
-                                            <div class="c_certify_button_div">
-                                                <button class="c_certify_button">인증하기</button>
-                                            </div>
-
-                                        </div>
+                                       
 
 
                                         <!--인증하기 모달창-->
@@ -257,20 +268,19 @@
 
 
                                                     <div class="modal_button">
-                                                        <button class="c_certify_modal_submit" type="submit">인증글
-								올리기</button>
+                                                        <button class="c_certify_modal_submit" type="submit">인증글 올리기</button>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="modal_layer"></div>
                                         </div>
 
-
-                                    </div>
-
+          
+									<!-- 인증글 올리기 -->
                                     <script>
                                         // 파일명 안내
                                         $(document).ready(function() {
+                                        	
                                             var inputFile = document.querySelector('input[name="uploadFile"]');
                                             $(inputFile).on('change', function() {
 
@@ -301,6 +311,9 @@
 
 
                                             $('.c_certify_modal_submit').on('click', function(e) {
+                                            	  top.window.location.reload(true);
+                                               
+
                                                 var boardTitle = document.querySelector('input[name="boardTitle"]');
                                                 var boardContent = document.querySelector('textarea[name="boardContent"]');
 
@@ -334,10 +347,14 @@
                                                     dataType: 'json',
                                                     success: function(result) {
                                                         showUploadedFile(result);
-                                                    }
+                                   
+                                                    }  
+                                                  
                                                 });
-                                            });
-                                        });
+	                                                window.opener.parent.location.reload(); // 부모창 새로고침 
+		                                            window.self.close(); // 현재 팝업 닫기 
+	                                          });                                            
+	                                      });
                                     </script>
 
 
@@ -348,13 +365,139 @@
                                     </div>
 
 
+         								<!--인증글 수정 모달창-->
+                                        <div id="c_certify_modify_modal">
+
+                                            <div class="c_certify_modal_start">
+                                                <div class="c_modal_close">
+                                                    <img src="/ex/resources/src/img/icon/close.png" alt="">
+                                                </div>
+                                                <h2 class="c_certify_modal_title">인증글 수정하기</h2>
+                                                <form class="c_certify_modal_form">
+                                                    <ul class="c_certify_modal_ul">
+                                                        <li>- 인증글 작성 시 포인트가 누적됩니다.</li>
+                                                        <li>- 누적된 포인트는 챌린지 종료 후 3일 이내 자동 적립됩니다.</li>
+                                                        <li>- 챌린지 종료 전에 인증글을 삭제하면 누적된 포인트가 회수됩니다.</li>
+                                                        <li>- 챌린지가 종료되기 전까지는 수정 및 삭제가 가능합니다.</li>
+                                                        <li>- 제목, 내용, 사진첨부를 다 완료해야 인증글이 등록됩니다.</li>
+                                                    </ul>
+                                                    <div class="c_certify_name">
+                                                        <p>제목</p>
+                                                        <input type="text" name="boardTitle1" class="inputbox_cetify1" required="required">
+                                                    </div>
+
+                                                    <div class="c_certify_content">
+                                                        <p>내용</p>
+                                                        <textarea cols="30" rows="50" name="boardContent1" class="inputbox_certify2" required="required"></textarea>
+                                                    </div>
+
+                                                    <div class="c_certify_img_button">
+                                                        <p>사진첨부</p>
+                                                        <input type="file" name="uploadFile" accept=".jpg, .png" id="certify_upload"><label for="certify_upload" class="certify_file_upload" required="required"></label> <span style="color: #999;">* 최대 5MB 크기의 jpg.png</span>
+
+                                                        <div class="uploadResult">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="modal_button">
+                                                        <button class="c_certify_modify_submit" type="submit">인증글 수정하기</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal_layer"></div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <!-- 인증글 수정하기 -->
+                                    <script>
+                                        // 파일명 안내
+                                        $(document).ready(function() {
+                                        	
+                                            var inputFile = document.querySelector('input[name="uploadFile"]');
+                                            $(inputFile).on('change', function() {
+
+                                                var fileName = inputFile.files[0].name;
+
+                                                inputFile.files[0].name = encodeURIComponent(inputFile.files[0].name);
+
+                                                $('.uploadResult').html(fileName);
+                                            });
+
+                                        });
+
+
+                                        $(document).ready(function() {
+                                            $('.c_certify_modal_form').submit(function(e) {
+                                                e.preventDefault();
+                                            });
+
+                                            var maxSize = 5242880;
+
+                                            function checkExtension(fileSize) {
+                                                if (fileSize >= maxSize) {
+                                                    alert("파일 사이즈 초과");
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+
+
+                                            $('.c_certify_modify_submit').on('click', function(e) {
+                                            	top.window.location.reload(true);
+                                               
+                                            	
+												var boardId1 = document.querySelector('input[name="boardId"]');
+                                                var boardTitle1 = document.querySelector('input[name="boardTitle1"]');
+                                                var boardContent1 = document.querySelector('textarea[name="boardContent1"]');
+
+                                                var formData1 = new FormData();
+                                                var inputFile1 = document.querySelector('input[name="uploadFile"]');
+                                                var files1 = inputFile1.files;
+
+                                                if (!checkExtension(files1[0].size)) {
+                                                    return false;
+                                                }
+
+
+
+                                                formData1.append('uploadFile', files1[0]);
+                                                formData1.append('boardId', boardId1.value);
+                                                formData1.append('boardTitle', boardTitle1.value);
+                                                formData1.append('boardContent', boardContent1.value);
+                                                formData1.append('boardGroupId', ${challengeInfo.classId});
+
+                                                const header = $('meta[name="_csrf_header"]').attr('th:content');
+                                                const token = $('meta[name="_csrf"]').attr('th:content');
+
+                                                $.ajax({
+                                                    url: '${CONTEXT_PATH}/modifyAjaxAction',
+                                                    type: 'POST',
+                                                    beforeSend: function(xhr) {
+                                                        xhr.setRequestHeader(header, token);
+                                                    },
+                                                    processData: false,
+                                                    contentType: false,
+                                                    data: formData1,
+                                                    dataType: 'json',
+                                                    success: function(result) {
+                                                        showUploadedFile(result);
+                                   
+                                                    }  
+                                                  
+                                                });
+	                                                window.opener.parent.location.reload(); // 부모창 새로고침 
+		                                            window.self.close(); // 현재 팝업 닫기 
+	                                          });                                            
+	                                      });
+                                    </script>
 
 
                                 </div>
 
                                 <!-- 댓글 입력창 -->
-                                <div class="c_reply_insert">
-                                    <!-- <c:url value="/iruri/c_detail_reply_insert" var="challengeReplyInsert" /> -->
+                                <div class="c_reply_insert">               
                                     <form:form name="commentForm" class="c_reply_insertBox" method="Post" accept-charset="utf-8">
                                         <input type="hidden" name="classId" value="${challengeInfo.classId}">
                                         <table>
@@ -482,24 +625,7 @@
                                                 } else {
 
                                                     $(replyList).each(function() {
-                                                        /*
-                                                        htmls += '<div class="c_reply_insert" id="reply">';
-								
-                                                        htmls += '<form class="c_reply_insertBox" action="">';
-								
-                                                        htmls += '<table>';
-                                                        htmls += '<tr>';
-								
-                                                        htmls += '<td class="c_reply_textarea"><textarea placeholder="글을 작성하세요."></textarea></td>';
-                                                        htmls += '<td class="c_reply_insertButton"><button>입력</button></td>';
-								
-                                                        htmls += '</tr>';
-                                                        htmls += '</table>';
-								
-                                                        htmls += '</form>';
-								
-                                                        htmls += '</div>';
-                                                        */
+                                                
 
                                                         htmls += '<div class="reply_count">';
                                                         const count = pagination.total;
@@ -539,7 +665,7 @@
                                                     /* ------------------ 페이징 부분 --------------------- */
 
                                                     if (pagination['prev']) {
-                                                        htmls2 += '<a class="arrow prev" href="javascript:list(' + (pagination['startPage'] - 1) + '"></a>';
+                                                        htmls2 += '<a class="arrow prev" href="javascript:getlist(' + (pagination['startPage'] - 1) + '"></a>';
                                                     }
                                                     // 번호를 표시하는 부분
                                                     for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
@@ -551,7 +677,7 @@
                                                     }
 
                                                     if (pagination['next']) {
-                                                        htmls2 += '<a class="arrow next" href="javascript:list(' + (pagination['endPage'] + 1) + ')"></a>';
+                                                        htmls2 += '<a class="arrow next" href="javascript:getlist(' + (pagination['endPage'] + 1) + ')"></a>';
 
                                                     }
                                                 } // if(list.length < 1) else 끝

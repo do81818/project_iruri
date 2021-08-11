@@ -284,7 +284,7 @@
                                                             //챌린지 리스트
                                                             htmls += '<div class="c_list_detail">';
                                                             htmls += '<div class="c_list_img">';
-                                                            htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+                                                            htmls += '<img src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
                                                             htmls += '</div>';
 
                                                             htmls += '<div class="c_list_title">';
