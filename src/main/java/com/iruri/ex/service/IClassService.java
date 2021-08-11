@@ -55,6 +55,4 @@ public interface IClassService {
     //운동종류
     List<ExerciseKindVO> selectExerciseKind(int userId);
     
-    // PT클래스 개설
-    void insertPtClass(IClassVO vo);
 }

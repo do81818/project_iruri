@@ -31,7 +31,7 @@ public class ImageController {
         return false;
     }
     
-    // http://localhost:8282/ex/display?fileName=파일이름
+    // http://localhost:8282/ex/iruri/display?fileName=파일이름
     @GetMapping("/iruri/display")
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName) {
