@@ -624,5 +624,28 @@ public class MypageUserController {
 		  }
 		  
 		  
+		  
+			// 신청한 챌린지 취소
+			@GetMapping("/challenge_delete")
+		    public String challenge_delete(Principal principal, IUserVO iuservo, Model model) {
+		        log.info("test()..");
+
+		        // 로그인한 유저의 정보 받아오기
+		        IUserVO vo = iUserService.selectOne(principal.getName());
+		        model.addAttribute("user",vo) ;
+
+
+		        // 모달 회원정보 업데이트
+		 		log.info("회원챌린지삭제().." + iuservo);	
+		 		
+		 		iuservo.setUserId(vo.getUserId());
+		 	    userchallengeService.challenge_delete(iuservo);
+		 	    
+
+		        return "redirect:/mypage/challengelist";
+		        
+		    }
+		  
+		  
 		 
 }

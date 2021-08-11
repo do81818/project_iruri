@@ -358,7 +358,7 @@ FROM
 	FROM
 	    iclass A, iuser B,exercise_kind e, exercise_date d
 	WHERE
-	 A.class_id = d.class_id and A.class_Id = e.class_id and A.class_id in ( select class_id from likelist where user_id = #{userId}) and category_id = 2 and class_enddate>= sysdate and a.user_id = b.user_id
+	 A.class_id = d.class_id and A.class_Id = e.class_id and A.class_id in ( select class_id from likelist where user_id = #{userId}) and category_id = 2 and class_enddate>= sysdate and A.user_id = b.user_id
    )C
     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )

@@ -132,4 +132,12 @@ public List<IClassVO> userclassendlist_date(int userId){
 	return userchallengeMapper.userclassendlist_date(userId);
 }
 
+
+// 유저 챌린지 삭제
+@Override
+public void challenge_delete(int userId) {
+	return userchallengeMapper.challeng_delete(userId);
+}
+
+
 }
