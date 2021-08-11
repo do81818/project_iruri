@@ -141,5 +141,16 @@ public void challenge_delete(int userId, int classId) {
 	userchallengeMapper.challenge_delete(userId, classId);
 }
 
+// 유저의 클래스 삭제
+@Override
+public void class_delete_insert(int userId, int classId) {
+	userchallengeMapper.class_delete_insert(userId, classId);
+}
+
+@Override
+public void class_delete_update(int userId, int classId) {
+	userchallengeMapper.class_delete_update(userId, classId);
+}
+
 
 }

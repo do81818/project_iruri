@@ -192,13 +192,18 @@
     margin-left: -10px;
     cursor: pointer;
     position: relative;
-    margin-top: 50px;
+    margin-top: 30px;
     
 
     
   }
 
-
+.class_cancle_info{
+	    text-align: center;
+    	font-size: 11px;
+    	color: var(--iruri-blue-color);
+	
+}
 
 
 

@@ -416,6 +416,30 @@ UPDATE pay SET pay_state = 'cancle'
 
 
 	</select>
+	
+		<insert id="class_delete_insert" parameterType="HashMap" >
+			<![CDATA[
+insert into money values((SELECT MAX(money_ID) FROM money)+1, sysdate, 0,
+(select buy_realpay from buy where pay_id in (select distinct pay.pay_id  from pay, buy, iclass where buy.user_id = #{userId} 
+and iclass.class_enddate > sysdate and iclass.category_id = 2 and buy.buy_id = pay.buy_id and buy.class_id = #{classId})),
+(select distinct pay.pay_id  from pay, buy, iclass where buy.user_id = #{userId} and iclass.category_id = 2 and buy.buy_id = pay.buy_id and buy.class_id= #{classId}), #{userId})
+
+			
+			]]>
+
+	</insert>
+	
+	
+			<update id="class_delete_update" parameterType="HashMap" >
+			<![CDATA[
+update pay set pay_state = 'cancle'
+where pay_id in (select distinct pay.pay_id  from pay, buy, iclass where buy.user_id = #{userId} 
+and iclass.class_enddate > sysdate and iclass.category_id = 2 and buy.buy_id = pay.buy_id and buy.class_id = #{classId})
+
+			
+			]]>
+
+	</update>
 
 
 

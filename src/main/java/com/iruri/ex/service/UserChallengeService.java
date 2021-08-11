@@ -60,5 +60,9 @@ public interface UserChallengeService {
 	
 	// 챌린지 삭제
 	void challenge_delete(int userId, int classId);
+	// 클래스 삭제
+	void class_delete_insert(int userId, int classId);
+
+	void class_delete_update(int userId, int classId);
 
 }

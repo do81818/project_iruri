@@ -57,4 +57,8 @@ List<IClassVO> userclassendlist_kind(int userId);
 List<IClassVO> userclassendlist_date(int userId);
 
 void challenge_delete(@Param("userId") int userId, @Param("classId") int classId);
+
+void class_delete_insert(@Param("userId") int userId, @Param("classId") int classId);
+
+void class_delete_update(@Param("userId") int userId, @Param("classId") int classId);
 }

@@ -640,6 +640,24 @@ public class MypageUserController {
 		        return "redirect:/mypage/challengelist";
 		        
 		    }
+			
+			
+			// 신청한 클래스 취소
+			@GetMapping("/mypage/class_delete")
+		    public String class_delete(@CurrentUser IUserVO iUserVO ,@RequestParam ("hihi2") int classId, IUserVO iuservo, Model model) {
+		        log.info("test()..");
+		        log.info("히히" + classId);
+		        
+		        // 로그인한 유저의 정보 받아오기
+		        model.addAttribute("user", iUserVO) ;
+		 		
+		 	    userchallengeService.class_delete_insert(iUserVO.getUserId(), classId);
+		 	   userchallengeService.class_delete_update(iUserVO.getUserId(), classId);
+		 	   
+
+		        return "redirect:/mypage/classlist";
+		        
+		    }
 		  
 		  
 		 

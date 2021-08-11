@@ -129,7 +129,7 @@
 												varStatus="status">
 
 												<li class="m_cl_recommend_img">
-														<button class="m_cl_cancel_class_bt">클래스취소</button>
+														<button class="m_cl_cancel_class_bt" id="${userclasslist.classId}">클래스취소</button>
 														<div class="m_cl_recommend_title">
 																${userclasslist.classTitle}
 																
@@ -154,6 +154,21 @@
 										<img class="m_cl_right" role="button"
 												src="/ex/resources/src/img/icon/arrow_blue_right.png">
 								</div>
+								
+								<script>
+								$(document).ready(function hihi2(){
+									$(".m_cl_cancel_class_bt").click(function(){
+										var hihi2 = $(this).attr('id');
+										console.log(hihi2);
+										
+										$('input[name="hihi2"]').attr('value',hihi2);
+									
+									});
+								
+								});
+								
+								
+								</script>
 								
 								<script>
 									$('.m_r_heart_label')
@@ -634,10 +649,12 @@
 												</div>
 												<div class="alertWindow_insert">
 														<h2 class="alertWindow_title">클래스 취소</h2>
-														<form action="#">
+														<form action="class_delete" id="class_delete" method="GET">
+															<input type="hidden" name="hihi2" value="hihi2">
 																<p class="alertWindow_content">
-																		정말로 클래스 구매를<br> 취소하시겠습니까?
-																</p>
+																		클래스 구매를<br> 취소하시겠습니까?<br></p>
+																		<div class="class_cancle_info">*pt가 시작된 클래스는 환불규정에 따라 환불됩니다.</div>
+																
 																<button class="alertWindow_submit_class" type="submit">클래스취소</button>
 														</form>
 												</div>
