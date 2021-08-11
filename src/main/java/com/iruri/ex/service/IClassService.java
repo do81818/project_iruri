@@ -48,6 +48,7 @@ public interface IClassService {
     // 종료된 클래스(+페이징)
     int getTotal_mypageTrainerClassListEnd(Criteria cri, int userId);
     List<IClassVO> mypageTrainerClassListEnd(Criteria cri, int userId);
+
     
     //운동요일
     // ExerciseDateVO selectExerciseDate(int userId);

@@ -112,12 +112,13 @@
 	
 	<!-- ICommentVO -->
 	<resultMap type="com.iruri.ex.vo.ICommentVO" id="iCommentMap">
-		<result property="commentId" column="user_id"/>
-		<result property="commentDate" column="user_email"/>
-		<result property="commentContent" column="user_pw"/>
+		<result property="commentId" column="comment_id"/>
+		<result property="commentDate" column="comment_date"/>
+		<result property="commentContent" column="comment_content"/>
 		<result property="userNickname" column="user_nickname"/>
-		<result property="userPhone" column="user_name"/>
-		<result property="classId" column="user_phone"/>
+		<result property="userPhone" column="user_phone"/>
+		
+		<result property="classId" column="class_id"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
 	
@@ -194,19 +195,7 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 	<!-- 회원관리 페이징 -->
 	<select id="getTotal_trainerUserManagement" resultType="int">
 	<![CDATA[
-		select count(*)
-from (
-select ids.class_id
-from (
-select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate 
-from iuser, 
-(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, iclass.class_joinmember, iclass.class_enddate 
-from buy,iclass,pay
-where buy.class_id = iclass.class_id and iclass.user_id= #{userId} and pay.buy_id = buy.buy_id
-and pay.pay_state='pay'
-order by buy.user_id)c 
-where c.user_id = iuser.user_id) ids
-group by ids.class_id) li
+		select count(*) from iClass where user_id = #{userId}
 	]]>
 	</select>
 	
@@ -219,22 +208,35 @@ FROM
     SELECT ROWNUM rn, bc.*
     FROM
     (
-        select  c.class_id, c.class_title, user_nickname, user_phone, c.class_joinmember,c.class_enddate, c.class_state 
-from iuser, 
-(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, 
-iclass.class_joinmember, iclass.class_enddate, iclass.class_state 
-from buy,iclass,pay
-where buy.class_id = iclass.class_id and iclass.user_id=#{userId} and pay.buy_id = buy.buy_id
-and pay.pay_state='pay'
-order by buy.user_id)c 
-where c.user_id = iuser.user_id
-order by class_id desc
+        SELECT B.*
+        FROM iclass B
+        WHERE B.user_id = #{userId} and B.category_id = 2 
+        ORDER BY B.class_id DESC, B.class_startdate DESC
     ) bc
      WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
 WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>
 	</select>
+	
+	
+	<!-- 회원관리 List2 -->
+	<select id="trainerUserManagementList2" resultMap="trainerUserManagementMap">
+		<![CDATA[
+			select *
+from iuser, 
+(select buy.buy_id, buy.user_id, iclass.class_id, iclass.class_title, 
+iclass.class_joinmember, iclass.class_enddate, iclass.class_state 
+from buy,iclass,pay
+where buy.class_id = iclass.class_id and iclass.user_id= #{userId} and pay.buy_id = buy.buy_id
+and pay.pay_state='pay'
+order by buy.user_id)c, icomment 
+where c.user_id = iuser.user_id and icomment.user_id=iuser.user_id
+order by c.class_id desc
+		]]>
+	</select>
+	
+	
 	
 
 

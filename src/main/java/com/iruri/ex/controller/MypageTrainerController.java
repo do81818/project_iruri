@@ -216,7 +216,9 @@ public class MypageTrainerController {
         log.info("oo"+trainerUserManagement);
         
         result.put("pageMaker", new PageVO(cri, total));
-
+        
+        List<trainerUserManagementVO> list2 = mypageTrainerService.trainerUserManagementList2(vo.getUserId());
+        result.put("list2", list2);
         return ResponseEntity.ok(result);
     }
     

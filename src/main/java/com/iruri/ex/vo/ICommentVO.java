@@ -41,7 +41,9 @@ public class ICommentVO {
     private String userNickname;
     
     private int userPhone;
+    
     private IUserVO iUserVO; // userId
+    
     private int classId;
 
 

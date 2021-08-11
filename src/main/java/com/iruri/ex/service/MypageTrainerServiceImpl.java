@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.iruri.ex.mapper.MypageTrainerMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BuyVO;
+import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.ProfitVO;
 import com.iruri.ex.vo.trainerUserManagementVO;
 
@@ -60,6 +61,13 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     public int getTotal_trainerUserManagement(Criteria cri, int userId) {
         return mypageTrainerMapper.getTotal_trainerUserManagement(cri, userId);
     }
+
+    @Override
+    public List<trainerUserManagementVO> trainerUserManagementList2(int userId) {
+        return mypageTrainerMapper.trainerUserManagementList2(userId);
+    }
+
+   
    
 
  

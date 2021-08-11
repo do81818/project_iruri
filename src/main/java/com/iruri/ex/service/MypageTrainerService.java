@@ -27,6 +27,8 @@ public interface MypageTrainerService {
     // 회원관리
     int getTotal_trainerUserManagement(Criteria cri, int userId);
     List<trainerUserManagementVO> trainerUserManagement(Criteria cri, int userId);
-    
-    
+
+    List<trainerUserManagementVO> trainerUserManagementList2(int userId);
+
+  
 }

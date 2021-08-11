@@ -30,4 +30,6 @@ public interface MypageTrainerMapper {
     // 트레이너 회원관리
     List<trainerUserManagementVO> trainerUserManagement(@Param("cri") Criteria cri, @Param("userId") int userId);
     int getTotal_trainerUserManagement(Criteria cri, @Param("userId") int userId);
+   
+    List<trainerUserManagementVO> trainerUserManagementList2(int userId);
 }

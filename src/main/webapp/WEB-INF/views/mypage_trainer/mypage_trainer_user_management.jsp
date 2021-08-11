@@ -13,7 +13,7 @@
 <html lang="ko">
 <head>
 <%@ include file="../include/static.jsp"%>
-<title>이루리 트레이너 마이페이지</title>
+<title>이루리 트레이너 마이페이지-회원관리</title>
 <!-- 페이지 이름을 적어주세요 -->
 <script src=""></script>
 <link rel="stylesheet"
@@ -35,30 +35,43 @@
 			success : function(result){
 				var trainerUserManagement = result['trainerUserManagement'];
 				console.log(trainerUserManagement);
-
+				var list2 = result['list2'];
+				console.log(list2);
 				var pagination = result['pageMaker'];
 				var htmls = '';
 				var htmls2 = '';
+				
+				for(let j = 0; j < trainerUserManagement.length; j++) {
+					for(let i = 0; i < list2.length; i++) {
+						if(trainerUserManagement[j].classId === list2[i].classId) {
+							trainerUserManagement[j] = list2[i];
+						}												
+					}
+				 }
 				
 				$(trainerUserManagement).each(function() {
 					htmls += '<div class="pt_user_management">';
 					htmls += '<table class="management_table">';
 					htmls += '<tr>';
 					htmls += '<td colspan="3" class="pt_title">';
-					htmls += '<span class="title_icon-red">'+this.classState+'</span>';
-					htmls +=  this.classTitle+'(총<span>'+this.classJoinMember+'</span>명)';
+					htmls += '<span class="title_icon-red">'+this.classState+'</span>&nbsp;';
+					htmls +=  this.classTitle+'&nbsp;(총<span>'+this.classJoinMember+'</span>명)';
 					htmls += '</td>';
 					htmls += '</tr>';
 					htmls += '<tr>';
 					htmls += '<td>';
 					htmls += '<ul>';
-					htmls += '<li><span class="pt_nickname_table">닉네임</span>&emsp;<span class="pt_nickname_phone">010-0000-0000</span></li>';
+					htmls += '<li>';
+							  for(var i = 0; i < this.iuserList.length; i++) {
+					htmls += '<span class="pt_nickname_table">'+this.iuserList[i].userNickname +'</span>&nbsp;';
+					htmls += '<span class="pt_nickname_phone">'+this.iuserList[i].userPhone+'</span>';
+							  }
+					htmls += '</li>';
 					htmls += '</ul>';
 					htmls += '</td>';
-
 					htmls += '<td class="arrow_box">';
-					htmls += '<button href="" class="a_arrow_up"></button>';
-					htmls += '<button href="" class="a_arrow_down"></button>';
+					/* htmls += '<button href="" class="a_arrow_up"></button>';
+					htmls += '<button href="" class="a_arrow_down"></button>'; */
 					htmls += '</td>';
 					/* 코멘트입력 칸 */
 					htmls += '<td class="td_box2">';

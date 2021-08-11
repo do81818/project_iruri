@@ -66,5 +66,6 @@ public interface IClassMapper {
    
     //운동종류
     List<ExerciseKindVO> selectExerciseKind(int userId);
+
     
 }
