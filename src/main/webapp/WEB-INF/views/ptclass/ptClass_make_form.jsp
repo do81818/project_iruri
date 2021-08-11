@@ -35,7 +35,7 @@
 		<main>
 				<div class="ptClassFormInsert">
 
-					<form:form class="ptForm" method="POST" action="insertPtClass" accept-charset="utf-8">
+					<form:form class="ptForm" method="POST" action="insertPtClass" accept-charset="utf-8" enctype="multipart/form-data">
 						<h2 class="ptFormTitle">PT클래스 개설</h2>
 
 						<div>
@@ -222,7 +222,7 @@
 							<div class="thumbnailWrap">
 								<div class="ptClassthumbnail">
 									<div>
-										<input id="mainImg" type="radio">
+										<input id="mainImg" type="radio" name="imageCheck" value="customImage">
 										<label for="mainImg" >
 											<i class="iruri-check-no-icon"></i>
 											<span>직접 이미지 올리기</span>
@@ -230,84 +230,25 @@
 									</div>
 	
 									<div>
-										<input type="file" accept=".jpg, .png" id="upload">
-										<label for="" class="file_upload">
+										<input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
+										<label for="upload" class="file_upload">
 											<i class="iruri-fileUpload-icon"></i>
 										</label> 
 									</div>
 									
 									<div>
-										<span style="color: #999;">* 650x500px 크기의 jpg.png</span>
+										<span style="color: #999;">* 5MB 크기 이하의 jpg.png</span>
 									</div>
 								</div>
 
 								<div class="defaultThumbnail">
-									<input id="defaultImg" type="radio">
+									<input id="defaultImg" type="radio" name="imageCheck" value="defaultImage" checked>
 									<label for="defaultImg" >
-										<i class="iruri-check-no-icon"></i>
+										<i class="iruri-check-yes-icon"></i>
 										<span>기본 이미지 사용</span>
 									</label>
 								</div>
 
-								<div class="c_img_list">
-									<div>
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_1">
-											<label for="c_basic_img_1" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_2">
-											<label for="c_basic_img_2" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_3">
-											<label for="c_basic_img_3" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_4">
-											<label for="c_basic_img_4" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_5">
-											<label for="c_basic_img_5" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_6">
-											<label for="c_basic_img_6" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_7">
-											<label for="c_basic_img_7" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-		
-										<div class="c_img_detail">
-											<input type="radio" id="c_basic_img_8">
-											<label for="c_basic_img_8" class="img_rd"> 
-												<img src="/ex/resources/src/img/icon/123-123.png" alt="">
-											</label>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 

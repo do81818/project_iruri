@@ -21,29 +21,19 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             <span class="suggestTitle">추천클래스</span>
 
             <div class="suggestWrap">
-              <div class="suggestImg">
-                <div class="suggestPtPerson">1 : 1</div>
-                <div class="suggestMetaData">
-                  <span>트레이너 지오</span>
-                  <h5>스쿼트, 런지, 플랭크 30일 챌린지</h5>
-                  <div class="suggestData">
-                    <span>2021.03.01 ~ 2021.04.01</span>
-                    <i class="iruri-heart-gray-icon"></i>
+              <c:forEach var="recommend" items="${recommendList}">
+                <div class="suggestImg" style="background: url(${CONTEXT_PATH}/iruri/display?fileName=${recommend.classImage}) no-repeat">
+                  <div class="suggestPtPerson">1 : ${recommend.classTotalMember}</div>
+                  <div class="suggestMetaData">
+                    <span>트레이너 ${recommend.IUserVO.userNickname}</span>
+                    <h5>${recommend.classTitle}</h5>
+                    <div class="suggestData">
+                      <span>${recommend.classStartDate} ~ ${recommend.classEndDate}</span>
+                      <i class="iruri-heart-gray-icon"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="suggestImg">
-                <div class="suggestPtPerson">1 : 1</div>
-                <div class="suggestMetaData">
-                  <span>트레이너 지오</span>
-                  <h5>러닝 전 5분 스트레칭</h5>
-                  <div class="suggestData">
-                    <span>2021.03.01 ~ 2021.04.01</span>
-                    <i class="iruri-heart-gray-icon"></i>
-                  </div>
-                </div>
-              </div>
+              </c:forEach>
             </div>
           </div>
 
