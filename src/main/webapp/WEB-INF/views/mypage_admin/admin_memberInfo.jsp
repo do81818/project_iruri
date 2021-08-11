@@ -164,7 +164,7 @@
              },
             success : function(result) {
                 console.log(result);
-                var list = result['pointlist'];
+                var list = result['list'];
                 var pagination = result['pageMaker'];
                 var htmls = "";
                 var htmls2 = "";

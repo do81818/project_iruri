@@ -77,5 +77,18 @@ public interface AdminMapper {
 	Integer countUserExInfoAll();
 	
 	// 트레이너정보_수익관리 리스트
-	List<TableJoinVO> gettrainerMoneyList(int userId, Criteria cri);
+	List<TableJoinVO> getTrainerMoneyList(@Param("userId") int userId, @Param("month") int month, @Param("pageNum") int pageNum, @Param("amount") int amount);
+	
+	// 트레이너정보_수익관리 리스트 갯수
+	Integer countTrainerMoneyList(int userId, int month);
+	
+	// 트레이너정보_수익관리 월별 수익 합계
+	Integer trainerMoneyMonthTotal(@Param("userId") int userId, @Param("month") int month);
+	
+	// 블랙리스트/일반회원 등록(전환)
+	void updateBlackList(@Param("userId") int userId, @Param("number") int number);
+	
+	// 블랙리스트 이유 등록
+    void updateBlackListReason(@Param("userId") int userId, @Param("reason") String reason);
+	
 }
