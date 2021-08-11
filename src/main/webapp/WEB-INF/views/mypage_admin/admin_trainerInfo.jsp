@@ -144,7 +144,7 @@
 	let number = document.getElementId("memberInfo_balackList").value;
 	 */
 	 
-	function updateBlackList() {
+	var updateBlackList = function() {
 	     var userId = ${info.iuserVo.userId};
 	   	 var number = $('#memberInfo_balackList').val();
 	   	 var reason = $('#memberInfo_balackList_reason').val();
@@ -154,19 +154,42 @@
 	     console.log(number);
 	     console.log(reason);
 	     
+	     
+	     const header = $('meta[name="_csrf_header"]').attr('th:content');
+         const token = $('meta[name="_csrf"]').attr('th:content');
+
+         $.ajax({
+             url: '${CONTEXT_PATH}/uploadAjaxAction',
+             type: 'POST',
+             beforeSend: function(xhr) {
+                 xhr.setRequestHeader(header, token);
+             },
+             processData: false,
+             contentType: false,
+             data: formData,
+             dataType: 'json',
+             success: function(result) {
+                 showUploadedFile(result);
+             }
+ 
+	     
 	     /* var formData = $("form.memberInfo_balackListForm").deserializing(); */
 		     
 		    $.ajax({
 		        url : '${CONTEXT_PATH_ADMIN}/ajax/update/blacklist',
 	            type : 'POST',
-	            cache : false,
+	            type: 'POST',
+	            beforeSend: function(xhr) {
+	                xhr.setRequestHeader(header, token);
+	            },
+	            processData: false,
+	            contentType: false,
 	            dataType : 'json',
 	            data : {
 	                'userId': userId,
 	                'number': number,
 	                'reason': reason,
 	            },
-	            contentType: 'application/json',
 	            success : function(result) {
 	                console.log(result);
 	                
