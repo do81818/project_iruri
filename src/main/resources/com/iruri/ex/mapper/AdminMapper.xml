@@ -227,6 +227,13 @@
 		from (
 			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
+			]]>
+			
+			<if test="keyword != null">
+				where u.user_nickname like '%#{keyword}%' or u.user_email like '%#{keyword}'	
+			</if>
+			
+			<![CDATA[
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
 			left outer join iclass c
@@ -269,7 +276,13 @@
 			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
 			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
 			    a.auth_id, a.auth_content
-			from iuser u
+			]]>
+			
+			<if test="keyword != null">
+				where u.user_nickname like '%#{keyword}%' or u.user_email like '%#{keyword}'	
+			</if>
+			
+			<![CDATA[
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3
 			order by u.user_id desc
