@@ -119,7 +119,7 @@ font-size: 20px;
 color: var(--iruri-blue-color);
 clear: both;
 width: 1200px;
-/* margin: 0 auto; */
+ margin: 0 auto; 
 margin-top: 70px;
 margin-left: 80px;
 margin-bottom: 20px;
@@ -129,31 +129,44 @@ text-align: left;
 
 /*추천챌린지 이미지*/
 
- .m_c_recommend {
-  width: 1200px;
-  height: 540px;
+.m_c_recommend {
+  display: flex;
+  height: 400px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
-
-
+  margin-bottom: 50px;
+  align-items: center;
 }
 
 .m_c_slides {
-position: relative;
- width: 490px;
-  height: 520px;
-  left:0;
-  transition: left 0.5s ease-in-out;
-  margin-left: 25px;
+display: flex;
+width: 100%;
+overflow: hidden
 }
+
+.m_c_slides ul {
+	position: relative;
+	display: flex;
+	gap: 87px;
+	
+	width: 2261px;
+}
+
+/* 
+position: relative;
+width: 2400px;
+height: 400px;
+left:0;
+transition: left 0.5s ease-in-out;
+margin-left: 25px;
+ */
       
-.swiper-wrapper {
+/* .swiper-wrapper {
 display: inline-block;
 clear: both;
 width: 1200px;
 margin: 0 auto;
-} 
+}  */
 
 /* .m_left{
 width: 40px;
@@ -171,44 +184,39 @@ margin-top: 170px;
 .m_left{
   width: 40px;
   height: 40px;
-  margin-right: 40px;
-  position: absolute;
-  left: 0;
-  top: 200px;
-  
+  align-content: center;
 }
+
 .m_right{
   width: 40px;
   height: 40px;
-  position: absolute;
-  right: 0;
-  top: 200px;
+	align-content: center;
 }
 
 .m_c_recommend_img  {
-position: absolute;
 width: 450px;
 height: 400px;
 background-color: var(--iruri-indigo-color);
-margin-bottom: 34px;
-padding: 20px;
-
-margin-right: 100px;
 border-radius: 30px; 
-margin-left: 60px;
-
+padding: 20px;
+margin: 0 25px;
 }
+
+/*
+position: relative;
+margin-bottom: 34px;
+margin-right: 70px;
+*/
 
 .m_c_recommend_title {
 position: relative;
 height: 73px;
 margin-bottom: 10px;
-display: flex;
 font-family: 'Cafe24Ssurround', sans-serif;
 color: var(--iruri-green-color);
 font-size: 32px;
 float: left;
-flex-direction: column;
+
 top: 240px;
 }
 
@@ -217,7 +225,6 @@ font-size: 20px;
 position: relative;
 color: var(--iruri-light-gray-color);
 float: left;
-position: relative;
 top: 220px;
 }
  

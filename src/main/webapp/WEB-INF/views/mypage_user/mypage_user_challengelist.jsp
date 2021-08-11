@@ -137,9 +137,8 @@ true, }, }); */
 								<div class=" m_c_recommend">
 										<img class="m_left" role="button" 
 												src="/ex/resources/src/img/icon/arrow_blue_left.png">
-										<img class="m_right" role="button" 
-												src="/ex/resources/src/img/icon/arrow_blue_right.png">
-										<ul class="m_c_slides">
+										<div class="m_c_slides">
+										<ul >
 												<c:forEach var="userchallengelist"
 														items="${userchallengelist}" varStatus="status">
 														<li class="m_c_recommend_img">
@@ -162,6 +161,9 @@ true, }, }); */
 
 												</c:forEach>
 										</ul>
+										</div>
+										<img class="m_right" role="button" 
+												src="/ex/resources/src/img/icon/arrow_blue_right.png">
 
 								</div>
 
@@ -193,19 +195,13 @@ true, }, }); */
 
 									const m_c_recommend_img = document
 											.querySelectorAll('.m_c_recommend_img');
-									console.log(m_c_recommend_img);
 
 									m_c_recommend_img
 											.forEach(function(item) {
-												let heartClassId = item
-														.querySelector('.m_c_heart .m_r_heart_label').htmlFor
-														.substring(5);
-												;
+												let heartClassId = item.querySelector('.m_c_heart .m_r_heart_label').htmlFor.substring(5);
+												
 
-												console.dir(heartClassId);
-
-												$
-														.ajax({
+												$.ajax({
 															url : '${CONTEXT_PATH}/userchallenge/heartList',
 															type : 'GET',
 															cache : false,
@@ -579,7 +575,6 @@ true, }, }); */
 
 											},
 											success : function(result) {
-												console.log(result);
 												var list = result['list'];
 												var pagination = result['pageMaker'];
 												var htmls = "";
@@ -728,7 +723,6 @@ true, }, }); */
 
 											},
 											success : function(result) {
-												console.log(result);
 												var endlist = result['endlist'];
 												var pagination1 = result['pageMaker'];
 												var htmls = "";
@@ -853,52 +847,53 @@ true, }, }); */
 </body>
 
 <script>
-	$(document)
-			.ready(
-					function() {
-						(function challengeSlideFunc() {
+function challengeSlideFunc() {
+	const slides = document.querySelector('.m_c_slides ul');
+	slide = document.querySelectorAll('.m_c_slides .m_c_recommend_img'),
+	slideCount = slide.length,
+	prevBtn = document.querySelector('.m_c_recommend .m_left'),
+	slideWidth = 490, slideMargin = 97,
+	MoveSlide = slideWidth + slideMargin,
+	nextBtn = document.querySelector('.m_c_recommend .m_right');
+	let currentIdx = 0;
+					
+	console.log(slides);
+	console.log(slide);
+	console.log(prevBtn);
+	console.log(nextBtn);
+	
+	//slide 배열
+	for (var i = 0; i < slide.length; i++) {
+		slide[i].style.left = (slideWidth * i + slideMargin * i)
+				+ 'px';
+	}
 
-							const slides = document
-									.querySelector('.m_c_slides');
-									slide = document
-											.querySelectorAll('.m_c_slides .m_cl_recommend_img'),
-									slideCount = slide.length,
-									prevBtn = document.querySelector('.m_c_left'),
-									slideWidth = 490, slideMargin = 80,
-									MoveSlide = slideWidth + slideMargin,
-									nextBtn = document.querySelector('.m_c_right');
-							let currentIdx = 0;
+	//slide 이동 함수
+	function goToSlide(num) {
+		slides.style.left = -num * MoveSlide + 'px';
+		currentIdx = num;
+	}
 
-							//slide 배열
-							for (var i = 0; i < slide.length; i++) {
-								slide[i].style.left = (slideWidth * i + slideMargin
-										* i)
-										+ 'px';
-							}
+	// 버튼을 클릭하면 슬라이드 이동시키기
+	nextBtn.addEventListener('click', function() {
+		if (currentIdx < slideCount - 2) {
+			goToSlide(currentIdx + 2);
+		} else {
+			goToSlide(0);
+		}
+	});
+	prevBtn.addEventListener('click', function() {
+		if (currentIdx > 0) {
+			goToSlide(currentIdx - 2);
+		} else {
+			goToSlide(slideCount - 2);
+		}
+	});
+}
 
-							//slide 이동 함수
-							function goToSlide(num) {
-								slides.style.left = -num * MoveSlide + 'px';
-								currentIdx = num;
-							}
-
-							// 버튼을 클릭하면 슬라이드 이동시키기
-							nextBtn.addEventListener('click', function() {
-								if (currentIdx < slideCount - 2) {
-									goToSlide(currentIdx + 1);
-								} else {
-									goToSlide(0);
-								}
-							});
-							prevBtn.addEventListener('click', function() {
-								if (currentIdx > 0) {
-									goToSlide(currentIdx - 1);
-								} else {
-									goToSlide(slideCount - 2);
-								}
-							});
-						});
-					});
+$(document).ready(() => {
+	challengeSlideFunc();
+});
 </script>
 
 
