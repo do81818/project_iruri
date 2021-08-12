@@ -10,6 +10,7 @@ import com.iruri.ex.mapper.IClassMapper;
 import com.iruri.ex.mapper.UserChallengeMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.IUserInfoVO;
 import com.iruri.ex.vo.IUserVO;
 
 import lombok.extern.log4j.Log4j;
@@ -131,5 +132,25 @@ public List<IClassVO> userclassendlist_kind(int userId){
 public List<IClassVO> userclassendlist_date(int userId){
 	return userchallengeMapper.userclassendlist_date(userId);
 }
+
+
+// 유저 챌린지 삭제
+@Override
+public void challenge_delete(int userId, int classId) {
+	log.info("infoupdate");
+	userchallengeMapper.challenge_delete(userId, classId);
+}
+
+// 유저의 클래스 삭제
+@Override
+public void class_delete_insert(int userId, int classId) {
+	userchallengeMapper.class_delete_insert(userId, classId);
+}
+
+@Override
+public void class_delete_update(int userId, int classId) {
+	userchallengeMapper.class_delete_update(userId, classId);
+}
+
 
 }

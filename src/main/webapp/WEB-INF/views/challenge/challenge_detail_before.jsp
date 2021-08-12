@@ -67,6 +67,7 @@
             <div class="c_detail_start">
 
                 <div class="c_detail_img">
+                <img src="${CONTEXT_PATH}/iruri/display?fileName=${challengeInfo.classImage}" alt="">
                 </div>
 
                 <!--오른쪽 위 정보-->
@@ -219,53 +220,107 @@
     <!--인증사진 리스트-->
     <div class="c_certify" id="certify">
         <div class="c_container">
-            <div class="c_certify_total">
-                <span>총 77 개</span>
-            </div>
 
-
-            <div class="c_certify_img_list">
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
-                <div class="c_certify_img">
-                    <img src="/ex/resources/src/img/icon/270-270.png" alt="">
-                </div>
             </div>
 
         </div>
 
         <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
         <div class="page_nation_certify">
-            <a class="arrow prev" href="#"></a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a class="arrow next" href="#"></a>
+           
         </div>
 
 
     </div>
+    
+        <script>
+                                    //인증글 ajax, 페이징
+                                    function getImagelist(page) {
+                                        $.ajax({
+                                            url: 'http://localhost:8282/ex/ajax/certifyImgList.json',
+                                            type: 'GET',
+                                            cache: false,
+                                            dateType: 'json',
+
+                                            data: {
+
+                                                pageNum: page,
+                                                classId: ${challengeInfo.classId},
+                                                // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
+                                                // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
+                                                // url 상으론 /rest/after?pageNum=2 이런식
+                                            },
+                                            success: function(result) {
+                                                var imgList = result['imgList'];
+                                                var pagination = result['pageMaker'];
+                                                var htmls = "";
+                                                var htmls2 = "";
+
+                                                var aaa = result['imgList'][0].boardList;
+                                                localStorage.setItem('boardList', JSON.stringify(aaa));
+                                                
+                                                if (imgList.length < 1) {
+                                                    htmls += '<div class="c_list_not_img">';
+                                                    htmls += '현재 등록된 인증사진이 없습니다.';
+                                                    htmls += '</div>';
+                                                } else {
+
+                                                    $(imgList).each(function() {
+
+
+                                                        htmls += '<div class="c_certify_total">';
+                                                        const count = pagination.total;
+                                                        htmls += '<span>총' +
+                                                            count +
+                                                            '개</span>';
+                                                        htmls += '</div>';
+
+
+                                                        htmls += '<div class="c_certify_img_list">';
+														
+                                                        $(this.boardList).each(function() {
+                     										
+                                                            htmls += '<div class="c_certify_img" onclick="certify_details_modal('+ this.boardId +')">';
+                                                            htmls += '<img src="${CONTEXT_PATH}/iruri/display?fileName=' + this.boardFile + '" alt="">';
+                                                            htmls += '</div>';
+
+                                                        });
+
+                                                        htmls += ' </div>';
+                                                        
+
+                                                    });
+                                                    
+                                                    /* ------------------ 페이징 부분 --------------------- */
+
+                                                    if (pagination['prev']) {
+                                                        htmls2 += '<a class="arrow prev" href="javascript:getImagelist(' + (pagination['startPage'] - 1) + '"></a>';
+                                                    }
+                                                    // 번호를 표시하는 부분
+                                                    for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+                                                        if (page !== idx) {
+                                                            htmls2 += '<a class="pageNumLink" href="javascript:getImagelist(' + idx + ')">' + (idx) + "</a>";
+                                                        } else {
+                                                            htmls2 += '<a class="pageNumLink active" href="javascript:getImagelist(' + idx + ')">' + (idx) + "</a>";
+                                                        }
+                                                    }
+
+                                                    if (pagination['next']) {
+                                                        htmls2 += '<a class="arrow next" href="javascript:getImagelist(' + (pagination['endPage'] + 1) + ')"></a>';
+                                                    }
+                                                } // if(list.length < 1) else 끝
+
+                                                $(".c_certify").html(htmls);
+                                                
+                                                $(".page_nation_certify").html(htmls2);
+                                                
+                                            }
+                                        });
+                                    }
+                                    $(document).ready(function() {
+                                    	getImagelist(1);
+                                    });
+                                </script>
 
 
 
@@ -282,15 +337,7 @@
     
     
 <script>
-/*
-$(document).ready(function() {
-	$('.c_parti_modal_button').submit(function(e) {
-		e.preventDefault();
-	});
-});
-*/
-
-	
+	//챌린지 참여하기
 $('.c_parti_modal_submit').click(function(){
 	const header = $('meta[name="_csrf_header"]').attr('th:content');
 	const token = $('meta[name="_csrf"]').attr('th:content');
@@ -391,7 +438,7 @@ $('.c_parti_modal_submit').click(function(){
 					         /* ------------------ 페이징 부분 --------------------- */
 	                        
 					         if (pagination['prev']) {
-	                             htmls2 += '<a class="arrow prev" href="javascript:list('+ (pagination['startPage']-1) +'"></a>';
+	                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +'"></a>';
 	         				} 
 	         				// 번호를 표시하는 부분
 	         				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
@@ -403,7 +450,7 @@ $('.c_parti_modal_submit').click(function(){
 	         				}
 	         				
 	         				if (pagination['next']) {
-	                            htmls2 += '<a class="arrow next" href="javascript:list('+ (pagination['endPage']+1) +')"></a>';
+	                            htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
 	        						
 	        				}			
 	         			}	// if(list.length < 1) else 끝

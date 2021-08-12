@@ -86,4 +86,6 @@ public interface AdminService {
     // 블랙리스트 이유 등록
     void updateBlackListReason(int userId, String reason);
 	
+    // 탈퇴회원으로 전환
+    void updateWithdrawMember(@Param("userId") int userId);
 }

@@ -107,11 +107,16 @@
                                             <div class="c_img_direct">
                                                 <p>대표이미지 설정</p>
                                                 <input type="radio" id="direct" name="imageCheck" value="customImage"/>
-                                                <label for="direct" class="rd_label">직접 이미지 올리기</label>
+                                                <label for="direct" class="rd_label">직접 이미지 올리기</label> 
                                                 <input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
                                                 <label for="upload" class="file_upload"></label>
                                                 <span style="color: #999;">* 최대 5MB 크기의 jpg.png</span>
                                             </div>
+                                            
+                                            <span class="uploadResult_makeForm">
+                                            <p></p>
+                                            </span>
+                                            
 
                                             <div class="c_img_basic">
                                                 <p></p>
@@ -124,12 +129,30 @@
                                                 <button class="c_make_button_submit" type="submit"><a href="challengeList">챌린지등록</button>
                                             </div>
 
+
+
                                         </form:form>
 
                                     </div>
 
                                 </div>
+									<script>
+                                        // 파일명 안내
+                                        $(document).ready(function() {
+                                        	
+                                            var inputFile = document.querySelector('input[name="uploadFile"]');
+                                            $(inputFile).on('change', function() {
 
+                                                var fileName = inputFile.files[0].name;
+
+                                                inputFile.files[0].name = encodeURIComponent(inputFile.files[0].name);
+
+                                                $('.uploadResult_makeForm').html(fileName);
+                                            });
+
+                                        });
+                                        
+                                        </script>
                             </main>
 
                             <%@ include file="../include/footerTemplate.jsp"%>

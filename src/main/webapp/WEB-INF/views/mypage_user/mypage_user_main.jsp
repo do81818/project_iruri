@@ -138,7 +138,7 @@
                 <input class="inputbox_size2" name="userNickname" type="text" >
                 <p>전화번호</p>
                 <input class="inputbox_size2" name="userPhone" type="text">
-                <button class="alertWindow_submit" type="submit" >비밀번호 변경</button>
+                <button class="alertWindow_submit" type="submit" >회원정보 변경</button>
               </form>
             </div>
           </div>
