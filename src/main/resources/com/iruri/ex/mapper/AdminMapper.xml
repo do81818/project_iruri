@@ -75,6 +75,11 @@
 		<result property="classPrice" column="class_pirce" />
 		<result property="userId" column="user_id" />
 	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.CategoryVO" id="categoryMap">
+		<result property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.GradeVO" id="gradeMap">
 		<result property="gradeId" column="grade_id" />
@@ -107,6 +112,11 @@
 		<collection property="reportVo" resultMap="reportMap" />
 	</resultMap>
 
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="userExInfoMap">
+		<collection property="iclassVo" resultMap="classMap" />
+		<collection property="categoryVo" resultMap="categoryMap" />
+	</resultMap>
 
 	<!-- 신고들어온 게시글(신고알림) 리스트 -->
 	<!-- 1.페이징처리 안된 리스트 -->
@@ -404,17 +414,32 @@
 
 
 	<!-- 일반회원정보 운동정보 리스트 -->
-	<select id="getUserExInfoAll" resultMap="pointMap">
+	<select id="getUserExInfoList" resultMap="userExInfoMap">
 		<![CDATA[
 		select *
 		from (
 			select rownum rn, li.*
 			from (
-				from (
-					select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
-					from iclass, category, (select class_id from buy
-		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
-				where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+				select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+				from iclass, category, (select class_id, user_id from buy
+				            where user_id = #{userId} 
+				            and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+				where iclass.class_id = b.class_id and iclass.category_id = category.category_id
+		]]>
+				<choose>
+					<when test='categoryId eq 2'>
+					<![CDATA[
+						and category.category_id = 2
+					]]> 
+					</when>
+					<when test='categoryId eq 3'>
+					<![CDATA[
+						and category.category_id = 3
+					]]> 
+					</when>
+				</choose>
+		<![CDATA[
+				order by iclass.class_id desc
 				) li
 			where rownum <= #{pageNum} * #{amount}
 				)
@@ -424,14 +449,30 @@
 
 
 	<!-- 일반회원정보 운동정보 갯수 -->
-	<select id="countUserExInfoAll" resultType="Integer">
+	<select id="countUserExInfoList" resultType="Integer">
 		<![CDATA[
 		select count(li.class_id)
 		from (
-		select iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
-		from iclass, category, (select class_id from buy
-		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
-		where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+				select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+				from iclass, category, (select class_id, user_id from buy
+				            where user_id = #{userId} 
+				            and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+				where iclass.class_id = b.class_id and iclass.category_id = category.category_id
+		]]>
+				<choose>
+					<when test='categoryId eq 2'>
+					<![CDATA[
+						and category.category_id = 2
+					]]> 
+					</when>
+					<when test='categoryId eq 3'>
+					<![CDATA[
+						and category.category_id = 3
+					]]> 
+					</when>
+				</choose>
+		<![CDATA[
+				order by iclass.class_id desc
 		) li
 		]]>
 	</select>

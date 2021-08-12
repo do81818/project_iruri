@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,9 +66,10 @@ public class MypageAdminController {
 
 	// showMemberList_Admin() ModelAndView 일반유저 목록 보기
 	@GetMapping("member/list")
-	public ModelAndView showMemberList_Admin(ModelAndView mav) {
+	public ModelAndView showMemberList_Admin(ModelAndView mav, int pageNum) {
 		log.info("showMemberList_Admin()...");
 		mav.setViewName("mypage_admin/mypage_admin_memberlist");
+		mav.addObject("page", pageNum);
 		return mav;
 	}
 
@@ -182,13 +184,14 @@ public class MypageAdminController {
 	
 	// showMemberDetail_Admin() ModelAndView 관리자 유저기본정보 상세보기
 	@GetMapping("member/info")
-	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId) {
+	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId, int pageNum) {
 		log.info("showMemberDetail_Admin()...");
 		mav.setViewName("mypage_admin/admin_memberInfo");
 		mav.addObject("info", adminService.getUserBasicInfo(userId));
 		int totalPoint = adminService.getUserBasicInfoPointTotal(userId);
 		DecimalFormat formatter = new DecimalFormat("###,###");
-		mav.addObject("point",formatter.format(totalPoint));
+		mav.addObject("point", formatter.format(totalPoint));
+		mav.addObject("page", pageNum);
 		log.info(mav);
 		return mav;
 	}
@@ -210,10 +213,34 @@ public class MypageAdminController {
 	
 	// showMemberDetailExercise_Admin() ModelAndView 관리자 유저운동정보 상세보기
 	@GetMapping("member/exerciseinfo")
-	public String showMemberDetailExercise_Admin(Locale locale, Model model) {
-
-		return "mypage_admin/admin_memberExerciseInfo";
+	public ModelAndView showMemberDetailExercise_Admin(ModelAndView mav, @RequestParam("userId") int userId, int pageNum) {
+	    
+	        log.info("showMemberDetailExercise_Admin()...");
+	        mav.setViewName("mypage_admin/admin_memberExerciseInfo");
+	        mav.addObject("userId", userId);
+	        mav.addObject("page", pageNum);
+	        log.info(mav);
+	        return mav;
+	    
 	}
+	
+
+    @ResponseBody
+    @GetMapping("ajax/member/exerciseinfo")
+    public ResponseEntity<HashMap<String, Object>> restShowMemberDetailExercise(@RequestParam("userId") int userId, @RequestParam("categoryId") int categoryId, @RequestParam("pageNum") int pageNum) {
+        log.info(userId);
+        HashMap<String, Object> result = new HashMap<>();
+        Criteria cri = new Criteria(pageNum, 10);
+        int total = adminService.countUserBasicInfoPoint(userId);
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+	
+	
+	
 	
 	
 	// showProfileTrainer_Admin() ModelAndView 트레이너 프로필 보기

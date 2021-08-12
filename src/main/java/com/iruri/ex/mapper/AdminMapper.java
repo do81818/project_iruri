@@ -70,11 +70,11 @@ public interface AdminMapper {
 	// 일반/유료회원 현재 보유포인트
 	Integer getUserBasicInfoPointTotal(int userId);
 
-	// 일반/유료회원정보 운동정보보기 _all
-	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
+	// 일반/유료회원정보 운동정보리스트 보기
+	List<TableJoinVO> getUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId, @Param("pageNum") int pageNum, @Param("amount") int amount);
 	
-	// 일반/유료회원 운동정보 갯수
-	Integer countUserExInfoAll();
+	// 일반/유료회원 운동정보 리스트 갯수
+	Integer countUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId);
 	
 	// 트레이너정보_수익관리 리스트
 	List<TableJoinVO> getTrainerMoneyList(@Param("userId") int userId, @Param("month") int month, @Param("pageNum") int pageNum, @Param("amount") int amount);
@@ -93,5 +93,5 @@ public interface AdminMapper {
     
     // 탈퇴회원으로 전환
     void updateWithdrawMember(@Param("userId") int userId);
-	
+
 }

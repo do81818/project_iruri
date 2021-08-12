@@ -189,12 +189,22 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+
     // 일반/유료회원정보 운동정보 리스트보기 _all
     @Override
-    public List<PointVO> getUserExInfoAll(int userId, Criteria cri) {
-        return mapper.getUserExInfoAll(userId, cri);
+    public List<TableJoinVO> getUserExInfoList(int userId, int categoryId, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        return mapper.getUserExInfoList(userId, categoryId, pageNum, amount);
     }
 
+    // 일반/유료회원 운동정보 리스트 갯수
+    @Override
+    public Integer countUserExInfoList(int userId, int categoryId) {
+        return mapper.countUserExInfoList(userId, categoryId);
+    }
+    
+    
     // 트레이너정보_수익관리 리스트
     @Override
     public List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri){

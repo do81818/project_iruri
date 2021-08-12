@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
-import com.iruri.ex.vo.AuthVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.PointVO;
 import com.iruri.ex.vo.ReportVO;
@@ -68,8 +67,11 @@ public interface AdminService {
 	// 일반/유료회원 현재 보유포인트
 	int getUserBasicInfoPointTotal(int userId);
 
-	// 일반/유료회원정보 운동정보 리스트보기 _all
-	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
+	// 일반/유료회원정보 운동정보리스트 보기
+    List<TableJoinVO> getUserExInfoList(int userId, int categoryId, Criteria cri);
+    
+    // 일반/유료회원 운동정보 리스트 갯수
+    Integer countUserExInfoList(int userId, int categoryId);
 	
 	// 트레이너정보_수익관리 리스트
 	List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri1);

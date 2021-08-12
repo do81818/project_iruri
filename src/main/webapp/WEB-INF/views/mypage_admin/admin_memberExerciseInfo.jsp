@@ -33,15 +33,15 @@
 
 	<div class="wrap">
 		<div class="admin_memberInfo_title">
-			<a href="#" onclick="history.back(-1)"><img
+			<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
 				src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
 			<h3>회원정보</h3>
 		</div>
 		<div id="admin_managementMenu">
 			<ul>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/info">기본정보<br>
+				<li><a href="${CONTEXT_PATH_ADMIN }/member/info?userId=${userId}&pageNum=${page}">기본정보<br>
 					<span></span></a></li>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo">운동정보<br>
+				<li><a href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${userId}&pageNum=${page}">운동정보<br>
 					<span class="under_line"></span></a></li>
 			</ul>
 		</div>
