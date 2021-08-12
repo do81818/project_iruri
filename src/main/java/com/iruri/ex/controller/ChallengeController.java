@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,17 +52,20 @@ public class ChallengeController {
     
     /*----------챌린지 메인-----------*/
     // 챌린지 메인
+
     @GetMapping("/iruri/challengeList")
-    public ModelAndView c_main(ModelAndView mav) {
+    public ModelAndView c_main(ModelAndView mav, IClassVO iClassVO, @CurrentUser IUserVO vo) {
         
         mav.setViewName("challenge/challenge_main2");
-        // mav.addObject(null, mav);
+        
+        //추천 챌린지
+        List<IClassVO> recommendList = challengeService.getChallengeRecommendInfo(iClassVO.getClassId());
+        mav.addObject("recommendList", recommendList);
         
         return mav;
     }
     
 
-    
     //챌린지 메인 페이징 처리(ajax)
     @ResponseBody
     @GetMapping("/ajax/challengeList")
@@ -92,9 +96,13 @@ public class ChallengeController {
 
     // 챌린지 메인 - 지난 챌린지
     @GetMapping("/iruri/challengeEndList")
-    public ModelAndView challengeEndList(ModelAndView mav) {
+    public ModelAndView challengeEndList(ModelAndView mav, IClassVO iClassVO, @CurrentUser IUserVO vo) {
         
         mav.setViewName("challenge/challenge_endList");
+        
+        //추천 챌린지
+        List<IClassVO> recommendList = challengeService.getChallengeRecommendInfo(iClassVO.getClassId());
+        mav.addObject("recommendList", recommendList);
         
         return mav;
     }
@@ -128,9 +136,13 @@ public class ChallengeController {
 
     // 챌린지 메인 - 관심 챌린지
     @GetMapping("/iruri/challengeLikeList")
-    public ModelAndView challengeLikeList(ModelAndView mav) {
+    public ModelAndView challengeLikeList(ModelAndView mav, IClassVO iClassVO, @CurrentUser IUserVO vo) {
        
         mav.setViewName("challenge/challenge_LikeList");
+        
+        //추천 챌린지
+        List<IClassVO> recommendList = challengeService.getChallengeRecommendInfo(iClassVO.getClassId());
+        mav.addObject("recommendList", recommendList);
         
         return mav;
     }
@@ -311,9 +323,10 @@ public class ChallengeController {
     @GetMapping("/ajax/certifyImgList")
     public ResponseEntity<HashMap<String, Object>> certify_img_list(@RequestParam("pageNum") int pageNum,
             @RequestParam("classId") int classId){
+        
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 8);
-        log.info(classId);
+        
         int total = challengeService.getTotal_challengeImg(cri, classId);
         result.put("pageMaker", new PageVO(cri, total));
         result.put("imgList", challengeService.challengeImgList(cri, classId));
@@ -412,6 +425,17 @@ public class ChallengeController {
             } 
     }
     
+    //인증글 삭제
+    @ResponseBody
+    @GetMapping("/ajax/deleteCertifyImgList")
+    public String deleteChallengeCertify(@RequestParam("boardId") int boardId, @CurrentUser IUserVO vo) {
+        log.info("delete Certify Img List()..");
+        
+        challengeService.deleteChallengeCertify(boardId, vo.getUserId());
+        
+        return "success";
+
+    }
     
     
     //댓글 작성
@@ -429,8 +453,33 @@ public class ChallengeController {
         return "success";
     }
  
+    //댓글 수정
+    @ResponseBody
+    @PostMapping("/ajax/modifyReply")
+    public String modifyReply(BoardVO boardVO, @CurrentUser IUserVO vo) {
+        log.info("modifyReply()..");
+        
+        boardVO.setIUserVO(vo);
+        challengeService.modifyChallengeReply(boardVO);
+        
+        return "success";
+
+    }
     
-    //댓글부분
+    //댓글 삭제
+    @ResponseBody
+    @GetMapping("/ajax/deleteReply")
+    public String deleteReply(@RequestParam("boardId") int boardId, @CurrentUser IUserVO vo) {
+        log.info("deleteReply()..");
+        
+        challengeService.deleteChallengeReply(boardId, vo.getUserId());
+        
+        return "success";
+
+    }
+    
+    
+    //댓글 리스트
     @ResponseBody
     @GetMapping("/ajax/c_detail_after_reply")
     public ResponseEntity<HashMap<String, Object>> challenge_after_before(@RequestParam("pageNum") int pageNum, 
