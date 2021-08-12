@@ -88,11 +88,11 @@ public class MypageAdminController {
 
 	// showMemberBlackList_Admin() ModelAndView 관리자 블랙리스트유저 목록 보기
 	@GetMapping("member/blacklist")
-	public ModelAndView showMemberBlackList_Admin(ModelAndView mav) {
+	public ModelAndView showMemberBlackList_Admin(ModelAndView mav, int pageNum) {
 		log.info("showMemberBlackList_Admin()...");
 		mav.setViewName("mypage_admin/mypage_admin_memberBlackList");
+		mav.addObject("page", pageNum);
 		return mav;
-
 	}
 
 	@ResponseBody
@@ -184,21 +184,23 @@ public class MypageAdminController {
 	
 	// showMemberDetail_Admin() ModelAndView 관리자 유저기본정보 상세보기
 	@GetMapping("member/info")
-	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId, int pageNum) {
+	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId, @RequestParam("member") String member, int pageNum) {
 		log.info("showMemberDetail_Admin()...");
 		mav.setViewName("mypage_admin/admin_memberInfo");
 		mav.addObject("info", adminService.getUserBasicInfo(userId));
 		int totalPoint = adminService.getUserBasicInfoPointTotal(userId);
 		DecimalFormat formatter = new DecimalFormat("###,###");
+		mav.addObject("member", member);
 		mav.addObject("point", formatter.format(totalPoint));
 		mav.addObject("page", pageNum);
 		log.info(mav);
 		return mav;
 	}
-
+	
+	
 	//  유저기본정보 상세보기 _ 포인트리스트
 	@ResponseBody
-	@GetMapping("ajax/member/info")
+	@GetMapping({"ajax/member/info","ajax/member/blacklist/info"})
 	public ResponseEntity<HashMap<String, Object>> restMemberDetail(@RequestParam("userId") int userId, @RequestParam("pageNum") int pageNum) {
 	    log.info(userId);
 		HashMap<String, Object> result = new HashMap<>();

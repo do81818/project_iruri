@@ -103,14 +103,14 @@
  						htmls += '<tr>';
 						htmls += '<td colspan="5" class="table_No_date">'
 								+ '등록된 일반/유료회원이 없습니다.' + '</td>';
-						+'등록된 회원이 없습니다.' + '</td>';
 						htmls += '</tr>'
 					} else {
 						$(list).each(
 							function() {
-								htmls += '<tr class="list_impact" onclick="link('
-										+ this.iuserVo.userId + ','	+ page
-										+ ')">';
+								const member = 'member';
+								htmls += '<tr class="list_impact" onclick=\"link(\''
+									+ this.iuserVo.userId +'\',\''+ member +'\',\''+ page
+									+ '\')\">';
 								htmls += '<td class="table_No_date">'
 										+ this.iuserVo.userId
 										+ '</td>';
@@ -176,8 +176,8 @@
 			getlist(${page});
 		});
 		
-		function link(id, page){
-			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&pageNum=" + page;
+		function link(id, member, page){
+			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&member=" + member + "&pageNum=" + page;
 		}
 		
 		

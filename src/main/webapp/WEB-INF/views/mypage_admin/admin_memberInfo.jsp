@@ -36,18 +36,28 @@
 
 	<div class="wrap">
 		<div class="admin_memberInfo_title">
-			<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
-				src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+		<c:set var="member" value="${member}" />
+		<c:choose>
+		<%-- console.log(${member })); --%>
+			<c:when test="${member eq 'member'}">
+				<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
+					src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+			</c:when>
+			<c:when test="${member eq 'black'}">
+				<a href="${CONTEXT_PATH_ADMIN }/member/blacklist?pageNum=${page}"><img
+					src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+			</c:when>
+		</c:choose>
 			<h3>회원정보</h3>
 		</div>
 
 		<div id="admin_managementMenu">
 			<ul>
 				<li><a
-					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}&pageNum=${page}">기본정보<br>
+					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">기본정보<br>
 						<span class="under_line"></span></a></li>
 				<li><a
-					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}&pageNum=${page}">운동정보<br>
+					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">운동정보<br>
 						<span></span></a></li>
 			</ul>
 		</div>

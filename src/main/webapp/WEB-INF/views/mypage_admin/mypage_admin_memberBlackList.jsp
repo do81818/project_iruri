@@ -58,7 +58,7 @@
 				<label for="tap1">신고알림</label> 
 			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list?pageNum=1'">
 				<label for="tap2">전체회원</label> 
-			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'" checked> 
+			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist?pageNum=1'" checked> 
 				<label for="tap3">블랙리스트</label>
 		</div>
 
@@ -107,12 +107,13 @@
     					} else {
     						$(list).each(
     							function() {
-    								var url = "${CONTEXT_PATH_ADMIN}/member/info";
-    								
-    								htmls += '<tr class="list_impact">';
-    								htmls += '<td class="table_No_date">'
-    										+ this.iuserVo.userId
-    										+ '</td>';
+    								const member = 'black';
+    								htmls += '<tr class="list_impact" onclick=\"link(\''
+										+ this.iuserVo.userId +'\',\''+ member +'\',\''+ page
+										+ '\')\">';
+									htmls += '<td class="table_No_date">'
+										+ this.iuserVo.userId
+										+ '</td>';
 
     								htmls += '<td class="table_indigo_text">';
     								if (this.authVo.authContent == "ROLE_USER") {
@@ -170,8 +171,13 @@
             }
 
             $(document).ready(function() {
-                getlist(1);
-            });
+    			getlist(${page});
+    		});
+    		
+    		function link(id, member, page){
+    			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&member=" + member + "&pageNum=" + page;
+    		}
+    		
         </script>
         
 
