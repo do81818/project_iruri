@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.MypageTrainerService;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.ICommentVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.ProfitVO;
 import com.iruri.ex.vo.trainerUserManagementVO;
@@ -216,6 +218,18 @@ public class MypageTrainerController {
         result.put("pageMaker", new PageVO(cri, total));
         
         return ResponseEntity.ok(result);
+    }
+    
+    @ResponseBody
+    @GetMapping("/insertComment")
+    public ResponseEntity<HashMap<String, Object>> insertComment(@Param("userId") int userId, @Param("classId") int classId, @Param("commentContent") String commentContent) {
+       log.info("insertComment()");   
+       
+       HashMap<String, Object> result = new HashMap<>();
+       mypageTrainerService.insertComment(userId, classId, commentContent);
+       result.put("commentList", mypageTrainerService.ClassBuyUserCommentList(userId,classId));
+       
+       return ResponseEntity.ok(result);
     }
     /*
      * @ResponseBody

@@ -316,6 +316,24 @@ order by icomment.comment_id
 	</select>
 	
 	
+	<insert id="insertComment">
+	<![CDATA[
+		INSERT INTO icomment (
+    comment_id,
+    comment_date,
+    comment_content,
+    user_id,
+    class_id
+) VALUES (
+    (select max(comment_id) from icomment)+1,
+    sysdate,
+    #{commentContent},
+    #{userId},
+    #{classId}
+)
+	]]>
+	</insert>
+	
 	
 
 

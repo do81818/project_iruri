@@ -42,6 +42,8 @@ public interface MypageTrainerService {
     
     // 해당 클래스의 특정 유저에 대한 코멘트 리스트
     List<ICommentVO> ClassBuyUserCommentList(int userId, int classId);
+
+    void insertComment(@Param("userId") int userId, @Param("classId") int classId, @Param("commentContent") String commentContent);
     
   
 }

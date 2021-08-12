@@ -85,5 +85,10 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
         return mypageTrainerMapper.ClassBuyUserCommentList(userId, classId);
     }
 
- 
+    @Override
+    public void insertComment(int userId, int classId, String commentContent) {
+        mypageTrainerMapper.insertComment(userId, classId, commentContent);
+    }
+
+    
 }

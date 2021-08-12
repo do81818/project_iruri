@@ -110,14 +110,16 @@
 					htmls += '</td>';
 					/* 코멘트입력 칸 */
 					htmls += '<td class="td_box2">';
-					htmls += '<form class="reply_insertBox" action="">';
+					htmls += '<form class="reply_insertBox" id="insert_'
+						+ this.classId
+						+ '">';
 					htmls += '<table>';
 					htmls += ' <tr>';
 					htmls += '<td class="reply_textarea">';
-					htmls += '<textarea placeholder="회원의 닉네임을 선택 후 작성하세요"></textarea>';
+					htmls += '<textarea placeholder="회원의 닉네임을 선택 후 작성하세요" name="commentContent"></textarea>';
 					htmls += '</td>';
 					htmls += '<td class="reply_insertButton">';
-					htmls += '<button>입력</button>';
+					htmls += '<button type="button">입력</button>';
 					htmls += '</td>';
 					htmls += '</tr>';
 					htmls += '</table>';
@@ -177,14 +179,87 @@
 
 <script>
 
-$(document).ready(function(){
+$(document).ready(function() {
 
-commentLink = function(userId,classId) {
-/* 	alert(userId,classId); */
+	commentLink = function(userId,classId) {
+	/* 	alert(userId,classId); */
 	console.log('commentLink');
 	managementComment(userId,classId);
 	
+	// 코멘트 작성자 선택
+	userChoice(userId, classId);
+	
 }
+	/* insertUserComment = function(userId, classId, commentContent){
+		console.log('insertUserComment');
+		insertComment(userId, classId, commentContent);
+	} */
+})
+
+
+function userChoice(userId, classId){
+	console.log('userChoice..');
+	var htmls= '';
+	htmls += '<table>';
+	htmls += ' <tr>';
+	htmls += '<td class="reply_textarea">';
+	htmls += '<input type="hidden" id="insert_classId_'
+	      + classId 
+	      + '" name="classId" value="'
+	      + classId 
+	      + '">';
+	htmls += '<input type="hidden" id="insert_userId'+ classId +'"name="userId" value="'+ userId + '">';
+	htmls += '<textarea id="insert_comment_'+ classId +'" placeholder="회원의 닉네임을 선택 후 작성하세요" name="commentContent"></textarea>';
+	htmls += '</td>';
+	
+	var id1 = 'insert_classId_'+ classId;
+	var id2 = 'insert_userId'+ classId;
+	var id3 = 'insert_comment_'+ classId;
+	
+	htmls += '<td class="reply_insertButton">';
+	htmls += '<button type="button" onclick="insertUserComment('+ id1 +','+ id2 +','+ id3 +')">입력</button>';
+	htmls += '</td>';
+	htmls += '</tr>';
+	htmls += '</table>';
+		
+	$('.reply_insertBox').html(htmls);
+}
+
+function insertUserComment(classId, userId, commentId) {
+	
+	console.log("클래스:"+classId);
+	console.log("유저:"+userId);
+	console.log("코멘트:"+commentId);
+	
+	/* var classId = $('#').val(); */
+	var userId = $('input[name="userId"]').val();
+	var commentContent = $('textarea[name="commentContent"]').val();
+	
+	console.log(classId);
+	console.log(userId);
+	console.log(commentContent);
+	
+	console.log('insertComment');
+	
+	$.ajax({
+				url : 'http://localhost:8282/ex/insertComment.json',
+		type : 'GET',
+		cache : false,
+		dataType : 'json',
+		data:{
+			userId : userId,
+			classId: classId,
+			commentContent: commentContent,
+		},
+		success : function(result){
+			console.log("성공!");
+			$('textarea[name="commentContent"]').empty();
+			managementComment(userId,classId);
+		}
+	
+    });
+}
+
 
 function managementComment(userId,classId) {
 	console.log('umanagementComment');
@@ -224,8 +299,6 @@ function managementComment(userId,classId) {
 					      + '</p>';
 					htmls3 += '</td>';
 					htmls3 += '</tr>';
-					
-					
 				});
 			}
 			
@@ -234,8 +307,9 @@ function managementComment(userId,classId) {
 		}
 	});
 }
-})
+
 </script>
+
 </head>
 
 <body>
