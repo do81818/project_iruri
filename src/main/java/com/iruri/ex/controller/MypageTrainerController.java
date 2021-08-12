@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,23 +41,19 @@ public class MypageTrainerController {
     @RequestMapping("/mypage/trainer")
     public String mypageT(@CurrentUser IUserVO vo, Model model) {
         log.info("main() ... ");
-        // 제일 부모 : SecurityContextHolder
-        // 제일 자식: Principal
-
-        // 1. principal 객체에 있는 email을 받아서 서비스단으로 보낸다 -> getName = 로그인한 이메일
-        // 2. 서비스에서 함수 만들기 selectOne
-        // IUserVO vo = iUserService.selectOne(principal.getName());
-        // 10. serviceImpl에서 리턴한 객체를 이름을 지어("user") 모델에 담는다.
-        // -> 리턴한 뷰에서 모델을 인식할 수 있다.
+      
         model.addAttribute("user", vo);
-
-        /*
-         * List<IClassVO> classList = iClassService.classList(vo.getUserId()); //
-         * model.addAttribute("classList", classList);
-         * 
-         * log.info(classList.get(0).getExerciseKindList().size());
-         * 
-         */
+        int userId = vo.getUserId();
+        //트레이너의 운영중인 클래스
+        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
+        
+        // 트레이너 총수익
+        int trainerProfit = mypageTrainerService.trainerProfit(userId);
+        int trainerProfitMan = trainerProfit/10000;
+        
+        model.addAttribute("trainerProfitMan", trainerProfitMan);
+      
         return "mypage_trainer/mypage_trainer_main";
     }
 
@@ -132,6 +129,7 @@ public class MypageTrainerController {
         model.addAttribute("user", vo);
         int userId = vo.getUserId();
         
+        //트레이너의 운영중인 클래스
         int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
         model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
         
@@ -184,16 +182,20 @@ public class MypageTrainerController {
         model.addAttribute("user", vo);
         
         int userId = vo.getUserId();
+        //트레이너의 운영중인 클래스
+        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
         
-       // List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(userId);
-   
-      //  model.addAttribute("trainerUserManagement", trainerUserManagement);
+        // 트레이너 총수익
+        int trainerProfit = mypageTrainerService.trainerProfit(userId);
+        int trainerProfitMan = trainerProfit/10000;
+        model.addAttribute("trainerProfitMan", trainerProfitMan);
         
         return "mypage_trainer/mypage_trainer_user_management";
     }
     
     
-    // 회원관리 ajax
+    // 회원관리 ajax- 클래스 리스트와 등록한 유저 리스트 출력
     @ResponseBody
     @GetMapping("/ajax/mypage/userManagement")
     public ResponseEntity<HashMap<String, Object>> userManagementAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
@@ -203,21 +205,62 @@ public class MypageTrainerController {
         HashMap<String, Object> result = new HashMap<>();
         
         int userId = vo.getUserId();
-        int total = mypageTrainerService.getTotal_trainerUserManagement(cri, userId);
+        int total = mypageTrainerService.countPagingClassList(cri, userId);
         
-        List<trainerUserManagementVO> trainerUserManagement = mypageTrainerService.trainerUserManagement(cri, userId);
-       
-        result.put("trainerUserManagement", trainerUserManagement);
+        // 트레이너 개설 클래스 리스트
+        result.put("list", mypageTrainerService.pagingTrainerClassList(cri, userId));
         
-        log.info("oo"+trainerUserManagement);
+        // 클래스에 등록한 유저 정보 리스트
+        result.put("userInfo", mypageTrainerService.ClassBuyUserList());
         
         result.put("pageMaker", new PageVO(cri, total));
         
-        List<trainerUserManagementVO> list2 = mypageTrainerService.trainerUserManagementList2(vo.getUserId());
-        result.put("list2", list2);
         return ResponseEntity.ok(result);
     }
+    /*
+     * @ResponseBody
+     * 
+     * @GetMapping("/ajax/mypage/userManagement") public
+     * ResponseEntity<HashMap<String, Object>> userManagementAjax(@CurrentUser
+     * IUserVO vo, @RequestParam("pageNum") int pageNum) {
+     * log.info("userManagementAjax() ... ");
+     * 
+     * Criteria cri = new Criteria(pageNum, 3); HashMap<String, Object> result = new
+     * HashMap<>();
+     * 
+     * int userId = vo.getUserId(); int total =
+     * mypageTrainerService.getTotal_trainerUserManagement(cri, userId);
+     * 
+     * List<trainerUserManagementVO> trainerUserManagement =
+     * mypageTrainerService.trainerUserManagement(cri, userId);
+     * List<trainerUserManagementVO> list2 =
+     * mypageTrainerService.trainerUserManagementList2(userId);
+     * List<trainerUserManagementVO> commentList =
+     * mypageTrainerService.commentList(userId);
+     * 
+     * result.put("trainerUserManagement", trainerUserManagement);
+     * result.put("pageMaker", new PageVO(cri, total)); result.put("list2", list2);
+     * result.put("commentList", commentList);
+     * 
+     * return ResponseEntity.ok(result); }
+     */
     
+    // 회원관리 ajax- 코멘트 리스트
+    @ResponseBody
+    @GetMapping("/ajax/mypage/userManagement/comment")
+    public ResponseEntity<HashMap<String, Object>> userManagementCommentAjax(@CurrentUser IUserVO vo, @Param("userId") int userIdInput, @Param("classId") int classId) {
+        log.info("userManagementAjax() ... ");
+        
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+        
+        // 트레이너 개설 클래스 리스트
+        result.put("commentList", mypageTrainerService.ClassBuyUserCommentList(userIdInput,classId));
+        
+        return ResponseEntity.ok(result);
+    }
    
+    
     
 }

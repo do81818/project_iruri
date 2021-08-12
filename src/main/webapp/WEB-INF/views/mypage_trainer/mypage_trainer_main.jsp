@@ -204,13 +204,6 @@
 		<%@ include file="../include/headerTemplate.jsp"%>
 		<!-- 경로를 확인해 주세요 -->
 
-<!--         
-		// 4.EmpUser 꺼내오기
-        EmpUser empUser = (EmpUser) auth.getPrincipal();
-        System.out.println(empUser.getEmp());
-        empUser = (EmpUser) userDetails;
-        System.out.println(empUser.getEmp());
-         -->
 		<main>
 			<!-- 콘텐츠를 넣어주세요 -->
 			<div class="container content">
@@ -233,13 +226,13 @@
 
 					<div id="challenge">
 						운영중인 클래스
-						<div class="count">10</div>
+						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
 					<div id="buy">
 						수익금
 						<div class="count">
-							200
+							${trainerProfitMan}
 							<div class="buy_text">만원</div>
 						</div>
 					</div>
