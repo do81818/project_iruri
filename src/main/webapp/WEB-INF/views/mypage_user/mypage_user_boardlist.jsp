@@ -35,22 +35,22 @@
 		</c:if>
 		<br>${user.userEmail}</div>
           </div>
-        <div id = "m_userboard_box">
-          <div id="m_userboard"><a href=".">작성글</a></div>
-          <div id ="m_userboard_number">${boardcount}</div>
-        </div>
-        <div id = "m_userpoint_box">
-          <div id="m_userpoint"><a href=".">보유포인트</a></div>
-          <div id ="m_userpoint_number">${totalpoint}</div>
-        </div>
-        <div id = "m_userchanllenge_box">
-          <div id="m_userchanllenge"><a href=".">참여중인챌린지</a></div>
-          <div id="m_userchanllenge_number">${userchallengecount}</div>
-        </div>
-        <div id = "m_userclass_box">
-          <div id="m_userclass"><a href=".">참여중인클래스</a></div>
-          <div id="m_userclass_number">${userclasscount}</div>
-        </div>
+      <div id = "m_userboard_box">
+        <div id="m_userboard"><a href="/ex/mypage/boardlist">작성글</a></div>
+        <div id ="m_userboard_number">${boardcount}</div>
+      </div>
+      <div id = "m_userpoint_box">
+        <div id="m_userpoint"><a href="/ex/mypage/pointlist">보유포인트</a></div>
+        <div id ="m_userpoint_number">${totalpoint}</div>
+      </div>
+      <div id = "m_userchanllenge_box">
+        <div id="m_userchanllenge"><a href="/ex/mypage/challengelist">참여중인챌린지</a></div>
+        <div id="m_userchanllenge_number">${userchallengecount}</div>
+      </div>
+      <div id = "m_userclass_box">
+        <div id="m_userclass"><a href="/ex/mypage/classlist">참여중인클래스</a></div>
+        <div id="m_userclass_number">${userclasscount} </div>
+      </div>
       </div>
        
      

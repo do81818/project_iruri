@@ -152,5 +152,10 @@ public void class_delete_update(int userId, int classId) {
 	userchallengeMapper.class_delete_update(userId, classId);
 }
 
+// 캘린더
+@Override
+public List<IClassVO> getCalendar(int userId) {
+	return userchallengeMapper.getCalendar(userId);
+}
 
 }
