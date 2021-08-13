@@ -37,11 +37,11 @@ public interface AdminMapper {
 	Integer countNormalBlackMember();
 
 	// 트레이너회원 리스트
-	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+	List<TableJoinVO> getTrainerMemberList(@Param("keyword") String keyword, @Param("pageNum") int pageNum, @Param("amount") int amount);
 //	List<IUserVO> getTrainerMemberList3(Criteria cri);
 
 	// 트레이너회원 리스트 갯수
-	Integer countTrainerMemberList();
+	Integer countTrainerMemberList(@Param("keyword") String keyword);
 
 	// 트레이너 별 등급(평점)
 	String getTrainerGrade(int userId);

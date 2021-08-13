@@ -53,8 +53,7 @@
 
 		<div id="admin_managementMenu">
 			<ul>
-				<li><a
-					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">기본정보<br>
+				<li><a href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">기본정보<br>
 						<span class="under_line"></span></a></li>
 				<li><a
 					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">운동정보<br>

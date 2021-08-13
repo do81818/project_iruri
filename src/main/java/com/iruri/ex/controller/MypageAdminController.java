@@ -118,12 +118,12 @@ public class MypageAdminController {
 
 	@ResponseBody
 	@GetMapping("ajax/trainer/list")
-	public ResponseEntity<HashMap<String, Object>> restTrainerList(@RequestParam("pageNum") int pageNum) {
+	public ResponseEntity<HashMap<String, Object>> restTrainerList(@RequestParam("keyword") String keyword, @RequestParam("pageNum") int pageNum) {
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
-		int total = adminService.countTrainerMemberList();
+		int total = adminService.countTrainerMemberList(keyword);
 		result.put("pageMaker", new PageVO(cri, total));
-		result.put("list", adminService.getTrainerMemberList(cri));
+		result.put("list", adminService.getTrainerMemberList(keyword,cri));
 		log.info(result);
 		return ResponseEntity.ok(result);
 	}
@@ -185,6 +185,7 @@ public class MypageAdminController {
 	// showMemberDetail_Admin() ModelAndView 관리자 유저기본정보 상세보기
 	@GetMapping("member/info")
 	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId, @RequestParam("member") String member, int pageNum) {
+	    log.info(member);
 		log.info("showMemberDetail_Admin()...");
 		mav.setViewName("mypage_admin/admin_memberInfo");
 		mav.addObject("info", adminService.getUserBasicInfo(userId));
@@ -215,31 +216,43 @@ public class MypageAdminController {
 	
 	// showMemberDetailExercise_Admin() ModelAndView 관리자 유저운동정보 상세보기
 	@GetMapping("member/exerciseinfo")
-	public ModelAndView showMemberDetailExercise_Admin(ModelAndView mav, @RequestParam("userId") int userId, int pageNum) {
+	public ModelAndView showMemberExerciseList_Admin(ModelAndView mav, @RequestParam("userId") int userId, @RequestParam("member") String member, @RequestParam("pageNum") int pageNum) {
 	    
 	        log.info("showMemberDetailExercise_Admin()...");
 	        mav.setViewName("mypage_admin/admin_memberExerciseInfo");
 	        mav.addObject("userId", userId);
+	        mav.addObject("member", member);
 	        mav.addObject("page", pageNum);
 	        log.info(mav);
 	        return mav;
 	    
 	}
 	
-
+	// 유저운동정보 리스트
     @ResponseBody
     @GetMapping("ajax/member/exerciseinfo")
-    public ResponseEntity<HashMap<String, Object>> restShowMemberDetailExercise(@RequestParam("userId") int userId, @RequestParam("categoryId") int categoryId, @RequestParam("pageNum") int pageNum) {
+    public ResponseEntity<HashMap<String, Object>> restShowMemberExerciseList(@RequestParam("userId") int userId, @RequestParam("categoryId") int categoryId, @RequestParam("pageNum") int pageNum) {
         log.info(userId);
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 10);
-        int total = adminService.countUserBasicInfoPoint(userId);
+        int total = adminService.countUserExInfoList(userId, categoryId);
         result.put("pageMaker", new PageVO(cri, total));
-        result.put("pointlist", adminService.getUserBasicInfoPoint(userId, cri));
+        result.put("exList", adminService.getUserExInfoList(userId, categoryId, cri));
         log.info(result);
         return ResponseEntity.ok(result);
     }
 	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
 	
 	

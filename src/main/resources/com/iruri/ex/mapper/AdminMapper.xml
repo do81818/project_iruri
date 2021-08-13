@@ -134,7 +134,7 @@
 		where r.board_id = c.board_id order by report_id desc
 		]]>
 	</select>
-
+	
 	<!-- 2.페이징처리 리스트 -->
 	<select id="getReportListWithPaging"
 		resultMap="reportIuserAuthJoinMap">
@@ -155,16 +155,14 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 3.리스트 갯수 -->
 	<select id="countReportId" resultType="Integer">
 		<![CDATA[
 		select count(REPORT_ID) from report
 		]]>
 	</select>
-
-
-
+	
 	<!-- 일반/유료회원 리스트 -->
 	<select id="getNormalUserList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -181,7 +179,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 일반/유료회원 리스트 갯수 -->
 	<select id="countNormalMember" resultType="Integer">
 		<![CDATA[
@@ -193,9 +191,7 @@
 		    ) li
 		]]>
 	</select>
-
-
-
+	
 	<!-- 일반/유료회원 블랙리스트 -->
 	<select id="getNormalUserBlackList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -212,7 +208,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 일반/유료회원 블랙리스트 갯수 -->
 	<select id="countNormalBlackMember" resultType="Integer">
 		<![CDATA[
@@ -224,10 +220,8 @@
 		    ) li
 		]]>
 	</select>
-
-
-
-
+	
+	
 	<!-- 트레이너 회원 리스트 -->
 	<select id="getTrainerMemberList" resultMap="iuserAuthJoinMap">
 		<![CDATA[  
@@ -235,72 +229,60 @@
 		from (
 		select rownum rn, li.*
 		from (
-			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
+			select * from(
+			select u.user_id, u.user_nickname, u.user_email, a.auth_content, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
-			]]>
-			
-			<if test="keyword != null">
-				where u.user_nickname like '%#{keyword}%' or u.user_email like '%#{keyword}'	
-			</if>
-			
-			<![CDATA[
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
 			left outer join iclass c
 			on u.user_id = c.user_id
 			left outer join grade g
 			on c.class_id = g.class_id
-			group by u.user_id, a.auth_content, u.user_nickname, u.user_email
-			order by u.user_id desc
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email) tr
+		]]>
+			<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_nickname like '%' || #{keyword} || '%' or tr.user_email like '%' || #{keyword} ||'%'
+			]]>	
+			</if>
+			
+		<![CDATA[  	
+			order by tr.user_id desc
 		) li
 		where rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
-
-	<!-- 트레이너 회원 리스트 -->
-	<!-- <select id="getTrainerMemberList2" resultMap="iUserMap"> <![CDATA[ 
-		select * from ( select rownum rn, li.* from ( select u.user_id, u.user_email, 
-		u.user_pw, u.user_nickname, u.user_name, user_signdate, u.user_blacklist, 
-		u.user_blacklist_reason, u.user_phone, a.auth_id, a.auth_content, c.class_id, 
-		g.grade_score from iuser u inner join authority a on u.user_id = a.user_id 
-		and a.auth_id = 3 inner join iclass c on u.user_id = c.user_id inner join 
-		grade g on c.class_id = g.class_id order by u.user_id desc ) li where rownum 
-		<= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} ]]> </select> 
-		<select id="getTrainerMemberList3" resultMap="iUserMap"> <![CDATA[ select 
-		* from ( select rownum rn, li.* from ( select u.user_id, u.user_email, u.user_pw, 
-		u.user_nickname, u.user_name, user_signdate, u.user_blacklist, u.user_blacklist_reason, 
-		u.user_phone, a.auth_id, a.auth_content from iuser u inner join authority 
-		a on u.user_id = a.user_id and a.auth_id = 3 order by u.user_id desc ) li 
-		where rownum <= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} 
-		]]> </select> -->
-
-
+	
 	<!-- 트레이너회원 리스트 갯수 -->
 	<select id="countTrainerMemberList" resultType="Integer">
 		<![CDATA[
 		select count(li.user_id)
 		from(
-			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
-			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content
-			]]>
-			
-			<if test="keyword != null">
-				where u.user_nickname like '%#{keyword}%' or u.user_email like '%#{keyword}'	
+			select * from(
+			select u.user_id, u.user_nickname, u.user_email, a.auth_content, (avg(g.grade_score)+u.user_id) as grade
+			from iuser u
+			inner join authority a
+			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
+			left outer join iclass c
+			on u.user_id = c.user_id
+			left outer join grade g
+			on c.class_id = g.class_id
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email) tr
+		]]>
+			<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_nickname like '%' || #{keyword} || '%' or tr.user_email like '%' || #{keyword} ||'%'
+			]]>	
 			</if>
 			
-			<![CDATA[
-			inner join authority a
-			on u.user_id = a.user_id and a.auth_id = 3
-			order by u.user_id desc
+		<![CDATA[  	
+			order by tr.user_id desc
 		) li
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 회원 블랙리스트 -->
 	<select id="getTrainerBlackList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -324,8 +306,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 회원 블랙리스트 갯수 -->
 	<select id="countTrainerBlackList" resultType="Integer">
 		<![CDATA[
@@ -344,8 +325,7 @@
 		) li
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 등록 -->
 	<insert id="trainerRegistInsert"
 		parameterType="com.iruri.ex.vo.IUserVO">
@@ -360,7 +340,7 @@
 		default, default, default
 		)
 	</insert>
-
+	
 	<!-- 트레이너 등록 후 권한 변경 -->
 	<update id="trainerAuthUpdate">
 		UPDATE authority SET auth_id = '3', auth_content =
@@ -378,7 +358,7 @@
 			on u.user_id = a.user_id where a.user_id = #{userId}
 		]]>
 	</select>
-
+	
 	<!-- 일반회원정보 포인트리스트 보기 -->
 	<select id="getUserBasicInfoPoint" resultMap="pointMap">
 		<![CDATA[
@@ -432,9 +412,9 @@
 						and category.category_id = 2
 					]]> 
 					</when>
-					<when test='categoryId eq 3'>
+					<when test='categoryId eq 1'>
 					<![CDATA[
-						and category.category_id = 3
+						and category.category_id = 1
 					]]> 
 					</when>
 				</choose>
@@ -579,8 +559,4 @@
 	</update>
 	
 	
-	
-	
-	
-
 </mapper>

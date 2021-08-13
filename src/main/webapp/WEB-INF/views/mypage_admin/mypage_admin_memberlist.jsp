@@ -56,7 +56,7 @@
 				<label for="tap1">신고알림</label> 
 			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list?pageNum=1'" checked>
 				<label for="tap2">전체회원</label> 
-			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'">
+			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist?pageNum=1'">
 				<label for="tap3">블랙리스트</label>
 		</div>
 

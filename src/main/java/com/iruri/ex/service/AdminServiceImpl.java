@@ -87,9 +87,12 @@ public class AdminServiceImpl implements AdminService {
 
     // 트레이너회원 리스트
     @Override
-    public List<TableJoinVO> getTrainerMemberList(Criteria cri) {
-        log.info(mapper.getTrainerMemberList(cri));
-        return mapper.getTrainerMemberList(cri);
+    public List<TableJoinVO> getTrainerMemberList(String keyword, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        log.info(mapper.getTrainerMemberList(keyword, pageNum, amount));
+        log.info(keyword);
+        return mapper.getTrainerMemberList(keyword, pageNum, amount);
     }
 //    public List<IUserVO> getTrainerMemberList3(Criteria cri) {
 //        log.info(mapper.getTrainerMemberList3(cri));
@@ -98,9 +101,9 @@ public class AdminServiceImpl implements AdminService {
     
     // 트레이너회원 리스트 갯수
     @Override
-    public int countTrainerMemberList() {
+    public int countTrainerMemberList(String keyword) {
         try {
-            int count = mapper.countTrainerMemberList();
+            int count = mapper.countTrainerMemberList(keyword);
             return count;
         } catch (Exception e) {
             return 0;

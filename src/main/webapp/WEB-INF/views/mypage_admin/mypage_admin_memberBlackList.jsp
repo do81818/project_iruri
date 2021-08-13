@@ -126,7 +126,6 @@
     								htmls += '</td>';
 
     								htmls += '<td class="table_indigo_text">'
-    										+ '<a href="#" target="_blank">'
     										+ this.iuserVo.userNickname
     										+ '</td>';
     								htmls += '<td class="table_blue_text">'
@@ -175,6 +174,9 @@
     		});
     		
     		function link(id, member, page){
+    		    console.log(id);
+    		    console.log(member);
+    		    console.log(page);
     			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&member=" + member + "&pageNum=" + page;
     		}
     		

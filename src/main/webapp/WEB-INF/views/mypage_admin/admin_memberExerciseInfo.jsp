@@ -9,10 +9,11 @@
 	scope="application" />
 <c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources"
 	scope="application" />
-<c:set var="CONTEXT_PATH_ADMIN"	value="${pageContext.request.contextPath}/mypage/admin"
+<c:set var="CONTEXT_PATH_ADMIN"
+	value="${pageContext.request.contextPath}/mypage/admin"
 	scope="application" />
-	
-	
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,61 +34,183 @@
 
 	<div class="wrap">
 		<div class="admin_memberInfo_title">
-			<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
-				src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+			<c:set var="member" value="${member}" />
+			<c:choose>
+				<%-- console.log(${member })); --%>
+				<c:when test="${member eq 'member'}">
+					<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
+						src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+				</c:when>
+				<c:when test="${member eq 'black'}">
+					<a href="${CONTEXT_PATH_ADMIN }/member/blacklist?pageNum=${page}"><img
+						src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+				</c:when>
+			</c:choose>
 			<h3>회원정보</h3>
+
 		</div>
 		<div id="admin_managementMenu">
 			<ul>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/info?userId=${userId}&pageNum=${page}">기본정보<br>
-					<span></span></a></li>
-				<li><a href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${userId}&pageNum=${page}">운동정보<br>
-					<span class="under_line"></span></a></li>
+				<li><a
+					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${userId}&member=${member}&pageNum=${page}">기본정보<br>
+						<span></span></a></li>
+				<li><a
+					href="${CONTEXT_PATH_ADMIN }/member/blacklist?userId=${userId}&member=${member}&pageNum=${page}">운동정보<br>
+						<span class="under_line"></span></a></li>
 			</ul>
 		</div>
-		
+
 		<!---------------------- 운동정보 하위 메뉴 -------------------------->
 		<div id="admin_memberTabMenu">
-			<input type="radio" id="tap1" name="taps" onclick="display_click()"
+			<input type="radio" id="tap1" name="taps" onclick="clickUrl(0)"
 				value="1" checked> <label for="tap1">전체</label> <input
-				type="radio" id="tap2" name="taps" onclick="display_click()"
-				value="2"> <label for="tap2">PT클래스</label> <input
-				type="radio" id="tap3" name="taps" onclick="display_click()"
-				value="3"> <label for="tap3">챌린지</label>
+				type="radio" id="tap2" name="taps" onclick="clickUrl(2)" value="2">
+			<label for="tap2">PT클래스</label> <input type="radio" id="tap3"
+				name="taps" onclick="clickUrl(1)" value="3"> <label
+				for="tap3">챌린지</label>
 		</div>
 
 		<!---------------------- 전체 탭 -------------------------->
-		<div class="list1">
-			<table class="admin_table memberInfo_exerciseTable">
-				<tr>
-					<th>No.</th>
-					<th>진행현황</th>
-					<th>분류</th>
-					<th>챌린지/PT클래스명</th>
-				</tr>
-				<tr>
-					<td class="table_No_date">500</td>
-					<td class="table_blue_text">진행중</td>
-					<td class="table_indigo_text">챌린지</td>
-					<td class="table_blue_text">스쿼트, 런지, 플랭크 30일챌린지, 플랭크 30일챌린지</td>
-				</tr>
-				<tr>
-					<td class="table_No_date">500</td>
-					<td class="table_blue_text">진행중</td>
-					<td class="table_indigo_text">챌린지</td>
-					<td class="table_blue_text">스쿼트, 런지, 플랭크 30일챌린지</td>
-				</tr>
 
-			</table>
-			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-			<div class="page_nation">
-				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
-				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-				<a class="arrow next" href="#"></a>
-			</div>
+		<table class="admin_table memberInfo_exerciseTable">
+			<!-- <tr>
+				<th>No.</th>
+				<th>진행현황</th>
+				<th>분류</th>
+				<th>챌린지/PT클래스명</th>
+			</tr>
+			<tr>
+				<td class="table_No_date">500</td>
+				<td class="table_blue_text">진행중</td>
+				<td class="table_indigo_text">챌린지</td>
+				<td class="table_blue_text">스쿼트, 런지, 플랭크 30일챌린지, 플랭크 30일챌린지</td>
+			</tr>
+			<tr>
+				<td class="table_No_date">500</td>
+				<td class="table_blue_text">진행중</td>
+				<td class="table_indigo_text">챌린지</td>
+				<td class="table_blue_text">스쿼트, 런지, 플랭크 30일챌린지</td>
+			</tr> -->
+
+		</table>
+		<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+		<div class="page_nation">
+			<!-- <a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
+			<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
+			<a class="arrow next" href="#"></a> -->
 		</div>
 
-		<!---------------------- PT클래스 탭 -------------------------->
+
+		<script type="text/javascript">
+            $(document).ready(function() {
+                getlist(1, 0);
+            })
+            
+            function clickUrl(categoryId) {
+                    getlist(1,categoryId);
+            }
+            
+            function getlist(page,categoryId) {
+                $.ajax({
+                    url : '${CONTEXT_PATH_ADMIN}/ajax/member/exerciseinfo',
+    				type : 'GET',
+    				cache : false,
+    				dataType : 'json',
+    				data : {
+    				    userId: ${userId},
+    				    categoryId: categoryId,
+    					pageNum : page,
+    				},
+    				success : function(result) {
+    				    console.log("성공");
+    				    var list = result['exList'];
+    					var pagination = result['pageMaker'];
+    					var htmls = "";
+    					var htmls2 = "";
+    					
+    					htmls += '<tr><th>No.</th><th>진행현황</th><th>분류</th><th>챌린지/PT클래스명</th></tr>';
+    					
+    					if(list.length < 1) {
+    					    htmls += '<tr>'
+    					     	+ '<td colspan="4" class="table_No_date" style="text-align:center; padding:100px;">구매/신청한 운동정보가 없습니다.</td>';
+    					} else {
+							$(list).each(function() {
+							    htmls += '<tr>'
+       						    	+ '<td class="table_No_date">'
+       						    	+ this.iclassVo.classId
+       						    	+ '</td>';
+       						    	
+   						    	if(this.iclassVo.classState == 'show' || this.iclassVo.classState == '진행중') {
+       					    		htmls += '<td class="table_blue_text">'
+	       					    		+ this.iclassVo.classState
+	       					    		+ '</td>';
+       					    	} else {
+       					    	    htmls += '<td class="table_No_date">종료</td>';
+       					    	}
+      						    	
+     						    htmls += '<td class="table_indigo_text">'
+       					    		+ this.categoryVo.categoryName
+       					    		+ '</td>';
+       					    	
+  						    	htmls += '<td class="table_blue_text">'
+       		    					+ this.iclassVo.classTitle
+       		    					+ '</td>';
+       		    						
+    					    });
+    					    
+							/* ---------------------- 페이징 ----------------------- */
+    					    if (pagination['prev']) {
+							htmls2 += '<a class="arrow prev" href="#admin_memberTabMenu" onclick="javascript:getlist('
+									+ (pagination['startPage'] - 1) + ',' + categoryId
+									+ ')"></a>';
+							}
+		
+							// 번호를 표시하는 부분
+							for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+								if (page !== idx) {
+									htmls2 += '<a class="pageNumLink" href="#admin_memberTabMenu" onclick="javascript:getlist('
+											+ idx + ',' + categoryId + ')">' + (idx) + "</a>";
+								} else {
+									htmls2 += '<a class="pageNumLink active" href="#admin_memberTabMenu" onclick="javascript:getlist('
+											+ idx + ',' + categoryId + ')">' + (idx) + "</a>";
+								}
+							}
+		
+							if (pagination['next']) {
+								htmls2 += '<a class="arrow next" href="#admin_memberTabMenu" onclick="javascript:getlist('
+										+ (pagination['endPage'] + 1) + ',' + categoryId
+										+ ')"></a>';
+	    	
+    						}
+    					} // if(list.length < 1) else 끝
+    	
+    					$(".admin_table").html(htmls);
+    					$(".page_nation").html(htmls2);
+    				
+    					    
+    					}
+                });
+            }
+            
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- 
+		-------------------- PT클래스 탭 ------------------------
 		<div class="list2">
 			<table class="admin_table memberInfo_exerciseTable">
 				<tr>
@@ -115,7 +238,7 @@
 					<td class="table_blue_text">스쿼트, 런지, 플랭크 30일챌린지</td>
 				</tr>
 			</table>
-			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+			페이징 태그(댓글, 게시글 등 다양하게 사용)
 			<div class="page_nation">
 				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
 				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
@@ -123,7 +246,7 @@
 			</div>
 		</div>
 
-		<!---------------------- 챌린지 탭 -------------------------->
+		-------------------- 챌린지 탭 ------------------------
 		<div class="list3">
 			<table class="admin_table memberInfo_exerciseTable">
 				<tr>
@@ -158,14 +281,14 @@
 				</tr>
 
 			</table>
-			<!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
+			페이징 태그(댓글, 게시글 등 다양하게 사용)
 			<div class="page_nation">
 				<a class="arrow prev" href="#"></a> <a href="#" class="active">1</a>
 				<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
 				<a class="arrow next" href="#"></a>
 			</div>
 		</div>
-
+ -->
 
 	</div>
 

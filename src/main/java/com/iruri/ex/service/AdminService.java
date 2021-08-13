@@ -34,14 +34,14 @@ public interface AdminService {
 	int countNormalBlackMember();
 
 	// 트레이너회원 리스트
-	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+	List<TableJoinVO> getTrainerMemberList(String keyword,Criteria cri);
 //	List<IUserVO> getTrainerMemberList3(Criteria cri);
 	
 	// 트레이너 별 등급(평점)
 	double getTrainerGrade(int userId);
 
 	// 트레이너회원 리스트 갯수
-	int countTrainerMemberList();
+	int countTrainerMemberList(String keyword);
 
 	// 트레이너회원 블랙리스트
 	List<TableJoinVO> getTrainerBlackList(Criteria cri);

@@ -66,9 +66,9 @@
 		<!---------------------- 트레이너전체 탭 -------------------------->
 		<div class="management_trainerMember">
 			<div class="totalTrainerMemberList">
-				<form action="">
-					<input type="text">
-					<button></button>
+				<form>
+					<input id="keywordSearchInputBox" type="text">
+					<button type="button" id="keywordSearch"></button>
 				</form>
 				<table class="admin_table">
 
@@ -82,7 +82,7 @@
 			</div>
 
 			<script>
-				function getlist(page) {
+				function getlist(page,keyword) {
 					$.ajax({
 								url : '${CONTEXT_PATH_ADMIN}/ajax/trainer/list.json',
 								type : 'GET',
@@ -90,6 +90,7 @@
 								dataType : 'json',
 								data : {
 									pageNum : page,
+									keyword: keyword,
 								},
 								success : function(result) {
 									console.log(result);
@@ -187,12 +188,23 @@
 				}
 
 				$(document).ready(function() {
-					getlist(1);
+					getlist(1,'iruriAdmin15978213');
 				});
 				
 				function link(userId){
 				    location.href='${CONTEXT_PATH_ADMIN}/trainer/info?userId='+ userId;
 				}
+				
+				document.getElementById("keywordSearch").addEventListener("click", function() {
+				    console.log('keywordSearch...');
+			        let keyword = document.getElementById("keywordSearchInputBox").value;
+			        if (keyword == null || keyword == "") {
+			            keyword = "iruriAdmin15978213";
+			        }
+			        console.log(keyword);
+			        getlist(1,keyword);
+			    }, false); 
+				
 			</script>
 
 		</div>
