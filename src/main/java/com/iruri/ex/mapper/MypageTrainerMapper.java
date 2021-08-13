@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.IClassVO;
+import com.iruri.ex.vo.ICommentVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.ProfitVO;
+import com.iruri.ex.vo.TableJoinVO;
 import com.iruri.ex.vo.trainerUserManagementVO;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.ExerciseDateVO;
@@ -27,9 +29,20 @@ public interface MypageTrainerMapper {
     int getTotalCount_mypageTrainerProfit(Criteria cri, @Param("userId") int userId);
     List<ProfitVO> profitList(@Param("cri") Criteria cri, @Param("userId") int userId);
     
-    // 트레이너 회원관리
-    List<trainerUserManagementVO> trainerUserManagement(@Param("cri") Criteria cri, @Param("userId") int userId);
-    int getTotal_trainerUserManagement(Criteria cri, @Param("userId") int userId);
-   
-    List<trainerUserManagementVO> trainerUserManagementList2(int userId);
+    
+    
+    // 특정 트레이너가 개설한 클래스 리스트
+    List<IClassVO> pagingTrainerClassList(@Param("cri") Criteria cri, @Param("userId") int userId);
+    
+    // 특정 트레이너가 개설한 클래스 리스트
+    Integer countPagingClassList(@Param("cri") Criteria cri, @Param("userId") int userId);
+    
+    // 클래스에 등록한 유저 리스트
+    List<TableJoinVO> ClassBuyUserList();
+    
+    // 해당 클래스의 특정 유저에 대한 코멘트 리스트
+    List<ICommentVO> ClassBuyUserCommentList(@Param("userId") int userId, @Param("classId") int classId);
+    
+    void insertComment(@Param("userId") int userId, @Param("classId") int classId, @Param("commentContent") String commentContent);
+    
 }
