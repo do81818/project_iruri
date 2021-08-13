@@ -48,6 +48,15 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     /*----------챌린지 메인-----------*/
+    //관심 챌린지
+    @Override
+    public List<IClassVO> getChallengeRecommendInfo(int classId) {
+        log.info("getChallengeRecommendInfo()..");
+        
+        return challengeMapper.challengeRecommend(classId);
+    }
+    
+    
     //전체 챌린지
     @Override
     public List<IClassVO> challengeList(Criteria criteria) {
@@ -234,6 +243,22 @@ public class ChallengeServiceImpl implements ChallengeService {
         log.info("challenge reply insert()..");
         challengeMapper.challengeReplyInsert(boardVO, classId);
     }
+    
+    // 댓글 삭제
+    @Override
+    public void deleteChallengeReply(int boardId, int userId) {
+        log.info("deleteChallengeReply() .. " + boardId + " " + userId);
+        
+        challengeMapper.deleteChallengeReply(boardId, userId);
+    }
+    
+    // 댓글 수정
+    @Override
+    public void modifyChallengeReply(BoardVO boardVO) {
+        log.info("deleteChallengeReply() .. " + boardVO);
+        
+        challengeMapper.modifyChallengeReply(boardVO);
+    }
 
     //댓글 userId
     @Override
@@ -257,6 +282,17 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         challengeMapper.modifyChallengeCertify(boardVO);
     }
+    
+    
+    // 인증글 삭제
+    @Override
+    public void deleteChallengeCertify(int boardId, int userId) {
+        log.info("deleteChallengeCertify() .. " + boardId + " " + userId);
+        
+        challengeMapper.deleteChallengeCertify(boardId, userId);
+    }
+    
+    
 
     
     //인증글 리스트
@@ -273,8 +309,12 @@ public class ChallengeServiceImpl implements ChallengeService {
         int pageNum = cri.getPageNum();
         int amount = cri.getAmount();
         
-        return challengeMapper.getListWithPaging_challengeImg(pageNum, amount, classId);
+        List<BoardVO> list = challengeMapper.getListWithPaging_challengeImg(pageNum, amount, classId);
+        
+        return list;
     }
+
+ 
 
 
 
