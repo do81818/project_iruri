@@ -97,11 +97,6 @@
 									<span class="c_recommend_date">
 										${recommend.classStartDate}~${recommend.classEndDate} </span>
 
-
-									<div class="c_heart">
-										<input type="checkbox" id="heart${recommend.classId}"><label
-											for="heart${recommend.classId}" class="heart_label"></label>
-									</div>
 								</div>
 							</div>
 						</a>

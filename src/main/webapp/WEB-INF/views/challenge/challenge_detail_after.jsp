@@ -23,10 +23,10 @@
 
                 <body>
                     <div class="iruri__wrapper">
-
+						
                         <%@ include file="../include/headerTemplate.jsp"%>
                             <!-- 경로를 확인해 주세요 -->
-
+							<p><sec:authentication property="principal.CurrentUser.authList[0].authId" /></p>
                             <main>
                                 <div class="c_container">
 
@@ -568,16 +568,16 @@
                                 <div class="c_complain_modal">
                                     <div class="c_complain_modal_start">
                                         <h4 class="c_complain_modal_title">신고사유 선택</h4>
-                                        <form action="#">
+                                        <form class="c_complain_form">
 
                                             <ul class="c_complain_modal_ul">
-                                                <li><input type="radio" name="c_complain" id="complain1"><label for="complain1" class="c_complain_modal_label" onclick="radio_click(this)"> 욕설, 비방, 차별, 혐오 </label></li>
+                                                <li><input type="radio" name="reportContent" id="complain1" value="욕설, 비방, 차별, 혐오"><label for="complain1" class="c_complain_modal_label" onclick="radio_click(this)"> 욕설, 비방, 차별, 혐오 </label></li>
 
-                                                <li><input type="radio" name="c_complain" id="complain2"><label for="complain2" class="c_complain_modal_label" onclick="radio_click(this)"> 홍보, 영리목적 </label></li>
+                                                <li><input type="radio" name="reportContent" id="complain2" value="홍보, 영리목적"><label for="complain2" class="c_complain_modal_label" onclick="radio_click(this)"> 홍보, 영리목적 </label></li>
 
-                                                <li><input type="radio" name="c_complain" id="complain3"><label for="complain3" class="c_complain_modal_label" onclick="radio_click(this)"> 음란, 청소년 유해 </label></li>
+                                                <li><input type="radio" name="reportContent" id="complain3" value="음란, 청소년 유해"><label for="complain3" class="c_complain_modal_label" onclick="radio_click(this)"> 음란, 청소년 유해 </label></li>
 
-                                                <li><input type="radio" name="c_complain" id="complain4"><label for="complain4" class="c_complain_modal_label" onclick="radio_click(this)"> 도배, 스팸 </label></li>
+                                                <li><input type="radio" name="reportContent" id="complain4" value="도배, 스팸"><label for="complain4" class="c_complain_modal_label" onclick="radio_click(this)"> 도배, 스팸 </label></li>
 
                                             </ul>
 
@@ -591,7 +591,6 @@
                                     </div>
                                     <div class="modal_layer"></div>
                                 </div>
-
 
                                 <!-- 댓글 수정 모달 -->
                                 <div class="reply_modify_modal">
@@ -619,99 +618,192 @@
                                 </div>
 
                                 <script>
-                                    //댓글 ajax, 페이징
+                                //댓글 ajax, 페이징
                                     function getlist(page) {
+                                    	const dataset = {
+                                    			url: 'http://localhost:8282/ex/ajax/c_detail_after_reply.json',
+                                                type: 'GET',
+                                                cache: false,
+                                                dateType: 'json',
 
-                                        $.ajax({
-                                            url: 'http://localhost:8282/ex/ajax/c_detail_after_reply.json',
-                                            type: 'GET',
-                                            cache: false,
-                                            dateType: 'json',
+                                                data: {
+                                                    pageNum: page,
+                                                    classId: ${challengeInfo.classId},
+                                                    // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
+                                                    // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
+                                                    // url 상으론 /rest/after?pageNum=2 이런식
+                                                },
+                                                success: function(result) {
+                                                	
+                                                }
+                                   			}
+                                    	
+                                    	$.ajax(dataset)
+                                        .then(result => { // 댓글 부분
+                                        	console.error(result);
+                                        	console.error(result.replyList);
+                                        	
+                                        	var replyList = result['replyList'];
+                                        	var pagination = result['pageMaker'];
+                                        	var htmls = "";
+                                        	
+                                        	if (replyList.length < 1) {
+                                                htmls += '<div class="c_list_not">';
+                                                htmls += '현재 등록된 댓글이 없습니다.';
+                                                htmls += '</div>';
+                                            } else {
 
-                                            data: {
+                                                htmls += '<div class="reply_count">';
+                                                const count = pagination.total;
+                                                htmls += '총' +
+                                                    count +
+                                                    '개';
+                                                htmls += '</div>';
+                                                htmls += '<table class="reply_table">';
+                                                
+                                                $(replyList).each(function() {
+                                                    $(this.boardList).each(function() {
+                                                    	//댓글 리스트 
+                                                        htmls += '<tr>';
+                                                        htmls += '<td class="reply_nickname">';
+                                                        htmls += this.iuserVO.userNickname;
+                                                        htmls += '</td>';
+                                                        htmls += '<td>';
+                                                        htmls += '<p class="reply_content">';
+                                                        htmls += this.boardContent;
+                                                        htmls += '</p>';
+                                                        htmls += '<p class="reply_date">';
+                                                        htmls += this.boardDate;
+                                                        htmls += '</p>';
+                                                        htmls += '</td>';
+                                                        
+                                                        htmls += '<td class="reply_button">';
+                                                        
+                                                        htmls += '</td>';
+                                                        
+                                                        htmls += '</tr>';
+                                                    }); // boardList.each
 
-                                                pageNum: page,
-                                                classId: ${challengeInfo.classId},
-                                                // Criteria 의 pageNum 의미함 restAfter 메소드에서 파라미터로 Criteria 가 있기 때문에
-                                                // 스프링 내부적으로 알아서 Criteria 안에 해당 멤버변수에 값할당
-                                                // url 상으론 /rest/after?pageNum=2 이런식
-                                            },
-                                            success: function(result) {
-
-                                                var replyList = result['replyList'];
-                                                var pagination = result['pageMaker'];
-                                                var htmls = "";
-                                                var htmls2 = "";
-                                                if (replyList.length < 1) {
-                                                    htmls += '<div class="c_list_not">';
-                                                    htmls += '현재 등록된 댓글이 없습니다.';
-                                                    htmls += '</div>';
-                                                } else {
-
-                                                    htmls += '<div class="reply_count">';
-                                                    const count = pagination.total;
-                                                    htmls += '총' +
-                                                        count +
-                                                        '개';
-                                                    htmls += '</div>';
-                                                    htmls += '<table class="reply_table">';
-                                                    
-                                                    $(replyList).each(function() {
-          
-                                                        $(this.boardList).each(function() {
-                                                            //댓글 리스트 
-
-                                                            htmls += '<tr>';
-
-                                                            htmls += '<td class="reply_nickname">';
-                                                            htmls += this.iuserVO.userNickname;
-                                                            htmls += '</td>';
-                                                            htmls += '<td>';
-                                                            htmls += '<p class="reply_content">';
-                                                            htmls += this.boardContent;
-                                                            htmls += '</p>';
-                                                            htmls += '<p class="reply_date">';
-                                                            htmls += this.boardDate;
-                                                            htmls += '</p>';
-                                                            htmls += '</td>';
-                                                            htmls += '<td class="reply_button"><button class="reply_modify" onclick="reply_modify_func(' + this.boardId + ', ${challengeInfo.classId})">수정</button>';
-                                                            htmls += '</tr>';
-                                                        });
-
-                                                    });
-                                                    htmls += ' </table>';
-
-                                                    
-                                                    
-                                                    /* ------------------ 페이징 부분 --------------------- */
-
-                                                    if (pagination['prev']) {
-                                                        htmls2 += '<a class="arrow prev" href="javascript:getlist(' + (pagination['startPage'] - 1) + '"></a>';
-                                                    }
-                                                    // 번호를 표시하는 부분
-                                                    for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
-                                                        if (page !== idx) {
-                                                            htmls2 += '<a class="pageNumLink" href="javascript:getlist(' + idx + ')">' + (idx) + "</a>";
-                                                        } else {
-                                                            htmls2 += '<a class="pageNumLink active" href="javascript:getlist(' + idx + ')">' + (idx) + "</a>";
-                                                        }
-                                                    }
-
-                                                    if (pagination['next']) {
-                                                        htmls2 += '<a class="arrow next" href="javascript:getlist(' + (pagination['endPage'] + 1) + ')"></a>';
-
-                                                    }
-                                                } // if(list.length < 1) else 끝
-
+                                                }); // replyList.each
+                                                
+                                                htmls += ' </table>';
+                                                
                                                 $(".c_after_reply").html(htmls);
-                                                $(".page_nation").html(htmls2);
+                                            }      
+                                                
 
+                                        	// 댓글 수정, 삭제, 신고 버튼
+                                        	const trs = document.querySelectorAll('.reply_table tbody tr');
+                                        	                                                
+                                        	$(replyList).each(function(i) {
+                                        		
+                                        		var reply_button = trs[i].querySelector('.reply_button');
+                                        		
+                                        	    $(this.boardList).each(function(i, obj) {
+
+                                        	    	fetch('/ex/auth/loginReplyCheck?userId=' + this.iuserVO.userId)
+                               	                	.then(data => data.text())
+                                	                .then(replyBtns => {
+                                	                	
+                                	                	
+                                	                	/* const userRoleNum = '<sec:authentication property="principal.CurrentUser.authList[0].authId" />';
+                                	                	console.log(typeof userRoleNum);
+                                	                	if(userRoleNum !== '1') { // 유저 권한 어드민 아닐때
+                                	                	} else { // 유저 권한 어드민 일때
+                                	                	} */
+                                	                	
+                               	                		reply_button.innerHTML = replyBtns;                                	                		                                	                		
+                                	                	
+                                	                	
+                                	                	var complainBtn = reply_button.querySelector('.reply_complain');
+                                	                	var modifyBtn = reply_button.querySelector('.reply_modify');
+                                	                	var deleteBtn = reply_button.querySelector('.reply_delete');
+                                	                	var blindBtn = reply_button.querySelector('.reply_blind');
+                                	                	
+                                	                	if(complainBtn != null) {
+	                                        	    		complainBtn.setAttribute('onclick', 'reply_complain_modal(' + this.boardId + ',' + this.iuserVO.userId + ')');                                	                		
+                                	                	}
+                                	                	
+                                	                	if(modifyBtn != null && deleteBtn != null) {
+	                                        	    		modifyBtn.setAttribute('onclick', 'reply_modify_func(' + this.boardId + ', ${challengeInfo.classId})');
+    	                                    	    		deleteBtn.setAttribute('href', '${CONTEXT_PATH}/ajax/deleteReply?boardId='+ this.boardId);
+                                	                	}
+                                	                	
+                                	                	function searchParam(key) {
+                                	                		  return new URLSearchParams(location.search).get(key);
+                               	                		};
+                                	                	
+                                	                	const boardGroupId = searchParam('classId');
+                                	                	
+                                	                	
+                                	                	
+                                	                	if(blindBtn != null) {
+                                	                		blindBtn.setAttribute('onclick', 'reply_blind_func(' + this.boardId + ',' + this.iuserVO.userId + ',' + boardGroupId + ')');
+                                	                	}
+                                	                });
+                                        	    }) // boardLIst.each
+                                        	}); // replyList.each 	
+
+                                        	return result;
+                                        })
+                                        .then(result => { // 페이징 부분
+                                        	
+                                        	var pagination = result['pageMaker'];
+                                            var htmls2 = "";
+                                            
+                                            /* ------------------ 페이징 부분 --------------------- */
+
+                                            if (pagination['prev']) {
+                                                htmls2 += '<a class="arrow prev" href="javascript:getlist(' + (pagination['startPage'] - 1) + ')"></a>';
+                                            }
+                                            // 번호를 표시하는 부분
+                                            for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+                                                if (page !== idx) {
+                                                    htmls2 += '<a class="pageNumLink" href="javascript:getlist(' + idx + ')">' + (idx) + "</a>";
+                                                } else {
+                                                    htmls2 += '<a class="pageNumLink active" href="javascript:getlist(' + idx + ')">' + (idx) + "</a>";
+                                                }
                                             }
 
-                                        });
-                                    }
+                                            if (pagination['next']) {
+                                                htmls2 += '<a class="arrow next" href="javascript:getlist(' + (pagination['endPage'] + 1) + ')"></a>';
+
+                                            }
+                                        
+                                        	$(".page_nation").html(htmls2);
+                                        	
+                                        	return result;
+                                        })
+                                    } // getlist();
+                                    
+                                    
+                                    
+                                    // 댓글 삭제
                                     $(document).ready(function() {
                                         getlist(1);
+                                        
+                                        $(document).on("click", ".reply_delete", function(event) {
+	                                        event.preventDefault();
+	                                        
+	                                        let trObj = $(this).parent().parent().parent();
+	                                        let pageNum = parseInt(document.querySelector('.page_nation > .pageNumLink.active').innerText);
+	                                        
+	                                        console.dir(typeof pageNum);
+	                                        
+	                                        $.ajax({
+	                            				type : "GET",
+	                            				url : $(this).attr("href"),
+	                            				success : function(result) {
+	                            					console.log(result);
+	                            					if (result == "SUCCESS") {
+	                            						getlist(pageNum);
+	                            					}
+	                            				},
+	                            				error : function(e) {
+	                            					console.log(e);
+	                            				}
+	                            			})
+                                        })
                                     });
                                 </script>
 
@@ -753,6 +845,8 @@
 
                                     });
                                 </script>
+                                
+                                 
                                 
                                 
                              

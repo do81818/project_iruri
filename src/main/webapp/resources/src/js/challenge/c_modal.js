@@ -26,19 +26,6 @@ $(function() {
 
 });
 
-
-//댓글 신고하기 모달//
-$(function() {
-    $(".reply_complain").click(function() {
-        $(".c_complain_modal").fadeIn();
-    });
-
-    $(".c_complain_modal_cancle").click(function() {
-        $(".c_complain_modal").fadeOut();
-    });
-
-});
-
 //챌린지 개설 경고 모달//
 $(function() {
 
@@ -260,7 +247,76 @@ function reply_modify_func(boardId, classId) {
     });
 }
 
+//댓글 신고하기 모달//
+function reply_complain_modal(boardId, userId) {
 
+    $(".c_complain_modal").fadeIn();
+    
+       $('.c_complain_form').submit(function(e) {
+             e.preventDefault();
+        });
+
+        //댓글 신고하기
+        $('.c_complain_modal_submit').on('click', function(e) {
+        
+        	
+        	
+            const header = $('meta[name="_csrf_header"]').attr('th:content');
+            const token = $('meta[name="_csrf"]').attr('th:content');
+            const reportContents = document.querySelectorAll('input[name="reportContent"]');
+            
+            let reportContent; 
+            reportContents.forEach(content => {
+            	if(content.checked === true) {
+					reportContent = content;             	
+            	}
+            });
+
+            $.ajax({
+                url: '/ex/ajax/reportReply',
+                type: 'POST',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    boardId: boardId,
+                    reportContent: reportContent.value,
+                    userId: userId
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(data) {
+                        getlist(1);
+                }
+            });
+            
+			$(".c_complain_modal").fadeOut();
+    
+        });
+
+    $(".c_complain_modal_cancle").click(function() {
+        $(".c_complain_modal").fadeOut();
+    });
+
+};
+
+function reply_blind_func(boardId, userId, boardGroupId) {
+
+	$.ajax({
+        url: '/ex/ajax/blindChallengeReply',
+        type: 'GET',
+        cache: false,
+        dateType: 'json',
+        data: {
+            boardId: boardId,
+            boardGroupId: boardGroupId,
+            userId: userId
+        },
+        success: function(data) {
+                getlist(1);
+        }
+    });
+}
 
 
 //인증글 수정 모달 X 버튼//
