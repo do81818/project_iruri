@@ -559,4 +559,162 @@
 	</update>
 	
 	
+	
+	 <!-- 수익관리 - 전체수익 매출리스트 -->
+	<select id="getTotalMoneyInOutList" resultMap="moneyJoinMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				select a.*, sum(a.total) over(order by rowId) totalMoney
+				from (
+			]]>
+			
+			<!-- 전체내역 볼 때 -->	    
+			<if test='inquire == "all"'>	    
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire != null and inquire == "input"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input) as total
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire != null and inquire == "output"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_output) as total
+			]]>
+			</if>
+			
+			<![CDATA[
+				   from money m
+				    inner join pay p
+				    on m.pay_id = p.pay_id
+				    INNER join buy b
+				    on p.buy_id = b.buy_id
+				    inner join iclass c
+				    on b.class_id = c.class_id
+				    inner join iuser u
+				    on m.user_id = u.user_id
+				    ]]> 
+			
+			<!-- 기간을 선택했을 때 -->	    
+			<if test='periodStartDate != null and periodEndDate != null'>	    
+			<![CDATA[	
+				    where m.money_date between #{periodStartDate} and #{periodEndDate} 
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire != null and inquire == "input"'>
+			<![CDATA[	
+				    and m.money_input > 0
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire != null and inquire == "output"'>
+			<![CDATA[	
+				    and m.money_output > 0
+			]]>
+		    </if>
+				    
+				    
+				    
+			<![CDATA[	    
+				    ) a
+				    order by a.money_id desc;
+				) li
+				]]> 
+			
+			
+			<![CDATA[
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	
+	<!-- 수익관리 - 전체수익 매출리스트 갯수 -->
+	<select id="countTotalMoneyInOutList" resultType="Integer">
+		<![CDATA[
+		select count(li.money_id)
+		from (
+			select a.*, sum(a.total) over(order by rowId) totalMoney
+			from (
+		]]>
+		
+		<!-- 전체내역 볼 때 -->	    
+		<if test='inquire == "all"'>	    
+		<![CDATA[	
+			    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+		]]>
+		</if>
+		
+		<!-- 입금내역만 볼 때 -->
+		<if test='inquire != null and inquire == "input"'>
+		<![CDATA[	
+			    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input) as total
+		]]>
+		</if>
+		
+		<!-- 출금내역만 볼 때 -->
+		<if test='inquire != null and inquire == "output"'>
+		<![CDATA[	
+			    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_output) as total
+		]]>
+		</if>
+		
+		<![CDATA[
+			   from money m
+			    inner join pay p
+			    on m.pay_id = p.pay_id
+			    INNER join buy b
+			    on p.buy_id = b.buy_id
+			    inner join iclass c
+			    on b.class_id = c.class_id
+			    inner join iuser u
+			    on m.user_id = u.user_id
+			    ]]> 
+		
+		<!-- 기간을 선택했을 때 -->	    
+		<if test='periodStartDate != null and periodEndDate != null'>	    
+		<![CDATA[	
+			    where m.money_date between #{periodStartDate} and #{periodEndDate} 
+		]]>
+		</if>
+		
+		<!-- 입금내역만 볼 때 -->
+		<if test='inquire != null and inquire == "input"'>
+		<![CDATA[	
+			    and m.money_input > 0
+		]]>
+		</if>
+		
+		<!-- 출금내역만 볼 때 -->
+		<if test='inquire != null and inquire == "output"'>
+		<![CDATA[	
+			    and m.money_output > 0
+		]]>
+	    </if>
+			    
+			    
+			    
+		<![CDATA[	    
+			    ) a
+			    order by a.money_id desc;
+			) li
+		]]> 
+	</select>
+	
+	
+	
+	
 </mapper>

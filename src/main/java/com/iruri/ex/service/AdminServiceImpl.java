@@ -252,5 +252,22 @@ public class AdminServiceImpl implements AdminService {
     public void updateWithdrawMember(int userId) {
         mapper.updateWithdrawMember(userId);
     }
+
+    @Override
+    public List<TableJoinVO> getTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        return mapper.getTotalMoneyInOutList(inquire, periodStartDate, periodEndDate, pageNum, amount);
+    }
+
+    @Override
+    public Integer countTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate) {
+        try {
+            int count = mapper.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
     
 }

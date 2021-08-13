@@ -2,8 +2,10 @@ package com.iruri.ex.controller;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.AdminService;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.TableJoinVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -290,7 +293,7 @@ public class MypageAdminController {
         log.info(result);
         return ResponseEntity.ok(result);
     }
-	
+    
 	
     // restUpdateBlacklist()  관리자 블랙리스트 수정
     @ResponseBody
@@ -346,11 +349,36 @@ public class MypageAdminController {
     
 	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
 	@GetMapping("paylist")
-	public String showPayList_Admin(Locale locale, Model model) {
-
-		return "mypage_admin/admin_managementMoney";
+	public ModelAndView showPayList_Admin(ModelAndView mav) {
+	    log.info("showPayList_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney");
+	    // 오늘의 매출추가
+	    // mav.addObject("todaySales",    );
+	    return mav;
 	}
 
+	// 관리자 수익 목록 보기 
+    @ResponseBody
+    @PostMapping("ajax/paylist")
+    public ResponseEntity<HashMap<String, Object>> restShowPayList_Admin(@Param("inquire") String inquire, @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
+            @Param("pageNum") int pageNum) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("restShowPayList_Admin()..");
+        Criteria cri = new Criteria(pageNum, 10);
+        int total = adminService.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("list", adminService.getTotalMoneyInOutList(inquire, periodStartDate, periodEndDate, cri));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+	
+	
+	
+	
+	
+	
 	
 	// insertPoint_Admin() ModelAndView 관리자 포인트 등록
 	

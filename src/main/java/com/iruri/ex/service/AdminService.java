@@ -89,5 +89,12 @@ public interface AdminService {
     void updateBlackListReason(int userId, String reason);
 	
     // 탈퇴회원으로 전환
-    void updateWithdrawMember(@Param("userId") int userId);
+    void updateWithdrawMember(int userId);
+    
+    // 수익관리 - 전체수익 매출 리스트
+    List<TableJoinVO> getTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate, Criteria cri);
+    
+    // 수익관리 - 전체수익 매출리스트 갯수
+    Integer countTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate);
+    
 }
