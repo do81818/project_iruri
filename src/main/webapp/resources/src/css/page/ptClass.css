@@ -104,7 +104,8 @@
   height: 43px;
 }
 
-.ptClassNav {
+.ptClassNav,
+p {
   margin-top: 100px;
   margin-bottom: 53px;
   display: flex;
@@ -132,6 +133,10 @@
 
 .ptClassFilter > div {
   display: flex;
+}
+
+.ptClassFilter input[type="radio"] {
+  display: none;
 }
 
 .ptClassFilter-label {
@@ -199,7 +204,7 @@
 .ptClassList {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+
 }
 
 .ptClassList .c_list_img {

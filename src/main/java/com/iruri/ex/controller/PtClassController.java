@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
 import com.iruri.ex.security.CurrentUser;
+import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.PtClassService;
 import com.iruri.ex.vo.ExerciseDateVO;
@@ -40,6 +41,8 @@ public class PtClassController {
     
     @Autowired
     PtClassService ptClassService;
+    @Autowired
+    ChallengeService challengeService;
     @Autowired
     ImageController imageController;
 
@@ -63,11 +66,15 @@ public class PtClassController {
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
         
-        int total = ptClassService.getTotalClass(cri, type, iUserVO.getUserId());
+        int userId = iUserVO.getUserId();
+        int total = ptClassService.getTotalClass(cri, type, userId);
+        List<IClassVO> list = ptClassService.getClassList(cri, type, userId);
         
-        result.put("list", ptClassService.getClassList(cri));
+        result.put("list", list);
         result.put("pageMaker", new PageVO(cri, total));
         
+        log.info(total);
+
         return ResponseEntity.ok(result);
     }
     
@@ -77,6 +84,29 @@ public class PtClassController {
         mav.setViewName("ptclass/ptclass_details");
         
         return mav;
+    }
+    
+    // 하트 처리하기
+    // 권한 있을때만 ajax 통신
+    // -1 = 처음 좋아요 확인
+    // input.check 1 = 이미 좋아요를 눌렀으므로 좋아요 해제
+    // 0 = 좋아요 추가
+    @GetMapping("/ajax/ptClassLike")
+    public int iruriPtClassLike(@CurrentUser IUserVO vo, @RequestParam("classId") int classId, @RequestParam("checkNum") int checkNum) {
+        
+        if(checkNum == 1) {
+            challengeService.challenge_likeDelete(classId, vo.getUserId());
+            challengeService.challenge_likeCountDown(classId);
+            return 0;
+        }
+        
+        if(checkNum == 0) {
+            challengeService.challenge_likeInsert(classId, vo.getUserId());
+            challengeService.challenge_likeCountUp(classId);
+            return 1;
+        }
+        
+        return challengeService.getUserHeartList(classId, vo.getUserId());
     }
     
     @GetMapping("/iruri/ptClassMakeForm")
@@ -154,6 +184,8 @@ public class PtClassController {
         // 해당 클래스 상세 보기로 이동하기
         return "SUCCESS";
     }
+    
+    
     
     
 }

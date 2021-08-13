@@ -87,7 +87,7 @@ FROM
 	FROM 
 		iclass ic, iuser iu
 	WHERE 
-		ic.user_id = iu.user_id and ic.category_id = 2 and ic.class_enddate >= sysdate
+		ic.user_id = iu.user_id and ic.category_id = 2 and ic.class_enddate >= sysdate and class_state = 'show'
 	ORDER BY 
 		ic.class_like DESC
 )
@@ -99,38 +99,27 @@ WHERE
 	<!-- 전체 클래스 토탈 넘버 -->
 	<select id="getTotalClassAll" resultType="int">
 <![CDATA[
-SELECT COUNT(*)
-FROM iclass ic,
-(
-    SELECt exkind.*, exdate.exercise_date
-    FROM
-    (
-        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
-        FROM exercise_kind
-        GROUP BY class_id
-    ) exkind,
-    (
-        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
-        FROM exercise_date
-        GROUP BY class_id
-    ) exdate
-    WHERE exkind.class_id = exdate.class_id
-) exercise
-WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+SELECT 
+	COUNT(*)
+FROM 
+	iclass
+WHERE 
+	iclass.category_id = 2 and class_enddate >= sysdate and class_state = 'show'
 ]]>
 	</select>
 	
 	<!-- 전체 클래스 리스트 -->
 	<select id="getClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
 <![CDATA[
-	SELECT *
+SELECT 
+	*
 FROM
 (
     SELECT ROWNUM AS RNUM, classlist.*
     FROM
     (
-        SELECT ic.*, exercise_kind, exercise_date
-        FROM iclass ic,
+        SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
+        FROM iclass ic, iuser iu,
         (
             SELECt exkind.*, exdate.exercise_date
             FROM
@@ -146,7 +135,7 @@ FROM
             ) exdate
             WHERE exkind.class_id = exdate.class_id
         ) exercise
-        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
     ) classlist
     WHERE   ROWNUM <= #{pageNum} * #{amount}
 )
@@ -157,15 +146,136 @@ WHERE RNUM > (#{pageNum}-1) * #{amount}
 	<!-- 구매한 클래스 토탈 넘버 -->
 	<select id="getTotalClassBuy" resultType="int">
 <![CDATA[
-SELECT COUNT(*)
-FROM pay,
+SELECT 
+	COUNT(*)
+FROM 
+	buy, pay, iclass
+WHERE 
+	buy.buy_id = pay.buy_id and buy.user_id = #{userId} and 
+	pay.pay_state = 'pay' and buy.class_id = iclass.class_id and iclass.category_id = 2 and iclass.class_state = 'show' and class_enddate >= sysdate
+]]>
+	</select>
+	
+	<!-- 구매한 클래스 리스트 -->
+	<select id="getBuyClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
 (
-    SELECT classlist.*, buy.buy_id
-    FROM buy,
+    SELECT ROWNUM AS RNUM, clsre.*
+    FROM
     (
-        SELECT ic.*, exercise.exercise_kind, exercise.exercise_date
-        FROM iclass ic,
-        (    
+        SELECT iclass.class_id
+        FROM buy, pay, iclass
+        WHERE buy.buy_id = pay.buy_id and buy.user_id = #{userId}
+        and pay.pay_state = 'pay' and buy.class_id = iclass.class_id and iclass.category_id = 2 and iclass.class_state = 'show'
+    ) buyre,
+    (
+        SELECT cls.*, iuser.user_nickname
+        FROM iuser,
+        (
+            SELECT ic.class_id, ic.user_id, ic.class_totalmember, ic.class_image, ic.class_title, ic.class_startdate, ic.class_time, ic.class_level, ic.class_enddate, ic.class_price, exercise.exercise_kind, exercise.exercise_date
+            FROM iclass ic,
+            (
+                SELECT exkind.*, exdate.exercise_date
+                FROM
+                (
+                    SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                    FROM exercise_kind
+                    GROUP BY class_id
+                ) exkind,
+                (
+                    SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                    FROM exercise_date
+                    GROUP BY class_id
+                ) exdate
+                WHERE exkind.class_id = exdate.class_id
+            ) exercise
+            WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and ic.class_state = 'show' and class_enddate >= sysdate
+        ) cls
+        WHERE cls.user_id = iuser.user_id
+    ) clsre
+    WHERE clsre.class_id = buyre.class_id and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
+	
+	<!-- 관심 클래스 토탈 넘버 -->
+	<select id="getTotalClassInterest" resultType="int">
+<![CDATA[
+SELECT 
+	count(li.class_id)
+FROM 
+	iclass, likelist li
+WHERE  
+	iclass.class_id = li.class_id and iclass.class_state = 'show' and class_enddate >= sysdate and li.user_id = #{userId}
+]]>
+	</select>
+	
+	<!-- 관심 클래스 리스트 -->
+	<select id="getInterestClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, clss.*
+    FROM likelist li,
+    (
+        SELECT cls.*, iu.user_nickname
+        FROM iuser iu,
+        (
+            SELECT ic.class_id, ic.user_id, ic.class_totalmember, ic.class_image, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, ic.class_price, ic.class_state, exercise.exercise_kind, exercise.exercise_date
+            FROM iclass ic,
+            (
+                SELECT exkind.*, exdate.exercise_date
+                FROM
+                (
+                    SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                    FROM exercise_kind
+                    GROUP BY class_id
+                ) exkind,
+                (
+                    SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                    FROM exercise_date
+                    GROUP BY class_id
+                ) exdate
+                WHERE exkind.class_id = exdate.class_id
+            ) exercise
+            WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and ic.class_state = 'show' and class_enddate >= sysdate
+        ) cls
+        WHERE cls.user_id = iu.user_id
+    ) clss
+    WHERE clss.class_id = li.class_id and class_state = 'show' and clss.class_enddate >= sysdate and li.user_id = #{userId} and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
+	
+	<!-- 지난 클래스 총 갯수-->
+	<select id="getTotalClassPast" resultType="int">
+<![CDATA[
+SELECT 
+    COUNT(*)
+FROM 
+    iclass
+WHERE 
+    iclass.category_id = 2 and class_enddate < sysdate
+]]>
+	</select>
+	
+	<!-- 지난 클래스 리스트 -->
+<select id="getPastClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, classlist.*
+    FROM
+    (
+        SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
+        FROM iclass ic, iuser iu,
+        (
             SELECt exkind.*, exdate.exercise_date
             FROM
             (
@@ -180,12 +290,12 @@ FROM pay,
             ) exdate
             WHERE exkind.class_id = exdate.class_id
         ) exercise
-        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate < sysdate and ic.user_id = iu.user_id
     ) classlist
-    WHERE classlist.class_id = buy.class_id and buy.user_id = #{userId}
-) buylist
-WHERE buylist.buy_id = pay.buy_id and pay_state = 'pay'
+    WHERE   ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
 ]]>
-	</select>
-
+   </select>
+   
 </mapper>

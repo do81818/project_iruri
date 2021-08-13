@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iruri.ex.mapper.ChallengeMapper;
 import com.iruri.ex.mapper.PtClassMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.security.CurrentUser;
@@ -22,6 +23,8 @@ public class PtClassServiceImpl implements PtClassService {
 
     @Autowired
     PtClassMapper ptClassMapper;
+    @Autowired
+    ChallengeMapper challengeMapper;
     
     @Override
     public void insertPtClass(IClassVO vo) {
@@ -62,19 +65,35 @@ public class PtClassServiceImpl implements PtClassService {
         }
         
         if(type.equals("interest")) {
-            return 0;
+            return ptClassMapper.getTotalClassInterest(userId);
         }
         
         if(type.equals("past")) {
-            return 0;
+            return ptClassMapper.getTotalClassPast(userId);
         }
         
         return 0;
     }
     
     @Override
-    public List<IClassVO> getClassList(Criteria cri) {
-        List<IClassVO> classList = ptClassMapper.getClassList(cri);
+    public List<IClassVO> getClassList(Criteria cri, String type, int userId) {
+        List<IClassVO> classList = new ArrayList<IClassVO>();
+        
+        if(type.equals("all")) {
+            classList = ptClassMapper.getClassList(cri);
+        }
+        
+        if(type.equals("buy")) {
+            classList = ptClassMapper.getBuyClassList(cri, userId);
+        }
+        
+        if(type.equals("interest")) {
+            classList = ptClassMapper.getInterestClassList(cri, userId);
+        }
+        
+        if(type.equals("past")) {
+            classList = ptClassMapper.getPastClassList(cri, userId);
+        }
         
         // ExerciseDateList & ExerciseKindList
         for(int i = 0; i < classList.size(); i++) {
@@ -106,6 +125,6 @@ public class PtClassServiceImpl implements PtClassService {
         }
 
         return classList;
-    };
+    }
 
 }
