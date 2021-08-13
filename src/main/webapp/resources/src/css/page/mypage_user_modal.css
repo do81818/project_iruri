@@ -87,7 +87,8 @@
   } */ 
   .alertWindow_close>img {
     position:relative;
-  left: 160px;
+  left: 158px;
+  top:10px;
   
  
   }
@@ -129,7 +130,7 @@
     height: 44px;
     border-radius: 5px;
     border: 1px solid var(--iruri-light-gray-color);
-    margin-bottom: 24px;
+    margin-bottom: 34px;
     outline: none;
     padding: 3px 20px;
     color: var(--iruri-indigo-color);

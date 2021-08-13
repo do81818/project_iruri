@@ -83,30 +83,22 @@ true, }, }); */
 														</c:if>
 														<br>${user.userEmail}</div>
 										</div>
-										<div id="m_userboard_box">
-												<div id="m_userboard">
-														<a href=".">작성글</a>
-												</div>
-												<div id="m_userboard_number">${boardcount}</div>
-										</div>
-										<div id="m_userpoint_box">
-												<div id="m_userpoint">
-														<a href=".">보유포인트</a>
-												</div>
-												<div id="m_userpoint_number">${totalpoint}</div>
-										</div>
-										<div id="m_userchanllenge_box">
-												<div id="m_userchanllenge">
-														<a href=".">참여중인챌린지</a>
-												</div>
-												<div id="m_userchanllenge_number">${userchallengecount}</div>
-										</div>
-										<div id="m_userclass_box">
-												<div id="m_userclass">
-														<a href=".">참여중인클래스</a>
-												</div>
-												<div id="m_userclass_number">${userclasscount}</div>
-										</div>
+      <div id = "m_userboard_box">
+        <div id="m_userboard"><a href="/ex/mypage/boardlist">작성글</a></div>
+        <div id ="m_userboard_number">${boardcount}</div>
+      </div>
+      <div id = "m_userpoint_box">
+        <div id="m_userpoint"><a href="/ex/mypage/pointlist">보유포인트</a></div>
+        <div id ="m_userpoint_number">${totalpoint}</div>
+      </div>
+      <div id = "m_userchanllenge_box">
+        <div id="m_userchanllenge"><a href="/ex/mypage/challengelist">참여중인챌린지</a></div>
+        <div id="m_userchanllenge_number">${userchallengecount}</div>
+      </div>
+      <div id = "m_userclass_box">
+        <div id="m_userclass"><a href="/ex/mypage/classlist">참여중인클래스</a></div>
+        <div id="m_userclass_number">${userclasscount} </div>
+      </div>
 								</div>
 
 								<!-- 챌린지 리스트박스 -->
@@ -144,8 +136,10 @@ true, }, }); */
 														items="${userchallengelist}" varStatus="status">
 														<li class="m_c_recommend_img">
 																<button class="m_cl_cancel_challenge_bt" id="${userchallengelist.classId}">챌린지취소</button>
-																<div class="m_c_recommend_title">
+																<div class="m_c_recommend_title"><a href="/ex/iruri/challenge_detail_after?classId=${userchallengelist.classId}">
 																		${userchallengelist.classTitle}<br>
+																		</a>
+																
 																</div>
 
 																<span class="m_c_recommend_date">
@@ -394,7 +388,7 @@ true, }, }); */
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_c_list_title">';
-																		htmls += '<a href="c_detail_before?classId='
+																		htmls += '<a href="/ex/iruri/challenge_detail_before?classId='
 																				+ this.classId
 																				+ '">';
 																		htmls += this.classTitle;
@@ -542,7 +536,7 @@ true, }, }); */
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_c_list_title">';
-																		htmls += '<a href="c_detail_before?classId='
+																		htmls += '<a href="/ex/iruri/challenge_detail_before?classId='
 																				+ this.classId
 																				+ '">';
 																		htmls += this.classTitle;

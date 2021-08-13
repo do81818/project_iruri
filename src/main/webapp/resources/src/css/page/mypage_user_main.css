@@ -223,6 +223,13 @@ button#addData1{
  top: -82px;
  left: 100px;
 }
+#m_bmititle{
+  padding-top: 10px;
+  padding-left: 17px;
+  font-family: 'Cafe24Ssurround';
+  font-size: 13px;
+ color: var(--iruri-light-blue-color);
+}
 #m_bminumber{
   padding-top: 40px;
   padding-left: 10px;

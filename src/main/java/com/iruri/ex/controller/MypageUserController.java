@@ -101,12 +101,40 @@ public class MypageUserController {
         // 유저의 참여 클래스 갯수
         int classcountvo = userchallengeService.classcount(vo.getUserId());
         log.info(classcountvo);
-        model.addAttribute("userclasscount",classcountvo);    
-
-
-        return "/mypage_user/mypage_user_main";
+        model.addAttribute("userclasscount",classcountvo);  
         
+        // 유저의 올해 몸무게 그래프
+        List<IUserInfoVO> useryearweight = iUserinfoService.useryearweight(vo.getUserId());
+        model.addAttribute("useryearweight",useryearweight);
+        log.info("유저의올해 몸무게"+useryearweight);
+        
+        // 유저의 이번달 몸무게 그래프
+        List<IUserInfoVO> usermonthweight = iUserinfoService.usermonthweight(vo.getUserId());
+        model.addAttribute("usermonthweight",usermonthweight);
+        log.info("유저의 이번달 몸무게"+usermonthweight);
+        
+        // 유저의 비만도 (BMI)
+        
+
+        return "/mypage_user/mypage_user_main";  
     }
+	
+	// 캘린더 ajax 통신
+	@ResponseBody
+	@GetMapping("/calendar")
+	public List<IClassVO> calendar(@CurrentUser IUserVO user) {
+		
+		/*
+		 * Date nowDate = new Date(); 
+		 * SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd"); 
+		 * log.info(simpleDateFormat.format(nowDate));
+		 */
+		
+		int userId = user.getUserId();
+		List<IClassVO> calendar = userchallengeService.getCalendar(userId);
+		
+		return calendar;
+	}
 
 	// 유저정보 업데이트
 	@GetMapping("/update")
