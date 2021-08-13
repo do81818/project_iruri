@@ -23,6 +23,9 @@ public interface ChallengeService {
     void insertChallenge(IClassVO iClassVO);
     
     /*----------챌린지 메인-----------*/
+    //추천 챌린지
+    List<IClassVO> getChallengeRecommendInfo(int classId);
+    
     //전체 챌린지 리스트
     List<IClassVO> challengeList(Criteria criteria);
     int getTotal_challenge(Criteria cri);
@@ -77,6 +80,12 @@ public interface ChallengeService {
 
     //챌린지 댓글 입력
     void challengeReplyInsert(BoardVO boardVO, int classId);
+    
+    //댓글 삭제
+    void deleteChallengeReply(int boardId, int userId);
+    
+    //댓글 수정
+    void modifyChallengeReply(BoardVO boardVO);
 
     //댓글 유저 
     BoardVO getUserId(IUserVO iUserVO);
@@ -86,10 +95,19 @@ public interface ChallengeService {
     
     // 인증글 수정
     void modifyChallengeCertify(BoardVO boardVO);
+    
+    // 인증글 삭제
+    void deleteChallengeCertify(int boardId, int userId);
 
     //인증글 리스트 페이징
     int getTotal_challengeImg(Criteria cri, int classId);
     List<BoardVO> challengeImgList(Criteria cri, int classId);
+
+
+  
+
+
+    
 
 
     

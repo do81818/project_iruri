@@ -80,7 +80,7 @@
 			<result property="boardLike" column="BOARD_LIKE"/>
 			<result property="boardGroupId" column="BOARD_GROUPID"/>
 			<result property="categoryId" column="CATEGORY_ID"/>
-			<result property="rn" column="rn"/>	
+			<result property="rnum" column="rnum"/>	
 			<result property="classId" column="CLASS_ID"/>
 			<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
 
@@ -101,7 +101,26 @@
 	</select>
 	
 	
-	
+	<!-- 추천챌린지 상위 2개(인기순) -->
+		<select id="challengeRecommend" resultMap="iClassMap">
+		<![CDATA[
+			SELECT 
+			*
+			FROM
+			(
+			   SELECT 
+			      ic.*, iu.user_nickname
+			   FROM 
+			      iclass ic, iuser iu
+			   WHERE 
+			      ic.user_id = iu.user_id and ic.category_id = 1 and ic.class_enddate >= sysdate and class_state = 'show'
+			   ORDER BY 
+			      ic.class_like DESC
+			)
+			WHERE 
+			   ROWNUM <= 2
+		]]>
+	</select>
 	
 	<!-- 챌린지 개설 시 폼 값 입력 -->
 	<insert id="insertChallenge">
@@ -231,7 +250,7 @@
 		SELECT *
 		FROM
 		(
-		    SELECT ROWNUM rn, c.*
+		    SELECT ROWNUM rnum, c.*
 		    FROM
 		    (
 		        SELECT B.*, A.likelist_id, A.board_id
@@ -252,7 +271,7 @@
 		    		]]>
 		    	</if>
 		    <![CDATA[
-		    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+		    	)	WHERE rnum > (#{pageNum}-1) * #{amount}
 	]]>
 
 	</select>
@@ -399,7 +418,7 @@
 				SELECT *
 				FROM
 				(
-				    SELECT ROWNUM rn, c.*
+				    SELECT ROWNUM rnum, c.*
 				    FROM
 				    (
 				        SELECT B.*, u.user_nickname 
@@ -408,7 +427,7 @@
          				order by B.board_date desc
 				    ) C
 				    WHERE rownum <= #{pageNum} * #{amount} 
-				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+				    	)	WHERE rnum > (#{pageNum}-1) * #{amount}
 			]]>
       
 			</select>
@@ -447,6 +466,46 @@
 			]]>
 		</insert>
 		
+		
+		<!-- 댓글 수정 -->
+		<update id="modifyChallengeReply">
+		<![CDATA[
+			UPDATE board
+			SET
+			 
+			board_content = #{boardContent}
+		
+			
+			WHERE
+			(
+			board_groupid = #{boardGroupId} and
+			category_id = 6 and
+			user_id = #{iUserVO.userId} and
+			board_Id = #{boardId}
+		
+			)
+		]]>
+		</update>
+		
+		
+				<!-- 댓글 삭제 -->
+		<delete id="deleteChallengeReply">
+		<![CDATA[
+			DELETE FROM board
+
+			WHERE
+			(
+			category_id = 6 and
+			user_id = #{userId} and
+			board_Id = #{boardId}
+	
+			)
+		]]>
+		</delete>
+		
+		
+		
+		
 		<!-- 인증글 추가 -->
 		<insert id="insertChallengeCertify">
 		<![CDATA[
@@ -479,6 +538,7 @@
 		]]>
 		</insert>
 		
+		
 		<!-- 인증글 수정 -->
 		<update id="modifyChallengeCertify">
 		<![CDATA[
@@ -501,6 +561,7 @@
 		]]>
 		</update>
 		
+		
 		<!-- 인증글 삭제 -->
 		<delete id="deleteChallengeCertify">
 		<![CDATA[
@@ -508,9 +569,8 @@
 
 			WHERE
 			(
-			board_groupid = #{boardGroupId} and
 			category_id = 5 and
-			user_id = #{iUserVO.userId} and
+			user_id = #{userId} and
 			board_Id = #{boardId}
 	
 			)
@@ -533,7 +593,7 @@
 				SELECT *
 				FROM
 				(
-				    SELECT ROWNUM rn, c.*
+				    SELECT ROWNUM rnum, c.*
 				    FROM
 				    (
 				        SELECT B.*, u.user_nickname 
@@ -542,7 +602,7 @@
          				order by B.board_date desc
 				    ) C
 				    WHERE rownum <= #{pageNum} * #{amount} 
-				    	)	WHERE rn > (#{pageNum}-1) * #{amount}
+				    	)	WHERE rnum > (#{pageNum}-1) * #{amount}
 			]]>
       
 			</select>

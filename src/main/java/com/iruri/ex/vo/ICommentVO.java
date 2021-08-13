@@ -38,10 +38,6 @@ public class ICommentVO {
     
     private String commentContent;
     
-    private String userNickname;
-    
-    private int userPhone;
-    
     private int classId;
 
 

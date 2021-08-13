@@ -4,6 +4,14 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.UserChallengeMapper">
 
+	<resultMap type="com.iruri.ex.vo.IClassVO" id="calendarMap">
+		<result property="classId" column="CLASS_ID" />
+		<result property="classTitle" column="CLASS_TITLE" />
+		<result property="classStartDate" column="CLASS_STARTDATE" />
+		<result property="classEndDate" column="CLASS_ENDDATE" />
+		<result property="categoryId" column="CATEGORY_ID" />
+	</resultMap>
+
 	<resultMap type="com.iruri.ex.vo.IClassVO"
 		id="UserChallengeMap">
 		<result property="classId" column="CLASS_ID" />
@@ -106,8 +114,8 @@
 			*
 		FROM
 			iclass
-				 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
-					and category_id = 1 and class_enddate >= sysdate
+		 WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+			and category_id = 1 and class_enddate >= sysdate and rownum <= 4
 		
 		]]>
 	</select>
@@ -440,6 +448,39 @@ and iclass.class_enddate > sysdate and iclass.category_id = 2 and buy.buy_id = p
 			]]>
 
 	</update>
+	
+<!-- SELECT class_id, category_id, month_first, month_last, class_startdate, class_enddate -->
+<!-- 유저 아이디, 년월  -->
+	<select id="getCalendar" resultMap="calendarMap">
+	<![CDATA[
+SELECT class_id, category_id, class_title, class_startdate, class_enddate
+FROM
+(
+    SELECT TO_CHAR(to_date('21/08/01', 'YY-MM-DD'), 'MONTH') month,
+    TRUNC(to_date('21/08/01', 'YY-MM-DD'),'MM') month_first, LAST_DAY(to_date('21/08/01', 'YY-MM-DD')) month_last
+    FROM dual
+) cri,
+(
+    SELECT endd.class_title, endd.category_id, startd.*, endd.class_enddate
+    FROM
+    (
+        SELECT class_id, class_startdate
+        FROM iclass
+        WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+        and class_enddate >= sysdate
+    ) startd,
+    (
+        SELECT class_title, category_id, class_id, class_enddate
+        FROM iclass 
+        WHERE class_id IN (select class_id from buy where user_id = #{userId} and buy_id IN (select buy_id from pay where pay_state='pay'))
+        and class_enddate >= sysdate
+    ) endd
+    WHERE startd.class_id = endd.class_id
+)    
+WHERE (month_first <= class_startdate and month_last >= class_startdate) or (month_first <= class_enddate and month_last >= class_enddate)
+ORDER BY category_id asc
+	]]>
+	</select>
 
 
 

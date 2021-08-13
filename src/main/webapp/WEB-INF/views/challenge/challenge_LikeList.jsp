@@ -80,39 +80,34 @@
 				<div class="c_text">추천챌린지</div>
 
 
-				<!--추천챌린지 이미지 2개-->
+		    <!--추천챌린지 이미지 2개-->
 				<div class="c_recommend">
-					<div class="c_recommend_img">
-
-						<div class="c_recommend_title">
-							스쿼트, 런지, 플랭크<br> 30일 챌린지
-						</div>
-
-						<span class="c_recommend_date"> 2021.03.01~2021.04.01 </span>
-
-
-						<div class="c_heart">
-							<input type="checkbox" id="heart1"><label for="heart1"
-								class="heart_label"></label>
-						</div>
-					</div>
+					<c:forEach var="recommend" items="${recommendList}">
+						<a
+							href="${CONTEXT_PATH}/iruri/challengeJoinCheck?classId=${recommend.classId}"
+							target="_blank">
+							<div class="c_recommend_img" style="position: relative">
+								<img
+									src="${CONTEXT_PATH}/iruri/display?fileName=${recommend.classImage}"
+									alt="" style="position: absolute;">
+								<div style="width: 100%; height: 100%; padding: 45px">
+									<div class="c_recommend_title">${recommend.classTitle}</div>
 
 
-
-					<div class="c_recommend_img">
-						<div class="c_recommend_title">러닝 전 5분 스트레칭</div>
-
-
-						<span class="c_recommend_date"> 2021.03.01~2021.04.01 </span>
+									<span class="c_recommend_date">
+										${recommend.classStartDate}~${recommend.classEndDate} </span>
 
 
-						<div class="c_heart">
-							<input type="checkbox" id="heart2"><label for="heart2"
-								class="heart_label"></label>
-						</div>
-
-					</div>
+									<div class="c_heart">
+										<input type="checkbox" id="heart${recommend.classId}"><label
+											for="heart${recommend.classId}" class="heart_label"></label>
+									</div>
+								</div>
+							</div>
+						</a>
+					</c:forEach>
 				</div>
+			</div>
 
 
 

@@ -120,7 +120,7 @@ font-size:16px;
 border-radius: 90px;
 border: 0.5px solid var(--iruri-red-color);
 color: var(--iruri-red-color);
-width: 110px;
+width: 100px;
 height: 100px;
 }
 
@@ -159,7 +159,7 @@ font-size:16px;
 border-radius: 80px;
 border: 0.5px solid var(--iruri-green-color);
 color: var(--iruri-green-color);
-width: 110px;
+width: 100px;
 height: 100px;
 }
 
@@ -172,7 +172,7 @@ font-size:16px;
 border-radius: 80px;
 border: 0.5px solid var(--iruri-blue-color);
 color: var(--iruri-blue-color);
-width: 110px;
+width: 100px;
 height: 100px;
 }
 

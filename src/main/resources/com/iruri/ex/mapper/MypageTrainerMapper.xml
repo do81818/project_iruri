@@ -107,19 +107,21 @@
 		<result property="userPoint" column="user_point"/>
 		<result property="userBlackList" column="user_blacklist"/>
 		<result property="userBlaskListReason" column="user_blacklist_reason"/>
-		
-		<collection property="iCommentList" resultMap="iCommentMap">
-		</collection>
 	</resultMap>
+	
+	
+	<!-- 유저정보, 클래스 정보 VO -->
+	<resultMap type="com.iruri.ex.vo.TableJoinVO" id="userClassJoinMap">
+		<collection property="iuserVo" resultMap="iUserMap"></collection>
+		<collection property="iclassVo" resultMap="iClassMap"></collection>
+	</resultMap>
+	
 	
 	<!-- ICommentVO -->
 	<resultMap type="com.iruri.ex.vo.ICommentVO" id="iCommentMap">
 		<result property="commentId" column="comment_id"/>
 		<result property="commentDate" column="comment_date"/>
 		<result property="commentContent" column="comment_content"/>
-		<result property="userNickname" column="user_nickname"/>
-		<result property="userPhone" column="user_phone"/>
-		
 		<result property="classId" column="class_id"/>
 	</resultMap>
 	
@@ -231,12 +233,106 @@ iclass.class_joinmember, iclass.class_enddate, iclass.class_state
 from buy,iclass,pay
 where buy.class_id = iclass.class_id and iclass.user_id= #{userId} and pay.buy_id = buy.buy_id
 and pay.pay_state='pay'
-order by buy.user_id)c, icomment 
-where c.user_id = iuser.user_id and icomment.user_id=iuser.user_id
+order by buy.user_id)c
+where c.user_id = iuser.user_id 
 order by c.class_id desc
 		]]>
 	</select>
 	
+	<!-- comment 리스트  -->
+	<select id="commentList" resultMap="trainerUserManagementMap">
+		<![CDATA[
+			SELECT distinct *
+FROM ICOMMENT,( 
+select iuser.user_id
+from iuser, 
+(select buy.user_id, iclass.class_id
+from buy,iclass,pay
+where buy.class_id = iclass.class_id and iclass.user_id = #{userId} and pay.buy_id = buy.buy_id
+and pay.pay_state='pay'
+order by buy.user_id)c 
+where c.user_id = iuser.user_id
+order by class_id desc)CM
+WHERE icomment.user_id = cm.user_id
+order by icomment.comment_id
+		]]>
+	</select>
+	
+	
+	<!-- 특정 트레이너가 개설한 클래스 리스트 -->
+	<select id="pagingTrainerClassList" resultMap="iClassMap">
+		<![CDATA[
+		SELECT *
+		FROM
+		(
+		    SELECT ROWNUM rn, bc.*
+		    FROM
+		    (
+		        select class_id, class_title, class_state, class_joinmember
+				from iclass
+				where user_id = #{userId}
+		    ) bc
+		     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+		)
+		WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<!-- 특정 트레이너가 개설한 클래스 리스트 갯수 -->
+	<select id="countPagingClassList" resultType="Integer">
+	<![CDATA[
+		select count(*) from 
+		(
+	        select class_id, class_title, class_state, class_joinmember
+			from iclass
+			where user_id = #{userId}
+	    )
+	]]>
+	</select>
+	
+	<!-- 클래스에 등록한 유저 리스트 -->
+	<select id="ClassBuyUserList" resultMap="userClassJoinMap">
+		<![CDATA[
+		select c.*, u.user_nickname, u.user_phone
+		from 
+			(select b.class_id, b.user_id
+			from pay p, buy b
+			where p.buy_id = b.buy_id and p.pay_state = 'pay') c
+		inner join iuser u
+		on c.user_id = u.user_id
+		order by u.user_id desc
+		]]>
+	</select>
+	
+	
+	<!-- 해당 클래스의 특정 유저에 대한 코멘트 리스트 -->
+	<select id="ClassBuyUserCommentList" resultMap="iCommentMap">
+		<![CDATA[
+		select *
+		from icomment
+		where class_id = #{classId} and user_id = #{userId}
+		order by comment_id desc	
+		]]>
+	</select>
+	
+	
+	<insert id="insertComment">
+	<![CDATA[
+		INSERT INTO icomment (
+    comment_id,
+    comment_date,
+    comment_content,
+    user_id,
+    class_id
+) VALUES (
+    (select max(comment_id) from icomment)+1,
+    sysdate,
+    #{commentContent},
+    #{userId},
+    #{classId}
+)
+	]]>
+	</insert>
 	
 	
 
