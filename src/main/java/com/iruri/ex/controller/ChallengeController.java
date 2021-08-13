@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.ReportVO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -244,7 +246,7 @@ public class ChallengeController {
     }
 
    
-    /*-------------챌린지 상세 페이지-------------*/
+    /*-------------챌린지 참여 전 페이지-------------*/
     // 챌린지 상세 -참여 전
     @GetMapping("/iruri/challenge_detail_before")
     public ModelAndView c_detail_before(ModelAndView mav, IClassVO iClassVO) {
@@ -305,6 +307,8 @@ public class ChallengeController {
     }
     
 
+    
+    /*-------------챌린지 참여 후 페이지-------------*/
     //챌린지 상세-참여 후 
     @GetMapping("/iruri/challenge_detail_after")
     public ModelAndView c_detail_after(ModelAndView mav, IClassVO iClassVO, 
@@ -474,10 +478,26 @@ public class ChallengeController {
         
         challengeService.deleteChallengeReply(boardId, vo.getUserId());
         
-        return "success";
+        return "SUCCESS";
 
     }
     
+    
+    //댓글 신고
+    @ResponseBody
+    @PostMapping("/ajax/reportReply")
+    public void challengeReplyReportInsert(ReportVO reportVO) {
+        
+        challengeService.challengeReplyReportInsert(reportVO);
+    }
+    
+    // 댓글 숨기기
+    @ResponseBody
+    @GetMapping("/ajax/blindChallengeReply")
+    public void blindChallengeReply(BoardVO boardVO, @RequestParam("userId") int userId) {
+        
+        challengeService.blindChallengeReply(boardVO, userId);
+    }
     
     //댓글 리스트
     @ResponseBody

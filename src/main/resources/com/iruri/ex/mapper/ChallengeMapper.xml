@@ -409,6 +409,7 @@
 			  	select count(*) 
 			  	from board b, iclass i
 	       	 	where b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
+	       	 	and board_state='show'
 		]]>
 		</select>
 		
@@ -424,7 +425,7 @@
 				        SELECT B.*, u.user_nickname 
 				        FROM board B, iclass A, iuser u
          				where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
-         				order by B.board_date desc
+         				and B.board_state='show' order by B.board_date desc
 				    ) C
 				    WHERE rownum <= #{pageNum} * #{amount} 
 				    	)	WHERE rnum > (#{pageNum}-1) * #{amount}
@@ -453,7 +454,7 @@
 				VALUES
 				(
 					(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
-					'테스트',
+					'챌린지댓글',
 					#{boardVO.boardContent},
 					sysdate,
 					'show',
@@ -488,7 +489,7 @@
 		</update>
 		
 		
-				<!-- 댓글 삭제 -->
+		<!-- 댓글 삭제 -->
 		<delete id="deleteChallengeReply">
 		<![CDATA[
 			DELETE FROM board
@@ -498,10 +499,54 @@
 			category_id = 6 and
 			user_id = #{userId} and
 			board_Id = #{boardId}
-	
 			)
 		]]>
 		</delete>
+		
+		
+	    <!-- 댓글 감추기 -->
+		<update id="blindChallengeReply">
+		<![CDATA[
+			UPDATE board
+			SET
+			 
+			board_state = 'blind'
+			
+			WHERE
+			(
+			board_groupid = #{boardVO.boardGroupId} and
+			category_id = 6 and
+			user_id = #{userId} and
+			board_Id = #{boardVO.boardId}
+		
+			)
+		]]>
+		</update>
+		
+		
+		  <!-- 댓글 신고->report insesrt -->
+			<insert id="challengeReplyReportInsert">
+			<![CDATA[
+				INSERT INTO report 
+				(
+					REPORT_ID, 
+					REPORT_CONTENT, 
+					BOARD_ID, 
+					REPORT_DATE,
+					USER_ID	
+				)
+				
+				VALUES
+				(
+					(SELECT NVL(MAX(REPORT_ID), MAX(REPORT_ID)) + 1 FROM report),
+					#{reportContent},
+					#{boardId},
+					sysdate,
+					#{userId}
+	       	 	)
+			]]>
+		</insert>
+		
 		
 		
 		

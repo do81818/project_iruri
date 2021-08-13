@@ -16,6 +16,7 @@ import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
+import com.iruri.ex.vo.ReportVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -259,6 +260,25 @@ public class ChallengeServiceImpl implements ChallengeService {
         
         challengeMapper.modifyChallengeReply(boardVO);
     }
+    
+    // 댓글 신고
+
+    @Override
+    public void challengeReplyReportInsert(ReportVO reportVO) {
+        
+        challengeMapper.challengeReplyReportInsert(reportVO);        
+    }
+    
+    
+    // 댓글 숨기기
+    @Override
+    public void blindChallengeReply(BoardVO boardVO, int userId) {
+        log.info("deleteChallengeReply() .. " + boardVO);
+        
+        challengeMapper.blindChallengeReply(boardVO, userId);
+    }
+    
+
 
     //댓글 userId
     @Override

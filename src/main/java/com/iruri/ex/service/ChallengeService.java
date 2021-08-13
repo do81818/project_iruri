@@ -10,6 +10,7 @@ import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
+import com.iruri.ex.vo.ReportVO;
 
 public interface ChallengeService {
     
@@ -86,6 +87,12 @@ public interface ChallengeService {
     
     //댓글 수정
     void modifyChallengeReply(BoardVO boardVO);
+    
+    //댓글 신고
+    void challengeReplyReportInsert(ReportVO reportVO);
+    
+    //댓글 숨기기
+    void blindChallengeReply(BoardVO boardVO, int userId);
 
     //댓글 유저 
     BoardVO getUserId(IUserVO iUserVO);
@@ -102,6 +109,9 @@ public interface ChallengeService {
     //인증글 리스트 페이징
     int getTotal_challengeImg(Criteria cri, int classId);
     List<BoardVO> challengeImgList(Criteria cri, int classId);
+
+
+    
 
 
   
