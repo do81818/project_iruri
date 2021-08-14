@@ -245,20 +245,6 @@ public class MypageAdminController {
         return ResponseEntity.ok(result);
     }
 	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
 	
 	
 	// showProfileTrainer_Admin() ModelAndView 트레이너 프로필 보기
@@ -359,14 +345,23 @@ public class MypageAdminController {
 
 	// 관리자 수익 목록 보기 
     @ResponseBody
-    @PostMapping("ajax/paylist")
+    @GetMapping("ajax/paylist")
     public ResponseEntity<HashMap<String, Object>> restShowPayList_Admin(@Param("inquire") String inquire, @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
             @Param("pageNum") int pageNum) {
         
         HashMap<String, Object> result = new HashMap<>();
         log.info("restShowPayList_Admin()..");
         Criteria cri = new Criteria(pageNum, 10);
-        int total = adminService.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+        
+        int total = 0;
+        
+        if(periodStartDate.equals("30")) {
+        	total = 30; 
+        	periodStartDate = "0";
+        	periodEndDate = "0";
+        } else {
+        	total = adminService.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+        }
         result.put("pageMaker", new PageVO(cri, total));
         result.put("list", adminService.getTotalMoneyInOutList(inquire, periodStartDate, periodEndDate, cri));
         log.info(result);
