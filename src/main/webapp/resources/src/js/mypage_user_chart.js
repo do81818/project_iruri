@@ -38,7 +38,13 @@ var config2 = {
 		labels: ['1월', '2월', '3월', '4월', '5월', '6월','7월','8월','9월','10월','11월','12월'],
 		datasets: [{
 			label: 'Weight changed',
-			data: [30,50,51,52,60,45,50,70],
+			data: [
+			<c:forEach items="${useryearweight}" var="item">
+				alert("${item.user_weight.val}")
+				</c:forEach>
+			
+			
+			],
 			backgroundColor: [
 				'rgba(239,239,239)',
 				

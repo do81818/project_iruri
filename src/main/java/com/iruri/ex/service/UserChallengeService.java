@@ -64,5 +64,8 @@ public interface UserChallengeService {
 	void class_delete_insert(int userId, int classId);
 
 	void class_delete_update(int userId, int classId);
+	
+	// 캘린더
+	List<IClassVO> getCalendar(int userId);
 
 }

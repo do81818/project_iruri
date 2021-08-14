@@ -26,19 +26,6 @@ $(function() {
 
 });
 
-
-//댓글 신고하기 모달//
-$(function() {
-    $(".reply_complain").click(function() {
-        $(".c_complain_modal").fadeIn();
-    });
-
-    $(".c_complain_modal_cancle").click(function() {
-        $(".c_complain_modal").fadeOut();
-    });
-
-});
-
 //챌린지 개설 경고 모달//
 $(function() {
 
@@ -102,69 +89,101 @@ $(function() {
 
 });
 
-//인증사진 상세 모달//
-function certify_details_modal(boardId) {
+// 인증사진 수정 함수//
+function certify_modify_modal(boardId) {
+    $(".c_myCertify_modal").fadeOut();
+    $("#c_certify_modify_modal").fadeIn();
+}
 
+// 인증사진 삭제 함수//
+function certify_delete_modal(boardId) {
+    top.window.location.reload(true);
+
+    console.log("deleteId", boardId);
+    
+    $.ajax({
+        url: 'http://localhost:8282/ex/ajax/deleteCertifyImgList',
+        type: 'GET',
+        cache: false,
+        dataType: 'json',
+        data: {
+            boardId: boardId,
+        },
+        success: function(data) {
+            if (data == "success") {
+                console.log(data);
+            }
+        }
+    });
+
+    $(".c_myCertify_modal").fadeOut();
+    window.opener.parent.location.reload(); // 부모창 새로고침 
+    window.self.close(); // 현재 팝업 닫기 
+}
+
+//인증사진 상세 모달//
+let modalBoardId;
+
+function certify_details_modal(boardId) {
 
     if (boardId === 'close') {
         $(".c_myCertify_modal").fadeOut();
-        return false;
+        return;
     }
 
     if (boardId === 'modify') {
-        $(".c_myCertify_modal").fadeOut();
-        $("#c_certify_modify_modal").fadeIn();
-        return false;
+        certify_modify_modal();
+        return;
     }
-    
+
     if (boardId === 'delete') {
-        $(".c_myCertify_modal").fadeOut();
-        return false;
+        certify_delete_modal(modalBoardId);
+        return;
     }
 
     const boardList = JSON.parse(localStorage.getItem('boardList'));
+
     let board = boardList.filter((item) => {
         return item.boardId === boardId;
-    });
-    board = board[0];
+    })[0];
 
-    console.log("board", board);
+    console.log(board);
 
-	fetch('/ex/auth/loginCheck?userId=' + board.iuserVO.userId)
-	.then(data => data.text())
-	.then(html => console.log(html));
-	
-	fetch('/ex/auth/loginCheck?userId=' + board.iuserVO.userId)
-	.then(data => data.text())
-	.then(btns => {
-		let template = `
-    	<div class="c_myCertify_modal_start">
-            <div>
-            	<input type="hidden" name="boardId" value="${board.boardId}">
-                <div class="myCertify_img">
-                    <img src="display?fileName=${board.boardFile}" alt="">
-                </div>
-                <div class="myCertify_myInfo">
-                    <span class="myCertify_date"> ${board.boardDate} </span> <span class="myCertify_nickname"> ${board.iuserVO.userNickname} </span>
-                </div>
-                <div class="myCertify_title">${board.boardTitle}</div>
-                <div class="myCertify_content">${board.boardContent}</div>
+    modalBoardId = board.boardId;
 
-                <div class="modal_button">`;
-        template += btns
-        template +=            `<button class="c_myCertify_modal_submit" onclick="certify_details_modal('close')">확인</button>
-                </div>
+    fetch('/ex/auth/loginCheck?userId=' + board.iuserVO.userId)
+        .then(data => data.text())
+        .then(btns => {
+            let template = `
+    <div class="c_myCertify_modal_start">
+        <div>
+            <input type="hidden" name="boardId" value="${board.boardId}">
+            <div class="myCertify_img">
+                <img src="display?fileName=${board.boardFile}" alt="">
+            </div>
+            <div class="myCertify_myInfo">
+                <span class="myCertify_date"> ${board.boardDate} </span> <span class="myCertify_nickname"> ${board.iuserVO.userNickname} </span>
+            </div>
+            <div class="myCertify_title">${board.boardTitle}</div>
+            <div class="myCertify_content">${board.boardContent}</div>
+
+            <div class="modal_button">`;
+            template += btns
+            template += `<button class="c_myCertify_modal_submit" onclick="certify_details_modal('close')">확인</button>
             </div>
         </div>
+    </div>
 
-        <div class="modal_layer"></div>`;
-	
-	    $(".c_myCertify_modal").html(template);
-	});
+    <div class="modal_layer"></div>`;
 
-	    $(".c_myCertify_modal").fadeIn();
+            $(".c_myCertify_modal").html(template);
+        });
 
+    $(".c_myCertify_modal").fadeIn();
 }
+
+
+
 
 //댓글 삭제 확인 모달//
 $(function() {
@@ -180,22 +199,129 @@ $(function() {
 
 
 //댓글 수정 모달//
-$(function() {
-    $(".reply_modify").click(function() {
-        $(".reply_modify_modal").fadeIn();
-    });
+function reply_modify_func(boardId, classId) {
 
+     $(".reply_modify_modal").fadeIn();
+	
+		// 댓글 수정하기 
+       $('.reply_form').submit(function(e) {
+           e.preventDefault();
+       });
+       
+       $('.reply_modify_modal_submit').on('click', function(e) {
+        	top.window.location.reload(true);
+        	
+           var boardContent2 = document.querySelector('textarea[name="reply_modify_content"]');	
+			
+           var formData2 = {
+       		  boardId: boardId,
+       		  boardContent: boardContent2.value,
+       		  boardGroupId: classId
+           }
+
+           const header = $('meta[name="_csrf_header"]').attr('th:content');
+           const token = $('meta[name="_csrf"]').attr('th:content');
+
+           $.ajax({
+           	url: '/ex/ajax/modifyReply',
+           	type: 'POST',
+           	beforeSend: function(xhr) {
+           		xhr.setRequestHeader(header, token);
+           	},
+           	data: formData2,
+           	dataType: 'json',
+           	success: function(result) {
+		     	getlist(1);
+             }
+           });
+           
+           window.opener.parent.location.reload(); // 부모창 새로고침 
+           window.self.close(); // 현재 팝업 닫기  
+           $(".reply_modify_modal").fadeOut();
+           
+          });                                            
+
+	                           
     $(".reply_modify_modal_cancle").click(function() {
         $(".reply_modify_modal").fadeOut();
     });
-});
+}
+
+//댓글 신고하기 모달//
+function reply_complain_modal(boardId, userId) {
+
+    $(".c_complain_modal").fadeIn();
+    
+       $('.c_complain_form').submit(function(e) {
+             e.preventDefault();
+        });
+
+        //댓글 신고하기
+        $('.c_complain_modal_submit').on('click', function(e) {
+        
+        	
+        	
+            const header = $('meta[name="_csrf_header"]').attr('th:content');
+            const token = $('meta[name="_csrf"]').attr('th:content');
+            const reportContents = document.querySelectorAll('input[name="reportContent"]');
+            
+            let reportContent; 
+            reportContents.forEach(content => {
+            	if(content.checked === true) {
+					reportContent = content;             	
+            	}
+            });
+
+            $.ajax({
+                url: '/ex/ajax/reportReply',
+                type: 'POST',
+                cache: false,
+                dateType: 'json',
+                data: {
+                    boardId: boardId,
+                    reportContent: reportContent.value,
+                    userId: userId
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(data) {
+                        getlist(1);
+                }
+            });
+            
+			$(".c_complain_modal").fadeOut();
+    
+        });
+
+    $(".c_complain_modal_cancle").click(function() {
+        $(".c_complain_modal").fadeOut();
+    });
+
+};
+
+function reply_blind_func(boardId, userId, boardGroupId) {
+
+	$.ajax({
+        url: '/ex/ajax/blindChallengeReply',
+        type: 'GET',
+        cache: false,
+        dateType: 'json',
+        data: {
+            boardId: boardId,
+            boardGroupId: boardGroupId,
+            userId: userId
+        },
+        success: function(data) {
+                getlist(1);
+        }
+    });
+}
 
 
-
-//인증글 수정 모달//
+//인증글 수정 모달 X 버튼//
 $(function() {
     $(".c_modal_close img").click(function() {
         $("#c_certify_modify_modal").fadeOut();
     });
-
 });

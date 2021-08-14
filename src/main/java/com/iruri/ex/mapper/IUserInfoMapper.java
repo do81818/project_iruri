@@ -13,6 +13,10 @@ import com.iruri.ex.vo.IUserInfoVO;
 public interface IUserInfoMapper {
     
 	List<IUserInfoVO> selectAll(int userId);
+
+	List<IUserInfoVO> useryearweight(int userId);
+
+	List<IUserInfoVO> usermonthweight(int userId);
     
 //	int userheightdate(int userId);
 }

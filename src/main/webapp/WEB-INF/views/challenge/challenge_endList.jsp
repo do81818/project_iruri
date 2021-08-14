@@ -82,38 +82,32 @@
                                     <div class="c_text">추천챌린지</div>
 
 
-                                    <!--추천챌린지 이미지 2개-->
+                        
+                              		<!--추천챌린지 이미지 2개-->
                                     <div class="c_recommend">
-                                        <div class="c_recommend_img">
-
-                                            <div class="c_recommend_title">
-                                                스쿼트, 런지, 플랭크<br> 30일 챌린지
-                                            </div>
-
-                                            <span class="c_recommend_date"> 2021.03.01~2021.04.01 </span>
-
-
-                                            <div class="c_heart">
-                                                <input type="checkbox" id="heart10000"><label for="heart10000" class="heart_label"></label>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="c_recommend_img">
-                                            <div class="c_recommend_title">러닝 전 5분 스트레칭</div>
-
-
-                                            <span class="c_recommend_date"> 2021.03.01~2021.04.01 </span>
-
-
-                                            <div class="c_heart">
-                                                <input type="checkbox" id="heart20000"><label for="heart20000" class="heart_label"></label>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
+										<c:forEach var="recommend" items="${recommendList}">
+										<a href="${CONTEXT_PATH}/iruri/challengeJoinCheck?classId=${recommend.classId}" target="_blank">
+                                        <div class="c_recommend_img" style="position: relative">
+                                            <img src="${CONTEXT_PATH}/iruri/display?fileName=${recommend.classImage}" alt="" style="position: absolute;">
+												<div style="width: 100%; height: 100%; padding: 45px">
+	                                                <div class="c_recommend_title">
+	                                                    ${recommend.classTitle}
+	                                                </div>
+	
+	
+	                                                <span class="c_recommend_date"> 
+	                                            		${recommend.classStartDate}~${recommend.classEndDate} 
+	                                           		</span>
+	
+	
+	                                               
+												</div>
+                                        	</div>
+                                        </a>
+									</c:forEach>
+                                  </div>
+							 </div>
+						
 
 
                                     <div class="c_main_tab">
@@ -234,8 +228,7 @@
                                         function getlist(page) {
 
                                             var search = $("#keyword").val();
-                                           
-                                          
+                        
                                             
 											// 1. ajax로 챌린지 리스트를 배열의 형태로 가져온다.
 											// 2. 1번을 어딘가에 보관한다.
@@ -322,12 +315,35 @@
                                                             htmls += '</div>';
 
                                                      
-            												htmls += '<div class="c_list_heart">';
-                                                            htmls += '<img class="heart_nologin_img" src="/ex/resources/src/img/icon/heart_gray.png" alt="">';
-                                                            htmls += '</div>';
-            												
+                                                        	var heartClassId = this.classId;
 
-                                                            htmls += '</div>';
+                                                               $.ajax({
+                                                                   url: '${CONTEXT_PATH}/iruri/heartList',
+                                                                   type: 'GET',
+                                                                   cache: false,
+                                                                   dateType: 'json',
+                                                                   data: {
+                                                                       classId: heartClassId,
+                                                                   },
+                                                                   success: function(result) {
+
+                                                                       if (result !== 0) {
+                                                                           $('#heart' + heartClassId).attr('checked', true);
+                                                                       }
+                                                                   }
+                                                               })
+               												
+                                                             
+	                                               												
+	                                               		
+	                                               			   htmls += '<div class="c_list_heart">';
+                                                               htmls += '<img class="heart_nologin_img" src="/ex/resources/src/img/icon/heart_gray.png" alt="">';
+                                                               htmls += '</div>';
+                                                 		
+
+                                                 			   htmls += '</div>';
+            
+                                             
 
 
                                                         });

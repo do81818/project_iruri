@@ -34,6 +34,28 @@ WHERE
 		]]>
 	</select>
 	
+	
+		<!-- 올해 몸무게 구하기 -->
+	<select id="useryearweight" resultMap="iUserinfoMap">
+		<![CDATA[
+SELECT distinct extract(month from user_writedate) 월,user_weight 
+FROM iuserinfo 
+WHERE user_id = #{userId} and ROWID IN (select MAX(ROWID) from iuserinfo group by (extract(month from user_writedate)))order by 월
+		]]>
+	</select>
+	
+	
+			<!-- 이번달 몸무게 구하기 -->
+	<select id="usermonthweight" resultMap="iUserinfoMap">
+		<![CDATA[
+select user_weight
+from iuserinfo where user_id = #{userId} and trunc(sysdate,'mm')< TO_CHAR(user_writedate,'YYYYMMDD')
+and TO_CHAR(user_writedate,'YYYYMMDD')<last_day(sysdate)
+order by user_writedate
+		]]>
+	</select>
+	
+	
 
 
 

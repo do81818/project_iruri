@@ -35,22 +35,22 @@
 		</c:if>
 		<br>${user.userEmail}</div>
           </div>
-          <div id = "m_userboard_box">
-            <div id="m_userboard"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/boardlist.html">작성글</a></div>
-            <div id ="m_userboard_number">${boardcount}</div>
-          </div>
-          <div id = "m_userpoint_box">
-            <div id="m_userpoint"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/pointlist.html">보유포인트</a></div>
-            <div id ="m_userpoint_number">${totalpoint}</div>
-          </div>
-          <div id = "m_userchanllenge_box">
-            <div id="m_userchanllenge"><a href="file:///C:/Users/twist/Desktop/mypage_user/iruri/src/html/challenge.list.html">참여중인챌린지</a></div>
-            <div id="m_userchanllenge_number">${userchallengecount}</div>
-          </div>
-          <div id = "m_userclass_box">
-            <div id="m_userclass"><a href="../html/classlist.html">참여중인클래스</a></div>
-            <div id="m_userclass_number">${userclasscount}</div>
-          </div>
+      <div id = "m_userboard_box">
+        <div id="m_userboard"><a href="/ex/mypage/boardlist">작성글</a></div>
+        <div id ="m_userboard_number">${boardcount}</div>
+      </div>
+      <div id = "m_userpoint_box">
+        <div id="m_userpoint"><a href="/ex/mypage/pointlist">보유포인트</a></div>
+        <div id ="m_userpoint_number">${totalpoint}</div>
+      </div>
+      <div id = "m_userchanllenge_box">
+        <div id="m_userchanllenge"><a href="/ex/mypage/challengelist">참여중인챌린지</a></div>
+        <div id="m_userchanllenge_number">${userchallengecount}</div>
+      </div>
+      <div id = "m_userclass_box">
+        <div id="m_userclass"><a href="/ex/mypage/classlist">참여중인클래스</a></div>
+        <div id="m_userclass_number">${userclasscount} </div>
+      </div>
         </div>
          
                  <!-- 포인트리스트박스 -->
@@ -79,7 +79,10 @@
                 <div class="m_userpoint_list">
                     <div id="m_point_type_save">적립</div>
                     <div id="m_point_content_box">
-                        <div id="m_point_date">${point.pointSavedate}</div>
+                    
+                        <div id="m_point_date">
+                        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${point.pointSavedate}"/></div>
                         <div id="m_point_content">${point.pointContent}</div>
                     </div>
                     <div id="m_point_price">${point.pointValue}</div>
@@ -94,7 +97,9 @@
                  <div class="m_userpoint_list">
                     <div id="m_point_type_pre">적립예정</div>
                     <div id="m_point_content_box">
-                        <div id="m_point_date">${point.pointSavedate}</div>
+                        <div id="m_point_date">
+                         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${point.pointSavedate}"/></div>
                         <div id="m_point_content">${point.pointContent}</div>
                     </div>
                     <div id="m_point_price">${point.pointValue}</div>
@@ -108,7 +113,9 @@
 				<div class="m_userpoint_list">
                 <div id="m_point_type_use">사용</div>
                 <div id="m_point_content_box">
-                    <div id="m_point_date">${point.pointSavedate}</div>
+                    <div id="m_point_date">
+                     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${point.pointSavedate}"/></div>
                     <div id="m_point_content">${point.pointContent}</div>
                 </div>
                 <div id="m_point_useprice">-${point.pointValue}</div>
@@ -131,7 +138,6 @@
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
         	
-        
             <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
             
         </c:forEach>

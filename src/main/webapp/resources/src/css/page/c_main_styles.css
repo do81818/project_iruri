@@ -96,13 +96,18 @@ body {
 .c_recommend_img {
     width: 565px;
     height: 440px;
-    background: url("/ex/resources/src/img/icon/565-440.png") no-repeat;
+    background: no-repeat;
     margin-bottom: 94px;
-    padding: 45px;
     float: left;
     margin-right: 35px;
-    border-radius: 30px;
 }
+
+.c_recommend .c_recommend_img img{
+	width: 100%;
+	height: 100%;
+	border-radius: 30px;
+}
+
 
 .c_recommend_title {
     height: 73px;
@@ -110,7 +115,6 @@ body {
     font-family: 'Cafe24Ssurround', sans-serif;
     color: var(--iruri-green-color);
     font-size: 32px;
-    float: left;
     position: relative;
     top: 240px;
 }

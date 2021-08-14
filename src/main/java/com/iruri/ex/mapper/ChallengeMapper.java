@@ -12,6 +12,7 @@ import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.LikeListVO;
+import com.iruri.ex.vo.ReportVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -30,6 +31,9 @@ public interface ChallengeMapper {
     void insertChallenge(IClassVO iClassVO);
 
     /*----------챌린지 메인-----------*/
+    //추천 챌린지
+    List<IClassVO> challengeRecommend(int classId);
+    
     //챌린지 메인 리스트
     List<IClassVO> ChallengeSelectAll();
     //지난 챌린지 리스트
@@ -85,7 +89,19 @@ public interface ChallengeMapper {
 
     //댓글 입력
     void challengeReplyInsert(@Param("boardVO") BoardVO boardVO, @Param("classId") int classId);
-    // , @Param("classId") int classId
+    
+    // 댓글 삭제
+    void deleteChallengeReply(@Param("boardId") int boardId, @Param("userId") int userId);
+    
+    // 댓글 수정
+    void modifyChallengeReply(BoardVO boardVO);
+    
+    // 댓글 신고
+    void challengeReplyReportInsert(ReportVO reportVO);
+    
+    // 댓글 감추기
+    void blindChallengeReply(@Param("boardVO") BoardVO boardVO, @Param("userId") int userId);
+
     //댓글 userId
     BoardVO readUserId(IUserVO iUserVO);
     
@@ -94,10 +110,20 @@ public interface ChallengeMapper {
     
     // 인증글 수정
     void modifyChallengeCertify(BoardVO boardVO);
+    
+    // 인증글 삭제
+    void deleteChallengeCertify(@Param("boardId") int boardId, @Param("userId") int userId);
+    
 
     //인증글 리스트
     int getTotalCount_challengeImg(Criteria cri, @Param("classId") int classId);
     List<BoardVO> getListWithPaging_challengeImg(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("classId") int classId);
+
+
+  
+
+
+
 
 
     

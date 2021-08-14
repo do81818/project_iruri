@@ -61,4 +61,7 @@ void challenge_delete(@Param("userId") int userId, @Param("classId") int classId
 void class_delete_insert(@Param("userId") int userId, @Param("classId") int classId);
 
 void class_delete_update(@Param("userId") int userId, @Param("classId") int classId);
+
+// 캘린더
+List<IClassVO> getCalendar(int userId);
 }

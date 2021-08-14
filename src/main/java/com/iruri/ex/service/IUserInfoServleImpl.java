@@ -28,6 +28,16 @@ public class IUserInfoServleImpl implements IUserInfoService {
     	}
     	return vo;
     }
+    
+    @Override
+    public List<IUserInfoVO>useryearweight(int userId){
+    	return iUserinfoMapper.useryearweight(userId);
+    }
+    
+    @Override
+    public List<IUserInfoVO>usermonthweight(int userId){
+    	return iUserinfoMapper.usermonthweight(userId);
+    }
 
 
 	/*
