@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReportVO {
     
-    private int boardId;
-    private String reportContent;
-    private Date reportDate;
     private int reportId;
+    private String reportContent;
+    private int boardId;
+    private Date reportDate;
     private int userId;
     
 }
