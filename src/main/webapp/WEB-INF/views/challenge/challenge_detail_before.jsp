@@ -265,7 +265,7 @@
                                                     htmls += '</div>';
                                                 } else {
 
-                                                    $(imgList).each(function() {
+                                                 
 
 
                                                         htmls += '<div class="c_certify_total">';
@@ -278,6 +278,7 @@
 
                                                         htmls += '<div class="c_certify_img_list">';
 														
+                                                        $(imgList).each(function() {
                                                         $(this.boardList).each(function() {
                      										
                                                             htmls += '<div class="c_certify_img" onclick="certify_details_modal('+ this.boardId +')">';
@@ -286,10 +287,9 @@
 
                                                         });
 
-                                                        htmls += ' </div>';
-                                                        
-
                                                     });
+                                                    
+                                                    htmls += ' </div>';
                                                     
                                                     /* ------------------ 페이징 부분 --------------------- */
 
@@ -394,17 +394,21 @@ $('.c_parti_modal_submit').click(function(){
 							htmls += '</div>';
 						} else {
 							
-							$(replyList).each(function() {
+							
 								
 							
 								htmls += '<div class="reply_count">';
-								const count = $(this.boardList).length;
+								const count = pagination.total;
 								htmls += '총'
 										+ count 
 										+ '개';
 								htmls += '</div>';
 								
 								htmls += '<table class="reply_table">';
+								
+								
+								$(replyList).each(function() {
+								
 								$(this.boardList).each(function() {
 												//댓글 리스트 
 												
@@ -429,10 +433,10 @@ $('.c_parti_modal_submit').click(function(){
 												htmls += '</tr>';
 								});
 												
-								htmls += ' </table>';
+								
 								
 											});
-							
+								htmls += ' </table>';
 						
 							
 					         /* ------------------ 페이징 부분 --------------------- */

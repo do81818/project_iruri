@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동영상 타이머 모달</title>
+    <link rel="stylesheet" href="../css/c_modal.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="../js/stopwatch.js" defer></script>
+
+</head>
+
+<body>
+    <!--운동영상 모달-->
+    <div class="ex_video_start">
+        <div class="alertWindow_close"><img src='../images/images/icon/close.png'> </div>
+
+        <div class="ex_viedo_start_img"></div>
+
+        <div class="ex_viedo_timer">
+            <div id="time" class="time">5</div>
+        </div>
+        <div class="btnBox">
+            <i id="startbtn" class="fa fa-play" aria-hidden="true"></i>
+            <i id="pausebtn" class="fa fa-pause" aria-hidden="true"></i>
+            <i id="stopbtn" class="fa fa-stop" aria-hidden="true"></i>
+        </div>
+        <div class="modal_layer"></div>
+    </div>
+
+</body>
+
+<style>
+    @charset "utf-8";
+    /*----------공통사항---------*/
+    
+    @font-face {
+        font-family: 'NanumBarunGothic';
+        src: url('../font/NanumBarunGothic.ttf');
+        /* format('truetype'); */
+    }
+    
+    @font-face {
+        font-family: 'Cafe24Ssurround';
+        src: url('../font/Cafe24Ssurround.ttf');
+        /* format('truetype'); */
+    }
+    
+    @font-face {
+        font-family: 'Cafe24SsurroundAir';
+        src: url('../font/Cafe24SsurroundAir.ttf');
+        /* format('truetype'); */
+    }
+    
+     :root {
+        /* font-size */
+        --header-gnb-font-size: 22px;
+        --header-side-nav-font-size: 12px;
+        --footer-title-font-size: 20px;
+        --footer-normal-font-size: 13px;
+        /* colors */
+        --iruri-red-color: #ff0000;
+        --iruri-yellow-color: #ffeb00;
+        --iruri-blue-color: #185abd;
+        --iruri-light-blue-color: #02a3ff;
+        --iruri-green-color: #80ff48;
+        --iruri-indigo-color: #0a1931;
+        --iruri-dark-gray-color: #666;
+        --iruri-gray-color: #999;
+        --iruri-light-gray-color: #ccc;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'NanumBarunGothic', sans-serif;
+    }
+    /*댓글 신고 모달*/
+    
+    .ex_video_start {
+        position: relative;
+        z-index: 1;
+        width: 600px;
+        padding: 30px;
+        border: 2px solid var(--iruri-blue-color);
+        border-radius: 50px;
+    }
+    
+    .alertWindow_close {
+        height: 40px;
+    }
+    
+    .alertWindow_close>img {
+        float: right;
+        width: 28px;
+    }
+    
+    .ex_viedo_start_img {
+        height: 300px;
+        width: 100%;
+        background-color: #999;
+    }
+    
+    .ex_viedo_timer {
+        margin: 20px 0;
+    }
+    
+    .time {
+        width: 150px;
+        height: 150px;
+        border-radius: 75px;
+        text-align: center;
+        margin: 0 auto;
+        font-size: 60px;
+        vertical-align: middle;
+        line-height: 150px;
+        border: 1px solid black;
+    }
+    
+    .btnBox {
+        margin: 30px auto;
+        text-align: center;
+    }
+    
+    .btnBox .fa {
+        margin: 0px 30px;
+        font-size: 30pt;
+        color: var(--iruri-blue-color);
+        cursor: pointer;
+    }
+</style>
+
+</html>

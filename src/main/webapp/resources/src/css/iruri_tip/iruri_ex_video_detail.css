@@ -1,0 +1,661 @@
+@charset "utf-8";
+
+/*----------공통사항---------*/
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url('../font/NanumBarunGothic.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('../font/Cafe24Ssurround.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('../font/Cafe24SsurroundAir.ttf');
+    /* format('truetype'); */
+}
+
+ :root {
+    /* font-size */
+    --header-gnb-font-size: 22px;
+    --header-side-nav-font-size: 12px;
+    --footer-title-font-size: 20px;
+    --footer-normal-font-size: 13px;
+    /* colors */
+    --iruri-red-color: #ff0000;
+    --iruri-yellow-color: #ffeb00;
+    --iruri-blue-color: #185abd;
+    --iruri-light-blue-color: #02a3ff;
+    --iruri-green-color: #80ff48;
+    --iruri-indigo-color: #0a1931;
+    --iruri-dark-gray-color: #666;
+    --iruri-gray-color: #999;
+    --iruri-light-gray-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NanumBarunGothic', sans-serif;
+}
+
+.ex_container {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+
+/*---------------------------------------------*/
+
+
+/*이루리운동>운동영상 루트 글씨*/
+
+.ex_category {
+    line-height: 134px;
+    float: left;
+    height: 134px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 28px;
+    color: var(--iruri-blue-color);
+}
+
+
+/*추천운동 이미지*/
+
+.ex_video {
+    display: inline-block;
+    clear: both;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.ex_video_img {
+    width: 1200px;
+    height: 440px;
+    background-color: var(--iruri-indigo-color);
+    margin-bottom: 45px;
+    padding: 45px;
+    margin-right: 35px;
+    border-radius: 30px;
+}
+
+.ex_title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.ex_views {
+    font-size: 14px;
+    color: var(--iruri-gray-color);
+    margin-right: 15px;
+}
+
+
+/*추천 운동 하트*/
+
+.ex_heart .heart_label {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    float: left;
+    left: 130px;
+    bottom: 22px;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    background: url('../images/images/icon/heart_gray.png') center/18px 18px no-repeat;
+}
+
+input[type=checkbox]:checked+label {
+    background-image: url('../images/images/icon/heart_red.png');
+}
+
+
+/*운동 시작하기*/
+
+.ex_start_button {
+    width: 100px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    font-size: 16px;
+    line-height: 48px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /* display: inline-block; */
+    margin: 0 20px;
+    text-decoration: none;
+    float: right;
+    position: relative;
+    bottom: 50px;
+}
+
+
+/*댓글*/
+
+table,
+tr,
+td {
+    border: 0;
+    border-collapse: collapse;
+    clear: both;
+}
+
+
+/* 댓글입력상자 */
+
+.reply_insertBox {
+    width: inherit;
+    padding: 10px 50px;
+    border: 1px solid var(--iruri-blue-color);
+    border-radius: 30px;
+    margin-bottom: 26px;
+    display: flex;
+}
+
+.reply_insertBox table {
+    width: 100%;
+}
+
+.reply_textarea {
+    width: 95%;
+}
+
+.reply_insertButton {
+    width: 5%;
+    height: 40px;
+    text-align: right;
+}
+
+.reply_insertButton>button {
+    font-size: 16px;
+    background-color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: var(--iruri-blue-color);
+}
+
+.reply_textarea>textarea {
+    height: 20px;
+    width: 98%;
+    resize: none;
+    font-size: 18px;
+    font-family: 'NanumBarunGothic';
+    color: var(--iruri-indigo-color);
+    outline: none;
+    border: none;
+}
+
+.reply_textarea>textarea::placeholder {
+    font-size: 16px;
+    font-family: 'NanumBarunGothic';
+    color: var(--iruri-gray-color);
+}
+
+
+/* 댓글리스트 */
+
+.reply_table {
+    width: 98%;
+}
+
+.reply_table td:nth-of-type(1),
+.reply_table td:nth-of-type(2) {
+    padding: 23px 35px;
+    border-top: 1px solid var(--iruri-light-gray-color);
+    border-bottom: 1px solid var(--iruri-light-gray-color);
+}
+
+.reply_nickname {
+    width: 145px;
+    vertical-align: top;
+    color: var(--iruri-indigo-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reply_content {
+    max-width: 100%;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--iruri-dark-gray-color);
+    line-height: 10px;
+}
+
+td.reply_button {
+    width: 150px;
+    padding: 0 38px 0 0;
+    text-align: right;
+    border-top: 1px solid var(--iruri-light-gray-color);
+    border-bottom: 1px solid var(--iruri-light-gray-color);
+}
+
+.reply_button>button {
+    font-size: 14px;
+    color: var(--iruri-gray-color);
+    padding: 5px;
+    border: 1px solid var(--iruri-gray-color);
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    margin: 5px;
+    cursor: pointer;
+}
+
+
+/*페이징*/
+
+.page_nation {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 110px;
+    justify-content: center;
+}
+
+.page_nation a {
+    display: block;
+    margin: 0 10px;
+    float: left;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    text-decoration: none;
+}
+
+.page_nation .prev {
+    position: relative;
+    top: 9px;
+    background: transparent url('../images/images/icon/icon_page_arrow_left.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-right: 7px;
+}
+
+.page_nation .next {
+    position: relative;
+    top: 9px;
+    background: transparent url('../images/images/icon/icon_page_arrow_right.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-left: 7px;
+}
+
+.page_nation a.active {
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    border-radius: 18px;
+}
+
+
+/*운동영상 시작하기 모달*/
+
+.ex_start_modal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.ex_video_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    position: fixed;
+    width: 600px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+}
+
+.alertWindow_close {
+    height: 40px;
+}
+
+.alertWindow_close>img {
+    float: right;
+    width: 28px;
+    cursor: pointer;
+}
+
+.ex_viedo_start_img {
+    height: 300px;
+    width: 100%;
+    background-color: #999;
+}
+
+.ex_viedo_timer {
+    margin: 20px 0;
+}
+
+.time {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 60px;
+    vertical-align: middle;
+    line-height: 150px;
+    border: 1px solid black;
+}
+
+.btnBox {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.btnBox .fa {
+    margin: 0px 30px;
+    font-size: 30pt;
+    color: var(--iruri-blue-color);
+    cursor: pointer;
+}
+
+
+/*댓글 신고 모달*/
+
+.c_complain_modal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.c_complain_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    position: fixed;
+    padding: 44px 70px;
+    width: 600px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+}
+
+.c_complain_modal_start>form {
+    width: 100%;
+}
+
+.c_complain_modal_title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.c_complain_modal_label {
+    line-height: 35px;
+    margin-right: 25px;
+}
+
+.c_complain_modal input[type=radio] {
+    display: none;
+}
+
+.c_complain_modal input[type=radio]+label {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 30px;
+    background: url('../images/images/icon/check_no.png') left/22px no-repeat;
+}
+
+.c_complain_modal input[type=radio]:checked+label {
+    background-image: url('../images/images/icon/check_yes.png');
+}
+
+.c_complain_modal_ul {
+    margin-left: 90px;
+}
+
+.c_complain_modal_ul li {
+    list-style: none;
+    margin-bottom: 20px;
+    position: relative;
+    top: 15px;
+}
+
+
+/*취소, 신고하기 버튼*/
+
+.modal_button {
+    text-align: center;
+    margin: 50px 25px 25px 25px;
+}
+
+.modal_button button {
+    width: 150px;
+    height: 55px;
+    border-radius: 27px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-right: 22px;
+}
+
+.c_complain_modal_cancle {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+.c_complain_modal_submit {
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+}
+
+.c_complain_modal_submit:disabled {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+
+/*댓글 삭제 확인 모달*/
+
+.reply_delete_modal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.reply_delete_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    position: fixed;
+    padding: 44px 70px;
+    width: 600px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+}
+
+.reply_delete_modal_start>form {
+    width: 100%;
+}
+
+.reply_delete_modal_title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.reply_delete_modal_ul {
+    margin-left: 90px;
+    display: inline-block;
+}
+
+.reply_delete_modal_ul li {
+    list-style: none;
+    margin-bottom: 20px;
+    position: relative;
+    top: 15px;
+    left: 50px;
+    display: inline-block;
+    text-align: center;
+}
+
+.reply_delete_modal_cancle {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+.reply_delete_modal_submit {
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+}
+
+
+/*댓글 수정 모달*/
+
+.reply_modify_modal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.reply_modify_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    position: fixed;
+    padding: 44px 70px;
+    width: 600px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+}
+
+.reply_modify_modal_start>form {
+    width: 100%;
+}
+
+.reply_modify_modal_title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.reply_modify_modal_cancle {
+    background-color: var(--iruri-light-gray-color);
+    color: white;
+}
+
+.reply_modify_modal_submit {
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+}
+
+.reply_modify_content {
+    text-align: center;
+}
+
+.inputbox_certify2 {
+    width: 400px;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid var(--iruri-light-gray-color);
+    outline: none;
+    color: var(--iruri-indigo-color);
+    font-size: 14px;
+    resize: none;
+}

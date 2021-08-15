@@ -1,0 +1,384 @@
+@charset "utf-8";
+
+/*----------공통사항---------*/
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url('../font/NanumBarunGothic.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('../font/Cafe24Ssurround.ttf');
+    /* format('truetype'); */
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('../font/Cafe24SsurroundAir.ttf');
+    /* format('truetype'); */
+}
+
+ :root {
+    /* font-size */
+    --header-gnb-font-size: 22px;
+    --header-side-nav-font-size: 12px;
+    --footer-title-font-size: 20px;
+    --footer-normal-font-size: 13px;
+    /* colors */
+    --iruri-red-color: #ff0000;
+    --iruri-yellow-color: #ffeb00;
+    --iruri-blue-color: #185abd;
+    --iruri-light-blue-color: #02a3ff;
+    --iruri-green-color: #80ff48;
+    --iruri-indigo-color: #0a1931;
+    --iruri-dark-gray-color: #666;
+    --iruri-gray-color: #999;
+    --iruri-light-gray-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NanumBarunGothic', sans-serif;
+}
+
+.ex_container {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+}
+
+
+/*---------------------------------------------*/
+
+
+/*이루리운동>운동영상 루트 글씨*/
+
+.ex_category {
+    line-height: 134px;
+    float: left;
+    height: 134px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 28px;
+    color: var(--iruri-blue-color);
+}
+
+
+/*추천운동 글씨*/
+
+.ex_text {
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 20px;
+    color: var(--iruri-blue-color);
+    clear: both;
+    width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 17px;
+}
+
+
+/*추천운동 이미지*/
+
+.ex_recommend {
+    display: inline-block;
+    clear: both;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.ex_recommend_img {
+    width: 565px;
+    height: 440px;
+    background: url('../images/images/icon/565-440.png') no-repeat;
+    margin-bottom: 94px;
+    padding: 45px;
+    float: left;
+    margin-right: 35px;
+    border-radius: 30px;
+}
+
+.ex_recommend_title {
+    height: 73px;
+    margin-bottom: 15px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    color: var(--iruri-green-color);
+    font-size: 32px;
+    float: left;
+    position: relative;
+    top: 240px;
+}
+
+.ex_recommend_date {
+    font-size: 20px;
+    color: var(--iruri-light-gray-color);
+    float: left;
+    position: relative;
+    top: 240px;
+}
+
+
+/*추천 운동 하트*/
+
+.ex_heart .heart_label {
+    width: 48px;
+    height: 43px;
+    position: relative;
+    top: 220px;
+    float: right;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    background: url('../images/images/icon/heart_gray.png') center/48px 43px no-repeat;
+}
+
+input[type=checkbox]:checked+label {
+    background-image: url('../images/images/icon/heart_red.png');
+}
+
+
+/*운동 분류 글씨*/
+
+.ex_main_tab {
+    margin-bottom: 53px;
+    text-align: center;
+}
+
+.ex_like_last1 a {
+    width: 100px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    font-size: 16px;
+    line-height: 48px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /* display: inline-block; */
+    margin: 0 10px;
+    text-decoration: none;
+    float: left;
+}
+
+.ex_like_last2 a {
+    width: 100px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    font-size: 16px;
+    line-height: 48px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /* display: inline-block; */
+    margin: 0 20px;
+    text-decoration: none;
+    float: right;
+}
+
+
+/*운동 정렬(셀렉트박스)*/
+
+#select_wrap {
+    display: inline-block;
+    position: relative;
+    left: 1052px;
+    margin: 15px 0;
+}
+
+.select {
+    text-align: center;
+    width: 126px;
+    height: 48px;
+    color: var(--iruri-blue-color);
+    padding: 11px 7px;
+    background: white url('../images/images/icon/select_box_arrow.png') right/16px 16px no-repeat scroll;
+    border-bottom: 1px solid var(--iruri-blue-color);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.select_ul {
+    display: none;
+    margin-top: 11px;
+    list-style-type: none;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    border: 1px solid var(--iruri-blue-color);
+    padding: 11px 7px;
+    box-shadow: 7px 7px 13px rgba(0, 0, 0, 0.3);
+    width: 126px;
+    text-align: left;
+    background-color: white;
+    position: absolute;
+}
+
+.select_ul li {
+    list-style-type: none;
+    padding: 11px 13px;
+    z-index: 2;
+}
+
+.select_ul li:hover,
+.select_ul li.selected {
+    background-color: var(--iruri-yellow-color);
+    color: var(--iruri-blue-color);
+}
+
+
+/*운동 리스트*/
+
+.ex_list {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.ex_list_detail {
+    display: inline-block;
+    width: 360px;
+    margin-bottom: 100px;
+    margin-left: 18.5px;
+    margin-right: 18.5px;
+}
+
+
+/* .ex_list_detail .ex_list_img {
+    display: inline-block;
+    text-align: center;
+    width: 360px;
+    height: 250px;
+    border-radius: 30px;
+    background: url('../images/images/icon/360-250.png') no-repeat;
+    margin-bottom: 28px;
+} */
+
+.ex_list_img {
+    position: relative;
+    z-index: -200;
+}
+
+.ex_mark {
+    position: absolute;
+    top: 15px;
+    left: 19px;
+    padding: 5px 6px;
+    font-size: 16px;
+    color: white;
+    background-color: var(--iruri-red-color);
+    font-weight: bold;
+    border-radius: 10px;
+    display: inline;
+    width: 35.42px;
+    height: 29px;
+    text-align: center;
+}
+
+.ex_list_img>img {
+    display: inline-block;
+    border-radius: 30px;
+    margin-bottom: 28px;
+}
+
+.ex_list_title {
+    height: 66px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    font-size: 26px;
+    line-height: 37px;
+    color: var(--iruri-blue-color);
+    margin-bottom: 28px;
+}
+
+.ex_list_date {
+    font-size: 18px;
+    color: var(--iruri-gray-color);
+    margin-bottom: 18px;
+}
+
+
+/*운동 리스트 하트*/
+
+.ex_list_heart .heart_label {
+    width: 43px;
+    height: 43px;
+    position: relative;
+    bottom: 40px;
+    float: right;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox]+label {
+    display: inline-block;
+    cursor: pointer;
+    background: url('../images/images/icon/heart_gray.png') center/43px 43px no-repeat;
+}
+
+input[type=checkbox]:checked+label {
+    background-image: url('../images/images/icon/heart_red.png');
+}
+
+
+/*페이징*/
+
+.page_nation {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 110px;
+    justify-content: center;
+}
+
+.page_nation a {
+    display: block;
+    margin: 0 10px;
+    float: left;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--iruri-gray-color);
+    text-decoration: none;
+}
+
+.page_nation .prev {
+    position: relative;
+    top: 9px;
+    background: transparent url('../images/images/icon/icon_page_arrow_left.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-right: 7px;
+}
+
+.page_nation .next {
+    position: relative;
+    top: 9px;
+    background: transparent url('../images/images/icon/icon_page_arrow_right.png') no-repeat center center;
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    margin-left: 7px;
+}
+
+.page_nation a.active {
+    background-color: var(--iruri-red-color);
+    color: var(--iruri-yellow-color);
+    border-radius: 18px;
+}
