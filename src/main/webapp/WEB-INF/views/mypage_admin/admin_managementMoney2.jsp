@@ -28,7 +28,51 @@
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
 </head>
 <body>
-<div id="admin_sales_All" class="admin_sales_All">
+	<div class="iruri__wrapper">
+		<%@ include file="../include/headerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->
+	</div>
+
+	<div class="wrap">
+		<div class="userInfoBox">
+			<h2>관리자명</h2>
+			<p>
+				관리자명<br> iruri123@iruri.com
+			</p>
+		</div>
+		<div id="admin_managementMenu">
+			<ul>
+				<li><a href="${CONTEXT_PATH_ADMIN}/main"> 회원관리<br> <span></span>
+				</a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/trainer/list"> 트레이너관리<br>
+						<span></span>
+				</a></li>
+				<li><a href="${CONTEXT_PATH_ADMIN}/paylist"> <span
+						class="admin_active">수익관리</span><br> <span class="under_line"></span>
+				</a></li>
+			</ul>
+		</div>
+
+		<!---------------------- 수익관리 하위 메뉴 -------------------------->
+		<div id="admin_memberTabMenu">
+			<input type="radio" id="tap1" name="taps"
+				onclick="userPart('member')" value="1" checked> <label
+				for="tap1">전체수익</label> <input type="radio" id="tap2" name="taps"
+				onclick="userPart('trainer')" value="2"> <label for="tap2">트레이너별
+				수익</label>
+		</div>
+
+		<!------------------------ 트레이너 검색 --------------------------->
+		<div id="trainerNameSearch" style="display:none">
+			<div class="admin_sales_trainerChoice" style="margin-bottom: 30px;">
+				<form>
+					<input type="text" name="trainerSearch">
+					<button type="button" id="trainerSearch_button"></button>
+					<ul class="a"><li>트레이너를 검색하세요</li></ul>;
+				</form>
+			</div>
+		</div>
+		<!---------------------- 전체수익 탭 -------------------------->
+		<div id="admin_sales_All" class="admin_sales_All">
 			<div class="admin_sales_dayAndMonth">
 				<div class="admin_today_sales">
 					<h3>오늘의 매출</h3>
@@ -119,18 +163,116 @@
 				</div>
 			</div>
 		</div>
- 
-		<script type="text/javascript">
-			$(document).ready(function() {
-				console.log("시작!");
-				getlist(1, 0, 'all', 0, 0);
-			})
 
+		<script type="text/javascript">
+		$(document).ready(function() {
+			console.log("시작!");
+			getlist(1, 0, 'all', 0, 0);
+		})
+		
+		
+			function userPart(part) {
+			
+			console.log("userPart()..");
+				
+				$('input[name=trainerChoice]').removeAttr('checked');
+				
+				
+				$("#rd1").attr('checked', 'checked');
+				$("#rd2").removeAttr('checked');
+				$("#rd3").removeAttr('checked');
+				
+				const inquireType = $('input[name=inquiry_type]:checked').val();
+				console.log("inquire: " + inquireType);
+
+				$('select[name=sy]').val("");
+				$('select[name=sm]').val("");
+				$('select[name=sd]').val("");
+				$('select[name=ey]').val("");
+				$('select[name=em]').val("");
+				$('select[name=ed]').val("");
+				
+				if (part == 'trainer') {
+					var userPart = 'trainer';
+					console.log('trainer');
+					$("#trainerNameSearch").css("display", "block");
+					trainerSearch('iruriAdmin15978213');
+				} else {
+					var userId = 0;
+					console.log('member');
+					$("#trainerNameSearch").css("display", "none");
+					getlist(1, 0, 'all', 0, 0);
+				}
+			}
+
+			function trainerSearch(word) {
+				
+				const keyword = word;
+				
+				console.log("trainerSearch()..");
+				console.log(keyword);
+				$.ajax({
+					url : '${CONTEXT_PATH_ADMIN}/ajax/trainerSearch',
+					type : 'GET',
+					cache : false,
+					dataType : 'json',
+					data : {
+						'keyword' : keyword,
+					},
+					success : function(result) {
+						console.log("성공");
+						var list = result['list'];
+		                var htmls = "";
+						
+		                htmls += '<div class="admin_sales_trainerChoice" style="margin-bottom: 30px;">'
+		                	+ '<form><input type="text" name="trainerSearch"><button type="button" id="trainerSearch_button"></button></form>';
+		               
+		                	
+		                if(list.length < 1){
+		                	htmls += '<ul class="a"><li>트레이너를 검색하세요</li></ul>';
+		                } else {
+		                	htmls += '<ul class="admin_sales_trainerResultY">';
+		                	
+		                	$(list).each(function(){
+		                		htmls += '<input type="radio" style="appearance: none; cursor: point;" name="trainerChoice" id="trainerChoice_' + this.iuserVo.userId + '">'
+		                			+ '<label style="width: 33%;" for="trainerChoice_' + this.iuserVo.userId + '">'
+		                			+ '<li><span><img src="${RESOURCES_PATH}/src/img/icon/icon_page_arrow_right.png"></span>'
+		                			+ '<span class="trainerChoice_id">'
+		                			+ this.iuserVo.userId
+		                			+ '</span> <span class="trainerChoice_name">'
+		                			+ this.iuserVo.userName
+		                			+ '</span>';
+		                			
+		                		if(this.authVo.authContent == 'ROLE_LEAVE'){
+		                			htmls += '<span style="font-size: 12px; color: #999999;">(탈퇴회원';
+		                			if(this.iuserVo.userBlackList == true) {
+		                				htmls += ' / 블랙리스트';
+		                			}
+		                			htmls += ')</span>';
+	                			}
+		                		
+		                		
+	                			htmls += '</li></label>';
+		                		
+		                	});
+		                	
+		                	htmls += '</ul>';
+		                }
+		                
+		                htmls +='</div>';
+		                
+		                $("#trainerNameSearch").html(htmls);
+		                getlist(1, 987654321, 'all', 0, 0);
+					}
+					    
+				});
+				
+			}
+			
 			function valueCheck() {
 
-				let currentUserId = $('input[name=trainerChoice]:checked')
-						.val();
-				if (currentUserId == null) {
+				let currentUserId = $('input[name=trainerChoice]:checked').val();
+				if(currentUserId == null) {
 					var userId = 987654321;
 				}
 				const tapsValue = $('input[name=taps]:checked').val();
@@ -203,11 +345,9 @@
 				return number;
 			}
 
-			function getlist(page, userId, inquire, periodStartDate,
-					periodEndDate) {
+			function getlist(page, userId, inquire, periodStartDate, periodEndDate) {
 
-				$
-						.ajax({
+				$.ajax({
 							url : '${CONTEXT_PATH_ADMIN}/ajax/paylist',
 							type : 'GET',
 							cache : false,
@@ -446,11 +586,23 @@
 						valueCheck();
 					}, false);
 
+			document.getElementById("trainerSearch_button").addEventListener(
+					"click", function() {
+						console.log("trainerSearch_button..");
+						const word = $("input[name=trainerSearch]").val();
+						trainerSearch(word);
+					}, false);
+			
+			/* document.querySelector("input[name=trainerChoice]").addEventListener(
+					"click", function() {
+						valueCheck();
+					}, false); */
 			
 		</script>
 
 
 		<script>
+		
 			var today = new Date();
 			var start_year = today.getFullYear() - 5; // 시작할 년도 
 			var today_year = today.getFullYear();
@@ -558,4 +710,13 @@
 				}
 			}
 		</script>
+
+	</div>
+
+
+	<div class="iruri__wrapper">
+		<%@ include file="../include/footerTemplate.jsp"%><!-- 경로를 확인해 주세요 -->
+
+	</div>
 </body>
+</html>

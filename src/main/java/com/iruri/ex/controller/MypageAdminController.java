@@ -342,11 +342,31 @@ public class MypageAdminController {
 	    // mav.addObject("todaySales",    );
 	    return mav;
 	}
+	
+	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
+		@GetMapping("paylist/all")
+		public ModelAndView showPayList_All_Admin(ModelAndView mav) {
+		    log.info("showPayList_All_Admin()..");
+		    mav.setViewName("mypage_admin/admin_managementMoney_all");
+		    // 오늘의 매출추가
+		    // mav.addObject("todaySales",    );
+		    return mav;
+		}
 
+		@GetMapping("paylist/trainer")
+		public ModelAndView showPayList_trainer_Admin(ModelAndView mav) {
+		    log.info("showPayList_trainer_Admin()..");
+		    mav.setViewName("mypage_admin/admin_managementMoney_trainer");
+		    // 오늘의 매출추가
+		    // mav.addObject("todaySales",    );
+		    return mav;
+		}
+		
+		
 	// 관리자 수익 목록 보기 
     @ResponseBody
     @GetMapping("ajax/paylist")
-    public ResponseEntity<HashMap<String, Object>> restShowPayList_Admin(@Param("inquire") String inquire, @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
+    public ResponseEntity<HashMap<String, Object>> restShowPayList_Admin(@Param("userId") int userId, @Param("inquire") String inquire, @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
             @Param("pageNum") int pageNum) {
         
         HashMap<String, Object> result = new HashMap<>();
@@ -360,16 +380,26 @@ public class MypageAdminController {
         	periodStartDate = "0";
         	periodEndDate = "0";
         } else {
-        	total = adminService.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+        	total = adminService.countTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate);
         }
         result.put("pageMaker", new PageVO(cri, total));
-        result.put("list", adminService.getTotalMoneyInOutList(inquire, periodStartDate, periodEndDate, cri));
+        result.put("list", adminService.getTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate, cri));
         log.info(result);
         return ResponseEntity.ok(result);
     }
 	
 	
-	
+	// 수익관리 - 트레이너 검색 
+    @ResponseBody
+    @GetMapping("ajax/trainerSearch")
+    public ResponseEntity<HashMap<String, Object>> getTrainerSearchList(@Param("keyword") String keyword) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("getTrainerSearchList()..");
+        result.put("list", adminService.getTrainerSearchList(keyword));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
 	
 	
 	

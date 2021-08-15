@@ -119,6 +119,8 @@
 									htmls += '일반회원';
 								} else if (this.authVo.authContent == "ROLE_PAYUSER") {
 									htmls += '유료회원';
+								} else if (this.authVo.authContent == "ROLE_LEAVE") {
+									htmls += '탈퇴회원';
 								} else {
 									htmls += '00';
 								}

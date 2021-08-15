@@ -254,20 +254,30 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<TableJoinVO> getTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate, Criteria cri) {
+    public List<TableJoinVO> getTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate, Criteria cri) {
         int pageNum = cri.getPageNum();
         int amount = cri.getAmount();
-        return mapper.getTotalMoneyInOutList(inquire, periodStartDate, periodEndDate, pageNum, amount);
+        return mapper.getTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate, pageNum, amount);
     }
 
     @Override
-    public Integer countTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate) {
+    public int countTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate) {
         try {
-            int count = mapper.countTotalMoneyInOutList(inquire, periodStartDate, periodEndDate);
+            int count = mapper.countTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate);
             return count;
         } catch (Exception e) {
             return 0;
         }
     }
+
+	@Override
+	public List<TableJoinVO> getTrainerSearchList(String keyword) {
+		return mapper.getTrainerSearchList(keyword);
+	}
+
+	@Override
+	public int sumTodayMoneyAll() {
+		return mapper.sumTodayMoneyAll();
+	}
     
 }

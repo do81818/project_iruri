@@ -600,10 +600,17 @@
 				    on p.buy_id = b.buy_id
 				    inner join iclass c
 				    on b.class_id = c.class_id
+		    ]]> 
+		    <!-- 트레이너별 내역보기 -->
+		    <if test ='userId != 0'>
+			<![CDATA[		
+				and c.user_id = #{userId}	
+			]]>
+			</if>
+		    <![CDATA[
 				    inner join iuser u
 				    on m.user_id = u.user_id
-		    ]]> 
-			
+		    ]]>
 			<!-- 기간을 선택했을 때 -->	    
 			<if test='periodStartDate != "0" and !periodEndDate.equals("0")'>
 			<![CDATA[	
@@ -678,6 +685,14 @@
 				    on p.buy_id = b.buy_id
 				    inner join iclass c
 				    on b.class_id = c.class_id
+		    ]]> 
+		    <!-- 트레이너별 내역보기 -->
+		    <if test ='userId != 0'>
+			<![CDATA[		
+				and c.user_id = #{userId}	
+			]]>
+			</if>
+		    <![CDATA[
 				    inner join iuser u
 				    on m.user_id = u.user_id
 				    ]]> 
@@ -708,10 +723,33 @@
 				    order by a.money_id desc
 				) li
 			]]> 
-			
-			
+	</select>
+
+	<!-- 트레이너별 수익관리 트레이너 검색 -->
+	<select id="getTrainerSearchList" resultMap="iuserAuthJoinMap">
+		<![CDATA[  
+		select tr.*
+			from (select u.*, a.auth_content
+			from iuser u, authority a
+			where u.user_id = a.user_id and a.auth_id = 3) tr
+		]]>
+		
+		<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_name like '%' || #{keyword} || '%'
+			]]>	
+		</if>
 	</select>
 	
+	<!-- 오늘의 매출 -전체 -->
+	<select id="sumTodayMoneyAll" resultType="Integer">
+		<![CDATA[  
+		select sum(money_input - money_output)
+		from money
+		where money_date = sysdate
+		]]>
+		
+	</select>
 	
 	
 	

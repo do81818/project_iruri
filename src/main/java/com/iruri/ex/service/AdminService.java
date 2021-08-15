@@ -92,9 +92,15 @@ public interface AdminService {
     void updateWithdrawMember(int userId);
     
     // 수익관리 - 전체수익 매출 리스트
-    List<TableJoinVO> getTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate, Criteria cri);
+    List<TableJoinVO> getTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate, Criteria cri);
     
     // 수익관리 - 전체수익 매출리스트 갯수
-    Integer countTotalMoneyInOutList(String inquire, String periodStartDate, String periodEndDate);
+    int countTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate);
+    
+    // 수익관리 - 트레이너 검색
+    List<TableJoinVO> getTrainerSearchList(@Param("keyword") String keyword);
+    
+    // 오늘의 수익 -전체
+    int sumTodayMoneyAll();
     
 }
