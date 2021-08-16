@@ -37,4 +37,6 @@ public interface BoardMapper {
 	// 내가 작성한 댓글 list
 	List<BoardVO> commentList(@Param("userId") int userId, @Param("criteria") Criteria criteria);
 	int total(int userId);
+
+	List<BoardVO> myjoinList(int userId);
 }
