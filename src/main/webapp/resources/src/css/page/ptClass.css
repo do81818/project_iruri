@@ -178,6 +178,11 @@ p {
   margin-bottom: 53px;
 }
 
+.ptClassSelect .select_ul {
+    position: absolute;
+    z-index: 1;
+} 
+
 .ptSelect {
   display: flex;
   justify-content: center;
@@ -196,7 +201,6 @@ p {
 }
 
 .ptClassSelect ul {
-  display: inline;
   left: 0;
   top: 45px;
 }

@@ -22,23 +22,25 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
             <div class="suggestWrap">
               <c:forEach var="recommend" items="${recommendList}">
-                <div class="suggestImg" style="background: url(${CONTEXT_PATH}/iruri/display?fileName=${recommend.classImage}) no-repeat">
-                  <div class="suggestPtPerson">1 : ${recommend.classTotalMember}</div>
-                  <div class="suggestMetaData">
-                    <span>트레이너 ${recommend.IUserVO.userNickname}</span>
-                    <h5><a href="">${recommend.classTitle}</a></h5>
-                    <div class="suggestData">
-                      <span>${recommend.classStartDate} ~ ${recommend.classEndDate}</span>
+                <a href="${CONTEXT_PATH}/iruri/ptClassDetails?classId=${recommend.classId}" target="_blank">
+                  <div class="suggestImg" style="background: url(${CONTEXT_PATH}/iruri/display?fileName=${recommend.classImage}) no-repeat">
+                    <div class="suggestPtPerson">1 : ${recommend.classTotalMember}</div>
+                    <div class="suggestMetaData">
+                      <span>트레이너 ${recommend.IUserVO.userNickname}</span>
+                      <h5>${recommend.classTitle}</h5>
+                      <div class="suggestData">
+                        <span>${recommend.classStartDate} ~ ${recommend.classEndDate}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </c:forEach>
             </div>
           </div>
 
           <ul class="ptClassNav">
             <li>
-              <a href="#" id="all" onclick="ajaxClassList(1, this)"> 전체 클래스 </a>
+              <a href="#" id="all" class="active" onclick="ajaxClassList(1, this)"> 전체 클래스 </a>
             </li>
             <li>
               <a href="#" id="buy" onclick="ajaxClassList(1, this)"> 구매한 클래스 </a>
@@ -59,9 +61,16 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
                 ptClassNavList.forEach(item => {
                   item.style.color = "#999";
+                  item.classList.remove("active");
+
+                  const inputs = document.querySelectorAll("input");
+                  inputs.forEach(input => {
+                    input.checked = false;
+                  });
                 });
 
                 item.style.color = "#185abd";
+                item.classList.add("active");
               });
             });
           </script>
@@ -262,22 +271,22 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             </div>
           </div>
 
-          <!-- 나래님이 만드신 필터랑 챌린지 개설 버튼 -->
           <div class="ptClassSelect" id="select_wrap">
             <div id="select" class="select ptSelect">
               <div>
-                <span>인기순</span>
+                <span>시작일순</span>
                 <i class="iruri-selectBox-arrow-icon"></i>
               </div>
               <ul id="ul" class="select_ul">
-                <li data-value="value 1">인기순</li>
-                <li data-value="value 2">시작일순</li>
-                <li data-value="value 3">평점순</li>
+                <li data-value="value 1">시작일순</li>
+                <li data-value="value 2">인기순</li>
               </ul>
             </div>
 
             <sec:authorize access="hasRole('TRAINER')">
-              <button class="c_make_button">챌린지개설</button>
+              <a href="/ex/iruri/ptClassMakeForm">
+                <button class="c_make_button">챌린지개설</button>
+              </a>
             </sec:authorize>
           </div>
 
@@ -292,17 +301,105 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
     </div>
 
     <script>
+      const labels = document.querySelectorAll("label");
+      labels.forEach(label => {
+        label.addEventListener("click", function (e) {
+          e.preventDefault();
+          const idStr = label.htmlFor;
+          const input = document.querySelector("#" + idStr);
+          const icon = label.querySelector("i");
+          if (input.checked === false) {
+            input.checked = true;
+            icon.className = "iruri-check-yes-icon";
+          } else {
+            input.checked = false;
+            icon.className = "iruri-check-no-icon";
+          }
+
+          const radios = document.querySelectorAll('input[type="radio"]');
+          radios.forEach(radio => {
+            const radioId = radio.id;
+            const label = document.querySelector("label[for=" + radioId + "]");
+            const icon = label.querySelector("i");
+            if (radio.checked === false) {
+              icon.className = "iruri-check-no-icon";
+            }
+          });
+        });
+      });
+
+      const ptClassFilter = document.querySelector(".ptClassFilter");
+      ptClassFilter.addEventListener("click", function (e) {
+        const activeType = document.querySelector(".active");
+        ajaxClassList(1, activeType);
+      });
+
+      const ptSelect = document.querySelector("#select");
+      ptSelect.addEventListener("click", function () {
+        const ul = document.querySelector(".select_ul");
+        if (ul.style.display !== "block") {
+          ul.style.display = "block";
+
+          ul.addEventListener("click", function (e) {
+            const sortText = ptSelect.querySelector("#select > div > span");
+            sortText.innerText = e.target.innerText;
+            const activeType = document.querySelector(".active");
+            ajaxClassList(1, activeType);
+          });
+        } else {
+          ul.style.display = "none";
+        }
+      });
+
       function ajaxClassList(page, type) {
+        const header = $('meta[name="_csrf_header"]').attr("th:content");
+        const token = $('meta[name="_csrf"]').attr("th:content");
+
+        const dataObj = {
+          pageNum: page,
+          type: type.id,
+          g1: document.querySelector("#g1").checked ? "남성" : null,
+          g2: document.querySelector("#g2").checked ? "여성" : null,
+          ek1: document.querySelector("#ek1").checked ? "헬스" : null,
+          ek2: document.querySelector("#ek2").checked ? "필라테스" : null,
+          ek3: document.querySelector("#ek3").checked ? "요가" : null,
+          ek4: document.querySelector("#ek4").checked ? "바디프로필" : null,
+          ek5: document.querySelector("#ek5").checked ? "댄스" : null,
+          p1: document.querySelector("#p1").checked ? "100000" : null,
+          p2: document.querySelector("#p2").checked ? "200000" : null,
+          p3: document.querySelector("#p3").checked ? "300000" : null,
+          p4: document.querySelector("#p4").checked ? "300000" : null,
+          ed1: document.querySelector("#ed1").checked ? "1" : null,
+          ed2: document.querySelector("#ed2").checked ? "2" : null,
+          ed3: document.querySelector("#ed3").checked ? "3" : null,
+          ed4: document.querySelector("#ed4").checked ? "4" : null,
+          day1: document.querySelector("#day1").checked ? "월" : null,
+          day2: document.querySelector("#day2").checked ? "화" : null,
+          day3: document.querySelector("#day3").checked ? "수" : null,
+          day4: document.querySelector("#day4").checked ? "목" : null,
+          day5: document.querySelector("#day5").checked ? "금" : null,
+          day6: document.querySelector("#day6").checked ? "토" : null,
+          day7: document.querySelector("#day7").checked ? "일" : null,
+          el1: document.querySelector("#el1").checked ? "easy" : null,
+          el2: document.querySelector("#el2").checked ? "normal" : null,
+          el3: document.querySelector("#el3").checked ? "hard" : null,
+          ep1: document.querySelector("#ep1").checked ? "1" : null,
+          ep2: document.querySelector("#ep2").checked ? "2" : null,
+          ep3: document.querySelector("#ep3").checked ? "4" : null,
+          ep4: document.querySelector("#ep4").checked ? "6" : null,
+        };
+
         $.ajax({
           url: "${CONTEXT_PATH}/ajax/class",
-          type: "GET",
+          type: "POST",
           cache: false,
           dataType: "json",
-          data: {
-            pageNum: page,
-            type: type.id,
+          data: dataObj,
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
           },
           success: function (result) {
+            var sortText = document.querySelector("#select > div > span").innerText;
             const list = result["list"];
             const pagination = result["pageMaker"];
             let listHtmls = "";
@@ -316,6 +413,12 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
               ptClassList.style.color = "rgb(24, 90, 189)";
               listHtmls = "<p>해당하는 챌린지가 없습니다</p>";
             } else {
+              // if (sortText === "인기순") {
+              //   list = list.sort(function (a, b) {
+              //     return b.classLike - a.classLike;
+              //   });
+              // }
+
               ptClassList.removeAttribute("style");
               $(list).each(function () {
                 listHtmls +=
@@ -327,7 +430,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                             </div>
 
                             <div class="ptListSubTitle">트레이너 ${"${this.iuserVO.userNickname}"}</div>
-                            <div class="c_list_title ptListTitle"><a href="">${"${this.classTitle}"}</a></div>
+                            <div class="c_list_title ptListTitle"><a href="${CONTEXT_PATH}/iruri/ptClassDetails?classId=${"${this.classId}"}">${"${this.classTitle}"}</a></div>
 
                             <div class="c_list_date">${"${this.classStartDate}"} ~ ${"${this.classEndDate}"}</div>
 
@@ -364,7 +467,15 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
                             <div class="ptListBuyData">
                               <div class="ptListPrice">\ ${"${this.classPrice}"}</div>
-                              <i class="iruri-heart-gray-icon" data-classId="${"${this.classId}"}"></i>`;
+                              <sec:authorize access="isAnonymous()">
+                              <a href="/ex/loginPage">
+                              <i class="iruri-heart-gray-icon"></i>
+                              </a>
+                              </sec:authorize>
+                              <sec:authorize access="isAuthenticated()">
+                              <i class="iruri-heart-gray-icon" data-classId="${"${this.classId}"}"></i>
+                              </sec:authorize>
+                              `;
                 listHtmls += `</div>
                           </div>`;
               });
@@ -444,25 +555,13 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                 },
               });
             });
+            return result;
           });
       }
 
       $(document).ready(() => {
         const all = document.querySelector("#all");
         ajaxClassList(1, all);
-      });
-
-      $(document).ready(() => {
-        const filter = document.querySelector(".ptClassFilter");
-        const filterInput = filter.querySelectorAll("input");
-        const filterLabel = filter.querySelectorAll("label");
-        console.log(filter, filterInput, filterLabel);
-
-        // 라벨을 클릭했을때 해당 인풋의 checked 속성 제어하고 해당 인풋의 라벨 아이콘 바꾸기
-        // 그리고 해당 인풋의 checked 속성의 값을 ajax 통신함
-        filterInput.forEach(input => {
-          console.log(input);
-        });
       });
     </script>
   </body>
