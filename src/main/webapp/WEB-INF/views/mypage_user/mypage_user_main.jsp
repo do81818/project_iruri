@@ -166,16 +166,16 @@
 												<h2 class="alertWindow_title">정보수정</h2>
 												<form action="update" method="GET">
 														<p>비밀번호</p>
-														<input class="inputbox_size1" name="userPw" type="text" />
+														<input class="inputbox_size1" name="userPw" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off"  />
 
 														<p>비밀번호 확인</p>
-														<input class="inputbox_size1" type="text" />
+														<input class="inputbox_size1" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off" />
 
 														<p>닉네임</p>
 														<input class="inputbox_size2" name="userNickname"
-																type="text">
+																type="text" autocomplete="off">
 														<p>전화번호</p>
-														<input class="inputbox_size2" name="userPhone" type="text">
+														<input class="inputbox_size2" name="userPhone" type="text" autocomplete="off">
 														<button class="alertWindow_submit" type="submit">회원정보
 																변경</button>
 												</form>
@@ -201,17 +201,17 @@
 												<form action="infoupdate" method="GET">
 														<p>성별</p>
 														<input class="inputbox_size1" name="userGender"
-																type="text" />
+																type="text" placeholder="'여' 혹은 '남' " autocomplete="off"/>
 
 														<p>나이</p>
-														<input class="inputbox_size1" name="userBirth" type="text" />
+														<input class="inputbox_size1" name="userBirth" type="text" placeholder="YYYY-MM-DD 형식으로 작성" autocomplete="off"/>
 
 														<p>키</p>
 														<input class="inputbox_size2" name="userHeight"
-																type="text">
+																type="text" autocomplete="off">
 														<p>몸무게</p>
 														<input class="inputbox_size2" name="userWeight"
-																type="text">
+																type="text" autocomplete="off">
 
 														<button class="alertWindow_submit" type="submit">신체정보
 																변경</button>

@@ -229,35 +229,39 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
     </div>
  
 	
-	    <!-- 팝업창  -->
-    <div class="modal"  max-width: 400px;
+				<!-- 팝업창  -->
+				<div class="modal"max-width: 400px;
     min-width: 500px;
     margin: 0 auto;
-    background-color: #eee;>
-      <div class="modal_content" 
-           title="클릭하면 창이 닫힙니다.">
-           <div class="alertWindow">
-            <div class="alertWindow_close"><img src='http://localhost:8282/ex/resources/src/img/icon/close.png' width="20px" height="20px" > </div>
-            <div class="alertWindow_insert">
-              <h2 class="alertWindow_title">정보수정</h2>
-              <form action="#">
-                <p>비밀번호</p>
-                <input class="inputbox_size1" type="text"  />
-                
-                <p>비밀번호 확인</p>
-                <input class="inputbox_size1" type="text" />
-                
-                <p>닉네임</p>
-                <input class="inputbox_size2" type="text">
-                <p>전화번호</p>
-                <input class="inputbox_size2" type="text">
-        
-                <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
-              </form>
-            </div>
-          </div>
-    </div>
-  </div>
+    background-color:#eee;>
+						<div class="modal_content" title="클릭하면 창이 닫힙니다.">
+								<div class="alertWindow">
+										<div class="alertWindow_close">
+												<img
+														src='http://localhost:8282/ex/resources/src/img/icon/close.png'
+														width="20px" height="20px">
+										</div>
+										<div class="alertWindow_insert">
+												<h2 class="alertWindow_title">정보수정</h2>
+												<form action="update" method="GET">
+														<p>비밀번호</p>
+														<input class="inputbox_size1" name="userPw" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off"  />
+
+														<p>비밀번호 확인</p>
+														<input class="inputbox_size1" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off" />
+
+														<p>닉네임</p>
+														<input class="inputbox_size2" name="userNickname"
+																type="text" autocomplete="off">
+														<p>전화번호</p>
+														<input class="inputbox_size2" name="userPhone" type="text" autocomplete="off">
+														<button class="alertWindow_submit" type="submit">회원정보
+																변경</button>
+												</form>
+										</div>
+								</div>
+						</div>
+				</div>
 
 
   <div class="modal1"  max-width: 400px;
