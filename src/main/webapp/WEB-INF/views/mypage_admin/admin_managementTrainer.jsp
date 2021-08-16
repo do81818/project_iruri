@@ -66,8 +66,8 @@
 		<!---------------------- 트레이너전체 탭 -------------------------->
 		<div class="management_trainerMember">
 			<div class="totalTrainerMemberList">
-				<form>
-					<input id="keywordSearchInputBox" type="text">
+				<form onkeydown="return event.key != 'Enter';">
+					<input id="keywordSearchInputBox" type="text" onkeyup="if(window.event.keyCode==13) {inputEnter()}">
 					<button type="button" id="keywordSearch"></button>
 				</form>
 				<table class="admin_table">
@@ -197,13 +197,18 @@
 				
 				document.getElementById("keywordSearch").addEventListener("click", function() {
 				    console.log('keywordSearch...');
-			        let keyword = document.getElementById("keywordSearchInputBox").value;
+			        inputEnter();
+			        getlist(1,keyword);
+			    }, false); 
+				
+				function inputEnter() {
+					let keyword = document.getElementById("keywordSearchInputBox").value;
 			        if (keyword == null || keyword == "") {
 			            keyword = "iruriAdmin15978213";
 			        }
 			        console.log(keyword);
 			        getlist(1,keyword);
-			    }, false); 
+				}
 				
 			</script>
 

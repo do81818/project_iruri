@@ -66,6 +66,12 @@ public interface AdminService {
 
 	// 일반/유료회원 현재 보유포인트
 	int getUserBasicInfoPointTotal(int userId);
+	
+	// 일반/유료회원 포인트 적립/차감
+	void insertPoint(PointVO vo);
+		
+	// 일반/유료회원 현재 보유포인트
+	void updatePoint(int userId, int userPoint);
 
 	// 일반/유료회원정보 운동정보리스트 보기
     List<TableJoinVO> getUserExInfoList(int userId, int categoryId, Criteria cri);
@@ -98,9 +104,19 @@ public interface AdminService {
     int countTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate);
     
     // 수익관리 - 트레이너 검색
-    List<TableJoinVO> getTrainerSearchList(@Param("keyword") String keyword);
+    List<TableJoinVO> getTrainerSearchList(String keyword);
     
     // 오늘의 수익 -전체
     int sumTodayMoneyAll();
     
+    // 오늘 수익 - 트레이너
+    int sumTodayMoneyTrainer(int userId);
+    
+    // 월별 수익 - 전체
+    List<TableJoinVO> sumMonthMoneyAll();
+
+    // 월별 수익 - 트레이너
+    List<TableJoinVO> sumMonthMoneyTrainer(int userId);
+
+
 }

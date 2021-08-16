@@ -96,6 +96,12 @@
 	</resultMap>
 	
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="monthTotalJoinMap">
+		<result property="totalMoney" column="totalMoney" />
+		<result property="month" column="month" />
+	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
 		id="moneyJoinMap">
 		<result property="totalMoney" column="totalmoney" />
 		<collection property="iuserVo" resultMap="iUserMap" />
@@ -391,6 +397,16 @@
 		from ipoint where user_id=#{user_id}
 		]]>
 	</select>
+	
+	<!-- 일반/유료회원 포인트 수정 -->
+	<insert id="insertPoint">
+	INSERT INTO ipoint VALUES ((select max(point_id) from ipoint)+1, sysdate, sysdate, #{pointState}, #{pointValue}, '관리자 이벤트 포인트', #{userId})
+	</insert>
+
+	<!-- 일반회원 보유포인트 수정 -->
+	<update id="updatePoint">
+	UPDATE iuser  SET user_point = #{userPoint} where user_id = #{userId}
+	</update>
 
 
 	<!-- 일반회원정보 운동정보 리스트 -->
@@ -736,7 +752,7 @@
 		
 		<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
 			<![CDATA[
-				where tr.user_name like '%' || #{keyword} || '%'
+				where tr.user_name like '%' || #{keyword} || '%' or tr.user_nickname like '%' || #{keyword} || '%'
 			]]>	
 		</if>
 	</select>
@@ -748,9 +764,77 @@
 		from money
 		where money_date = sysdate
 		]]>
-		
 	</select>
 	
+	<!-- 오늘의 매출 - 트레이너 -->
+	<select id="sumTodayMoneyTrainer" resultType="Integer">
+		<![CDATA[  
+		select sum(pa.tot - ca.tot) as total
+		from (
+		select nvl(sum(b.buy_point + m.money_input), 0) as tot
+		from money m
+		inner join pay p
+		on m.pay_id = p.pay_id and p.pay_state = 'pay'
+		inner join buy b
+		on b.buy_id = p.buy_id
+		inner join iclass c
+		on b.class_id = c.class_id and c.user_id = #{userId}
+		where m.money_date = sysdate
+		) pa, (
+		select nvl(sum(b.buy_point + m.money_output), 0) as tot
+		from money m
+		inner join pay p
+		on m.pay_id = p.pay_id and p.pay_state = 'cancle'
+		inner join buy b
+		on b.buy_id = p.buy_id
+		inner join iclass c
+		on b.class_id = c.class_id and c.user_id = #{userId}
+		where m.money_date = sysdate
+		) ca
+		]]>
+	</select>
+	
+	<!-- 월별 수익 -전체 -->
+	<select id="sumMonthMoneyAll" resultMap="monthTotalJoinMap">
+		<![CDATA[  
+		select to_char(m.money_date, 'mm') as month , nvl(sum(m.money_input- m.money_output),0) as totalMoney
+		from money m
+		group by to_char(m.money_date, 'mm')
+		]]>
+	</select>
+	
+	<!-- 월별 수익 -트레이너 -->
+	<select id="sumMonthMoneyTrainer" resultMap="monthTotalJoinMap">
+		<![CDATA[  
+		select (m_in.mon) as month, sum(nvl(m_in.intot,0) - nvl(m_out.outtot,0)) as totalMoney
+		from (
+		select to_char(m.money_date, 'mm') as mon, sum(b.buy_point + m.money_input) as intot
+		from iclass c
+		inner join buy b
+		on c.class_id = b.class_id
+		inner join pay p
+		on b.buy_id = p.buy_id and p.pay_state = 'pay'
+		inner join money m
+		on m.pay_id = p.pay_id
+		where c.user_id = #{userId}
+		group by to_char(m.money_date, 'mm')
+		) m_in
+		full outer join (
+		select to_char(m.money_date, 'mm') as mon, sum(b.buy_point + m.money_output) as outtot
+		from iclass c
+		inner join buy b
+		on c.class_id = b.class_id
+		inner join pay p
+		on b.buy_id = p.buy_id and p.pay_state = 'cancle'
+		inner join money m
+		on m.pay_id = p.pay_id
+		where c.user_id = #{userId}
+		group by to_char(m.money_date, 'mm')
+		) m_out
+		on m_in.mon = m_out.mon
+		group by m_in.mon
+		]]>
+	</select>
 	
 	
 </mapper>

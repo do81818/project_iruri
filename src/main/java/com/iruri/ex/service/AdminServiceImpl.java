@@ -277,7 +277,37 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int sumTodayMoneyAll() {
-		return mapper.sumTodayMoneyAll();
+		try {
+			int total = mapper.sumTodayMoneyAll();
+			return total;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public int sumTodayMoneyTrainer(int userId) {
+		return mapper.sumTodayMoneyTrainer(userId);
+	}
+
+	@Override
+	public List<TableJoinVO> sumMonthMoneyAll() {
+		return mapper.sumMonthMoneyAll();
+	}
+
+	@Override
+	public List<TableJoinVO> sumMonthMoneyTrainer(int userId) {
+		return mapper.sumMonthMoneyTrainer(userId);
+	}
+
+	@Override
+	public void insertPoint(PointVO vo) {
+		mapper.insertPoint(vo);
+	}
+
+	@Override
+	public void updatePoint(int userId, int userPoint) {
+		mapper.updatePoint(userId, userPoint);
 	}
     
 }

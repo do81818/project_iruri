@@ -2,16 +2,12 @@ package com.iruri.ex.controller;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +18,7 @@ import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.AdminService;
 import com.iruri.ex.vo.IUserVO;
-import com.iruri.ex.vo.TableJoinVO;
+import com.iruri.ex.vo.PointVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -271,9 +267,12 @@ public class MypageAdminController {
         Criteria cri = new Criteria(pageNum, 10);
         int total = adminService.countTrainerMoneyList(userId, month);
         result.put("pageMaker", new PageVO(cri, total));
+        // 트레이너 수익 리스트
         result.put("list", adminService.getTrainerMoneyList(userId, month, cri));
+        // 리스트-월별
         result.put("month", month);
         log.info(month);
+        // 합계금액
         result.put("monthTotal", adminService.trainerMoneyMonthTotal(userId, month));
         log.info(adminService.trainerMoneyMonthTotal(userId, month));
         log.info(result);
@@ -344,24 +343,40 @@ public class MypageAdminController {
 	}
 	
 	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
-		@GetMapping("paylist/all")
-		public ModelAndView showPayList_All_Admin(ModelAndView mav) {
-		    log.info("showPayList_All_Admin()..");
-		    mav.setViewName("mypage_admin/admin_managementMoney_all");
-		    // 오늘의 매출추가
-		    // mav.addObject("todaySales",    );
-		    return mav;
-		}
-
-		@GetMapping("paylist/trainer")
-		public ModelAndView showPayList_trainer_Admin(ModelAndView mav) {
-		    log.info("showPayList_trainer_Admin()..");
-		    mav.setViewName("mypage_admin/admin_managementMoney_trainer");
-		    // 오늘의 매출추가
-		    // mav.addObject("todaySales",    );
-		    return mav;
-		}
+	@GetMapping("paylist/all")
+	public ModelAndView showPayList_All_Admin(ModelAndView mav) {
+	    log.info("showPayList_All_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney_all");
+	    int totalMoney = adminService.sumTodayMoneyAll();
+	    log.info("totalMoney:" + totalMoney);
+	    mav.addObject("totalMoney", totalMoney);
+	    log.info("mav:" + mav);
+	    
+	    return mav;
+	}
+	
+	// 전체수익 그래프
+    @ResponseBody
+    @GetMapping("ajax/paylist/all/graph")
+    public ResponseEntity<HashMap<String, Object>> showPayList_All_Graph() {
+    	HashMap<String, Object> result = new HashMap<>();
+        log.info("showPayList_All_Graph()..");
+        result.put("monthMoney", adminService.sumMonthMoneyAll());
+	    log.info(adminService.sumMonthMoneyAll()); 
+    	return ResponseEntity.ok(result);
+    }
+    
+    
+	@GetMapping("paylist/trainer")
+	public ModelAndView showPayList_trainer_Admin(ModelAndView mav) {
 		
+	    log.info("showPayList_trainer_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney_trainer");
+	    // 오늘의 매출추가
+	    // mav.addObject("todaySales",    );
+	    return mav;
+	}
+	
 		
 	// 관리자 수익 목록 보기 
     @ResponseBody
@@ -401,11 +416,49 @@ public class MypageAdminController {
         return ResponseEntity.ok(result);
     }
 	
+    
+    // 수익관리 - 트레이너 수익 오늘의매출/월별매출 
+    @ResponseBody
+    @GetMapping("ajax/trainer/monthAndDay")
+    public ResponseEntity<HashMap<String, Object>> getTrainerMonthAndDay(@Param("userId") int userId) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("getTrainerMonthAndDay()..");
+        result.put("info", adminService.getUserBasicInfo(userId));
+        result.put("todayMoney", adminService.sumTodayMoneyTrainer(userId));
+        result.put("monthMoney", adminService.sumMonthMoneyTrainer(userId));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+    // insertPoint_Admin() ModelAndView 관리자 포인트 등록
+    @ResponseBody
+    @PostMapping("ajax/member/info/pointInsert")
+    public ResponseEntity<HashMap<String, Object>> insertPoint_Admin(@Param("userId") int userId, @Param("pointState") String pointState, @Param("pointValue") int pointValue) {
+    	
+    	HashMap<String, Object> result = new HashMap<>();
+        log.info("insertPoint_Admin()..");
+        
+        // 포인트 등록/차감
+        PointVO vo = new PointVO();
+        vo.setPointState(pointState);
+        vo.setPointValue(pointValue);
+        vo.setUserId(userId);
+        adminService.insertPoint(vo);
+        
+        // 유저 현재 포인트 확인
+        int userPoint = adminService.getUserBasicInfoPointTotal(userId);
+        
+        // 유저 현재 포인트 업데이트
+        adminService.updatePoint(userId, userPoint);
+        
+        result.put("info", adminService.getUserBasicInfo(userId));
+        result.put("point", userPoint);
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
 	
 	
-	
-	
-	// insertPoint_Admin() ModelAndView 관리자 포인트 등록
 	
 	// deleteTrainer_Admin() ResponseEntity 관리자 트레이너 탈퇴 전환
 	// showPayDetail_Admin() ModelAndView 관리자 수익 상세 보기

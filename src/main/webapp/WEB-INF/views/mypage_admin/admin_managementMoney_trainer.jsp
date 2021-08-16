@@ -3,9 +3,9 @@
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
 
 <!------------------------ 트레이너 검색 --------------------------->
-<div class="admin_sales_trainerChoice" style="margin-bottom: 30px;">
-	<form>
-		<input type="text" name="trainerSearch">
+<div class="admin_sales_trainerChoice">
+	<form name="trainerSearchForm" onkeydown="return event.key != 'Enter';">
+		<input type="text" name="trainerSearch" onkeyup="if(window.event.keyCode==13) {inputEnter()}">
 		<button type="button" id="trainerSearch_button"></button>
 	</form>
 	<div id="trainerNameSearch_result">
@@ -19,15 +19,16 @@
 
 
 	<div class="admin_sales_dayAndMonth">
+		<h2><span id="admin_sales_trainerName"></span> 트레이너의 수익</h2>
 		<div class="admin_today_sales">
 			<h3>오늘의 매출</h3>
 			<p>
-				2,000,000<span>원</span>
+				0<span>원</span>
 			</p>
 		</div>
 		<div class="admin_monthly_sales">
 			<h3>월별매출</h3>
-			<div>그래프</div>
+			<div><canvas id="myChart" width="160" height="60"></canvas></div>
 		</div>
 	</div>
 
@@ -112,8 +113,184 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		console.log("시작!");
+		getTrainerMonthAndDay(987654321);
 		getlist(1, 987654321, 'all', 0, 0);
 	})
+	
+	
+	function getTrainerMonthAndDay(userId) {
+		const currentUserId = userId;
+		console.log("getTrainerMonthAndDay()..");
+		$.ajax({
+			url : '${CONTEXT_PATH_ADMIN}/ajax/trainer/monthAndDay',
+			type : 'GET',
+			cache : false,
+			dataType : 'json',
+			data : {
+				'userId' : currentUserId,
+			},
+			success : function(result) {
+				console.log("그래프 성공");	
+				
+				var monthMoney = result['monthMoney'];
+				let length = monthMoney.length;
+				console.log("길이: " + monthMoney.length);
+				
+				let month = new Date().getMonth()+2;
+				console.log(month);
+				
+				let labelsArr = [];
+				let labelsArr2 = [];
+				let ValArr = [];
+				
+				for(let i = 1; i <= month; i++){
+					labelsArr2.push(i);
+					labelsArr.push(i + '월');
+				}
+				
+				let index = 0;
+				for(let i = 0; i < month; i++){
+					for(let j = 0; j < length; j++){
+						if(labelsArr2[i] == monthMoney[j].month){
+							ValArr.push(monthMoney[j].totalMoney);
+							index = 1;
+						}
+					}
+					if(index != 1) {
+						ValArr.push('0');
+					}
+					index = 0;
+				}
+
+				console.log("labelsArr: "+ labelsArr);
+				console.log("ValArr: " + ValArr);
+				
+				let max = 0;
+				let step = 0;
+				
+				for(let i = 0; i < length; i++){
+					if(max < monthMoney[i].totalMoney) {
+						max = monthMoney[i].totalMoney;
+					}
+				}
+				
+				if(max >= 1000000){
+					step = 500000;
+				} else if (max >= 100000 && max < 1000000){
+					step = 250000;
+				} else {
+					step = 50000;
+				}
+				
+				let maxVal = (Math.ceil(max/step)+1) * step;
+				
+				console.log(maxVal);
+				const ctx = document.getElementById('myChart').getContext('2d');
+				
+				var myChart = new Chart(ctx, {
+					
+					type: 'line',
+		            data: {
+		            	 labels: labelsArr,
+		                 datasets: [{
+
+		                     // label: '# of Votes',
+		                     data: ValArr,
+		                     fill: false,
+
+		                     borderColor: 'rgba(2, 163, 255, 1)',
+		                     borderWidth: 1,
+		                     
+		                     pointBackgroundColor : 'rgba(2, 163, 255, 1)',
+
+		                     /* parsing: {
+		                         xAxisKey: 'id',
+		                         yAxisKey: 'nested.value'
+		                     }, */
+		                 }],
+		            },
+		            options: {
+		            	legend: {
+		                    display: false,
+		                },
+
+		                // responsive: false,
+		                tooltips: {
+		                    enabled: false,
+		                },
+		                hover: {
+		                    animationDuration: 0,
+		                },
+		                animation: {
+	                        // duration: 1,
+	                        onComplete: function () {
+	                            var chartInstance = this.chart,
+	                                ctx = chartInstance.ctx;
+	                            ctx.font = Chart.helpers.fontString(Chart.defaults.global
+	                                .defaultFontSize, Chart
+	                                .defaults.global.defaultFontStyle, Chart.defaults.global
+	                                .defaultFontFamily);
+	                           
+	                            ctx.fillStyle = 'rgba(24, 90, 189, 1)';
+	                            ctx.textAlign = 'center';
+	                            ctx.textBaseline = 'center';
+	                            ctx.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+
+	                            this.data.datasets.forEach(function (dataset, i) {
+	                                var meta = chartInstance.controller.getDatasetMeta(
+	                                    i);
+	                                meta.data.forEach(function (bar, index) {
+	                                    var data = dataset.data[index];
+	                                    ctx.fillText(data, bar._model.x, bar
+	                                        ._model
+	                                        .y - 5);
+	                                });
+	                            });
+	                        }
+	                    },
+	                    scales: {
+	                        yAxes: [{
+	                            ticks: {
+	                                fontSize: 8,
+	                                stepSize: step,
+	                                max: maxVal,
+	                                callback: function(value,index) {
+	                                	if(value.toString() > 3){
+	                                		return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+	                                	}
+	                                }
+	                            }
+	                        }],
+	                        xAxes: [{
+	                            ticks: {
+	                                fontSize: 10,
+	                            }
+	                        }]
+	                    },
+		            }
+				});
+				
+				console.log("트레이너 오늘의 매출");
+				var info = result['info'];
+				var todayMoney = result['todayMoney'];
+				var htmls= '';
+				var htmls2= '';
+				/* var htmls3= ''; */
+				
+								
+				htmls += info.iuserVo.userName + '(' + info.iuserVo.userNickname + ')';
+				
+				htmls2 += '<h3>오늘의 매출</h3><p>'
+					+ todayMoney
+					+ '<span>원</span></p>';
+					
+				$('#admin_sales_trainerName').html(htmls)
+				$('.admin_today_sales').html(htmls2)
+				/* $('.admin_monthly_sales').html(htmls2) */
+				
+			}
+		});
+	}
 
 	function trainerSearch(word) {
 
@@ -140,7 +317,7 @@
 							htmls += '<ul class="admin_sales_trainerResultY">';
 
 							$(list).each(function() {
-												htmls += '<input type="radio" style="cursor: point;" name="trainerChoice" id="trainerChoice_' 
+												htmls += '<input type="radio" style="appearance: none;" name="trainerChoice" id="trainerChoice_' 
 													+ this.iuserVo.userId + '" value="'
 													+ this.iuserVo.userId +'">'
 													+ '<label style="width: 33%;" for="trainerChoice_'
@@ -150,7 +327,7 @@
 													+ '<span class="trainerChoice_id">'
 													+ this.iuserVo.userId
 													+ '</span> <span class="trainerChoice_name">'
-													+ this.iuserVo.userName
+													+ this.iuserVo.userName + '(' + this.iuserVo.userNickname +')'
 													+ '</span>';
 
 												if (this.authVo.authContent == 'ROLE_LEAVE') {
@@ -180,6 +357,7 @@
 	function valueCheck() {
 
 		let currentUserId = $('input[name=trainerChoice]:checked').val();
+		
 		let userId = 0;
 		console.log("currentUserId :" + currentUserId);
 		if (currentUserId == null) {
@@ -192,6 +370,7 @@
 		if (tapsValue == 1) {
 			userId = 0;
 		}
+		getTrainerMonthAndDay(userId);
 		console.log("userId :" + userId);
 
 		const inquireType = $('input[name=inquiry_type]:checked').val();
@@ -238,6 +417,7 @@
 
 			} else {
 				alert("기간을 다시 입력하세요.");
+				resetDate();
 			}
 		} else if ((sy == null || sy == "") && (sm == null || sm == "")
 				&& (sd == null || sd == "") && (ey == null || ey == "")
@@ -245,8 +425,24 @@
 			getlist(1, userId, inquire, 0, 0);
 		} else {
 			alert("기간을 다시 입력하세요.");
+			resetDate();
 		}
 
+	}
+	
+	function resetDate(){
+		const sy = $('select[name=sy]').val('');
+		console.log("sy: " + sy);
+		const sm = $('select[name=sm]').val('');
+		console.log("sm: " + sm);
+		const sd = $('select[name=sd]').val('');
+		console.log("sd: " + sd);
+		const ey = $('select[name=ey]').val('');
+		console.log("ey:" + ey);
+		const em = $('select[name=em]').val('');
+		console.log("em: " + em);
+		const ed = $('select[name=ed]').val('');
+		console.log("ed: " + ed);
 	}
 
 	function dateCheck(number) {
@@ -278,8 +474,9 @@
 						var pagination = result['pageMaker'];
 						var htmls = "";
 						var htmls2 = "";
-
-						htmls += '<tr><th>날짜</th><th>내용</th><th>이름</th><th>입금</th><th>출금</th><th>잔금</th></tr>';
+						
+						
+						htmls += '<tr><th>날짜</th><th>내용</th><th>이름</th><th>입금</th><th>출금</th><th>합계</th></tr>';
 
 						if (list.length < 1) {
 							htmls += '<tr>';
@@ -382,7 +579,7 @@
 
 							}
 						} // if(list.length < 1) else 끝
-
+						
 						$(".admin_table").html(htmls);
 						$(".page_nation").html(htmls2);
 
@@ -484,6 +681,9 @@
 
 	}
 
+	document.querySelector(".inquiry_types").addEventListener("click", function() {
+		valueCheck();
+	}, false);
 	document.getElementById("rd1").addEventListener("click", function() {
 		valueCheck();
 	}, false);
@@ -500,13 +700,33 @@
 
 	document.getElementById("trainerSearch_button").addEventListener("click",
 			function() {
-				console.log("trainerSearch_button()..");
-				const word = $("input[name=trainerSearch]").val();
-				trainerSearch(word);
+				inputEnter();
 			}, false);
+	
+	function inputEnter(){
+	console.log("trainerSearch_button()..");
+		const word = $("input[name=trainerSearch]").val();
+		
+		if(word.length < 1 || word == null) {
+			$("input[name=trainerSearch]").val('');
+			alert("트레이너의 이름 또는 닉네임을 검색하세요.");
+		} else {
+			trainerSearch(word);
+		}
+	}
 
 	document.getElementById("trainerNameSearch_result").addEventListener(
 			"click", function() {
+				console.log('트레이너 선택');
+				
+				var htmls1 = '<td><h3>조회구분</h3></td>'
+					+ '<td><input type="radio" name="inquiry_type" id="rd1" value="all" checked> <label for="rd1"><span></span>전체내역</label>'
+					+ '<input type="radio" name="inquiry_type" id="rd2" value="input"><label for="rd2"><span></span>입금내역</label>' 
+					+ '<input type="radio"name="inquiry_type" id="rd3" value="output"> <label for="rd3"><span></span>출금내역</label></td>';
+				
+				$(".inquiry_types").html(htmls1);
+				resetDate();
+				
 				valueCheck();
 			}, false);
 </script>

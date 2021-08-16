@@ -25,4 +25,5 @@ public class TableJoinVO {
 	
 	private double avgGrade;
 	private int totalMoney;
+	private int month;
 }

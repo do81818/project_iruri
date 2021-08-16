@@ -38,7 +38,7 @@
 		<div class="admin_memberInfo_title">
 		<c:set var="member" value="${member}" />
 		<c:choose>
-		<%-- console.log(${member })); --%>
+		<%-- console.log(${member})); --%>
 			<c:when test="${member eq 'member'}">
 				<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
 					src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
@@ -246,15 +246,15 @@
 			<div class="admin_memberInfo_pointTitle">
 				<h3>포인트</h3>
 				<p>
-					현재보유포인트<span>${point}</span>
+					현재보유포인트<span id="admin_memberInfo_userPoint">${point}</span>
 				</p>
-				<form>
-					<input type="radio" id="memberInfo_point_rd1" name="memberInfo_point_rds"> 
+				<form onkeydown="return event.key != 'Enter';">
+					<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save"> 
 						<label for="memberInfo_point_rd1">적립</label> 
-						<input type="radio"	id="memberInfo_point_rd2" name="memberInfo_point_rds"> 
+						<input type="radio"	id="memberInfo_point_rd2" name="pointState" value="use"> 
 						<label for="memberInfo_point_rd2">사용</label> 
-						<input type="number" maxlength="10">
-					<button>포인트등록</button>
+						<input type="number" maxlength="10" name="pointValue" onkeyup="if(window.event.keyCode==13) {inputEnter()}">
+					<button type="button" id="pointInsertButton">포인트등록</button>
 				</form>
 
 			</div>
@@ -278,6 +278,49 @@
 	    console.log( "ready!" );
         getlist(1);
     });
+	
+	function inputEnter(){
+		const pointState = $("input[name=pointState]:checked").val();
+		console.log("pointState: "+ pointState);
+		const point = $("input[name=pointValue]").val();
+		console.log("point: "+point);
+		
+		if(point == "" || point == null || pointState.length < 1 || pointState == null) {
+			$("input[name=pointValue]").val('');
+			alert("적립/차감할 포인트를 입력하세요.");
+		} else {
+			userInfoPointInsert(${info.iuserVo.userId}, pointState, point);
+		}
+	}
+	
+	document.getElementById("pointInsertButton").addEventListener("click", function() {
+		inputEnter();
+	}, false);
+	
+	function userInfoPointInsert(userId, pointState, point){
+
+		console.log("userId: " + userId + ", pointState: "+ pointState+"point: "+ point);
+		 const header = $('meta[name="_csrf_header"]').attr('th:content');
+         const token = $('meta[name="_csrf"]').attr('th:content');
+         
+         $.ajax({
+		     url: '${CONTEXT_PATH_ADMIN}/ajax/member/info/pointInsert',
+		     type: 'POST',
+		     data: {
+		         userId: ${info.iuserVo.userId},
+                 pointState : pointState,
+                 pointValue : point,
+		     },
+		     dataType: 'json',
+		     beforeSend: function(xhr) {
+           		xhr.setRequestHeader(header, token);
+       		 },
+       		 success : function(result) {
+       		  	console.log("포인트 등록 성공!");
+            	
+            }
+		})
+	}
 	
 	function getlist(page) {
 	    $.ajax({

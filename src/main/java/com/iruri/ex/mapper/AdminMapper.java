@@ -69,6 +69,12 @@ public interface AdminMapper {
 	
 	// 일반/유료회원 현재 보유포인트
 	Integer getUserBasicInfoPointTotal(int userId);
+	
+	// 일반/유료회원 포인트 적립/차감
+	void insertPoint(PointVO vo);
+	
+	// 일반/유료회원 현재 보유포인트
+	void updatePoint(@Param("userId") int userId, int userPoint);
 
 	// 일반/유료회원정보 운동정보리스트 보기
 	List<TableJoinVO> getUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId, @Param("pageNum") int pageNum, @Param("amount") int amount);
@@ -108,5 +114,14 @@ public interface AdminMapper {
     
     // 오늘 수익 -전체
     Integer sumTodayMoneyAll();
+    
+    // 오늘 수익 - 트레이너
+    Integer sumTodayMoneyTrainer(@Param("userId") int userId);
+    
+    // 월별 수익 - 전체
+    List<TableJoinVO> sumMonthMoneyAll();
+
+    // 월별 수익 - 트레이너
+    List<TableJoinVO> sumMonthMoneyTrainer(@Param("userId") int userId);
 
 }
