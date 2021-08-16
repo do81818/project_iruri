@@ -14,6 +14,8 @@ public interface IUserInfoService {
 	List<IUserInfoVO> useryearweight(int userId);
 
 	List<IUserInfoVO> usermonthweight(int userId);
+
+	int userbmi(int userId);
         
 //    int userheightdate(int userId);
 }
