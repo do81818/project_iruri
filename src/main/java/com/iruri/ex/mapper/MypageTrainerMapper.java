@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.ICommentVO;
 import com.iruri.ex.vo.IUserVO;
@@ -44,5 +45,13 @@ public interface MypageTrainerMapper {
     List<ICommentVO> ClassBuyUserCommentList(@Param("userId") int userId, @Param("classId") int classId);
     
     void insertComment(@Param("userId") int userId, @Param("classId") int classId, @Param("commentContent") String commentContent);
+   
+    
+    
+    
+    // 클래스 댓글조회
+    List<BoardVO> classReplyList(@Param("cri") Criteria cri, @Param("userId") int userId);
+    
+    Integer countReply(Criteria cri, @Param("userId") int userId);
     
 }
