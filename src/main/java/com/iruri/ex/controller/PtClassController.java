@@ -2,12 +2,14 @@ package com.iruri.ex.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -58,17 +60,96 @@ public class PtClassController {
     }
     
     // 이루리 PT클래스 메인 클래스 리스트
-    @GetMapping("/ajax/class")
+    @PostMapping("/ajax/class")
     public ResponseEntity<HashMap<String, Object>> iruriClass(
-            @RequestParam("type") String type, @RequestParam("pageNum") int pageNum,
-            @CurrentUser IUserVO iUserVO) {
-        
+            @RequestParam("type") String type, 
+            @RequestParam("pageNum") int pageNum,
+            @CurrentUser IUserVO iUserVO, 
+            @RequestParam("g1") String g1, 
+            @RequestParam("g2") String g2,
+            @RequestParam("ek1") String ek1, 
+            @RequestParam("ek2") String ek2, 
+            @RequestParam("ek3") String ek3,
+            @RequestParam("ek4") String ek4, 
+            @RequestParam("ek5") String ek5, 
+            @RequestParam("p1") String p1,
+            @RequestParam("p2") String p2, 
+            @RequestParam("p3") String p3, 
+            @RequestParam("p4") String p4,
+            @RequestParam("ed1") String ed1, 
+            @RequestParam("ed2") String ed2, 
+            @RequestParam("ed3") String ed3,
+            @RequestParam("ed4") String ed4, 
+            @RequestParam("day1") String day1, 
+            @RequestParam("day2") String day2,
+            @RequestParam("day3") String day3, 
+            @RequestParam("day4") String day4, 
+            @RequestParam("day5") String day5,
+            @RequestParam("day6") String day6,
+            @RequestParam("day7") String day7,
+            @RequestParam("el1") String el1,
+            @RequestParam("el2") String el2,
+            @RequestParam("el3") String el3,
+            @RequestParam("ep1") String ep1,
+            @RequestParam("ep2") String ep2,
+            @RequestParam("ep3") String ep3,
+            @RequestParam("ep4") String ep4) {
+
+        g1 = g1.equals("") ? null : g1;
+        g2 = g2.equals("") ? null : g2;
+        ek1 = ek1.equals("") ? null : ek1;
+        ek2 = ek2.equals("") ? null : ek2;
+        ek3 = ek3.equals("") ? null : ek3;
+        ek4 = ek4.equals("") ? null : ek4;
+        ek5 = ek5.equals("") ? null : ek5;
+        p1 = p1.equals("") ? null : p1;
+        p2 = p2.equals("") ? null : p2;
+        p3 = p3.equals("") ? null : p3;
+        p4 = p4.equals("") ? null : p4;
+        ed1 = ed1.equals("") ? null : ed1;
+        ed2 = ed2.equals("") ? null : ed2;
+        ed3 = ed3.equals("") ? null : ed3;
+        ed4 = ed4.equals("") ? null : ed4;
+        day1 = day1.equals("") ? null : day1;
+        day2 = day2.equals("") ? null : day2;
+        day3 = day3.equals("") ? null : day3;
+        day4 = day4.equals("") ? null : day4;
+        day5 = day5.equals("") ? null : day5;
+        day6 = day6.equals("") ? null : day6;
+        day7 = day7.equals("") ? null : day7;
+        el1 = el1.equals("") ? null : el1;
+        el2 = el2.equals("") ? null : el2;
+        el3 = el3.equals("") ? null : el3;
+        ep1 = ep1.equals("") ? null : ep1;
+        ep2 = ep2.equals("") ? null : ep2;
+        ep3 = ep3.equals("") ? null : ep3;
+        ep4 = ep4.equals("") ? null : ep4;
+
         HashMap<String, Object> result = new HashMap<>();
         Criteria cri = new Criteria(pageNum, 9);
         
-        int userId = iUserVO.getUserId();
-        int total = ptClassService.getTotalClass(cri, type, userId);
-        List<IClassVO> list = ptClassService.getClassList(cri, type, userId);
+        
+        int userId = 0;
+        if(iUserVO != null) {
+            userId = iUserVO.getUserId();
+        }
+        int total = ptClassService.getTotalClass(cri, 
+                type, userId,
+                g1, g2,
+                ek1, ek2, ek3, ek4, ek5,
+                p1, p2, p3, p4,
+                ed1, ed2, ed3, ed4,
+                day1, day2, day3, day4, day5, day6, day7,
+                el1, el2, el3, 
+                ep1, ep2, ep3, ep4);
+        List<IClassVO> list = ptClassService.getClassList(cri, type, userId,
+                g1, g2,
+                ek1, ek2, ek3, ek4, ek5,
+                p1, p2, p3, p4,
+                ed1, ed2, ed3, ed4,
+                day1, day2, day3, day4, day5, day6, day7,
+                el1, el2, el3, 
+                ep1, ep2, ep3, ep4);
         
         result.put("list", list);
         result.put("pageMaker", new PageVO(cri, total));
@@ -78,19 +159,7 @@ public class PtClassController {
         return ResponseEntity.ok(result);
     }
     
-    @GetMapping("/iruri/ptClassDetails")
-    public ModelAndView pt_details(ModelAndView mav) {
-        
-        mav.setViewName("ptclass/ptclass_details");
-        
-        return mav;
-    }
-    
-    // 하트 처리하기
-    // 권한 있을때만 ajax 통신
-    // -1 = 처음 좋아요 확인
-    // input.check 1 = 이미 좋아요를 눌렀으므로 좋아요 해제
-    // 0 = 좋아요 추가
+    // 하트
     @GetMapping("/ajax/ptClassLike")
     public int iruriPtClassLike(@CurrentUser IUserVO vo, @RequestParam("classId") int classId, @RequestParam("checkNum") int checkNum) {
         
@@ -107,6 +176,25 @@ public class PtClassController {
         }
         
         return challengeService.getUserHeartList(classId, vo.getUserId());
+    }
+    
+    @GetMapping("/iruri/ptClassDetails")
+    public ModelAndView pt_details(ModelAndView mav, @RequestParam("classId") int classId) {
+        
+        mav.setViewName("ptclass/ptclass_details");
+        
+        return mav;
+    }
+    
+    @GetMapping("/iruri/ptClassJoinCheck")
+    @ResponseBody
+    public ResponseEntity<HashMap<String, Object>> joinCheck(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+        
+        // 2. 해당 클래스가 참여 가능한지 지난 클래스인지 확인
+        // 3. 유저의 참여 정보 확인
+        // 4. 해당 클래스 정보에 따라서 맞는 json 전송
+        
+        return null;
     }
     
     @GetMapping("/iruri/ptClassMakeForm")
