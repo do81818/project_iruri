@@ -254,10 +254,10 @@
 
 						<div class="button">
 							<button class="c_make_button_cancle" type="reset">
-								챌린지등록 취소
+								클래스 등록 취소
 							</button>
 							<button class="c_make_button_submit" type="submit">
-								챌린지등록
+								클래스등록
 							</button>
 						</div>
 

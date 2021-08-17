@@ -3,10 +3,12 @@
     display: flex;
 }
 .pt_profit_graph{
+	flex: 3;
     padding: 50px 50px;
 }
 
 .pt_profit{
+	flex: 7;
     padding: 50px 0px;
   }
   
@@ -25,7 +27,7 @@ margin: 27px 35px;
 }
 
 .pt_month_number{
-  width: 80%;
+  /* width: 80%; */
   font-family: 'Cafe24SsurroundAir';
 font-size: 50px;
 color: var(--iruri-indigo-color);
@@ -34,7 +36,7 @@ padding: 27px 35px;
 }
 .pt_won{
   font-family: 'Cafe24SsurroundAir';
-font-size: 23px;
+font-size: 30px;
 color: var(--iruri-indigo-color);
 }
 

@@ -328,7 +328,7 @@ function managementComment(userId,classId) {
 						<div class="nickname">
 							<!-- 루리 -->
 							${user.userNickname}
-							<button class="infobutton" type="button" onclick=""​>클래스
+							<button class="infobutton" type="button" onclick="location.href='/ex/iruri/ptClassMakeForm'">클래스
 								개설</button>
 						</div>
 						<div class="user_detail">
@@ -357,11 +357,10 @@ function managementComment(userId,classId) {
 				<!-- 관리메뉴 -->
 				<div class="class_MenuBar">
 					<ul>
-						<li class="class_MenuBar_text"><a href="#">클래스관리</a></li>
-						<li class="class_MenuBar_text_now"><a href="#">회원관리</a></li>
-						<li class="class_MenuBar_text"><a href="#">클래스댓글조회</a></li>
-						<li class="class_MenuBar_text"><a href="#">수익관리</a></li>
-						<li class="class_MenuBar_text"><a href="#">프로필관리</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer">클래스관리</a></li>
+						<li class="class_MenuBar_text_now"><a href="/ex/mypage/trainer/userManagement">회원관리</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer/classReply">클래스댓글조회</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer/profit">수익관리</a></li>
 					</ul>
 				</div>
 

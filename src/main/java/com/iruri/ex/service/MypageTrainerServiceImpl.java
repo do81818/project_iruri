@@ -38,11 +38,25 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     }
     
     // 이달의 수익
+    /*
+     * @Override public int monthProfit(int userId) { return
+     * mypageTrainerMapper.monthProfit(userId); }
+     */
+    
     @Override
-    public int monthProfit(int userId) {
-        return mypageTrainerMapper.monthProfit(userId);
+    public int getTotalCount_monthProfit(Criteria cri, int userId) {
+        return mypageTrainerMapper.getTotalCount_monthProfit(cri, userId);
     }
     
+    /*
+     * @Override public List<ProfitVO> monthProfitList(Criteria cri, int userId) {
+     * return mypageTrainerMapper.monthProfitList(cri, userId); }
+     */
+    @Override
+    public List<ProfitVO> monthProfitList(int userId) {   
+        return mypageTrainerMapper.monthProfitList(userId);
+    }
+
     // 수익
     @Override
     public int getTotal_mypageTrainerProfit(Criteria cri, int userId) {
@@ -108,5 +122,8 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
         return mypageTrainerMapper.classReplyList(cri, userId);
     }
 
+  
+
+   
     
 }
