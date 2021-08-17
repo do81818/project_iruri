@@ -82,7 +82,7 @@
 		<![CDATA[
   	SELECT *  FROM (
     	SELECT ROWNUM AS RNUM, A.* FROM (
-        	select c.category_id ctct,b.board_content,b.board_date,b.board_groupid, b.board_title,b.category_id
+        	select c.category_id ctct,b.board_content,b.board_date,b.board_groupid, b.board_title,b.category_id, b.board_file
 				from board b, iclass c
 					where board_groupid in (SELECT class_id from iclass )
 					and b.board_groupid = c.class_id and b.user_id =#{userId} and b.board_state = 'show' 

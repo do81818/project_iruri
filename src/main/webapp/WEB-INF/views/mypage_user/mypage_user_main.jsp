@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-		pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 		prefix="sec"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!-- 필요한 태그 라이브러리는 추가하셔서 사용하시면 됩니다. -->
 <c:set var="CONTEXT_PATH" value="${pageContext.request.contextPath}" />
-<c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" />
+<c:set var="RESOURCES_PATH" value="${CONTEXT_PATH}/resources" scope="application"/>
 <!DOCTYPE html>
 <html lang="ko">
 <head>

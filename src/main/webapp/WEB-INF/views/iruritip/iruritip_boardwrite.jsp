@@ -30,7 +30,7 @@
         <div class="bw_makeForm_insert">
 
 
-            <form class="bw_makeForm" action="#">
+            <form class="bw_makeForm" action="submit">
                 <!--accept-charset="utf-8" name="c_make_form" method="GET"-->
                 <h2 class="bw_makeForm_title">게시판 글쓰기</h2>
 
@@ -62,8 +62,8 @@
 
                 <div class="bw_button">
              
-                    <button class="bw_make_button_cancle" type="reset">글쓰기 취소</button>
-                    <button class="bw_make_button_submit" type="submit">글 등록</button>
+                    <button class="bw_make_button_cancle" type="reset" onclick="location.href='/ex/iruritip/freeboard'">글쓰기 취소</button>
+                    <button class="bw_make_button_submit"  type="submit"onclick="location.href='/ex/iruritip/freeboard'">글 등록</button>
                 </div>
 
 
