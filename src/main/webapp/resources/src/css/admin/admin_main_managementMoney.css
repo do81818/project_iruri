@@ -84,11 +84,11 @@
 }
 
 .admin_today_sales {
-    flex: 50%;
+    flex: 1;
 }
 
 .admin_monthly_sales {
-    flex: 50%;
+    flex: 1;
     display: flex;
     justify-content: space-between;
 }
@@ -104,10 +104,22 @@
     font-size: 25px;
 }
 
+.admin_monthly_sales {
+	width: 100%;
+	height: 154px;
+}
+
+.admin_monthly_sales>h3{
+	width:100px;
+	vertical-align: top;
+}
+
 .admin_monthly_sales>div {
-    width: 75%;
-    height: 154px;
-    background-color: #ccc;
+	flex: 75;
+	position: relative; 
+	/* background-color: #ccc; */
+    vertical-align: top;
+    left: -60px;
 }
 
 .admin_sales_inquiry {

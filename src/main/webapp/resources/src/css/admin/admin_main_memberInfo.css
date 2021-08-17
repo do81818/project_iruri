@@ -111,6 +111,7 @@ td {
     border-radius: 18px;
     background-color: white;
     margin-left: 20px;
+    cursor: Default;
 }
 
 /* 블랙리스트 */

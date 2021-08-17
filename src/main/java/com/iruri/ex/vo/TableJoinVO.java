@@ -20,8 +20,10 @@ public class TableJoinVO {
 	private PayVO payVo;
 	private BuyVO buyVo;
 	private IClassVO iclassVo;
+	private CategoryVO categoryVo;
 	private ICommentVO icommentVo;
 	
 	private double avgGrade;
 	private int totalMoney;
+	private int month;
 }

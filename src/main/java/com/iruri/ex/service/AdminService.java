@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
-import com.iruri.ex.vo.AuthVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.PointVO;
 import com.iruri.ex.vo.ReportVO;
@@ -35,14 +34,14 @@ public interface AdminService {
 	int countNormalBlackMember();
 
 	// 트레이너회원 리스트
-	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+	List<TableJoinVO> getTrainerMemberList(String keyword,Criteria cri);
 //	List<IUserVO> getTrainerMemberList3(Criteria cri);
 	
 	// 트레이너 별 등급(평점)
 	double getTrainerGrade(int userId);
 
 	// 트레이너회원 리스트 갯수
-	int countTrainerMemberList();
+	int countTrainerMemberList(String keyword);
 
 	// 트레이너회원 블랙리스트
 	List<TableJoinVO> getTrainerBlackList(Criteria cri);
@@ -67,9 +66,18 @@ public interface AdminService {
 
 	// 일반/유료회원 현재 보유포인트
 	int getUserBasicInfoPointTotal(int userId);
+	
+	// 일반/유료회원 포인트 적립/차감
+	void insertPoint(PointVO vo);
+		
+	// 일반/유료회원 현재 보유포인트
+	void updatePoint(int userId, int userPoint);
 
-	// 일반/유료회원정보 운동정보 리스트보기 _all
-	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
+	// 일반/유료회원정보 운동정보리스트 보기
+    List<TableJoinVO> getUserExInfoList(int userId, int categoryId, Criteria cri);
+    
+    // 일반/유료회원 운동정보 리스트 갯수
+    Integer countUserExInfoList(int userId, int categoryId);
 	
 	// 트레이너정보_수익관리 리스트
 	List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri1);
@@ -87,5 +95,28 @@ public interface AdminService {
     void updateBlackListReason(int userId, String reason);
 	
     // 탈퇴회원으로 전환
-    void updateWithdrawMember(@Param("userId") int userId);
+    void updateWithdrawMember(int userId);
+    
+    // 수익관리 - 전체수익 매출 리스트
+    List<TableJoinVO> getTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate, Criteria cri);
+    
+    // 수익관리 - 전체수익 매출리스트 갯수
+    int countTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate);
+    
+    // 수익관리 - 트레이너 검색
+    List<TableJoinVO> getTrainerSearchList(String keyword);
+    
+    // 오늘의 수익 -전체
+    int sumTodayMoneyAll();
+    
+    // 오늘 수익 - 트레이너
+    int sumTodayMoneyTrainer(int userId);
+    
+    // 월별 수익 - 전체
+    List<TableJoinVO> sumMonthMoneyAll();
+
+    // 월별 수익 - 트레이너
+    List<TableJoinVO> sumMonthMoneyTrainer(int userId);
+
+
 }
