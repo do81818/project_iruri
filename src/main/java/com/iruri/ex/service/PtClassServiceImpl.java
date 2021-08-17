@@ -202,13 +202,7 @@ public class PtClassServiceImpl implements PtClassService {
     }
     
     @Override
-    public int getUserJoinChallengeListCheck(int classId, int userId) {
-        
-        return 0;
-    }
-    
-    @Override
-    public HashMap<String, Object> joinCheck(int classId, int userId,  Criteria certifyCri, Criteria replyCri) {
+    public HashMap<String, Object> joinCheck(int classId, int userId) {
         
         HashMap<String, Object> map = new HashMap<>();
         List<IClassVO> classList = ptClassMapper.ptSelectOne(classId); 
@@ -258,21 +252,31 @@ public class PtClassServiceImpl implements PtClassService {
         map.put("classVO", classList);
         map.put("classPerson", classPerson);
         
-        
-        List<BoardVO> certifyList = ptClassMapper.certifySelectOne(certifyCri, classId);
-        int certifyCount = ptClassMapper.certifySelectOneCount(classId);
-        
-        map.put("certifyList", certifyList);
-        map.put("certifyCri", new PageVO(certifyCri, certifyCount));
-        
         return map;
     }
     
     @Override
-    public void insertChallengeCertify(BoardVO boardVO) {
-        log.info("insertChallengeCertify() .. " + boardVO);
+    public int ptClassCertifyCount(int classId) {
         
-        challengeMapper.insertChallengeCertify(boardVO);
+        return ptClassMapper.ptClassCertifyCount(classId);
+    }
+    
+    @Override
+    public List<BoardVO> ptClassCertifyList(Criteria cri, int classId) {
+        
+        return ptClassMapper.ptClassCertifyList(cri, classId);
+    }
+    
+    @Override
+    public int ptClassReplyCount(int classId) {
+        
+        return ptClassMapper.ptClassReplyCount(classId);
+    }
+    
+    @Override
+    public List<BoardVO> ptClassReplyList(Criteria cri, int classId) {
+        
+        return ptClassMapper.ptClassReplyList(cri, classId);
     }
 
 }

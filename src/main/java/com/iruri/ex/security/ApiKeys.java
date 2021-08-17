@@ -8,4 +8,6 @@ public class ApiKeys {
     public static String N_CLIENT_SECRET = "fWpmifbWYr";
     public static String EMAIL = "do81818@naver.com";
     public static String PW = "dkffltldkzltm!23";
+    public static String I_REST_KEY = "0112823102906354";
+    public static String I_REST_SECRET = "745253ae8fbe951830a7dba759a2d61d762d70ce6b176f812a20b66bea11da048f75f48ba44d44a3";
 }

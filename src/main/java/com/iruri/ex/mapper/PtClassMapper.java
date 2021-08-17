@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.access.method.P;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.vo.BoardVO;
@@ -86,9 +87,14 @@ public interface PtClassMapper {
     List<IClassVO> ptSelectOne(int classId);
     int ptSelectCount(int classId);
     
-    List<BoardVO> certifySelectOne(@Param("cri") Criteria cri, @Param("classId") int classId);
-    int certifySelectOneCount(int classId);
+    // 인증글 총 갯수
+    int ptClassCertifyCount(int classId);
+    // 인증글 리스트
+    List<BoardVO> ptClassCertifyList(@Param("cri") Criteria cri, @Param("classId") int classId);
     
-    List<BoardVO> replySelectOne(@Param("cri") Criteria cri, @Param("classId") int classId);
-    int replySelectOneCount(int classId);
+    // 댓글 총 갯수
+    int ptClassReplyCount(int classId);
+    // 댓글 리스트
+    List<BoardVO> ptClassReplyList(@Param("cri") Criteria cri, @Param("classId") int classId);
+    
 }

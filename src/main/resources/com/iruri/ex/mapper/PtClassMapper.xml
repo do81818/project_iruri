@@ -4,6 +4,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.PtClassMapper">
 
+	<resultMap type="com.iruri.ex.vo.BoardVO" id="boardMap">
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardContent" column="BOARD_CONTENT"/>
+		<result property="boardFile" column="BOARD_FILE"/>
+		<result property="boardDate" column="BOARD_DATE"/>
+		<result property="boardState" column="BOARD_STATE"/>
+		<result property="boardHit" column="BOARD_HIT"/>
+		<result property="boardLike" column="BOARD_LIKE"/>
+		<result property="boardGroupId" column="BOARD_GROUPID"/>
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="rnum" column="rnum"/>	
+		<result property="classId" column="CLASS_ID"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+	</resultMap>
+
 	<!-- PT 클래스 생성 -->
 	<insert id="insertPtClass">
 		<![CDATA[
@@ -619,7 +635,15 @@ WHERE buy.buy_id = pay.buy_id and buy.class_id = iclass.class_id and iclass.clas
 ]]>
    </select>
    
-   <select id="certifySelectOne" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+   <select id="ptClassCertifyCount" resultType="int">
+<![CDATA[
+SELECT count(*) 
+FROM board b, iclass i
+WHERE b.category_id = 5 and b.board_groupid = i.class_id and i.class_id = #{classId}
+]]>
+   </select>
+   
+   <select id="ptClassCertifyList" resultMap="boardMap">
 <![CDATA[
 SELECT *
 FROM
@@ -638,12 +662,32 @@ WHERE rnum > (#{cri.pageNum}-1) * #{cri.amount}
 ]]>
    </select>
    
-   <select id="certifySelectOneCount" resultType="int">
+   <select id="ptClassReplyCount" resultType="int">
 <![CDATA[
 SELECT count(*) 
 FROM board b, iclass i
-WHERE b.category_id = 5 and b.board_groupid = i.class_id and i.class_id = #{classId}
+WHERE b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
+and board_state='show'
 ]]>
    </select>
+   
+   <select id="ptClassReplyList" resultMap="boardMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM rnum, c.*
+    FROM
+    (
+       SELECT B.*, u.user_nickname 
+       FROM board B, iclass A, iuser u
+	   where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+	   and B.board_state='show' order by B.board_date desc
+    ) C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount} 
+)	
+WHERE rnum > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
    
 </mapper>
