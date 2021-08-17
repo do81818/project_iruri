@@ -265,11 +265,9 @@
 					<div class="pt_profit">
 						<!-- 에이젝스 처리하기 -->
 						<table>
+							<tr><td colspan="3""><span class="pt_month_text">이달의 수익</span></td></tr>
 							<tr>
-								<span class="pt_month_text">이달의 수익</span>
-							</tr>
-							<tr>
-								<td class="pt_month_number"><span class="pt_won">5000</span></td>
+								<td class="pt_month_number"><span class="pt_won"></span></td>
 								<td class="pt_pre_month"><span>이전달</span> <a
 									onclick="indexCheck(1)"><img
 										src="/ex/resources/src/img/icon/arrow_red_left.png" alt="up"
@@ -282,7 +280,10 @@
 							
 
 						</table>
-
+						
+						
+			
+                
 
 						<!-- <div class="month_profit_list"></div>
              

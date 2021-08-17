@@ -35,7 +35,8 @@
 		<main>
 				<div class="ptClassFormInsert">
 
-					<form:form class="ptForm" method="POST" action="insertPtClass" accept-charset="utf-8" enctype="multipart/form-data">
+					<form class="ptForm" method="POST" action="/ex/iruri/insertPtClass?${_csrf.parameterName}=${_csrf.token}" accept-charset="utf-8" enctype="multipart/form-data">
+						
 						<h2 class="ptFormTitle">PT클래스 개설</h2>
 
 						<div>
@@ -262,7 +263,7 @@
 						</div>
 
 
-					</form:form>
+					</form>
 
 				</div>
 

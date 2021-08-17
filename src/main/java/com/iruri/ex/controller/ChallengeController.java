@@ -208,7 +208,7 @@ public class ChallengeController {
             iClassVO.setClassImage(uploadFileName);
 
             try {
-                File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
+                File saveFile = new File(uploadFolder, uploadFileName);
                 uploadFile.transferTo(saveFile);
                 
                 if(imageController.checkImageType(saveFile)) {

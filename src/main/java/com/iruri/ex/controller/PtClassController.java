@@ -205,14 +205,12 @@ public class PtClassController {
         return mav;
     }
     
-    @ResponseBody
     @PostMapping(value = "/iruri/insertPtClass", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String insert_pt_class(@RequestParam("imageCheck") String imageCheck, MultipartFile uploadFile, 
-            IClassVO iClassVO, 
-            @RequestParam("exerciseKind") List<String> kind,
-            @RequestParam("exerciseDate") List<String> date,
-            @CurrentUser IUserVO iUserVO) {
+    public void insert_pt_class(@RequestParam("imageCheck") String imageCheck, MultipartFile uploadFile, IClassVO iClassVO, 
+            @RequestParam("exerciseKind") List<String> kind, @RequestParam("exerciseDate") List<String> date,
+            @CurrentUser IUserVO iUserVO, HttpServletResponse response) throws IOException {
         log.info("insert_pt_Class () ... ");
+            
         log.info(imageCheck);
         
         if(imageCheck.equals("customImage")) {
@@ -228,7 +226,7 @@ public class PtClassController {
             iClassVO.setClassImage(uploadFileName);
         
             try {
-                File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
+                File saveFile = new File(uploadFolder, uploadFileName);
                 uploadFile.transferTo(saveFile);
                 
                 if(imageController.checkImageType(saveFile)) {
@@ -270,7 +268,8 @@ public class PtClassController {
         
         // 현재 사용자가 생성한 PT 클래스 중 가장 높은 번호의 챌린지 아이디를 찾아서
         // 해당 클래스 상세 보기로 이동하기
-        return "SUCCESS";
+        response.sendRedirect("/ex/iruri/ptClassList");
+       
     }
     
     

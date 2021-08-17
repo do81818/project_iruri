@@ -3,12 +3,15 @@
     display: flex;
 }
 .pt_profit_graph{
-	flex: 3;
+   flex: 3;
+   /* background-color: #dffffd; */
+   height: 300px;
     padding: 50px 50px;
 }
 
 .pt_profit{
-	flex: 7;
+   flex: 7;
+   /* background-color: #ddffdd; */
     padding: 50px 0px;
   }
   
@@ -23,42 +26,28 @@ font-size: 20px;
 color: var(--iruri-blue-color);
 margin: 27px 35px;
 
-
 }
 
 .pt_month_number{
-  /* width: 80%; */
-  font-family: 'Cafe24SsurroundAir';
-font-size: 50px;
-color: var(--iruri-indigo-color);
-padding: 27px 35px;
+   display: table-cell;
+   margin:0;
+   width: 80%;
+    font-family: 'Cafe24SsurroundAir';
+   font-size: 50px;
+   color: var(--iruri-indigo-color);
+   padding: 50px 35px 30px 35px;
+   vertical-align: bottom;
 
 }
 .pt_won{
   font-family: 'Cafe24SsurroundAir';
-font-size: 30px;
+font-size: 23px;
 color: var(--iruri-indigo-color);
 }
 
 .arrow_width_up_down{
   width: 30px;
   
-}
-
-.pt_pre_month{
-  font-size: 12px;
-  color: var(--iruri-dark-gray-color);
-  position: relative;
-  left: 180px;
-
-}
-
-.pt_next_month{
-  font-size: 12px;
-  color: var(--iruri-dark-gray-color);
-  position: relative;
-  left: 220px;
-
 }
 
 .pt_class_profit{
@@ -96,7 +85,6 @@ color: var(--iruri-indigo-color);
   text-align: left;
 }
 
-
 .pt_pre_month>span,
 .pt_next_month>span {
   display: block;
@@ -104,6 +92,9 @@ color: var(--iruri-indigo-color);
 }
 
 .pt_pre_month, .pt_next_month {
-  padding-bottom: 30px;
+  padding: 40px 0 30px 0;
   width: 10%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--iruri-dark-gray-color);
 }

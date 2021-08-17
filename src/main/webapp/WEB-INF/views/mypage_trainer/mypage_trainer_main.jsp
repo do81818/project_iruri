@@ -59,7 +59,7 @@
 						// src="../image/360-250.png"
 						htmls +=	'<div class="pt_card">';
 						htmls += 		'<div class="pt_image_and_mark">';
-						htmls +=			'<img class="pt_image">';/* +this.classImage+'</img>'; */
+						htmls += 			'<img src="${CONTEXT_PATH}/iruri/display?fileName='+this.classImage + '" alt="" class="pt_image">';
 						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
 						htmls += 		'</div>';
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
@@ -142,7 +142,7 @@
 						// src="../image/360-250.png"
 						htmls +=	'<div class="pt_card">';
 						htmls += 		'<div class="pt_image_and_mark">';
-						htmls +=			'<img class="pt_image">';/* +this.classImage+'</img>' */
+						htmls +=			'<img src="${CONTEXT_PATH}/iruri/display?fileName='+this.classImage + '" alt="" class="pt_image">';
 						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
 						htmls += 		'</div>';
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
