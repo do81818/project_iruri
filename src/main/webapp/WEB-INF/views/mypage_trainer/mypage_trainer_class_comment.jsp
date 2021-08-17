@@ -12,6 +12,85 @@
     <%@ include file="../include/static.jsp" %> 
     <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
     <script src=""></script> <!-- js -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			profit(1);
+		});
+		function profit(page){
+			$.ajax({
+				url : 'http://localhost:8282/ex/ajax/mypage/classReply.json',
+				type : 'GET',
+				cache : false,
+				dataType : 'json',
+				data:{
+					pageNum: page,
+				},
+				success : function(result){
+					var ReplyList = result['ReplyList'];
+					console.log(ReplyList);
+					var pagination = result['pageMaker'];
+					var htmls = ''; 
+					var htmls2 = '';
+					
+					if(ReplyList.length < 1) {
+						htmls = '현재 트레이너님의 클레스에 작성된 댓글이 없습니다';
+					} else {
+					
+					$(ReplyList).each(function() {
+						htmls +='<div class="content_list">';
+						htmls +='<div class="class_title_and_ing">';
+						htmls +='<div class="ing_red">';
+						htmls += this.iclassList[0].classState; 
+						htmls +='</div>';
+						htmls +='<div class="class_title">';
+						htmls +=this.iclassList[0].classTitle; 
+						htmls +='</div>';
+						htmls +='</div>';
+
+						htmls +='<div class="class_nickname_and_day">';
+		                htmls +='<div class="class_nickname">';
+		                htmls +=this.iuserVO.userNickname; 
+		                htmls +='</div>';
+		                htmls +='<div class="and_class">';
+		                htmls +='|';
+		                htmls +='</div>';
+		                htmls +='<div class="write_day">';
+		                htmls +=this.boardDate; 
+		                htmls +='</div>';
+		                htmls +='</div>';
+
+		                htmls +='<div class="content_text">';
+		                htmls +=this.boardContent;
+		                htmls +='</div>';
+		               	htmls +='</div>';
+
+				});
+					if (pagination['prev']) {
+						htmls2 += '<a class="arrow prev" href="javascript:profit('+ (pagination['startPage']-1) +')"></a>';
+					} 
+					// 번호를 표시하는 부분
+					for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
+						if (page !== idx) {
+							htmls2 += '<a class="pageNumLink" href="javascript:profit('+ idx + ')">' + (idx) + "</a>";
+						} else {
+							htmls2 += '<a class="pageNumLink active" href="javascript:profit('+ idx + ')">' + (idx) + "</a>";
+						}
+					}
+					
+					if (pagination['next']) {
+						htmls2 += '<a class="arrow next" href="javascript:profit('+ (pagination['endPage']+1) +')"></a>';
+						
+					}
+						$(".pt_class_reply_list").html(htmls);
+						$(".page_nation").html(htmls2);
+					}
+				}
+			});
+
+		};
+		
+	</script>
+	
 	</head>
 			
   <body>
@@ -42,13 +121,13 @@
 
 					<div id="challenge">
 						운영중인 챌린지
-						<div class="count">10</div>
+						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
 					<div id="buy">
 						수익금
 						<div class="count">
-							200
+						${trainerProfitMan}
 							<div class="buy_text">만원</div>
 						</div>
 					</div>
@@ -56,119 +135,22 @@
 				<!-- 관리메뉴 -->
 				<div class="class_MenuBar">
 					<ul>
-						<li class="class_MenuBar_text_now"><a href="#">클래스관리</a></li>
+						<li class="class_MenuBar_text"><a href="#">클래스관리</a></li>
 						<li class="class_MenuBar_text"><a href="#">회원관리</a></li>
-						<li class="class_MenuBar_text"><a href="#">클래스댓글조회</a></li>
+						<li class="class_MenuBar_text_now"><a href="#">클래스댓글조회</a></li>
 						<li class="class_MenuBar_text"><a href="#">수익관리</a></li>
 						<li class="class_MenuBar_text"><a href="#">프로필관리</a></li>
 					</ul>
 				</div>
 
-				<!-- 클래스 메뉴 -->
-				 <!-- 클래스 댓글조회 -->
-            <div class="content_list">
-                <div class="class_title_and_ing">
-                    <div class="ing_red">
-                        진행중
-                    </div>
-                    <div class="class_title">
-                        스쿼트, 런지, 플랭크 30일 챌린지
-                    </div>
-                </div>
+				<!-- 클래스 댓글조회 -->
+            	<div class="pt_class_reply_list"></div>
 
-                <div class="class_nickname_and_day">
-                    <div class="class_nickname">
-                        닉네임
-                    </div>
-                    <div class="and_class">
-                        |
-                    </div>
-                    <div class="write_day">
-                        2021.07.06
-                    </div>
-                </div>
-
-                <div class="content_text">
-                    아침을 시작하기 전에 스트레칭을 같이 해주시고 끝나고서 질문도 친절하게 받아주세요!! 이름도 불러주시면서 해주셔서 잘하고 있는지 확인받을 수도
-                    있고, 화상으로 진행되는 데도 자세를 정확하게 짚어주셔서 신기했습니다!!ㅎㅎ 시간대도 딱 좋고 앞으로도 계속 하고 싶네요!
-                </div>
-            </div>
-
-            <div class="content_list">
-                <div class="class_title_and_ing">
-                    <div class="ing_red">
-                        진행중
-                    </div>
-                    <div class="class_title">
-                        스쿼트, 런지, 플랭크 30일 챌린지
-                    </div>
-                </div>
-
-                <div class="class_nickname_and_day">
-                    <div class="class_nickname">
-                        닉네임
-                    </div>
-                    <div class="and_class">
-                        |
-                    </div>
-                    <div class="write_day">
-                        2021.07.06
-                    </div>
-                </div>
-
-                <div class="content_text">
-                    아침을 시작하기 전에 스트레칭을 같이 해주시고 끝나고서 질문도 친절하게 받아주세요!! 이름도 불러주시면서 해주셔서 잘하고 있는지 확인받을 수도
-                    있고, 화상으로 진행되는 데도 자세를 정확하게 짚어주셔서 신기했습니다!!ㅎㅎ 시간대도 딱 좋고 앞으로도 계속 하고 싶네요!
-                </div>
-            </div>
-
-            <div class="content_list">
-                <div class="class_title_and_ing">
-                    <div class="ing_gray">
-                        종료
-                    </div>
-                    <div class="class_title">
-                        스쿼트, 런지, 플랭크 30일 챌린지
-                    </div>
-                </div>
-
-                <div class="class_nickname_and_day">
-                    <div class="class_nickname">
-                        닉네임
-                    </div>
-                    <div class="and_class">
-                        |
-                    </div>
-                    <div class="write_day">
-                        2021.07.06
-                    </div>
-                </div>
-
-                <div class="content_text">
-                    아침을 시작하기 전에 스트레칭을 같이 해주시고 끝나고서 질문도 친절하게 받아주세요!! 이름도 불러주시면서 해주셔서 잘하고 있는지 확인받을 수도
-                    있고, 화상으로 진행되는 데도 자세를 정확하게 짚어주셔서 신기했습니다!!ㅎㅎ 시간대도 딱 좋고 앞으로도 계속 하고 싶네요!
-                </div>
-            </div>
-
-				
-				
-				<!-- 페이징 -->
-				<div class="page_nation">
-					<a class="arrow prev" href="#"></a> 
-					<a href="#" class="active">1</a>
-					<a href="#">2</a> 
-					<a href="#">3</a> 
-					<a href="#">4</a> 
-					<a href="#">5</a>
-					<a class="arrow next" href="#"></a>
-				</div>
+                <div class="page_nation"></div>
 
 
-
-			</div>
-
-
-		</main>
+		</div>
+	</main>
       
     <%@ include file="../include/footerTemplate.jsp" %>  <!-- 경로를 확인해 주세요 --> 
     

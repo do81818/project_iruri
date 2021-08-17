@@ -64,7 +64,7 @@
     
     <!-- 로그인 메뉴 -->
     <sec:authorize access="isAuthenticated()">
-      <form:form action="${CONTEXT_PATH}/logout" method="POST" class="infoMenu-login">
+      <form:form action="${CONTEXT_PATH}/logout" method="POST" class="infoMenu-login" id="logout">
         <a href="#" class="infoMenu__item">
           <i class="iruri-search-icon"></i>
           <span>검색</span>

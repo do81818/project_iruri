@@ -87,7 +87,7 @@ FROM
 	FROM 
 		iclass ic, iuser iu
 	WHERE 
-		ic.user_id = iu.user_id and ic.category_id = 2 and ic.class_enddate >= sysdate
+		ic.user_id = iu.user_id and ic.category_id = 2 and ic.class_enddate >= sysdate and class_state = 'show'
 	ORDER BY 
 		ic.class_like DESC
 )
@@ -96,11 +96,218 @@ WHERE
 ]]>
 	</select>
 	
+	<sql id="searchKeyword">
+		<if test='g1 != null and g2 == null'>
+			and iu.user_id = iuserinfo.user_id 
+			and iuserinfo.user_gender = '남성'
+        </if>
+        <if test='g1 == null and g2 != null'>
+			and iu.user_id = iuserinfo.user_id 
+			and iuserinfo.user_gender = '여성'
+        </if>
+        
+        <if test='ek1 != null'>
+			and exercise_kind like '%'||'헬스'||'%'
+        </if>
+        <if test='ek2 != null'>
+			and exercise_kind like '%'||'필라테스'||'%'
+        </if>
+        <if test='ek3 != null'>
+			and exercise_kind like '%'||'요가'||'%'
+        </if>
+        <if test='ek4 != null'>
+			and exercise_kind like '%'||'바디프로필'||'%'
+        </if>
+        <if test='ek5 != null'>
+			and exercise_kind like '%'||'댄스'||'%'
+        </if>
+        
+        <if test='p1 != null'>
+       	<![CDATA[
+			and class_price <= 100000
+		]]> 
+        </if>
+        <if test='p2 != null'>
+		<![CDATA[
+			and class_price <= 200000
+		]]> 
+        </if>
+        <if test='p3 != null'>
+		<![CDATA[
+			and class_price <= 300000
+		]]> 
+        </if>
+        <if test='p4 != null'>
+		<![CDATA[
+			and class_price >= 300000
+		]]> 
+        </if>
+        
+        <if test='ed1 != null'>
+		<![CDATA[
+			and ic.class_startdate <= to_char(add_months(sysdate,+1))
+		]]> 
+        </if>
+        <if test='ed2 != null'>
+		<![CDATA[
+			and ic.class_startdate <= to_char(add_months(sysdate,+2))
+		]]> 
+        </if>
+        <if test='ed3 != null'>
+		<![CDATA[
+			and ic.class_startdate <= to_char(add_months(sysdate,+3))
+		]]> 
+        </if>
+        <if test='ed4 != null'>
+		<![CDATA[
+			and ic.class_startdate >= to_char(add_months(sysdate,+3))
+		]]> 
+        </if>
+        
+        <if test='day1 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'월'||'%'
+		]]> 
+        </if>
+        <if test='day2 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'화'||'%'
+		]]> 
+        </if>
+        <if test='day3 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'수'||'%'
+		]]> 
+        </if>
+        <if test='day4 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'목'||'%'
+		]]> 
+        </if>
+        <if test='day5 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'금'||'%'
+		]]> 
+        </if>
+        <if test='day6 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'토'||'%'
+		]]> 
+        </if>
+        <if test='day7 != null'>
+		<![CDATA[
+			and exercise_date like '%'||'일'||'%'
+		]]> 
+        </if>
+        
+        <if test='el1 != null and el2 == null and el3 == null'>
+		<![CDATA[
+			and class_level = 'easy'
+		]]> 
+        </if>
+        <if test='el1 == null and el2 != null and el3 == null'>
+		<![CDATA[
+			and class_level = 'normal'
+		]]> 
+        </if>
+        <if test='el1 == null and el2 == null and el3 != null'>
+		<![CDATA[
+			and class_level = 'hard'
+		]]> 
+        </if>
+        <if test='el1 != null and el2 != null and el3 == null'>
+		<![CDATA[
+			and class_level in ('easy', 'normal')
+		]]> 
+        </if>
+        <if test='el1 == null and el2 != null and el3 != null'>
+		<![CDATA[
+			and class_level in ('normal', 'hard')
+		]]> 
+        </if>
+        <if test='el1 != null and el2 == null and el3 != null'>
+		<![CDATA[
+			and class_level in ('easy', 'hard')
+		]]> 
+        </if>
+        
+        <if test='ep1 != null and ep2 == null and ep3 == null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (1)
+		]]> 
+        </if>
+        <if test='ep1 == null and ep2 != null and ep3 == null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (2)
+		]]> 
+        </if>
+        <if test='ep1 == null and ep2 == null and ep3 != null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (4)
+		]]> 
+        </if>
+        <if test='ep1 == null and ep2 == null and ep3 == null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (6)
+		]]> 
+        </if>
+        <if test='ep1 != null and ep2 != null and ep3 == null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (1,2)
+		]]> 
+        </if>
+        <if test='ep1 != null and ep2 == null and ep3 != null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (1,4)
+		]]> 
+        </if>
+        <if test='ep1 != null and ep2 == null and ep3 == null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (1,6)
+		]]> 
+        </if>
+        <if test='ep1 != null and ep2 != null and ep3 != null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (1,2,4)
+		]]> 
+        </if>
+        <if test='ep1 != null and ep2 != null and ep3 == null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (1,2,6)
+		]]> 
+        </if>
+		<if test='ep1 != null and ep2 == null and ep3 != null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (1,4,6)
+		]]> 
+        </if>
+		<if test='ep1 == null and ep2 != null and ep3 != null and ep4 == null'>
+		<![CDATA[
+			and class_totalmember in (2,4)
+		]]> 
+        </if>     
+        <if test='ep1 == null and ep2 != null and ep3 == null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (2,6)
+		]]> 
+        </if>     
+        <if test='ep1 == null and ep2 != null and ep3 != null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (2, 4, 6)
+		]]> 
+        </if>     
+        <if test='ep1 == null and ep2 == null and ep3 != null and ep4 != null'>
+		<![CDATA[
+			and class_totalmember in (4, 6)
+		]]> 
+        </if>
+	</sql>
+	
 	<!-- 전체 클래스 토탈 넘버 -->
 	<select id="getTotalClassAll" resultType="int">
 <![CDATA[
-SELECT COUNT(*)
-FROM iclass ic,
+SELECT count(*)
+FROM iclass ic, iuser iu, iuserinfo,
 (
     SELECt exkind.*, exdate.exercise_date
     FROM
@@ -116,21 +323,24 @@ FROM iclass ic,
     ) exdate
     WHERE exkind.class_id = exdate.class_id
 ) exercise
-WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
 ]]>
+		
+     <include refid="searchKeyword" />       
 	</select>
 	
 	<!-- 전체 클래스 리스트 -->
 	<select id="getClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
 <![CDATA[
-	SELECT *
+SELECT 
+	*
 FROM
 (
     SELECT ROWNUM AS RNUM, classlist.*
     FROM
     (
-        SELECT ic.*, exercise_kind, exercise_date
-        FROM iclass ic,
+        SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
+        FROM iclass ic, iuser iu, iuserinfo,
         (
             SELECt exkind.*, exdate.exercise_date
             FROM
@@ -146,26 +356,197 @@ FROM
             ) exdate
             WHERE exkind.class_id = exdate.class_id
         ) exercise
-        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
+]]>
+         <include refid="searchKeyword"/>
+<![CDATA[
     ) classlist
-    WHERE   ROWNUM <= #{pageNum} * #{amount}
+    WHERE   ROWNUM <= #{cri.pageNum} * #{cri.amount}
 )
-WHERE RNUM > (#{pageNum}-1) * #{amount}
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
 ]]>
 	</select>
 	
 	<!-- 구매한 클래스 토탈 넘버 -->
 	<select id="getTotalClassBuy" resultType="int">
 <![CDATA[
-SELECT COUNT(*)
-FROM pay,
+SELECT count(*)
+FROM iclass ic, iuser iu, iuserinfo, buy, pay,
 (
-    SELECT classlist.*, buy.buy_id
-    FROM buy,
+    SELECt exkind.*, exdate.exercise_date
+    FROM
     (
-        SELECT ic.*, exercise.exercise_kind, exercise.exercise_date
-        FROM iclass ic,
-        (    
+        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+        FROM exercise_kind
+        GROUP BY class_id
+    ) exkind,
+    (
+        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+        FROM exercise_date
+        GROUP BY class_id
+    ) exdate
+    WHERE exkind.class_id = exdate.class_id
+) exercise
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show' and
+buy.buy_id = pay.buy_id and buy.user_id = #{userId} and pay.pay_state = 'pay' and buy.class_id = ic.class_id and iu.user_id = iuserinfo.user_id
+]]>
+		 <include refid="searchKeyword"/>
+	</select>
+	
+	<!-- 구매한 클래스 리스트 -->
+	<select id="getBuyClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, clsre.*
+    FROM
+    (
+        SELECT iclass.class_id
+        FROM buy, pay, iclass
+        WHERE buy.buy_id = pay.buy_id and buy.user_id = 5
+        and pay.pay_state = 'pay' and buy.class_id = iclass.class_id and iclass.category_id = 2 and iclass.class_state = 'show'
+    ) buyre,
+    (
+        SELECT ic.*, iu.user_nickname
+        FROM iuser iu, iuserinfo,
+        (
+            SELECT ic.class_id, ic.user_id, ic.class_totalmember, ic.class_image, ic.class_title, ic.class_startdate, ic.class_time, ic.class_level, ic.class_enddate, ic.class_price, exercise.exercise_kind, exercise.exercise_date
+            FROM iclass ic,
+            (
+                SELECT exkind.*, exdate.exercise_date
+                FROM
+                (
+                    SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                    FROM exercise_kind
+                    GROUP BY class_id
+                ) exkind,
+                (
+                    SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                    FROM exercise_date
+                    GROUP BY class_id
+                ) exdate
+                WHERE exkind.class_id = exdate.class_id
+            ) exercise
+            WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and ic.class_state = 'show' and class_enddate >= sysdate
+        ) ic
+        WHERE ic.user_id = iu.user_id and iu.user_id = iuserinfo.user_id
+]]>
+		 <include refid="searchKeyword" />
+<![CDATA[
+    ) clsre
+    WHERE clsre.class_id = buyre.class_id and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
+	
+	<!-- 관심 클래스 토탈 넘버 -->
+	<select id="getTotalClassInterest" resultType="int">
+<![CDATA[
+SELECT count(*)
+FROM iclass ic, iuser iu, iuserinfo, likelist li,
+(
+    SELECt exkind.*, exdate.exercise_date
+    FROM
+    (
+        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+        FROM exercise_kind
+        GROUP BY class_id
+    ) exkind,
+    (
+        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+        FROM exercise_date
+        GROUP BY class_id
+    ) exdate
+    WHERE exkind.class_id = exdate.class_id
+) exercise
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show' 
+and iu.user_id = iuserinfo.user_id and ic.class_id = li.class_id and li.user_id = #{userId}
+]]>
+		<include refid="searchKeyword"/>
+	</select>
+	
+	<!-- 관심 클래스 리스트 -->
+	<select id="getInterestClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, clss.*
+    FROM likelist li,
+    (
+        SELECT ic.*, iu.user_nickname
+        FROM iuser iu, iuserinfo,
+        (
+            SELECT ic.class_id, ic.user_id, ic.class_totalmember, ic.class_image, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, ic.class_price, ic.class_state, exercise.exercise_kind, exercise.exercise_date
+            FROM iclass ic,
+            (
+                SELECT exkind.*, exdate.exercise_date
+                FROM
+                (
+                    SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+                    FROM exercise_kind
+                    GROUP BY class_id
+                ) exkind,
+                (
+                    SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+                    FROM exercise_date
+                    GROUP BY class_id
+                ) exdate
+                WHERE exkind.class_id = exdate.class_id
+            ) exercise
+            WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and ic.class_state = 'show' and class_enddate >= sysdate
+        ) ic
+        WHERE ic.user_id = iu.user_id and iu.user_id = iuserinfo.user_id
+]]>
+        <include refid="searchKeyword" />
+
+<![CDATA[
+    ) clss
+    WHERE clss.class_id = li.class_id and class_state = 'show' and clss.class_enddate >= sysdate and li.user_id = #{userId} and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
+	
+	<!-- 지난 클래스 총 갯수-->
+	<select id="getTotalClassPast" resultType="int">
+<![CDATA[
+SELECT count(*)
+FROM iclass ic, iuser iu, iuserinfo,
+(
+    SELECt exkind.*, exdate.exercise_date
+    FROM
+    (
+        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+        FROM exercise_kind
+        GROUP BY class_id
+    ) exkind,
+    (
+        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+        FROM exercise_date
+        GROUP BY class_id
+    ) exdate
+    WHERE exkind.class_id = exdate.class_id
+) exercise
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate < sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
+]]>
+	<include refid="searchKeyword" />
+	</select>
+	
+	<!-- 지난 클래스 리스트 -->
+<select id="getPastClassList" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM AS RNUM, classlist.*
+    FROM
+    (
+        SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
+        FROM iclass ic, iuser iu, iuserinfo,
+        (
             SELECt exkind.*, exdate.exercise_date
             FROM
             (
@@ -180,12 +561,15 @@ FROM pay,
             ) exdate
             WHERE exkind.class_id = exdate.class_id
         ) exercise
-        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate
-    ) classlist
-    WHERE classlist.class_id = buy.class_id and buy.user_id = #{userId}
-) buylist
-WHERE buylist.buy_id = pay.buy_id and pay_state = 'pay'
+        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate < sysdate and ic.user_id = iu.user_id and iu.user_id = iuserinfo.user_id
 ]]>
-	</select>
-
+		<include refid="searchKeyword" />
+<![CDATA[
+    ) classlist
+    WHERE   ROWNUM <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+   </select>
+   
 </mapper>

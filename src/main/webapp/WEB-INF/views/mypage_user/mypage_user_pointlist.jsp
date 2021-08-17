@@ -138,7 +138,18 @@
         
         <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
         	
-            <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+            <%--  <a class="active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>  --%>
+         
+         
+       <c:choose>
+          <c:when test="${pageMaker.cri.pageNum == num}">
+             <a class="pageNumLink active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+          </c:when> 
+          <c:otherwise>
+          	<a class="pageNumLink" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+          </c:otherwise>
+          </c:choose> 
+            
             
         </c:forEach>
         

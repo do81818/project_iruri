@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.MypageTrainerMapper;
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.BuyVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.ICommentVO;
@@ -88,6 +89,23 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
     @Override
     public void insertComment(int userId, int classId, String commentContent) {
         mypageTrainerMapper.insertComment(userId, classId, commentContent);
+    }
+
+    // 클래스 댓글조회
+    @Override
+    public Integer countReply(Criteria cri, int userId) {
+        try {
+            int total = mypageTrainerMapper.countReply(cri, userId);
+            return total;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public List<BoardVO> classReplyList(Criteria cri, int userId) {
+        
+        return mypageTrainerMapper.classReplyList(cri, userId);
     }
 
     
