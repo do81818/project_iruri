@@ -249,11 +249,13 @@
 					현재보유포인트<span id="admin_memberInfo_userPoint">${point}</span>
 				</p>
 				<form onkeydown="return event.key != 'Enter';">
-					<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save"> 
+						<span id="memberInfo_point_rds">
+						<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save"> 
 						<label for="memberInfo_point_rd1">적립</label> 
 						<input type="radio"	id="memberInfo_point_rd2" name="pointState" value="use"> 
 						<label for="memberInfo_point_rd2">사용</label> 
 						<input type="number" maxlength="10" name="pointValue" onkeyup="if(window.event.keyCode==13) {inputEnter()}">
+						</span>
 					<button type="button" id="pointInsertButton">포인트등록</button>
 				</form>
 
@@ -317,8 +319,15 @@
        		 },
        		 success : function(result) {
        		  	console.log("포인트 등록 성공!");
-       		  	var htmls = result['point'];
-       		  	$("#admin_memberInfo_userPoint").html(htmls);
+       		  	var point = result['point'];
+       		  	var htmls = '<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save">'
+       		  			+ '<label for="memberInfo_point_rd1">적립</label>'
+       		  			+ '<input type="radio"	id="memberInfo_point_rd2" name="pointState" value="use">'
+	       		  		+ '<label for="memberInfo_point_rd2">사용</label>'
+	       		  		+ '<input type="number" maxlength="10" name="pointValue" onkeyup="if(window.event.keyCode==13) {inputEnter()}">';       		  	
+       		  	
+       		  	$("#admin_memberInfo_userPoint").html(point);
+       		  	$("#memberInfo_point_rds").html(htmls);
        		 	getlist(1);
             }
 		})
