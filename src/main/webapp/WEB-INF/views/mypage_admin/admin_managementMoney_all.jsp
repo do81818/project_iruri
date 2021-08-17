@@ -138,7 +138,6 @@
 			console.log("시작!");
 			/* console.log("차트");
 			monthlyMoneyChart('myChart'); */
-			getGraph();
 			getlist(1, 0, 'all', 0, 0);
 		})
 		
