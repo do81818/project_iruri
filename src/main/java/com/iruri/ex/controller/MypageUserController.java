@@ -727,6 +727,16 @@ public class MypageUserController {
 			       return "/iruritip/iruritip_boardwrite";
 			       
 			   }
+			   
+			   
+				// 신청한 클래스 취소
+				@GetMapping("/iruritip/submit")
+			    public String iruritip_submit(Principal principal,Model model) {
+
+
+			        return "redirect:/iruritip/freeboard";
+			        
+			    }
 		  
 		  
 		 
