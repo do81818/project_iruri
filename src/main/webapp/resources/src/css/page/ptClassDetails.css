@@ -39,6 +39,7 @@
 }
 
 .ptDetail__infoData {
+  width: 492px;
   padding-top: 10px;
 }
 
@@ -128,6 +129,10 @@
   color: var(--iruri-yellow-color);
 }
 
+.buyData__buyBtn:disabled {
+  background-color: var(--iruri-gray-color);
+}
+
 .ptDetail__nav {
   display: flex;
   width: 1200px;
@@ -196,6 +201,10 @@
   flex-direction: column;
 }
 
+.ptDetail__certifyContents .page_nation_certify {
+    background-color: var(--iruri-yellow-color) !important;
+}
+
 .ptDetail_certify__total {
   width: 88.3px;
   height: 34px;
@@ -261,4 +270,108 @@
   border: none;
   outline: none;
   color: var(--iruri-blue-color);
+}
+
+#pt_certify_modal,
+#pt_certify_modify_modal {
+    position: relative;
+    z-index: 900;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+
+.modal_layer {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 13, 13, 0.4);
+}
+
+.pt_certify_modal_start {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 30px;
+    border: 2px solid var(--iruri-blue-color);
+    border-radius: 50px;
+    background: #fff;
+    position: fixed;
+    padding: 44px 70px;
+}
+
+.pt_modal_close>img {
+    float: right;
+    width: 28px;
+    cursor: pointer;
+}
+
+.pt_certify_modal_start>form {
+    width: 100%;
+}
+
+.pt_certify_modal_title {
+    font-weight: 400;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin: 50px 0;
+}
+
+.pt_certify_modal_ul {
+    margin-bottom: 40px;
+    line-height: 25px;
+}
+
+.pt_certify_modal_ul li {
+    list-style: none;
+    position: relative;
+    top: 15px;
+    color: var(--iruri-gray-color);
+}
+
+
+
+.pt_certify_img_button >span {
+    position: relative;
+    top: 10px;
+}
+
+.pt_certify_file_upload {
+    margin-right: 5px;
+    margin-left: -30px;
+    position: relative;
+    top: 10px;
+}
+
+input[type=file] {
+    display: none;
+}
+
+.pt_certify_img_button input[type=file]+label {
+    display: inline;
+    cursor: pointer;
+    padding: 20px 80px;
+    background: url('/ex/resources/src/img/icon/img_upload.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.pt_certify_img_button input[type=file]:checked+label {
+    background-image: url('/ex/resources/src/img/icon/img_upload.png');
+}
+
+.uploadResult {
+    margin-bottom: 36px;
+    position: relative;
+    top: 35px;
+    color: var(--iruri-gray-color);
 }

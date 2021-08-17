@@ -15,54 +15,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
       <main>
         <div class="ptClassDetailWrap">
-          <article class="ptDetail__info">
-            <div class="ptDetail__img">
-              <div class="ptDetail__person">1:1</div>
-            </div>
-            <div class="ptDetail__infoData">
-              <div class="infoData__subTitle">클래스</div>
-              <h4 class="infoData__title">스쿼트, 런지, 플랭크 30일 챌린지 클래스 챌린지 클래스</h4>
-              <h5 class="infoData__trainer">공공 트레이너</h5>
-              <div class="infoData__count">
-                <i class="iruri_heart_icon"></i>
-                <span>006</span>
-              </div>
-
-              <div class="infoData__goal">나나난</div>
-
-              <dl class="infoData__detailData">
-                <div>
-                  <dt>운동종류</dt>
-                  <dd>헬스</dd>
-                </div>
-                <div>
-                  <dt>운동강도</dt>
-                  <dd>EASY</dd>
-                </div>
-                <div>
-                  <dt>운동기간</dt>
-                  <dd>2021.03.01~2021.04.01</dd>
-                </div>
-                <div>
-                  <dt>월동요일</dt>
-                  <dd>월수금</dd>
-                </div>
-                <div>
-                  <dt>운동시간</dt>
-                  <dd>50분</dd>
-                </div>
-                <div>
-                  <dt>참여인원</dt>
-                  <dd>00 / 20</dd>
-                </div>
-              </dl>
-
-              <div class="infoData__buyData">
-                <span class="buyData__price">\150,000</span>
-                <button class="buyData__buyBtn">구매하기</button>
-              </div>
-            </div>
-          </article>
+          <article class="ptDetail__info"></article>
 
           <ul class="ptDetail__nav">
             <li>
@@ -85,57 +38,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             <p>아침에 눈을 뜨면 지난밤이 궁금해</p>
           </div>
 
-          <div class="ptDetail__certify" id="certify">
-            <div class="ptDetail__certifyContents">
-              <div class="ptDetail_certify__total">총 77 개</div>
-              <div class="ptDetail_certify__images">
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-
-                <div class="images__image">
-                  <img src="/ex/resources/src/img/icon/270-270.png" />
-                </div>
-              </div>
-
-              <!-- 페이징 태그(댓글, 게시글 등 다양하게 사용)-->
-              <div class="page_nation_certify">
-                <a class="arrow prev" href="#"></a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a class="arrow next" href="#"></a>
-              </div>
-
-              <button class="ptDetail_certify__btn">인증하기</button>
-            </div>
-          </div>
+          <div class="ptDetail__certify" id="certify"></div>
 
           <!-- 댓글 입력창 -->
           <div class="c_reply_insert" id="reply">
@@ -227,36 +130,38 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
           </div>
 
           <!--인증하기 모달창-->
-          <div id="c_certify_modal">
-            <div class="c_certify_modal_start">
-              <div class="c_modal_close">
+          <div id="pt_certify_modal">
+            <div class="pt_certify_modal_start">
+              <div class="pt_modal_close">
                 <img src="/ex/resources/src/img/icon/close.png" alt="" />
               </div>
-              <h2 class="c_certify_modal_title">인증글 작성</h2>
+              <h2 class="pt_certify_modal_title">인증글 작성</h2>
               <form action="#">
-                <ul class="c_certify_modal_ul">
+                <ul class="pt_certify_modal_ul">
                   <li>- 인증글 작성 시 포인트가 누적됩니다.</li>
                   <li>- 누적된 포인트는 챌린지 종료 후 3일 이내 자동 적립됩니다.</li>
                   <li>- 챌린지 종료 전에 인증글을 삭제하면 누적된 포인트가 회수됩니다.</li>
                   <li>- 챌린지가 종료되기 전까지는 수정 및 삭제가 가능합니다.</li>
                 </ul>
-                <div class="c_certify_name">
+                <div class="pt_certify_name">
                   <p>제목</p>
-                  <input type="text" class="inputbox_cetify1" />
+                  <input type="text" class="inputbox_cetify1" name="boardTitle" />
                 </div>
 
-                <div class="c_certify_content">
+                <div class="pt_certify_content">
                   <p>내용</p>
-                  <textarea cols="30" rows="50" class="inputbox_certify2"></textarea>
+                  <textarea cols="30" rows="50" class="inputbox_certify2" name="boardContent"></textarea>
                 </div>
 
-                <div class="c_certify_img">
+                <div class="pt_certify_img_button">
                   <p>사진첨부</p>
-                  <input type="file" accept=".jpg, .png" id="certify_upload" /><label for="certify_upload" class="certify_file_upload"></label> <span style="color: #999">* 650x500px 크기의 jpg.png</span>
+                  <input type="file" name="uploadFile" accept=".jpg, .png" id="certify_upload" /><label for="certify_upload" class="pt_certify_file_upload"></label> <span style="color: #999">* 650x500px 크기의 jpg.png</span>
+
+                  <div class="uploadResult"></div>
                 </div>
 
                 <div class="modal_button">
-                  <button class="c_certify_modal_submit" type="submit">인증글 올리기</button>
+                  <button class="pt_certify_modal_submit" type="submit">인증글 올리기</button>
                 </div>
               </form>
             </div>
@@ -331,5 +236,230 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
       <%@ include file="../include/footerTemplate.jsp"%>
     </div>
+    <script>
+      // 1 이미 참여한 클래스
+      // 0 참여 가능한 클래스
+      // -1 참여 불가능한 클래스
+      function detailsAjax(cPageNum, rPageNum) {
+        const classQuery = new URLSearchParams(location.search).get("classId");
+        $.ajax({
+          url: "/ex/iruri/ptClassJoinCheck",
+          type: "GET",
+          cache: false,
+          data: {
+            classId: classQuery,
+            cPageNum: cPageNum,
+            rPageNum: rPageNum,
+          },
+          dataType: "json",
+          success: function (result) {
+            const classVO = result["classVO"][0];
+            const userVO = result["classVO"][0]["iuserVO"];
+
+            let titleInfoHtml = `<div class="ptDetail__img" style="background: url(/ex/iruri/display?fileName=${"${classVO.classImage}"})">
+                <div class="ptDetail__person">1:${"${classVO.classTotalMember}"}</div>
+              </div>
+              <div class="ptDetail__infoData">
+                <div class="infoData__subTitle">클래스</div>
+                <h4 class="infoData__title">${"${classVO.classTitle}"}</h4>
+                <h5 class="infoData__trainer">${"${userVO.userNickname}"} 트레이너</h5>
+                <div class="infoData__count">
+                  <i class="iruri_heart_icon"></i>
+                  <span>${"${classVO.classLike}"}</span>
+                </div>
+
+                <div class="infoData__goal">${"${classVO.classGoal}"}</div>
+
+                <dl class="infoData__detailData">
+                  <div>
+                    <dt>운동종류</dt>
+                    <dd>`;
+
+            const exerciseKindList = classVO.exerciseKindList;
+            for (let i = 0; i < exerciseKindList.length; i++) {
+              titleInfoHtml += exerciseKindList[i].exerciseKind;
+              if (i < exerciseKindList.length - 1) titleInfoHtml += ", ";
+            }
+
+            titleInfoHtml +=
+              //
+              `</dd>
+                  </div>
+                  <div>
+                    <dt>운동강도</dt>
+                    <dd>${"${classVO.classLevel}"}</dd>
+                  </div>
+                  <div>
+                    <dt>운동기간</dt>
+                    <dd>${"${classVO.classStartDate}"}~${"${classVO.classEndDate}"}</dd>
+                  </div>
+                  <div>
+                    <dt>월동요일</dt>
+                    <dd>`;
+
+            const exerciseDateList = classVO.exerciseDateList;
+            for (let i = 0; i < exerciseDateList.length; i++) {
+              titleInfoHtml += exerciseDateList[i].exerciseDate;
+              if (i < exerciseDateList.length - 1) titleInfoHtml += ", ";
+            }
+
+            titleInfoHtml += `</dd>
+                  </div>
+                  <div>
+                    <dt>운동시간</dt>
+                    <dd>${"${classVO.classTime}"}분</dd>
+                  </div>
+                  <div>
+                    <dt>참여인원</dt>
+                    <dd>${"${result.classPerson}"} / ${"${classVO.classTotalMember}"}</dd>
+                  </div>
+                </dl>
+
+                <div class="infoData__buyData">
+                  <span class="buyData__price">${"${classVO.classPrice}"}</span>`;
+
+            if (classVO.classTotalMember <= result.classPerson) {
+              titleInfoHtml += `<button class="buyData__buyBtn" disabled>인원초과된 클래스입니다.</button>`;
+            } else if (result.joinCheck === 1) {
+              titleInfoHtml += `<button class="buyData__buyBtn" disabled>이미 참여한 클래스입니다.</button>`;
+            } else if (result.joinCheck === 0) {
+              titleInfoHtml += `<button class="buyData__buyBtn">구매하기</button>`;
+            } else {
+              titleInfoHtml += `<button class="buyData__buyBtn" disabled>지난 클래스입니다.</button>`;
+            }
+
+            titleInfoHtml += `</div>
+              </div>`;
+
+            const ptDetail__info = document.querySelector(".ptDetail__info");
+            const ptDetail__infoDescription = document.querySelector(".ptDetail__infoDescription");
+
+            ptDetail__info.innerHTML = titleInfoHtml;
+            ptDetail__infoDescription.innerHTML = `<h6>클래스 소개</h6>
+              <p>${"${classVO.classContent}"}</p>
+              <h6>트레이너 소개</h6>
+              <p>${"${classVO.classTrainerInfo}"}</p>`;
+
+            // 인증글
+            const total = result.certifyCri.total;
+            const certifyList = result.certifyList;
+            certifyHtmls = `
+              <div class="ptDetail__certifyContents">
+              <div class="ptDetail_certify__total">총 ${"${total}"} 개</div>
+              <div class="ptDetail_certify__images">`;
+
+            for (let list in certifyList) {
+              certifyHtmls += `
+                <div class="images__image" onclick="certify_details_modal(${"${list.boardId}"})">
+                  <img src="/ex/resources/src/img/icon/${"${list.boardFile}"}" />
+                </div>
+              `;
+            }
+
+            // 인증글 페이징 // 보드 페이지넘 추가
+            const cPagination = result.certifyCri;
+            if (cPagination.prev) {
+              certifyHtmls += '<a class="arrow prev" href="javascript:detailsAjax(' + (cPagination["startPage"] - 1) + "," + rPageNum + '"></a>';
+            }
+
+            for (var idx = cPagination["startPage"]; idx <= cPagination["endPage"]; idx++) {
+              if (cPageNum !== idx) {
+                certifyHtmls += '<a class="pageNumLink" href="javascript:detailsAjax(' + idx + "," + rPageNum + ')">' + idx + "</a>";
+              } else {
+                certifyHtmls += '<a class="pageNumLink active" href="javascript:detailsAjax(' + idx + "," + rPageNum + ')">' + idx + "</a>";
+              }
+            }
+
+            if (cPagination.next) {
+              certifyHtmls += '<a class="arrow next" href="javascript:detailsAjax(' + (pagination["endPage"] + 1) + "," + rPageNum + ')"></a>';
+            }
+
+            certifyHtmls += `
+            </div>
+            <button class="ptDetail_certify__btn">인증하기</button>
+              </div>
+            `;
+
+            const ptDetail__certify = document.querySelector(".ptDetail__certify");
+            ptDetail__certify.innerHTML = certifyHtmls;
+
+            const ptDetail_certify__btn = $(".ptDetail_certify__btn");
+            ptDetail_certify__btn.on("click", function () {
+              const pt_certify_modal = $("#pt_certify_modal");
+              pt_certify_modal.fadeIn();
+            });
+
+            const closeIcon = document.querySelector("#pt_certify_modal .pt_modal_close img");
+            closeIcon.addEventListener("click", function () {
+              const pt_certify_modal = $("#pt_certify_modal");
+              pt_certify_modal.fadeOut();
+            });
+
+            var inputFile = document.querySelector('input[name="uploadFile"]');
+            $(inputFile).on("change", function () {
+              var fileName = inputFile.files[0].name;
+              inputFile.files[0].name = encodeURIComponent(inputFile.files[0].name);
+              $(".uploadResult").html(fileName);
+            });
+
+            $("#pt_certify_modal form").submit(function (e) {
+              e.preventDefault();
+            });
+
+            var maxSize = 5242880;
+
+            function checkExtension(fileSize) {
+              if (fileSize >= maxSize) {
+                alert("파일 사이즈 초과");
+                return false;
+              }
+              return true;
+            }
+
+            $(".pt_certify_modal_submit").on("click", function (e) {
+              top.window.location.reload(true);
+
+              var boardTitle = document.querySelector('input[name="boardTitle"]');
+              var boardContent = document.querySelector('textarea[name="boardContent"]');
+
+              var formData = new FormData();
+              var inputFile = document.querySelector('input[name="uploadFile"]');
+              var files = inputFile.files;
+
+              if (!checkExtension(files[0].size)) {
+                return false;
+              }
+
+              formData.append("uploadFile", files[0]);
+              formData.append("boardTitle", boardTitle.value);
+              formData.append("boardContent", boardContent.value);
+              formData.append("boardGroupId", classQuery);
+
+              const header = $('meta[name="_csrf_header"]').attr("th:content");
+              const token = $('meta[name="_csrf"]').attr("th:content");
+
+              $.ajax({
+                url: "${CONTEXT_PATH}/ptClassUpload",
+                type: "POST",
+                beforeSend: function (xhr) {
+                  xhr.setRequestHeader(header, token);
+                },
+                processData: false,
+                contentType: false,
+                data: formData,
+                dataType: "json",
+              });
+
+              window.opener.parent.location.reload(); // 부모창 새로고침
+              window.self.close(); // 현재 팝업 닫기
+            });
+          },
+        });
+      }
+
+      $(document).ready(function () {
+        detailsAjax(1, 1);
+      });
+    </script>
   </body>
 </html>

@@ -1,8 +1,12 @@
 package com.iruri.ex.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 
 public interface PtClassService {
@@ -27,5 +31,8 @@ public interface PtClassService {
             String ep1, String ep2, String ep3, String ep4); // 타입에 해당하는 클래스 리스트 총 갯수 받아오기
 
     int getUserJoinChallengeListCheck(int classId, int userId);
+    HashMap<String, Object> joinCheck(int classId, int userId, Criteria certifyCri, Criteria replyCri);
+    
+    void insertChallengeCertify(BoardVO boardVO);
     
 }

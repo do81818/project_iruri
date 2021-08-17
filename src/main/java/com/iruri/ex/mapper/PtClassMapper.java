@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 
 @Mapper
@@ -80,4 +81,14 @@ public interface PtClassMapper {
             @Param("el1") String el1, @Param("el2") String el2, @Param("el3") String el3, 
             @Param("ep1") String ep1, @Param("ep2") String ep2, @Param("ep3") String ep3, @Param("ep4") String ep4);
 
+    int joinCheck(int classId);
+    int joinCheckNum(@Param("classId") int classId, @Param("userId") int userId);
+    List<IClassVO> ptSelectOne(int classId);
+    int ptSelectCount(int classId);
+    
+    List<BoardVO> certifySelectOne(@Param("cri") Criteria cri, @Param("classId") int classId);
+    int certifySelectOneCount(int classId);
+    
+    List<BoardVO> replySelectOne(@Param("cri") Criteria cri, @Param("classId") int classId);
+    int replySelectOneCount(int classId);
 }

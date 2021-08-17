@@ -29,6 +29,7 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.ChallengeService;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.PtClassService;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
@@ -188,13 +189,63 @@ public class PtClassController {
     
     @GetMapping("/iruri/ptClassJoinCheck")
     @ResponseBody
-    public ResponseEntity<HashMap<String, Object>> joinCheck(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
+    public ResponseEntity<HashMap<String, Object>> joinCheck(@RequestParam("rPageNum") int rPageNum, @RequestParam("cPageNum") int cPageNum, @RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
         
-        // 2. 해당 클래스가 참여 가능한지 지난 클래스인지 확인
-        // 3. 유저의 참여 정보 확인
-        // 4. 해당 클래스 정보에 따라서 맞는 json 전송
+        if(vo == null) {
+            vo = new IUserVO();
+            vo.setUserId(0);
+        }
         
-        return null;
+        Criteria certifyCri = new Criteria(cPageNum, 8);
+        Criteria replyCri = new Criteria(rPageNum, 6);
+        HashMap<String, Object> result = ptClassService.joinCheck(classId, vo.getUserId(), certifyCri, replyCri);
+        
+        return ResponseEntity.ok(result);
+    }
+    
+    @ResponseBody
+    @PostMapping(value = "/ptClassUpload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void ptClassUpload(MultipartFile uploadFile, BoardVO boardVO, @CurrentUser IUserVO iUservo) {
+        
+            String uploadFolder = "C:\\upload";
+
+            log.info("upload File Name: " + uploadFile.getOriginalFilename());
+            log.info("upload File Size: " +uploadFile.getSize());            
+
+            String uploadFileName = uploadFile.getOriginalFilename();
+
+            // IE has file path
+            uploadFileName = uploadFileName
+                    .substring(uploadFileName.lastIndexOf("\\") + 1);
+            log.info("only file name: " + uploadFileName);
+            
+            // 이름 중복방지 난수
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
+
+            boardVO.setBoardFile(uploadFileName);
+            boardVO.setCategoryId(5);
+            boardVO.setIUserVO(iUservo);
+            
+            try {
+                File saveFile = new File(uploadFolder, uploadFileName);
+                uploadFile.transferTo(saveFile);
+                
+                if(imageController.checkImageType(saveFile)) {
+                    FileOutputStream thumbnail = new FileOutputStream(
+                            new File(uploadFolder, "s_" + uploadFileName));
+                    
+                    Thumbnailator.createThumbnail(
+                            uploadFile.getInputStream(), thumbnail, 270, 270);
+                    
+                    thumbnail.close();
+                    
+                    // challengeService.insertChallengeCertify(boardVO);
+                    ptClassService.insertChallengeCertify(boardVO);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
     }
     
     @GetMapping("/iruri/ptClassMakeForm")
@@ -268,8 +319,6 @@ public class PtClassController {
         
         ptClassService.insertPtClass(iClassVO);
         
-        // 현재 사용자가 생성한 PT 클래스 중 가장 높은 번호의 챌린지 아이디를 찾아서
-        // 해당 클래스 상세 보기로 이동하기
         return "SUCCESS";
     }
     

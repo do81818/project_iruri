@@ -1,15 +1,19 @@
 package com.iruri.ex.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.iruri.ex.mapper.ChallengeMapper;
 import com.iruri.ex.mapper.PtClassMapper;
 import com.iruri.ex.page.Criteria;
+import com.iruri.ex.page.PageVO;
 import com.iruri.ex.security.CurrentUser;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.ExerciseDateVO;
 import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
@@ -201,6 +205,74 @@ public class PtClassServiceImpl implements PtClassService {
     public int getUserJoinChallengeListCheck(int classId, int userId) {
         
         return 0;
+    }
+    
+    @Override
+    public HashMap<String, Object> joinCheck(int classId, int userId,  Criteria certifyCri, Criteria replyCri) {
+        
+        HashMap<String, Object> map = new HashMap<>();
+        List<IClassVO> classList = ptClassMapper.ptSelectOne(classId); 
+        for(int i = 0; i < classList.size(); i++) {
+            String date = classList.get(i).getExerciseDateList().get(0).getExerciseDate();
+            String kind = classList.get(i).getExerciseKindList().get(0).getExerciseKind();
+            List<ExerciseDateVO> dateList = new ArrayList<ExerciseDateVO>();
+            List<ExerciseKindVO> kindList = new ArrayList<ExerciseKindVO>();
+            
+            String[] dateArr = date.split(",");
+            for(int j = 0; j < dateArr.length; j++) {
+                ExerciseDateVO dateVO = new ExerciseDateVO();
+                
+                dateVO.setExerciseDate(dateArr[j]);
+                dateVO.setClassId(classList.get(i).getClassId());
+                dateList.add(dateVO);
+            }
+            
+            String[] kindArr = kind.split(",");
+            for(int j = 0; j < kindArr.length; j++) {
+                ExerciseKindVO kindVO = new ExerciseKindVO();
+                
+                kindVO.setExerciseKind(kindArr[j]);
+                kindVO.setClassId(classList.get(i).getClassId());
+                kindList.add(kindVO);
+            }
+            
+            classList.get(i).setExerciseDateList(dateList);
+            classList.get(i).setExerciseKindList(kindList);
+        }
+        int classPerson = ptClassMapper.ptSelectCount(classId);
+        
+        int checkNum = ptClassMapper.joinCheck(classId);
+        if(checkNum == 1) { // 참여가능
+            int joinCheckNum = ptClassMapper.joinCheckNum(classId, userId);
+            if(joinCheckNum == 0) { // 유저의 참여 정보가 없으므로 참여가능
+                map.put("joinCheck", 0);
+            }
+            if(joinCheckNum == 1) { // 유저의 참여 정보가 있으므로 참여 불가능
+                map.put("joinCheck", 1);
+            } 
+        }
+        if(checkNum == -1) { // 참여불가능         
+            map.put("joinCheck", -1);
+        }
+        
+        map.put("classVO", classList);
+        map.put("classPerson", classPerson);
+        
+        
+        List<BoardVO> certifyList = ptClassMapper.certifySelectOne(certifyCri, classId);
+        int certifyCount = ptClassMapper.certifySelectOneCount(classId);
+        
+        map.put("certifyList", certifyList);
+        map.put("certifyCri", new PageVO(certifyCri, certifyCount));
+        
+        return map;
+    }
+    
+    @Override
+    public void insertChallengeCertify(BoardVO boardVO) {
+        log.info("insertChallengeCertify() .. " + boardVO);
+        
+        challengeMapper.insertChallengeCertify(boardVO);
     }
 
 }
