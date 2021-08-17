@@ -105,7 +105,7 @@
 }
 
 .ptClassNav,
-p {
+.ptClassWrap p {
   margin-top: 100px;
   margin-bottom: 53px;
   display: flex;

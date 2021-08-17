@@ -256,13 +256,19 @@
                                                 var htmls = "";
                                                 var htmls2 = "";
 
-                                                var aaa = result['imgList'][0].boardList;
+                                                var aaa = [];
+                                                imgList.map(item => item.boardList)
+                                                					.forEach(item => {
+                                                						aaa.push(item[0]);
+                                                					});
+                                                //var aaa = result['imgList'][0].boardList;
                                                 localStorage.setItem('boardList', JSON.stringify(aaa));
                                                 
                                                 if (imgList.length < 1) {
                                                     htmls += '<div class="c_list_not_img">';
                                                     htmls += '현재 등록된 인증사진이 없습니다.';
                                                     htmls += '</div>';
+                                                    console.log(imgList.length);
                                                 } else {
 
                                                  
@@ -389,14 +395,10 @@ $('.c_parti_modal_submit').click(function(){
 						var htmls2 = "";
 
 						if (replyList.length < 1) {
-							htmls += '<div class="c_list_not">';
-							htmls += '현재 등록된 댓글이 없습니다.';
-							htmls += '</div>';
+							 htmls += '<div class="c_list_not">';
+                             htmls += '현재 등록된 댓글이 없습니다.';
+                             htmls += '</div>';
 						} else {
-							
-							
-								
-							
 								htmls += '<div class="reply_count">';
 								const count = pagination.total;
 								htmls += '총'
@@ -408,13 +410,8 @@ $('.c_parti_modal_submit').click(function(){
 								
 								
 								$(replyList).each(function() {
-								
-								$(this.boardList).each(function() {
-												//댓글 리스트 
-												
-
-												
-												
+									$(this.boardList).each(function() {
+												//댓글 리스트
 												htmls += '<tr>';
 												
 												htmls += '<td class="reply_nickname">';
@@ -431,11 +428,8 @@ $('.c_parti_modal_submit').click(function(){
 												htmls += '</p>';
 												htmls += '</td>';
 												htmls += '</tr>';
-								});
-												
-								
-								
 											});
+										});
 								htmls += ' </table>';
 						
 							
@@ -459,13 +453,13 @@ $('.c_parti_modal_submit').click(function(){
 	        				}			
 	         			}	// if(list.length < 1) else 끝
 	                     
-	                        $(".c_before_reply").html(htmls);
-	         				$(".page_nation").html(htmls2);
-	         				
-	                     }
-	                     
-	                 });                             
-	            }
+                        $(".c_before_reply").html(htmls);
+         				$(".page_nation").html(htmls2);
+         				
+                    }
+                    
+                });                             
+           }
 
 	            $(document).ready(function() {
 	                getlist(1);

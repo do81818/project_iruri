@@ -185,19 +185,7 @@ input[type=checkbox] {
 }
 
 
-/*관심챌린지 없을때 문구*/
 
-.c_list_not {
-    text-align: center;
-    font-family: 'Cafe24Ssurround', sans-serif;
-    font-size: 24px;
-    color: var(--iruri-blue-color);
-    display: inline-block;
-    margin: 0 20px;
-    text-decoration: none;
-    position: relative;
-    left : 450px;
-}
 
 
 /*챌린지 검색창*/

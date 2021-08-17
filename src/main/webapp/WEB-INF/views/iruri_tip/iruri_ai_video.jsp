@@ -46,7 +46,7 @@
             <!--관심영상-->
             <button class="ai_like_button">관심영상</button>
             <!--정렬(셀렉트박스)-->
-            <div id="select_wrap">
+            <div id="#select_wrap_iruri_tip">
                 <div id="select" class="select">인기순</div>
                 <ul id="ul" class="select_ul">
 

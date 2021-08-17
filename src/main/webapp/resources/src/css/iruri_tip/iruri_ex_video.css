@@ -193,7 +193,7 @@ input[type=checkbox]:checked+label {
 
 /*운동 정렬(셀렉트박스)*/
 
-#select_wrap {
+#select_wrap_iruri_tip {
     display: inline-block;
     position: relative;
     left: 1052px;
@@ -206,7 +206,7 @@ input[type=checkbox]:checked+label {
     height: 48px;
     color: var(--iruri-blue-color);
     padding: 11px 7px;
-    background: white url('../images/images/icon/select_box_arrow.png') right/16px 16px no-repeat scroll;
+    background: white url("/ex/resources/src/img/icon/select_box_arrow.png") right/16px 16px no-repeat scroll;
     border-bottom: 1px solid var(--iruri-blue-color);
     font-size: 16px;
     cursor: pointer;

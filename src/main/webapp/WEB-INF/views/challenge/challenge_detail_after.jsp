@@ -13,7 +13,7 @@
                 <head>
                     <%@ include file="../include/static.jsp"%>
                         <!-- 경로를 확인해 주세요 -->
-                        <title>챌린지 상세(참여 후)</title>
+                        <title>${challengeInfo.classTitle}</title>
                         <!-- 페이지 이름을 적어주세요 -->
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
@@ -26,8 +26,8 @@
 						
                         <%@ include file="../include/headerTemplate.jsp"%>
                             <!-- 경로를 확인해 주세요 -->
-							<p><sec:authentication property="principal.CurrentUser.authList[0].authId" /></p>
-                            <main>
+							
+                           <main>
                                 <div class="c_container">
 
                                     <!--챌린지상세-->
@@ -364,11 +364,12 @@
                                           dataType: 'json',
                                           success: function(result) {
                                               showUploadedFile(result);
-                         
+                         				      getlist(1);
                                           }  
                                         
                                       });
                                        window.opener.parent.location.reload(); // 부모창 새로고침 
+                                       
                                     window.self.close(); // 현재 팝업 닫기 
                                  });                                            
                              });
@@ -500,13 +501,18 @@
 	                                           data: formData1,
 	                                           dataType: 'json',
 	                                           success: function(result) {
+	                                        	   getlist(1);
 	                                               showUploadedFile(result);
-	                          
+	                                               
 	                                           }  
 	                                         
 	                                       });
-	                                        window.opener.parent.location.reload(); // 부모창 새로고침 
-	                                     window.self.close(); // 현재 팝업 닫기 
+	                                       
+	                                     window.opener.parent.location.reload(); // 부모창 새로고침 
+	                                     window.self.close(); // 현재 팝업 닫기
+	                                      
+	                                     
+	                                     
 	                                  });                                            
 	                              });
 	                           </script>
@@ -849,12 +855,6 @@
 
                                     });
                                 </script>
-                                
-                                 
-                                
-                                
-                             
-
 
                             </main>
 
