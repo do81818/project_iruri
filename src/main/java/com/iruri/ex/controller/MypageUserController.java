@@ -114,6 +114,9 @@ public class MypageUserController {
         log.info("유저의 이번달 몸무게"+usermonthweight);
         
         // 유저의 비만도 (BMI)
+        int userbmi = iUserinfoService.userbmi(vo.getUserId());
+        model.addAttribute("userbmi",userbmi);
+        log.info("유저의bmi"+userbmi);
         
 
         return "/mypage_user/mypage_user_main";  
@@ -230,6 +233,7 @@ public class MypageUserController {
 	
 	        // 내가 작성한 댓글 list ( 페이징 )
 	        List<BoardVO> commentlistVO = boardService.commentList(vo.getUserId(),cri);
+	        log.info(commentlistVO);
 	        
 	        int total = boardService.total(vo.getUserId());
 	        log.info(total);
@@ -253,6 +257,11 @@ public class MypageUserController {
 		        model.addAttribute("userclasscount",classcountvo);
 	        
 	        // 페이징
+			/*
+			 * // 유저의 챌린지랑 클래스 댓글 List<BoardVO> myjoinlist =
+			 * boardService.myjoinlist(vo.getUserId());
+			 * model.addAttribute("myjoinlist",myjoinlist);
+			 */
 	        
 	       
 	      return "/mypage_user/mypage_user_boardlist";
@@ -686,6 +695,38 @@ public class MypageUserController {
 		        return "redirect:/mypage/classlist";
 		        
 		    }
+			
+			
+			
+			// 이루리 팁 부분
+			  
+			 
+			   @GetMapping("/iruritip")
+			   public String iruritip_main(Principal principal,Model model) {
+
+			        
+			       return "/iruritip/iruritip_main";
+			       
+			   }
+			   
+			   // 마이페이지 포인트 리스트
+			   @GetMapping("/iruritip/freeboard")
+			   public String iruritip_freeboard(Principal principal,Model model) {
+
+			        
+			       return "/iruritip/iruritip_freeboard";
+			       
+			   }
+			   
+			   
+			   // 마이페이지 포인트 리스트
+			   @GetMapping("/iruritip/boardwrite")
+			   public String iruritip_boardwrite(Principal principal,Model model) {
+
+			        
+			       return "/iruritip/iruritip_boardwrite";
+			       
+			   }
 		  
 		  
 		 

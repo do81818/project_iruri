@@ -28,4 +28,6 @@ public interface BoardService {
     // 내가 작성한 댓글 list
     List<BoardVO> commentList(int userId, Criteria criteria);
     int total(int userId);
+
+	/* List<BoardVO> myjoinlist(int userId); */
 }

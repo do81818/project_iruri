@@ -56,6 +56,17 @@ order by user_writedate
 	</select>
 	
 	
+				<!-- bmi 수치 구하기 -->
+	<select id="userbmi" resultType="int">
+		<![CDATA[
+select distinct TRUNC((select avg(user_weight)
+from iuserinfo where user_id = #{userId} and trunc(sysdate,'mm')< TO_CHAR(user_writedate,'YYYYMMDD')
+and TO_CHAR(user_writedate,'YYYYMMDD')<last_day(sysdate))*10000/(user_height*user_height))BMI
+from iuserinfo where user_id = #{userId}
+		]]>
+	</select>
+	
+	
 
 
 
