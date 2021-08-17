@@ -104,7 +104,8 @@
   height: 43px;
 }
 
-.ptClassNav {
+.ptClassNav,
+p {
   margin-top: 100px;
   margin-bottom: 53px;
   display: flex;
@@ -132,6 +133,10 @@
 
 .ptClassFilter > div {
   display: flex;
+}
+
+.ptClassFilter input[type="radio"] {
+  display: none;
 }
 
 .ptClassFilter-label {
@@ -173,6 +178,11 @@
   margin-bottom: 53px;
 }
 
+.ptClassSelect .select_ul {
+    position: absolute;
+    z-index: 1;
+} 
+
 .ptSelect {
   display: flex;
   justify-content: center;
@@ -191,7 +201,6 @@
 }
 
 .ptClassSelect ul {
-  display: inline;
   left: 0;
   top: 45px;
 }
@@ -199,7 +208,7 @@
 .ptClassList {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+
 }
 
 .ptClassList .c_list_img {

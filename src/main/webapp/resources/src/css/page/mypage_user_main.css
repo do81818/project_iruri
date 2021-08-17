@@ -217,11 +217,12 @@ button#addData1{
   padding-top: 20px;
   padding-left: 20px;
   font-family: 'Cafe24SsurroundAir';
-  font-size: 12px;
+  font-size: 15px;
   color:var(--iruri-gray-color);
   position: relative;
  top: -82px;
- left: 100px;
+ left:47px;
+ text-align: center;
 }
 #m_bmititle{
   padding-top: 10px;

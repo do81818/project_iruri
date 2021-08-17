@@ -78,17 +78,23 @@
 ${sumList2[status.index].데이터명}
 ${sumList3[status.index].데이터명} --%>
 
+
+
 	<c:forEach var="confirm" items="${commentlist}" varStatus="status">
 	
 
 		<c:if test="${confirm.categoryId == 5}">
 		<div class="m_userboardlist">
            <div id="m_confirm_list_type">인증글</div>
-           <div id="m_board_list_img"><img id="img" src="../img/icon/270-270.png"></div>
+           <div id="m_board_list_img"><img id="img" src="/ex/resources/src/img/icon/360-250.png"></div>
            <div id="m_board_list_content">
-          <div id="m_board_list_title">  <c:out value="${confirm.boardTitle}" /></div>
+          <div id="m_board_list_title"> <a href="/ex/iruri/challenge_detail_after?classId=${confirm.boardGroupId}"> 
+          <c:out value="${confirm.boardTitle}" /></a></div>
             <div id="m_board_list_content">  <c:out value="${confirm.boardContent}" /></div>
-            <div id="m_board_list_date">  <c:out value="${confirm.boardDate}" /></div>
+            <div id="m_board_list_date"> 
+               <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${confirm.boardDate}"/>
+           </div>
             
          </div>
         </div>
@@ -99,28 +105,49 @@ ${sumList3[status.index].데이터명} --%>
 		<c:if test="${confirm.categoryId == 7}">
                   <div class="m_userboardlist">
           <div id="m_board_list_type">게시글</div>
-          <div id="m_board_list_img"><img id="img" src="../img/icon/270-270.png"></div>
+          <div id="m_board_list_img"><img id="img" src="/ex/resources/src/img/icon/360-250.png"></div>
           <div id="m_board_list_content">
            <div id="m_board_list_title"><c:out value="${confirm.boardTitle}" /></div>
            <div id="m_board_list_content"><c:out value="${confirm.boardContent}" /></div>
-           <div id="m_board_list_date"><c:out value="${confirm.boardDate}" /></div>
+                       <div id="m_board_list_date"> 
+               <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${confirm.boardDate}"/>
+           </div>
         </div>
        </div>
         <p class="border1"></p>  
 		</c:if>
 
 
-<c:if test="${confirm.categoryId == 6 or confirm.categoryId == 8}">
+<c:if test="${confirm.categoryId == 6}">
+
  		<div class="m_userboardlist">
       <div id="m_comment_list_type">댓글</div>
       <div id="m_board_list_content">
-       <div id="m_board_list_content"><c:out value="${confirm.boardContent}" /></div>
-       <div id="m_board_list_date"><c:out value="${confirm.boardDate}" /></div>
+       <div id="m_board_list_content">
+     
+       <a href="/ex/iruri/challenge_detail_after?classId=${confirm.boardGroupId}">  <c:out value=" ${confirm.boardContent}" /></a></div>
+                  <div id="m_board_list_date"> 
+               <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+                    <fmt:formatDate pattern ="yyyy-MM-dd" value="${confirm.boardDate}"/>
+           </div>
     </div>
    </div>
    <p class="border1"></p>
 		</c:if>
 	</c:forEach>
+	<div class="m_userboardlist">
+ <div id="m_board_list_type">게시글</div>
+ <div id="m_board_list_img"><img id="img" src="http://localhost:8282/ex/resources/src/img/icon/270-270.png"></div>
+ <div id="m_board_list_content">
+  <div id="m_board_list_title">더운데 몸조심 하세요~</div>
+  <div id="m_board_list_content">아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
+  <div id="m_board_list_date">2021.07.25</div>
+</div>
+</div>
+
+	
+<p class="border1"></p>
 
 
 <!-- 인증글
@@ -175,7 +202,17 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
         	             <%-- <a class="pageNumLink" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
         <%-- 	</c:if>  --%>
 
-              <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a>
+              <%-- <a class="active" href="boardlist${pageMaker.makeQuery(num)}" >${num}</a> --%>
+              
+               <c:choose>
+          <c:when test="${pageMaker.cri.pageNum == num}">
+             <a class="pageNumLink active" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+          </c:when> 
+          <c:otherwise>
+          	<a class="pageNumLink" href="pointlist${pageMaker.makeQuery(num)}" >${num}</a>
+          </c:otherwise>
+          </c:choose> 
+          
         </c:forEach>
         
         <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
@@ -192,35 +229,39 @@ http://localhost:8282/ex/resources/src/img/icon/270-270.png
     </div>
  
 	
-	    <!-- 팝업창  -->
-    <div class="modal"  max-width: 400px;
+				<!-- 팝업창  -->
+				<div class="modal"max-width: 400px;
     min-width: 500px;
     margin: 0 auto;
-    background-color: #eee;>
-      <div class="modal_content" 
-           title="클릭하면 창이 닫힙니다.">
-           <div class="alertWindow">
-            <div class="alertWindow_close"><img src='http://localhost:8282/ex/resources/src/img/icon/close.png' width="20px" height="20px" > </div>
-            <div class="alertWindow_insert">
-              <h2 class="alertWindow_title">정보수정</h2>
-              <form action="#">
-                <p>비밀번호</p>
-                <input class="inputbox_size1" type="text"  />
-                
-                <p>비밀번호 확인</p>
-                <input class="inputbox_size1" type="text" />
-                
-                <p>닉네임</p>
-                <input class="inputbox_size2" type="text">
-                <p>전화번호</p>
-                <input class="inputbox_size2" type="text">
-        
-                <button class="alertWindow_submit" type="submit">비밀번호 변경</button>
-              </form>
-            </div>
-          </div>
-    </div>
-  </div>
+    background-color:#eee;>
+						<div class="modal_content" title="클릭하면 창이 닫힙니다.">
+								<div class="alertWindow">
+										<div class="alertWindow_close">
+												<img
+														src='http://localhost:8282/ex/resources/src/img/icon/close.png'
+														width="20px" height="20px">
+										</div>
+										<div class="alertWindow_insert">
+												<h2 class="alertWindow_title">정보수정</h2>
+												<form action="update" method="GET">
+														<p>비밀번호</p>
+														<input class="inputbox_size1" name="userPw" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off"  />
+
+														<p>비밀번호 확인</p>
+														<input class="inputbox_size1" type="text" placeholder="8~16자리의 영문 대소문자, 숫자 및 특수문자 사용" autocomplete="off" />
+
+														<p>닉네임</p>
+														<input class="inputbox_size2" name="userNickname"
+																type="text" autocomplete="off">
+														<p>전화번호</p>
+														<input class="inputbox_size2" name="userPhone" type="text" autocomplete="off">
+														<button class="alertWindow_submit" type="submit">회원정보
+																변경</button>
+												</form>
+										</div>
+								</div>
+						</div>
+				</div>
 
 
   <div class="modal1"  max-width: 400px;

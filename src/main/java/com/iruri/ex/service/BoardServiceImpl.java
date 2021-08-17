@@ -80,6 +80,11 @@ public class BoardServiceImpl implements BoardService {
 		  log.info("total().."); 
 	  return boardMapper.total(userId); 
 	  }
+	  
+		/*
+		 * //클래스랑 챌린지 public List<BoardVO> myjoinlist(int userId){ return
+		 * boardMapper.myjoinList(userId); }
+		 */
 	 
     
     

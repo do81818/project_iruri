@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iruri.ex.mapper.ChallengeMapper;
 import com.iruri.ex.mapper.PtClassMapper;
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.security.CurrentUser;
@@ -22,6 +23,8 @@ public class PtClassServiceImpl implements PtClassService {
 
     @Autowired
     PtClassMapper ptClassMapper;
+    @Autowired
+    ChallengeMapper challengeMapper;
     
     @Override
     public void insertPtClass(IClassVO vo) {
@@ -51,30 +54,116 @@ public class PtClassServiceImpl implements PtClassService {
     }
 
     @Override
-    public int getTotalClass(Criteria cri, String type, int userId) {
+    public int getTotalClass(Criteria cri, String type, int userId,
+            String g1, String g2,
+            String ek1, String ek2, String ek3, String ek4, String ek5,
+            String p1, String p2, String p3, String p4,
+            String ed1, String ed2, String ed3, String ed4,
+            String day1, String day2, String day3, String day4, String day5, String day6, String day7,
+            String el1, String el2, String el3, 
+            String ep1, String ep2, String ep3, String ep4) {
         
         if(type.equals("all")) {
-            return ptClassMapper.getTotalClassAll(); 
+            return ptClassMapper.getTotalClassAll(
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4); 
         }
         
         if(type.equals("buy")) {
-            return ptClassMapper.getTotalClassBuy(userId);
+            return ptClassMapper.getTotalClassBuy(userId, g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
         }
         
         if(type.equals("interest")) {
-            return 0;
+            return ptClassMapper.getTotalClassInterest(userId,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
         }
         
         if(type.equals("past")) {
-            return 0;
+            return ptClassMapper.getTotalClassPast(userId,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
         }
         
         return 0;
     }
     
     @Override
-    public List<IClassVO> getClassList(Criteria cri) {
-        List<IClassVO> classList = ptClassMapper.getClassList(cri);
+    public List<IClassVO> getClassList(Criteria cri, String type, int userId,
+            String g1, String g2,
+            String ek1, String ek2, String ek3, String ek4, String ek5,
+            String p1, String p2, String p3, String p4,
+            String ed1, String ed2, String ed3, String ed4,
+            String day1, String day2, String day3, String day4, String day5, String day6, String day7,
+            String el1, String el2, String el3, 
+            String ep1, String ep2, String ep3, String ep4) {
+        
+        List<IClassVO> classList = new ArrayList<IClassVO>();
+        
+        if(type.equals("all")) {
+            classList = ptClassMapper.getClassList(cri,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
+        }
+        
+        if(type.equals("buy")) {
+            classList = ptClassMapper.getBuyClassList(cri, userId,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
+        }
+        
+        if(type.equals("interest")) {
+            classList = ptClassMapper.getInterestClassList(cri, userId,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
+        }
+        
+        if(type.equals("past")) {
+            classList = ptClassMapper.getPastClassList(cri, userId,
+                    g1, g2,
+                    ek1, ek2, ek3, ek4, ek5,
+                    p1, p2, p3, p4,
+                    ed1, ed2, ed3, ed4,
+                    day1, day2, day3, day4, day5, day6, day7,
+                    el1, el2, el3,
+                    ep1, ep2, ep3, ep4);
+        }
         
         // ExerciseDateList & ExerciseKindList
         for(int i = 0; i < classList.size(); i++) {
@@ -106,6 +195,12 @@ public class PtClassServiceImpl implements PtClassService {
         }
 
         return classList;
-    };
+    }
+    
+    @Override
+    public int getUserJoinChallengeListCheck(int classId, int userId) {
+        
+        return 0;
+    }
 
 }
