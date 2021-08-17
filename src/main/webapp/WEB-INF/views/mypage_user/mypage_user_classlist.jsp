@@ -68,6 +68,10 @@
 																test="${user.authList[0].authContent eq 'ROLE_USER'}">
 																<div>일반회원</div>
 														</c:if>
+														<c:if
+														test="${user.authList[0].authContent eq 'ROLE_PAYUSER'}">
+														<div>프리미엄 회원</div>
+												</c:if>
 														<br>${user.userEmail}</div>
 										</div>
       <div id = "m_userboard_box">
@@ -120,7 +124,10 @@
 										<c:forEach var="userclasslist" items="${userclasslist}"
 												varStatus="status">
 
-												<li class="m_cl_recommend_img">
+												 <div> 
+												<!-- <a class="m_cl_recommend_img" href="/ex/resources/src/img/icon/565-440.png"> -->
+												<img alt="" class="m_cl_recommend_img" src="${CONTEXT_PATH}/iruri/display?fileName=${userclasslist.classImage}" alt="" > 
+															<!--  <div style="width: 100%; height: 100%;"> -->
 														<button class="m_cl_cancel_class_bt" id="${userclasslist.classId}">클래스취소</button>
 														<div class="m_cl_recommend_title">
 																${userclasslist.classTitle}
@@ -137,7 +144,8 @@
 																		for="heart${userclasslist.classId}"
 																		class="m_r_heart_label"></label>
 														</div>
-												</li>
+														<!-- </div> -->
+												</div> <!-- </a> -->
 
 										</c:forEach>
 									</ul>
@@ -284,7 +292,7 @@
 
 												if (list.length < 1) {
 													htmls += '<div class="m_cl_list_not">';
-													htmls += '하트를 누른 챌린지가 없습니다.';
+													htmls += '하트를 누른 클래스가 없습니다.';
 													htmls += '</div>';
 
 												} else {
@@ -292,7 +300,7 @@
 																	function() {
 																		htmls += '<div class="m_cl_list_detail">';
 																		htmls += '<div class="m_cl_list_img">';
-																		htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+																		htmls += '<img class="m_cl_list_img_please" src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_trainer_name">'
@@ -300,7 +308,7 @@
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_list_title">';
-																		htmls += '<a href="c_detail_before?classId='
+																		htmls += '<a href="/ex/iruri/ptClassDetails?classId='
 																				+ this.classId
 																				+ '">';
 																		htmls += this.classTitle;
@@ -464,7 +472,7 @@
 																	function() {
 																		htmls += '<div class="m_cl_list_detail">';
 																		htmls += '<div class="m_cl_list_img">';
-																		htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+																		htmls += '<img class="m_cl_list_img_please" src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_cl_trainer_name">';
@@ -596,10 +604,7 @@
                                                                             class="m_cl_heart_label"></label> </div> </div> -->
 
 				<!-- 팝업창  -->
-				<div class="modal"max-width: 400px;
-    min-width: 500px;
-    margin: 0 auto;
-    background-color:#eee;>
+				<div class="modal">
 						<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 								<div class="alertWindow">
 										<div class="alertWindow_close">
@@ -630,10 +635,7 @@
 				</div>
 
 						<!-- 클래스취소 -->
-						<div class="class_cancel" max-width:="max-width:" 400px;="400px;"
-								min-width:="min-width:" 500px;="500px;" margin:="margin:"
-								auto;="auto;" background-color:="background-color:"
-								#eee;="#eee;">
+						<div class="class_cancel" >
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 										<div class="alertWindow_class">
 												<div class="alertWindow_close">
@@ -653,6 +655,7 @@
 												</div>
 										</div>
 								</div>
+							
 						</div>
 
 				</main>
