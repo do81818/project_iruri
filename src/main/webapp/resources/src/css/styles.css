@@ -33,6 +33,11 @@
 @import "page/ptClassDetails.css";
 @import "page/ptClassMakeForm.css";
 
+@import "iruri_tip/iruri_ai_detail.css";
+@import "iruri_tip/iruri_ai.css";
+@import "iruri_tip/iruri_ex_video_detail.css";
+@import "iruri_tip/iruri_ex_video.css";
+
 
 :root {
   /* font-size */

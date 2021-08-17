@@ -185,10 +185,12 @@ function certify_details_modal(boardId) {
 
 
 
-//댓글 삭제 확인 모달//
+//댓글 삭제 확인 모달//	
+/*
 $(function() {
     $(".reply_delete").click(function() {
-        $(".reply_delete_modal").fadeIn();
+        $(".reply_delete_modal").fadeIn();    
+        
     });
 
     $(".reply_delete_modal_cancle").click(function() {
@@ -196,7 +198,7 @@ $(function() {
     });
 
 });
-
+*/
 
 //댓글 수정 모달//
 function reply_modify_func(boardId, classId) {
