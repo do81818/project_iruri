@@ -74,7 +74,7 @@ public interface AdminMapper {
 	void insertPoint(PointVO vo);
 	
 	// 일반/유료회원 현재 보유포인트
-	void updatePoint(@Param("userId") int userId, int userPoint);
+	void updatePoint(@Param("userId") int userId, @Param("userPoint")int userPoint);
 
 	// 일반/유료회원정보 운동정보리스트 보기
 	List<TableJoinVO> getUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId, @Param("pageNum") int pageNum, @Param("amount") int amount);

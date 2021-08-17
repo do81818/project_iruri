@@ -170,7 +170,7 @@
 		     },
 		     dataType: 'json',
 		     beforeSend: function(xhr) {
-           		xhr.setRequestHeader(header, token);
+           		xhr.setRequestHeader(header, token)
        		 },
        		 success : function(result) {
        		  	console.log("성공");
@@ -222,7 +222,7 @@
 			     },
 			     dataType: 'json',
 			     beforeSend: function(xhr) {
-	           		xhr.setRequestHeader(header, token);
+	           		xhr.setRequestHeader(header, token)
 	       		 },
 	       		 success : function(result) {
 	       		  	console.log("성공");
@@ -243,7 +243,7 @@
 		<!---------------------- 포인트 적립/사용 테이블 -------------------------->
 		
 		<div class="admin_memberInfo_point">
-			<div class="admin_memberInfo_pointTitle">
+			<div class="admin_memberInfo_pointTitle" id="location_list">
 				<h3>포인트</h3>
 				<p>
 					현재보유포인트<span id="admin_memberInfo_userPoint">${point}</span>
@@ -285,7 +285,7 @@
 		const point = $("input[name=pointValue]").val();
 		console.log("point: "+point);
 		
-		if(point == "" || point == null || pointState.length < 1 || pointState == null) {
+		if(point == "" || point == null || point < 0 || pointState.length < 1 || pointState == null) {
 			$("input[name=pointValue]").val('');
 			alert("적립/차감할 포인트를 입력하세요.");
 		} else {
@@ -313,11 +313,13 @@
 		     },
 		     dataType: 'json',
 		     beforeSend: function(xhr) {
-           		xhr.setRequestHeader(header, token);
+           		xhr.setRequestHeader(header, token)
        		 },
        		 success : function(result) {
        		  	console.log("포인트 등록 성공!");
-            	
+       		  	var htmls = result['point'];
+       		  	$("#admin_memberInfo_userPoint").html(htmls);
+       		 	getlist(1);
             }
 		})
 	}
@@ -377,20 +379,20 @@
                              
                              /* ------------------ 페이징 부분 --------------------- */
                              if (pagination['prev']) {
-                                 htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
+                                 htmls2 += '<a class="arrow prev" href="#location_list" onclick="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
              				} 
 
              				// 번호를 표시하는 부분
              				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
              					if (page !== idx) {
-             					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					   htmls2 += '<a class="pageNumLink" href="#location_list" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
              					} else {
-             					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					   htmls2 += '<a class="pageNumLink active" href="#location_list" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
              					}
              				}
 
              				if (pagination['next']) {
-                                htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+                                htmls2 += '<a class="arrow next" href="#location_list" onclick="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
             						
             				}			
              			}	// if(list.length < 1) else 끝
