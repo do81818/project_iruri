@@ -10,8 +10,9 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %> 
-    <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
-    <script src=""></script> <!-- js -->
+    <title>트레이너 마이페이지 클래스 조회</title> <!-- 페이지 이름을 적어주세요 -->
+    <link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/component/paging.css">
 	<script type="text/javascript">
 		$(document).ready(function(){
 			profit(1);

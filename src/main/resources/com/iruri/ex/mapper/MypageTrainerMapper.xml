@@ -149,6 +149,7 @@
 		select count(*) from board b,  iclass c,  iuser u
 where board_groupid in (SELECT class_id from iclass where user_id =#{userId})
 and b.board_groupid = c.class_id and b.category_id=6 and b.user_id = u.user_id
+and b.board_state = 'show'
 	]]>
 	</select>
 	
@@ -164,6 +165,7 @@ FROM
        select b.*, c.class_title, c.class_state, u.user_nickname from board b,  iclass c,  iuser u
 where board_groupid in (SELECT class_id from iclass where user_id =#{userId})
 and b.board_groupid = c.class_id and b.category_id=6 and b.user_id = u.user_id
+and b.board_state = 'show'
     ) ac
      WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
