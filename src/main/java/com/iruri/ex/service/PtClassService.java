@@ -48,4 +48,13 @@ public interface PtClassService {
     int ptClassReplyCount(int classId);
     // 댓글 리스트
     List<BoardVO> ptClassReplyList(Criteria cri, int classId);
+    
+    // 상세보기 인증글 작성
+    void insertptClassCertify(BoardVO boardVO);
+    
+    // 인증글 상세보기
+    BoardVO getCertifySelectOne(int boardId);
+    
+    // 댓글 작성
+    void insertReply(int boardGroupId, String boardContent, int userId);
 }

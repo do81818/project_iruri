@@ -42,11 +42,37 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
           <!-- 댓글 입력창 -->
           <div class="c_reply_insert" id="reply">
-            <form class="c_reply_insertBox" action="">
+            <div class="c_reply_insertBox">
               <textarea placeholder="글을 작성하세요."></textarea>
               <button>입력</button>
-            </form>
+            </div>
           </div>
+
+          <script>
+            document.querySelector(".c_reply_insert button").addEventListener("click", function () {
+              const content = document.querySelector(".c_reply_insertBox textarea");
+              const userId = '<sec:authentication property="principal.currentUser.userId"/>';
+
+              console.log("classQuery", classQuery);
+              console.log("boardContent", content);
+              console.log("boardContent", content.value);
+              console.log("userId", userId);
+              $.ajax({
+                url: "/ex/iruri/insertReply",
+                type: "GET",
+                cache: false,
+                data: {
+                  boardGroupId: classQuery,
+                  boardContent: content.value,
+                  userId: userId,
+                },
+                dataType: "json",
+                success: function () {
+                  detailsReplyAjax(1);
+                },
+              });
+            });
+          </script>
 
           <!--댓글리스트-->
           <div class="c_reply"></div>
@@ -196,7 +222,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
             for (let certify in list) {
               certifyHtmls += `
-                <div class="images__image" onclick="certify_details_modal(${"${list[certify].boardId}"})">
+                <div class="images__image" data-boardId="${"${list[certify].boardId}"}">
                   <img src="/ex/iruri/display?fileName=${"${list[certify].boardFile}"}" />
                 </div>
               `;
@@ -231,7 +257,143 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
             const ptDetail__certify = document.querySelector(".ptDetail__certify");
             ptDetail__certify.innerHTML = certifyHtmls;
+
+            const ptDetail_certify__btn = document.querySelector(".ptDetail_certify__btn");
+            console.log(ptDetail_certify__btn);
+            ptDetail_certify__btn.addEventListener("click", function () {
+              $("#pt_certify_modal").fadeIn();
+
+              // 파일명 안내
+              let inputFile = document.querySelector('input[name="uploadFile"]');
+              console.log("inputFile", inputFile);
+              inputFile.addEventListener("change", function () {
+                let fileName = inputFile.files[0].name;
+                console.log("fileName", fileName);
+                inputFile.files[0].name = encodeURIComponent(inputFile.files[0].name);
+                $(".uploadResult").html(fileName);
+              });
+
+              $(".pt_certify_modal_title + form").submit(function (e) {
+                e.preventDefault();
+              });
+
+              var maxSize = 5242880;
+
+              function checkExtension(fileSize) {
+                if (fileSize >= maxSize) {
+                  alert("파일 사이즈 초과");
+                  return false;
+                }
+                return true;
+              }
+
+              $(".pt_certify_modal_submit").on("click", function (e) {
+                top.window.location.reload(true);
+
+                const boardTitle = document.querySelector('input[name="boardTitle"]');
+                const boardContent = document.querySelector('textarea[name="boardContent"]');
+
+                const formData = new FormData();
+                const inputFile = document.querySelector('input[name="uploadFile"]');
+                const files = inputFile.files;
+
+                if (!checkExtension(files[0].size)) {
+                  return false;
+                }
+
+                formData.append("uploadFile", files[0]);
+                formData.append("boardTitle", boardTitle.value);
+                formData.append("boardContent", boardContent.value);
+                formData.append("boardGroupId", classQuery);
+
+                const header = $('meta[name="_csrf_header"]').attr("th:content");
+                const token = $('meta[name="_csrf"]').attr("th:content");
+                $.ajax({
+                  url: "${CONTEXT_PATH}/iruri/ptClassUpload",
+                  type: "POST",
+                  beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                  },
+                  processData: false,
+                  contentType: false,
+                  data: formData,
+                  dataType: "json",
+                  success: function (result) {
+                    showUploadedFile(result);
+                    detailsCertifyAjax(1);
+                  },
+                });
+                window.opener.parent.location.reload(); // 부모창 새로고침
+
+                window.self.close(); // 현재 팝업 닫기
+              });
+
+              $(".pt_modal_close img").on("click", function () {
+                $("#pt_certify_modal").fadeOut();
+              });
+            });
+
+            const certifies = document.querySelectorAll(".images__image");
+            certifies.forEach(certify => {
+              const boardId = certify.dataset.boardid;
+
+              certify.addEventListener("click", function () {
+                certifyDetails(boardId);
+              });
+            });
           });
+      }
+
+      // certify Details 함수
+      function certifyDetails(boardId) {
+        $(".c_myCertify_modal").fadeIn();
+
+        $.ajax({
+          url: "/ex/iruri/getCertifySelectOne",
+          type: "GET",
+          cache: false,
+          data: {
+            boardId: boardId,
+          },
+          dataType: "json",
+        }).then(result => {
+          console.log("board", result);
+          let htmls =
+            //
+            `
+          <div class="c_myCertify_modal_start">
+          <div>
+            <div class="myCertify_img">
+              <img src="/ex/iruri/display?fileName=${"${result.boardFile}"}" alt="" />
+            </div>
+            <div class="myCertify_myInfo"><span class="myCertify_date"> ${"${result.boardDate}"} </span> <span class="myCertify_nickname"> ${"${result.iuserVO.userNickname}"} </span></div>
+            <div class="myCertify_title">${"${result.boardTitle}"}</div>
+            <div class="myCertify_content">${"${result.boardContent}"}</div>
+
+            <div class="modal_button">
+              <button class="c_myCertify_modal_submit2 ptModifyBtn">수정</button>
+              <button class="c_myCertify_modal_submit2">삭제</button>
+              <button class="c_myCertify_modal_submit">확인</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal_layer"></div>
+        `;
+
+          $(".c_myCertify_modal").html(htmls);
+
+          $(".c_myCertify_modal_submit").on("click", function () {
+            $(".c_myCertify_modal").fadeOut();
+          });
+
+          $(".ptModifyBtn").on("click", function () {
+            $(".c_myCertify_modal").hide();
+            $("#pt_certify_modal").show();
+
+            let modifyHtmls = ``;
+          });
+        });
       }
 
       function detailsReplyAjax(page) {
@@ -255,7 +417,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             let replyHtmls = `
               <div class="reply_count">총 ${"${pageMaker.total}"} 개</div>
               <table class="reply_table">
-              
+
               `;
             for (let reply in list) {
               replyHtmls +=
@@ -305,8 +467,49 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
       });
     </script>
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!--인증하기 모달창-->
+    <div id="pt_certify_modal">
+      <div class="pt_certify_modal_start">
+        <div class="pt_modal_close">
+          <img src="/ex/resources/src/img/icon/close.png" alt="" />
+        </div>
+        <h2 class="pt_certify_modal_title">인증글 작성</h2>
+        <form action="#">
+          <ul class="pt_certify_modal_ul">
+            <li>- 인증글 작성 시 포인트가 누적됩니다.</li>
+            <li>- 누적된 포인트는 챌린지 종료 후 3일 이내 자동 적립됩니다.</li>
+            <li>- 챌린지 종료 전에 인증글을 삭제하면 누적된 포인트가 회수됩니다.</li>
+            <li>- 챌린지가 종료되기 전까지는 수정 및 삭제가 가능합니다.</li>
+          </ul>
+          <div class="pt_certify_name">
+            <p>제목</p>
+            <input type="text" class="inputbox_cetify1" name="boardTitle" />
+          </div>
+
+          <div class="pt_certify_content">
+            <p>내용</p>
+            <textarea cols="30" rows="50" class="inputbox_certify2" name="boardContent"></textarea>
+          </div>
+
+          <div class="pt_certify_img_button">
+            <p>사진첨부</p>
+            <input type="file" name="uploadFile" accept=".jpg, .png" id="certify_upload" /><label for="certify_upload" class="pt_certify_file_upload"></label> <span style="color: #999">* 650x500px 크기의 jpg.png</span>
+
+            <div class="uploadResult"></div>
+          </div>
+
+          <div class="modal_button">
+            <button class="pt_certify_modal_submit" type="submit">인증글 올리기</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal_layer"></div>
+    </div>
+
+    <!--내 인증글 모달창-->
+    <div class="c_myCertify_modal"></div>
+
+    <!-- 결제모듈 -->
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 
@@ -315,38 +518,59 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
       IMP.init("imp50068834");
 
       function requestPay() {
-        // 주문번호(merchant_uid) 미리 생성하기 (변질된 값과 비교를 위해서)
+        // DB에 주문번호(merchant_uid) 미리 생성하기 (변질된 값과 비교를 위해서)
+        const userId = '<sec:authentication property="principal.currentUser.userId"/>';
+        console.log("classQuery", classQuery);
+        const infoData__title = document.querySelector(".infoData__title").innerText;
+        const buyData__price = document.querySelector(".buyData__price").innerText;
 
-        IMP.request_pay(
-          {
-            name: "물마시기 챌린지",
-            amount: 64900,
+        $.ajax({
+          url: "/ex/iruri/getBuyId",
+          type: "GET",
+          dataType: "json",
+          cache: false,
+          data: {
+            userId: userId,
+            classId: classQuery,
+            buyRealPay: buyData__price,
           },
-          function (rsp) {
-            if (rsp.success) {
-              // 결제 성공시
-              const header = $('meta[name="_csrf_header"]').attr("th:content");
-              const token = $('meta[name="_csrf"]').attr("th:content");
-              $.ajax({
-                url: "/ex/iruri/ptClassBuy",
-                type: "POST",
-                beforeSend: function (xhr) {
-                  xhr.setRequestHeader(header, token);
-                },
-                dataType: "json",
-                data: {
-                  imp_uid: rsp.imp_uid, // 결제 번호
-                  merchant_uid: rsp.merchant_uid, // 주문번호 (IMP.request_pay 를 호출하기전에 DB에서 먼저 주문 레코드를 생성하며 해당 주문 번호를 merchant_uid 에 저장해야함)
-                },
-              }).done(function (data) {
-                console.log("data", data);
-                // 서버 api 성공시 로직
-              });
-            } else {
-              console.log("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-            }
-          }
-        );
+        }) //
+          .then(result => {
+            console.log("result", result);
+            IMP.request_pay(
+              {
+                name: infoData__title,
+                amount: buyData__price,
+              },
+              function (rsp) {
+                if (rsp.success) {
+                  // 결제 성공시
+                  const header = $('meta[name="_csrf_header"]').attr("th:content");
+                  const token = $('meta[name="_csrf"]').attr("th:content");
+                  $.ajax({
+                    url: "/ex/iruri/ptClassBuy",
+                    type: "POST",
+                    beforeSend: function (xhr) {
+                      xhr.setRequestHeader(header, token);
+                    },
+                    dataType: "json",
+                    data: {
+                      imp_uid: rsp.imp_uid, // 결제 번호
+                      merchant_uid: result, // 주문번호
+                      buyId: parseInt(result),
+                    },
+                  }).done(function (data) {
+                    console.log("data", data);
+                    if (data === "success") {
+                      location.reload(true);
+                    }
+                  });
+                } else {
+                  console.log("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                }
+              }
+            );
+          });
       }
     </script>
   </body>
