@@ -114,18 +114,18 @@ body {
     right: 25px;
 }
 
-input[type=checkbox] {
+.ai_list_heart .heart_label input[type=checkbox] {
     display: none;
 }
 
-input[type=checkbox]+label {
+.ai_list_heart .heart_label input[type=checkbox]+label {
     display: inline-block;
     cursor: pointer;
-    background: url('../images/images/icon/heart_gray.png') center/25px 25px no-repeat;
+    background: url('/ex/resources/src/img/icon/heart_gray.png') center/25px 25px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
-    background-image: url('../images/images/icon/heart_red.png');
+.ai_list_heart .heart_label input[type=checkbox]:checked+label {
+    background-image: url('/ex/resources/src/img/icon/heart_red.png');
 }
 
 
@@ -268,7 +268,7 @@ td.reply_button {
 .page_nation .prev {
     position: relative;
     top: 9px;
-    background: transparent url('../images/images/icon/icon_page_arrow_left.png') no-repeat center center;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_left.png') no-repeat center center;
     width: 14px;
     height: 14px;
     background-size: cover;
@@ -278,7 +278,7 @@ td.reply_button {
 .page_nation .next {
     position: relative;
     top: 9px;
-    background: transparent url('../images/images/icon/icon_page_arrow_right.png') no-repeat center center;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_right.png') no-repeat center center;
     width: 14px;
     height: 14px;
     background-size: cover;
@@ -354,11 +354,11 @@ td.reply_button {
     display: inline-block;
     cursor: pointer;
     padding-left: 30px;
-    background: url('../images/images/icon/check_no.png') left/22px no-repeat;
+    background: url('/ex/resources/src/img/icon/check_no.png') left/22px no-repeat;
 }
 
 .c_complain_modal input[type=radio]:checked+label {
-    background-image: url('../images/images/icon/check_yes.png');
+    background-image: url('/ex/resources/src/img/icon/check_yes.png');
 }
 
 .c_complain_modal_ul {

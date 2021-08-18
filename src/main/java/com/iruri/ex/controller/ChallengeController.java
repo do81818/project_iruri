@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -189,6 +191,7 @@ public class ChallengeController {
 
     // 챌린지 개설 폼 작성 후 입력 (챌린지 등록)
     @PostMapping(value = "/iruri/insert_challenge", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    //, method = RequestMethod.POST
     public String c_make_form2(@RequestParam("imageCheck") String imageCheck, MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo) {
         log.info("challenge_make_form()...");
 

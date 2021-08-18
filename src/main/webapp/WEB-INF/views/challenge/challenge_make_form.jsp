@@ -25,11 +25,8 @@
                         <!-- 달력 한글 추가를 위해 커스텀 -->
                         <script src="${RESOURCES_PATH}/src/js/challenge/datepicker.ko.js" defer></script>
 
-
-
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_calendar.js" defer></script>
-
 
                         <link href="${RESOURCES_PATH}/src/css/page/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
 
@@ -108,6 +105,7 @@
                                                 <p>대표이미지 설정</p>
                                                 <input type="radio" id="direct" name="imageCheck" value="customImage"/>
                                                 <label for="direct" class="rd_label">직접 이미지 올리기</label> 
+                                                
                                                 <input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
                                                 <label for="upload" class="file_upload"></label>
                                                 <span style="color: #999;">* 최대 5MB 크기의 jpg.png</span>
