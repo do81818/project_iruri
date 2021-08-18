@@ -17,6 +17,7 @@
 		$(document).ready(function(){
 			profit(1);
 		});
+		
 		function profit(page){
 			$.ajax({
 				url : 'http://localhost:8282/ex/ajax/mypage/classReply.json',
