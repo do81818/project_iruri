@@ -41,7 +41,12 @@ public class IUserInfoServleImpl implements IUserInfoService {
     
     @Override
     public int userbmi(int userId) {
-    	return iUserinfoMapper.userbmi(userId);
+    	try {
+    		return iUserinfoMapper.userbmi(userId);
+		} catch (Exception e) {
+			return 0;
+		}
+    	
     }
 
 

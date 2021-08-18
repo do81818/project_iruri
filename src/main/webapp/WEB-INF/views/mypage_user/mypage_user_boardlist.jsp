@@ -185,11 +185,12 @@ ${sumList3[status.index].데이터명} --%>
 										<div id="m_board_list_type">게시글</div>
 										<div id="m_board_list_img">
 												<img id="img"
-														src="http://localhost:8282/ex/resources/src/img/icon/270-270.png">
+														src="http://localhost:8282/ex/resources/src/img/icon/diet.png">
 										</div>
 										<div id="m_board_list_content">
-												<div id="m_board_list_title">더운데 몸조심 하세요~</div>
-												<div id="m_board_list_content">아침에 적당히 땀흘리니까 기분이 좋더라구영</div>
+												<div id="m_board_list_title">
+												<a href="/ex/iruritip/boardlist">하루 1000 칼로리 식단입니다!</a></div>
+												<div id="m_board_list_content">다이어트 하시느라 힘드신 분들 많으시죠?</div>
 												<div id="m_board_list_date">2021.07.25</div>
 										</div>
 								</div>
