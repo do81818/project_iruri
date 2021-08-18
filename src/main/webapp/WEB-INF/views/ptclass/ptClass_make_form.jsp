@@ -35,7 +35,8 @@
 		<main>
 				<div class="ptClassFormInsert">
 
-					<form:form class="ptForm" method="POST" action="insertPtClass" accept-charset="utf-8" enctype="multipart/form-data">
+					<form class="ptForm" method="POST" action="/ex/iruri/insertPtClass?${_csrf.parameterName}=${_csrf.token}" accept-charset="utf-8" enctype="multipart/form-data">
+						
 						<h2 class="ptFormTitle">PT클래스 개설</h2>
 
 						<div>
@@ -254,15 +255,15 @@
 
 						<div class="button">
 							<button class="c_make_button_cancle" type="reset">
-								챌린지등록 취소
+								클래스 등록 취소
 							</button>
 							<button class="c_make_button_submit" type="submit">
-								챌린지등록
+								클래스등록
 							</button>
 						</div>
 
 
-					</form:form>
+					</form>
 
 				</div>
 
