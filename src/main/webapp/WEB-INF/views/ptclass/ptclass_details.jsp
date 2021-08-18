@@ -67,9 +67,9 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                   userId: userId,
                 },
                 dataType: "json",
-                success: function () {
-                  detailsReplyAjax(1);
-                },
+              })
+              .always(function() {
+            	  detailsReplyAjax(1);
               });
             });
           </script>
@@ -288,8 +288,6 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
               }
 
               $(".pt_certify_modal_submit").on("click", function (e) {
-                top.window.location.reload(true);
-
                 const boardTitle = document.querySelector('input[name="boardTitle"]');
                 const boardContent = document.querySelector('textarea[name="boardContent"]');
 
@@ -320,12 +318,11 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                   dataType: "json",
                   success: function (result) {
                     showUploadedFile(result);
-                    detailsCertifyAjax(1);
                   },
+                }).always(function() {
+                	detailsCertifyAjax(1);
+                	$("#pt_certify_modal").fadeOut();
                 });
-                window.opener.parent.location.reload(); // 부모창 새로고침
-
-                window.self.close(); // 현재 팝업 닫기
               });
 
               $(".pt_modal_close img").on("click", function () {

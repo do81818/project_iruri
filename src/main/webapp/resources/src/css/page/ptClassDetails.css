@@ -222,6 +222,7 @@
 .ptDetail_certify__images {
   display: grid;
   grid-template-columns: repeat(4, 270px);
+  grid-template-rows: repeat(2, 270px);
   justify-content: space-between;
   row-gap: 26px;
   padding-bottom: 85px;
