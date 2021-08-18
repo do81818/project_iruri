@@ -37,11 +37,11 @@ public interface AdminMapper {
 	Integer countNormalBlackMember();
 
 	// 트레이너회원 리스트
-	List<TableJoinVO> getTrainerMemberList(Criteria cri);
+	List<TableJoinVO> getTrainerMemberList(@Param("keyword") String keyword, @Param("pageNum") int pageNum, @Param("amount") int amount);
 //	List<IUserVO> getTrainerMemberList3(Criteria cri);
 
 	// 트레이너회원 리스트 갯수
-	Integer countTrainerMemberList();
+	Integer countTrainerMemberList(@Param("keyword") String keyword);
 
 	// 트레이너 별 등급(평점)
 	String getTrainerGrade(int userId);
@@ -69,12 +69,18 @@ public interface AdminMapper {
 	
 	// 일반/유료회원 현재 보유포인트
 	Integer getUserBasicInfoPointTotal(int userId);
-
-	// 일반/유료회원정보 운동정보보기 _all
-	List<PointVO> getUserExInfoAll(int userId, Criteria cri);
 	
-	// 일반/유료회원 운동정보 갯수
-	Integer countUserExInfoAll();
+	// 일반/유료회원 포인트 적립/차감
+	void insertPoint(PointVO vo);
+	
+	// 일반/유료회원 현재 보유포인트
+	void updatePoint(@Param("userId") int userId, @Param("userPoint")int userPoint);
+
+	// 일반/유료회원정보 운동정보리스트 보기
+	List<TableJoinVO> getUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId, @Param("pageNum") int pageNum, @Param("amount") int amount);
+	
+	// 일반/유료회원 운동정보 리스트 갯수
+	Integer countUserExInfoList(@Param("userId") int userId, @Param("categoryId") int categoryId);
 	
 	// 트레이너정보_수익관리 리스트
 	List<TableJoinVO> getTrainerMoneyList(@Param("userId") int userId, @Param("month") int month, @Param("pageNum") int pageNum, @Param("amount") int amount);
@@ -93,5 +99,29 @@ public interface AdminMapper {
     
     // 탈퇴회원으로 전환
     void updateWithdrawMember(@Param("userId") int userId);
-	
+    
+    // 수익관리 - 전체수익 매출 리스트
+    List<TableJoinVO> getTotalMoneyInOutList(@Param("userId") int userId, @Param("inquire") String inquire,  
+            @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
+            @Param("pageNum") int pageNum, @Param("amount") int amount);
+    
+    // 수익관리 - 전체수익 매출리스트 갯수
+    Integer countTotalMoneyInOutList(@Param("userId") int userId, @Param("inquire") String inquire,  
+            @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate);
+    
+    // 수익관리 - 트레이너 검색
+    List<TableJoinVO> getTrainerSearchList(@Param("keyword") String keyword);
+    
+    // 오늘 수익 -전체
+    Integer sumTodayMoneyAll();
+    
+    // 오늘 수익 - 트레이너
+    Integer sumTodayMoneyTrainer(@Param("userId") int userId);
+    
+    // 월별 수익 - 전체
+    List<TableJoinVO> sumMonthMoneyAll();
+
+    // 월별 수익 - 트레이너
+    List<TableJoinVO> sumMonthMoneyTrainer(@Param("userId") int userId);
+
 }

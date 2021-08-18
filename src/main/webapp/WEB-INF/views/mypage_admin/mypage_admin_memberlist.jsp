@@ -52,14 +52,12 @@
 
 		<!---------------------- 회원관리 하위 메뉴 -------------------------->
 		<div id="admin_memberTabMenu">
-			<input type="radio" id="tap1" name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> <label
-				for="tap1">신고알림</label> <input type="radio" id="tap2" name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'" checked>
-			<label for="tap2">전체회원</label> <input type="radio" id="tap3"
-				name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'">
-			<label for="tap3">블랙리스트</label>
+			<input type="radio" id="tap1" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> 
+				<label for="tap1">신고알림</label> 
+			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list?pageNum=1'" checked>
+				<label for="tap2">전체회원</label> 
+			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist?pageNum=1'">
+				<label for="tap3">블랙리스트</label>
 		</div>
 
 		<!---------------------- 전체회원 탭-------------------------->
@@ -105,14 +103,14 @@
  						htmls += '<tr>';
 						htmls += '<td colspan="5" class="table_No_date">'
 								+ '등록된 일반/유료회원이 없습니다.' + '</td>';
-						+'등록된 회원이 없습니다.' + '</td>';
 						htmls += '</tr>'
 					} else {
 						$(list).each(
 							function() {
-								htmls += '<tr class="list_impact" onclick="link('
-										+ this.iuserVo.userId
-										+ ')">';
+								const member = 'member';
+								htmls += '<tr class="list_impact" onclick=\"link(\''
+									+ this.iuserVo.userId +'\',\''+ member +'\',\''+ page
+									+ '\')\">';
 								htmls += '<td class="table_No_date">'
 										+ this.iuserVo.userId
 										+ '</td>';
@@ -121,6 +119,8 @@
 									htmls += '일반회원';
 								} else if (this.authVo.authContent == "ROLE_PAYUSER") {
 									htmls += '유료회원';
+								} else if (this.authVo.authContent == "ROLE_LEAVE") {
+									htmls += '탈퇴회원';
 								} else {
 									htmls += '00';
 								}
@@ -142,7 +142,7 @@
 	
 						/* ------------------ 페이징 부분 --------------------- */
 						if (pagination['prev']) {
-							htmls2 += '<a class="arrow prev" href="javascript:getlist('
+							htmls2 += '<a class="arrow prev" href="#admin_memberTabMenu" onclick="javascript:getlist('
 									+ (pagination['startPage'] - 1)
 									+ ')"></a>';
 						}
@@ -150,16 +150,16 @@
 						// 번호를 표시하는 부분
 						for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
 							if (page !== idx) {
-								htmls2 += '<a class="pageNumLink" href="javascript:getlist('
+								htmls2 += '<a class="pageNumLink" href="#admin_memberTabMenu" onclick="javascript:getlist('
 										+ idx + ')">' + (idx) + "</a>";
 							} else {
-								htmls2 += '<a class="pageNumLink active" href="javascript:getlist('
+								htmls2 += '<a class="pageNumLink active" href="#admin_memberTabMenu" onclick="javascript:getlist('
 										+ idx + ')">' + (idx) + "</a>";
 							}
 						}
 	
 						if (pagination['next']) {
-							htmls2 += '<a class="arrow next" href="javascript:getlist('
+							htmls2 += '<a class="arrow next" href="#admin_memberTabMenu" onclick="javascript:getlist('
 									+ (pagination['endPage'] + 1)
 									+ ')"></a>';
 	
@@ -175,11 +175,11 @@
 		}
 
 		$(document).ready(function() {
-			getlist(1);
+			getlist(${page});
 		});
 		
-		function link(id){
-			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId="+id;
+		function link(id, member, page){
+			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&member=" + member + "&pageNum=" + page;
 		}
 		
 		

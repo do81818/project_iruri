@@ -13,7 +13,7 @@
 <link rel="stylesheet"
    href="${RESOURCES_PATH}/src/css/page/iruritip_main.css">
 <%@ include file="../include/static.jsp"%>
-<title>마이페이지 메인</title>
+<title>이루리팁 자유게시판</title>
 <script src="${RESOURCES_PATH}/src/js/mypage_user_main.js" defer></script>
 <script src="${RESOURCES_PATH}/src/js/mypage_user_chart.js" defer></script>
 
@@ -51,92 +51,92 @@
         
         <hr class="tip_line">  
         <div class="freeboard_list_box">
-          <div class="fb_list_number">1</div>
+          <div class="fb_list_number">10</div>
           <div class="fb_list_nickname">몸짱아줌마</div>
-          <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-          <div class="fb_list_date">2017.10.02</div>
-          <div class="fb_list_hit">45</div>
-          <div class="fb_list_recontent">11</div>
+          <div class="fb_list_title">몸짱이 되는길은 이렇게 힘든가요?</div>
+          <div class="fb_list_date">2021.07.21</div>
+          <div class="fb_list_hit">455</div>
+          <div class="fb_list_recontent">6</div>
       </div>
 
       <hr class="tip_line">  
       <div class="freeboard_list_box">
-        <div class="fb_list_number">1</div>
-        <div class="fb_list_nickname">몸짱아줌마</div>
+        <div class="fb_list_number">65</div>
+        <div class="fb_list_nickname">거북이</div>
         <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-        <div class="fb_list_date">2017.10.02</div>
-        <div class="fb_list_hit">45</div>
-        <div class="fb_list_recontent">11</div>
+        <div class="fb_list_date">2021.07.26</div>
+        <div class="fb_list_hit">65</div>
+        <div class="fb_list_recontent">14</div>
     </div>
 
     <hr class="tip_line">  
     <div class="freeboard_list_box">
-      <div class="fb_list_number">1</div>
-      <div class="fb_list_nickname">몸짱아줌마</div>
-      <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-      <div class="fb_list_date">2017.10.02</div>
-      <div class="fb_list_hit">45</div>
-      <div class="fb_list_recontent">11</div>
+      <div class="fb_list_number">102</div>
+      <div class="fb_list_nickname">메추리알</div>
+      <div class="fb_list_title">다들 열운동 하고 계신가요?</div>
+      <div class="fb_list_date">2021.07.29</div>
+      <div class="fb_list_hit">87</div>
+      <div class="fb_list_recontent">21</div>
   </div>
 
   <hr class="tip_line">  
   <div class="freeboard_list_box">
-    <div class="fb_list_number">1</div>
-    <div class="fb_list_nickname">몸짱아줌마</div>
-    <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-    <div class="fb_list_date">2017.10.02</div>
-    <div class="fb_list_hit">45</div>
-    <div class="fb_list_recontent">11</div>
+    <div class="fb_list_number">76</div>
+    <div class="fb_list_nickname">다이어트시렁</div>
+    <div class="fb_list_title">제 다이어트는 언제 끝나는걸까요..</div>
+    <div class="fb_list_date">2021.08.01</div>
+    <div class="fb_list_hit">166</div>
+    <div class="fb_list_recontent">9</div>
 </div>
 
 <hr class="tip_line">  
 <div class="freeboard_list_box">
-  <div class="fb_list_number">1</div>
-  <div class="fb_list_nickname">몸짱아줌마</div>
-  <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-  <div class="fb_list_date">2017.10.02</div>
-  <div class="fb_list_hit">45</div>
+  <div class="fb_list_number">34</div>
+  <div class="fb_list_nickname">톰순이</div>
+  <div class="fb_list_title">오늘 처음으로 헬스장에 갔습니다.</div>
+  <div class="fb_list_date">2021.08.01</div>
+  <div class="fb_list_hit">1253</div>
+  <div class="fb_list_recontent">15</div>
+</div>
+
+<hr class="tip_line">  
+<div class="freeboard_list_box">
+  <div class="fb_list_number">11</div>
+  <div class="fb_list_nickname">콜라</div>
+  <div class="fb_list_title">콜라가 먹고싶더군요</div>
+  <div class="fb_list_date">2021.08.02</div>
+  <div class="fb_list_hit">355</div>
   <div class="fb_list_recontent">11</div>
 </div>
 
 <hr class="tip_line">  
 <div class="freeboard_list_box">
-  <div class="fb_list_number">1</div>
-  <div class="fb_list_nickname">몸짱아줌마</div>
-  <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-  <div class="fb_list_date">2017.10.02</div>
-  <div class="fb_list_hit">45</div>
-  <div class="fb_list_recontent">11</div>
+  <div class="fb_list_number">44</div>
+  <div class="fb_list_nickname">김근육</div>
+  <div class="fb_list_title">김종국씨가 되려고 노력중입니다.</div>
+  <div class="fb_list_date">2021.08.03</div>
+  <div class="fb_list_hit">96</div>
+  <div class="fb_list_recontent">26</div>
 </div>
 
 <hr class="tip_line">  
 <div class="freeboard_list_box">
-  <div class="fb_list_number">1</div>
-  <div class="fb_list_nickname">몸짱아줌마</div>
-  <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-  <div class="fb_list_date">2017.10.02</div>
-  <div class="fb_list_hit">45</div>
-  <div class="fb_list_recontent">11</div>
+  <div class="fb_list_number">19</div>
+  <div class="fb_list_nickname">너나잘해</div>
+  <div class="fb_list_title">개짱나 ㅡㅡ 헬스장에서 말좀거지마세요</div>
+  <div class="fb_list_date">2021.08.03</div>
+  <div class="fb_list_hit">3985</div>
+  <div class="fb_list_recontent">52</div>
 </div>
 
 <hr class="tip_line">  
 <div class="freeboard_list_box">
-  <div class="fb_list_number">1</div>
-  <div class="fb_list_nickname">몸짱아줌마</div>
-  <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-  <div class="fb_list_date">2017.10.02</div>
-  <div class="fb_list_hit">45</div>
-  <div class="fb_list_recontent">11</div>
-</div>
-
-<hr class="tip_line">  
-<div class="freeboard_list_box">
-  <div class="fb_list_number">1</div>
-  <div class="fb_list_nickname">몸짱아줌마</div>
-  <div class="fb_list_title">운동이 너무 힘들어요 ㅜㅜ</div>
-  <div class="fb_list_date">2017.10.02</div>
-  <div class="fb_list_hit">45</div>
-  <div class="fb_list_recontent">11</div>
+  <div class="fb_list_number">3</div>
+  <div class="fb_list_nickname">펭귄</div>
+  <div class="fb_list_title">오늘부로 다이어트 끝입니다.</div>
+  <div class="fb_list_date">2021.08.03</div>
+  <div class="fb_list_hit">679</div>
+  <div class="fb_list_recontent">21</div>
 </div>
 
 <!-- 글쓰기 버튼 -->

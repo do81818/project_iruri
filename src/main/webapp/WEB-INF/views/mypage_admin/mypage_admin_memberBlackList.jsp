@@ -23,6 +23,7 @@
 <link rel="stylesheet"
 	href="${RESOURCES_PATH}/src/css/admin/admin_main_normalMember.css">
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" defer></script>
 
 <!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
 </head>
@@ -53,14 +54,12 @@
 
 		<!---------------------- 회원관리 하위 메뉴 -------------------------->
 		<div id="admin_memberTabMenu">
-			<input type="radio" id="tap1" name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> <label
-				for="tap1">신고알림</label> <input type="radio" id="tap2" name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list'">
-			<label for="tap2">전체회원</label> <input type="radio" id="tap3"
-				name="taps"
-				onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist'"
-				checked> <label for="tap3">블랙리스트</label>
+			<input type="radio" id="tap1" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/main'"> 
+				<label for="tap1">신고알림</label> 
+			<input type="radio" id="tap2" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/list?pageNum=1'">
+				<label for="tap2">전체회원</label> 
+			<input type="radio" id="tap3" name="taps" onclick="location.href='${CONTEXT_PATH_ADMIN}/member/blacklist?pageNum=1'" checked> 
+				<label for="tap3">블랙리스트</label>
 		</div>
 
 		<!---------------------- 트레이너회원 탭 -------------------------->
@@ -108,24 +107,27 @@
     					} else {
     						$(list).each(
     							function() {
-    								var url = "${CONTEXT_PATH_ADMIN}/member/info";
-    								htmls += '<tr class="list_impact">';
-    								htmls += '<td class="table_No_date">'
-    										+ this.iuserVo.userId
-    										+ '</td>';
+    								const member = 'black';
+    								htmls += '<tr class="list_impact" onclick=\"link(\''
+										+ this.iuserVo.userId +'\',\''+ member +'\',\''+ page
+										+ '\')\">';
+									htmls += '<td class="table_No_date">'
+										+ this.iuserVo.userId
+										+ '</td>';
 
     								htmls += '<td class="table_indigo_text">';
     								if (this.authVo.authContent == "ROLE_USER") {
     									htmls += '일반회원';
     								} else if (this.authVo.authContent == "ROLE_PAYUSER") {
     									htmls += '유료회원';
+    								} else if (this.authVo.authContent == "ROLE_LEAVE") {
+    									htmls += '탈퇴회원';
     								} else {
     									htmls += '00';
     								}
     								htmls += '</td>';
 
     								htmls += '<td class="table_indigo_text">'
-    										+ '<a href="#" target="_blank">'
     										+ this.iuserVo.userNickname
     										+ '</td>';
     								htmls += '<td class="table_blue_text">'
@@ -141,20 +143,20 @@
                          
                          /* ------------------ 페이징 부분 --------------------- */
                          if (pagination['prev']) {
-                             htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
+                             htmls2 += '<a class="arrow prev" href="#admin_memberTabMenu" onclick="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
          				} 
 
          				// 번호를 표시하는 부분
          				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
          					if (page !== idx) {
-         					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					   htmls2 += '<a class="pageNumLink" href="#admin_memberTabMenu" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
          					} else {
-         					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+         					   htmls2 += '<a class="pageNumLink active" href="#admin_memberTabMenu" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
          					}
          				}
 
          				if (pagination['next']) {
-                            htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+                            htmls2 += '<a class="arrow next" href="#admin_memberTabMenu" onclick="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
         						
         				}			
          			}	// if(list.length < 1) else 끝
@@ -170,8 +172,16 @@
             }
 
             $(document).ready(function() {
-                getlist(1);
-            });
+    			getlist(${page});
+    		});
+    		
+    		function link(id, member, page){
+    		    console.log(id);
+    		    console.log(member);
+    		    console.log(page);
+    			location.href="${CONTEXT_PATH_ADMIN}/member/info?userId=" + id + "&member=" + member + "&pageNum=" + page;
+    		}
+    		
         </script>
         
 

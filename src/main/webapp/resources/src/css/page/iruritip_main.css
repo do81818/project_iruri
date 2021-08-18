@@ -1,132 +1,126 @@
 @charset "UTF-8";
 
+/* 이루리팁 상단부분 */
+.tip_top {
+	display: flex;
+}
 
-  /* 이루리팁 상단부분 */
-  .tip_top{
-    display: flex;
+.tip_top .tip_title {
+	flex: 9;
+	margin: 40px;
+	float: left;
+	padding-left: 110px;
+	font-family: 'Cafe24Ssurround';
+	color: var(- -iruri-blue-color);
+	margin-top: 26px;
+}
 
-  }
+.tip_line {
+	width: 1200px;
+	height: 1px;
+	padding: 0;
+}
 
-  .tip_top .tip_title{
-      flex: 9;
-      margin: 40px;
-      float: left;
-      padding-left: 110px;
-      font-family: 'Cafe24Ssurround';
-      color:var(--iruri-blue-color);
-      margin-top: 26px;
-      
+/* 이루리팁 박스부분 */
+.tip_middle {
+	display: flex;
+	line-height: 26px;
+}
 
-     
-  }
+.tip_middle .tip_box_left {
+	flex: 45%;
+	margin: 60px;
+	padding-left: 90px;
+}
 
-  .tip_line{
+.tip_middle .tip_box_right {
+	flex: 55%;
+}
 
-    width: 1200px;
-    height: 1px;
-    padding: 0;
+.tip_box_left .tipbox_title {
+	font-size: 19px;
+	padding-bottom: 5px;
+}
 
-    }
+.tip_box_left .tipbox_date {
+	font-size: 16px;
+	color: var(--iruri-gray-color);
+	padding-bottom: 0px;
+}
 
+.tip_box_left .tipbox_content {
+	font-size: 17px;
+}
 
-    /* 이루리팁 박스부분 */
-    .tip_middle{
-        display: flex;
-    }
+.tipbox_image {
+	margin: 0%;
+	padding: 0%;
+}
 
-    .tip_middle .tip_box_left{
-        flex:45%;
-        margin: 60px;
-      padding-left: 90px;
+.tipbox_image>img {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 0;
+	width: 350px;
+	height: 250px;
+	border-radius: 20px;
+}
 
+/* 이루리팁 리스트 */
+table, tr, td {
+	border: 0;
+	border-collapse: collapse;
+	clear: both;
+}
 
-    }
-    .tip_middle .tip_box_right{
-        flex:55%;
-    }
+.reply_table td:nth-of-type(1), .reply_table td:nth-of-type(2) {
+	padding: 23px 35px;
+	border-top: 1px solid var(- -iruri-light-gray-color);
+	border-bottom: 1px solid var(- -iruri-light-gray-color);
+}
+.tip_list_image{
+	width: 145px; 
+	height : 140px;
+	margin-right: 20px;
+	
+}
+.tip_list_image>img {
+	margin-bottom: 30px;
+	/* margin-right: 48px; */
+	/* margin-top: -6px; */
+	/* padding-left: 20px; */
+	width: 139px; height : 137px;
+	vertical-align: top;
+	color: var(- -iruri-indigo-color);
+	border-radius: 20px;
+	margin-right: 40px;
+	
+}
 
-    .tip_box_left .tipbox_title{
-        font-size: 17px;
-        padding-bottom: 22px;
-    }
-    .tip_box_left .tipbox_date{
-        font-size: 16px;
-        color: var(--iruri-light-gray-color);
-        padding-bottom: 8px;
-    }
-    .tip_box_left .tipbox_content{
-     font-size: 17px;   
-    }
-    .tipbox_image{
-        margin: 0%;
-        padding: 0%;
-    }
-    .tipbox_image>img{
-        margin-top: 30px;
-        margin-bottom: 30px;
-        padding: 0;
-        width: 350px;
-        height: 250px;
-        border-radius: 20px;
+.tip_list_title {
+	margin-top: 31px;
+	margin-bottom: 10px;
+	font-size: 17px;
+	color: var(--iruri-gray-color);
+	line-height: 20px;
+}
 
-    }
+.tip_list_content {
+	margin-bottom: 15px;
+	font-size: 16px;
+	color: var(- -iruri-dark-gray-color);
+	line-height: 25px;
+}
 
+.tip_list_date {
+	line-height: 25px;
+	font-size: 14px;
+		color: var(--iruri-gray-color);
+}
 
-    /* 이루리팁 리스트 */
-    table,
-    tr,
-    td {
-      border: 0;
-      border-collapse: collapse;
-      clear: both;
-    }
-
-
-
-    .reply_table td:nth-of-type(1),
-    .reply_table td:nth-of-type(2) {
-      padding: 23px 35px;
-      border-top: 1px solid var(--iruri-light-gray-color);
-      border-bottom: 1px solid var(--iruri-light-gray-color);
-    }
-
-    .tip_list_image>img {
-     margin-bottom: 32px;
-    margin-right: 48px;
-        margin-top: -6px;
-    /* padding-left: 20px; */
-      width: 120px;
-      height: 150px;
-      vertical-align: top;
-      color: var(--iruri-indigo-color);
-      border-radius: 20px;
-    }
-
-    .tip_list_title{
-    margin-top: 29px;
-        margin-bottom: 15px;
-      font-size: 18px;
-      color: var(--iruri-dark-gray-color);
-      line-height: 25px;
-    }
-
-    .tip_list_content {
-        margin-bottom: 15px;
-      font-size: 15px;
-      color: var(--iruri-dark-gray-color);
-      line-height: 25px;
-    }
-
-    .tip_list_date {
-        line-height: 25px;
-      font-size: 14px;
-      color: var(--iruri-light-gray-color);
-    }
-    
-    .tip_list_hit{
-
-        margin-bottom: 10px;
-        font-size: 13px;
-        color: var(--iruri-light-gray-color);
-
-    }
+.tip_list_hit {
+	margin-bottom: 10px;
+	margin-left:10px;
+	font-size: 13px;
+	color: var(- -iruri-light-gray-color);
+}

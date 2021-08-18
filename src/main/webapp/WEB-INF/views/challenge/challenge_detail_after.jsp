@@ -13,7 +13,7 @@
                 <head>
                     <%@ include file="../include/static.jsp"%>
                         <!-- 경로를 확인해 주세요 -->
-                        <title>챌린지 상세(참여 후)</title>
+                        <title>${challengeInfo.classTitle}</title>
                         <!-- 페이지 이름을 적어주세요 -->
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_menu_hover.js" defer></script>
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_modal.js" defer></script>
@@ -26,8 +26,8 @@
 						
                         <%@ include file="../include/headerTemplate.jsp"%>
                             <!-- 경로를 확인해 주세요 -->
-							<p><sec:authentication property="principal.CurrentUser.authList[0].authId" /></p>
-                            <main>
+							
+                           <main>
                                 <div class="c_container">
 
                                     <!--챌린지상세-->
@@ -129,6 +129,29 @@
                                              <button class="c_certify_button">인증하기</button>
                                          </div>
                                      
+                                    <!-- 댓글 삭제 확인 모달 -->
+							 <%--        <div class="reply_delete_modal">
+							            <div class="reply_delete_modal_start">
+							                <h4 class="reply_delete_modal_title">댓글 삭제</h4>
+							                <form class="reply_delete_form">
+							
+							                    <ul class="reply_delete_modal_ul">
+							                        <li>
+							                            해당 댓글을 정말로 삭제하시겠습니까?
+							                        </li>
+							
+							                    </ul>
+							
+							                    <div class="modal_button">
+							
+							                        <button class="reply_delete_modal_cancle" type="reset">취소</button>
+							                        <button class="reply_delete_modal_submit" type="submit">댓글삭제</button>
+							                    </div>
+							                </form>
+							
+							            </div>
+							            <div class="modal_layer"></div>
+							        </div> --%>
                                    
                                         
                                      
@@ -341,11 +364,12 @@
                                           dataType: 'json',
                                           success: function(result) {
                                               showUploadedFile(result);
-                         
+                         				      getlist(1);
                                           }  
                                         
                                       });
                                        window.opener.parent.location.reload(); // 부모창 새로고침 
+                                       
                                     window.self.close(); // 현재 팝업 닫기 
                                  });                                            
                              });
@@ -477,13 +501,18 @@
 	                                           data: formData1,
 	                                           dataType: 'json',
 	                                           success: function(result) {
+	                                        	   getlist(1);
 	                                               showUploadedFile(result);
-	                          
+	                                               
 	                                           }  
 	                                         
 	                                       });
-	                                        window.opener.parent.location.reload(); // 부모창 새로고침 
-	                                     window.self.close(); // 현재 팝업 닫기 
+	                                       
+	                                     window.opener.parent.location.reload(); // 부모창 새로고침 
+	                                     window.self.close(); // 현재 팝업 닫기
+	                                      
+	                                     
+	                                     
 	                                  });                                            
 	                              });
 	                           </script>
@@ -541,27 +570,7 @@
 
 
                                 <!--댓글리스트-->
-                                <div class="c_after_reply" id="reply">
-
-                                    <%-- 
-	
-		<div class="reply_count">총 77 개</div>
-		<table class="reply_table">
-			<tr>
-				<td class="reply_nickname">닉네임</td>
-				<td>
-					<p class="reply_content">Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Neque pariatur hic, iusto quae nam cupiditate
-						nostrum dolores unde dicta perferendis temporibus facilis nobis
-						ducimus provident omnis voluptatum consequatur explicabo
-						excepturi.</p>
-					<p class="reply_date">2021.07.03</p>
-				</td>
-				<td class="reply_button"><button class="reply_modify">수정</button>
-					<button class="reply_complain">신고</button></td>
-			</tr>
-		</table> --%>
-                                </div>
+                                <div class="c_after_reply" id="reply"> </div>
 
 
                                 <!--댓글 신고 모달-->
@@ -779,8 +788,9 @@
                                     
                                     
                                     // 댓글 삭제
-                                    $(document).ready(function() {
+                                     $(document).ready(function() {
                                         getlist(1);
+                                        
                                         
                                         $(document).on("click", ".reply_delete", function(event) {
 	                                        event.preventDefault();
@@ -804,7 +814,7 @@
 	                            				}
 	                            			})
                                         })
-                                    });
+                                    }); 
                                 </script>
 
 
@@ -845,12 +855,6 @@
 
                                     });
                                 </script>
-                                
-                                 
-                                
-                                
-                             
-
 
                             </main>
 

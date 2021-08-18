@@ -132,7 +132,7 @@ text-align: left;
 .m_c_recommend {
   display: flex;
   height: 400px;
-  margin: 0 auto;
+  margin: 72px auto;
   position: relative;
   margin-bottom: 50px;
   align-items: center;
@@ -141,7 +141,8 @@ text-align: left;
 .m_c_slides {
 display: flex;
 width: 100%;
-overflow: hidden
+overflow: hidden;
+position: relative;
 }
 
 .m_c_slides ul {
@@ -196,7 +197,16 @@ margin-top: 170px;
 .m_c_recommend_img  {
 width: 450px;
 height: 400px;
-background-color: var(--iruri-indigo-color);
+border-radius: 30px; 
+padding: 20px;
+margin: 0 25px;
+
+
+}
+
+.m_c_recommend_img_pz img {
+width: 450px;
+height: 400px;
 border-radius: 30px; 
 padding: 20px;
 margin: 0 25px;
@@ -206,9 +216,10 @@ margin: 0 25px;
 position: relative;
 margin-bottom: 34px;
 margin-right: 70px;
+background: url("/ex/resources/src/img/icon/565-440.png") center center no-repeat;
 */
 
-.m_c_recommend_title {
+/* .m_c_recommend_title {
 position: relative;
 height: 73px;
 margin-bottom: 10px;
@@ -216,19 +227,39 @@ font-family: 'Cafe24Ssurround', sans-serif;
 color: var(--iruri-green-color);
 font-size: 32px;
 float: left;
-
 top: 240px;
+} */
+
+.m_c_recommend_title {
+position: absolute;
+    height: 73px;
+    margin-bottom: 0px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    color: var(--iruri-green-color);
+    font-size: 32px;
+    float: left;
+    top: 284px;
+    margin-left: 66px;
 }
 
-.m_c_recommend_date {
+/* .m_c_recommend_date {
 font-size: 20px;
 position: relative;
 color: var(--iruri-light-gray-color);
 float: left;
 top: 220px;
-}
+} */
  
+.m_c_recommend_date {
+font-size: 20px;
+    position: relative;
+    color: var(--iruri-light-gray-color);
+    float: left;
+    margin-top: 20px;
+    margin-left: 67px;
+    top: -122px;
 
+}
 
 
 
@@ -359,17 +390,20 @@ border: 1px solid var(--iruri-blue-color);
 
 .m_cl_cancel_challenge_bt{
 width: 100px;
-height: 38px;
-border-radius: 24px;
-background-color:var(--iruri-blue-color);
-  color: var(--iruri-yellow-color);
-  text-align:center;
-font-size: 14px;
+    height: 38px;
+    border-radius: 24px;
+    background-color: var(--iruri-blue-color);
+    color: var(--iruri-yellow-color);
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    float: left;
+    top: -370px;
+    margin-left: 341px;
 
-border: none;
-outline: none;
-cursor: pointer;
-float: right;
 }
 
 
@@ -398,9 +432,18 @@ text-align: center;
 width: 340px;
 height: 250px;
 border-radius: 30px;
-background-color: var(--iruri-gray-color);
 margin-bottom: 28px;
 margin-left: 40px;
+}
+
+/* background-color: var(--iruri-gray-color); */
+.m_c_list_detail .m_c_list_img_please {
+display: inline-block;
+text-align: center;
+width: 340px;
+height: 250px;
+border-radius: 30px;
+margin-bottom: 28px;
 }
 
 

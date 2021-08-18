@@ -87,9 +87,12 @@ public class AdminServiceImpl implements AdminService {
 
     // 트레이너회원 리스트
     @Override
-    public List<TableJoinVO> getTrainerMemberList(Criteria cri) {
-        log.info(mapper.getTrainerMemberList(cri));
-        return mapper.getTrainerMemberList(cri);
+    public List<TableJoinVO> getTrainerMemberList(String keyword, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        log.info(mapper.getTrainerMemberList(keyword, pageNum, amount));
+        log.info(keyword);
+        return mapper.getTrainerMemberList(keyword, pageNum, amount);
     }
 //    public List<IUserVO> getTrainerMemberList3(Criteria cri) {
 //        log.info(mapper.getTrainerMemberList3(cri));
@@ -98,9 +101,9 @@ public class AdminServiceImpl implements AdminService {
     
     // 트레이너회원 리스트 갯수
     @Override
-    public int countTrainerMemberList() {
+    public int countTrainerMemberList(String keyword) {
         try {
-            int count = mapper.countTrainerMemberList();
+            int count = mapper.countTrainerMemberList(keyword);
             return count;
         } catch (Exception e) {
             return 0;
@@ -189,12 +192,22 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+
     // 일반/유료회원정보 운동정보 리스트보기 _all
     @Override
-    public List<PointVO> getUserExInfoAll(int userId, Criteria cri) {
-        return mapper.getUserExInfoAll(userId, cri);
+    public List<TableJoinVO> getUserExInfoList(int userId, int categoryId, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        return mapper.getUserExInfoList(userId, categoryId, pageNum, amount);
     }
 
+    // 일반/유료회원 운동정보 리스트 갯수
+    @Override
+    public Integer countUserExInfoList(int userId, int categoryId) {
+        return mapper.countUserExInfoList(userId, categoryId);
+    }
+    
+    
     // 트레이너정보_수익관리 리스트
     @Override
     public List<TableJoinVO> getTrainerMoneyList(int userId, int month, Criteria cri){
@@ -239,5 +252,62 @@ public class AdminServiceImpl implements AdminService {
     public void updateWithdrawMember(int userId) {
         mapper.updateWithdrawMember(userId);
     }
+
+    @Override
+    public List<TableJoinVO> getTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate, Criteria cri) {
+        int pageNum = cri.getPageNum();
+        int amount = cri.getAmount();
+        return mapper.getTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate, pageNum, amount);
+    }
+
+    @Override
+    public int countTotalMoneyInOutList(int userId, String inquire, String periodStartDate, String periodEndDate) {
+        try {
+            int count = mapper.countTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate);
+            return count;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+	@Override
+	public List<TableJoinVO> getTrainerSearchList(String keyword) {
+		return mapper.getTrainerSearchList(keyword);
+	}
+
+	@Override
+	public int sumTodayMoneyAll() {
+		try {
+			int total = mapper.sumTodayMoneyAll();
+			return total;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public int sumTodayMoneyTrainer(int userId) {
+		return mapper.sumTodayMoneyTrainer(userId);
+	}
+
+	@Override
+	public List<TableJoinVO> sumMonthMoneyAll() {
+		return mapper.sumMonthMoneyAll();
+	}
+
+	@Override
+	public List<TableJoinVO> sumMonthMoneyTrainer(int userId) {
+		return mapper.sumMonthMoneyTrainer(userId);
+	}
+
+	@Override
+	public void insertPoint(PointVO vo) {
+		mapper.insertPoint(vo);
+	}
+
+	@Override
+	public void updatePoint(int userId, int userPoint) {
+		mapper.updatePoint(userId, userPoint);
+	}
     
 }

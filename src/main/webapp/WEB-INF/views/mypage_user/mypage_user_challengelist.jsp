@@ -81,6 +81,10 @@ true, }, }); */
 																test="${user.authList[0].authContent eq 'ROLE_USER'}">
 																<div>일반회원</div>
 														</c:if>
+														<c:if
+														test="${user.authList[0].authContent eq 'ROLE_PAYUSER'}">
+														<div>프리미엄 회원</div>
+												</c:if>
 														<br>${user.userEmail}</div>
 										</div>
       <div id = "m_userboard_box">
@@ -134,7 +138,10 @@ true, }, }); */
 										<ul >
 												<c:forEach var="userchallengelist"
 														items="${userchallengelist}" varStatus="status">
-														<li class="m_c_recommend_img">
+														<div >
+														<%-- <img src="${CONTEXT_PATH}/iruri/display?fileName=${userchallengelist.classImage}" alt="" style="position: absolute;">  --%>
+															 <img alt="" class="m_c_recommend_img" src="${CONTEXT_PATH}/iruri/display?fileName=${userchallengelist.classImage}" alt="" > 
+															 <!-- <div style="width: 100%; height: 100%;"> -->
 																<button class="m_cl_cancel_challenge_bt" id="${userchallengelist.classId}">챌린지취소</button>
 																<div class="m_c_recommend_title"><a href="/ex/iruri/challenge_detail_after?classId=${userchallengelist.classId}">
 																		${userchallengelist.classTitle}<br>
@@ -152,7 +159,9 @@ true, }, }); */
 																				for="heart${userchallengelist.classId}"
 																				class="m_r_heart_label"></label>
 																</div>
-														</li>
+																
+																<!-- </div> -->
+														</div>
 
 												</c:forEach>
 										</ul>
@@ -287,14 +296,11 @@ true, }, }); */
 								</form>
 
 
-
+	</div>
 
 
 				<!-- 팝업창  -->
-				<div class="modal"max-width: 400px;
-    min-width: 500px;
-    margin: 0 auto;
-    background-color:#eee;>
+				<div class="modal">
 						<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 								<div class="alertWindow">
 										<div class="alertWindow_close">
@@ -326,10 +332,7 @@ true, }, }); */
 
 
 							<!-- 챌린지취소  -->
-						<div class="challenge_cancel" max-width:="max-width:" 400px;="400px;"
-								min-width:="min-width:" 500px;="500px;" margin:="margin:"
-								auto;="auto;" background-color:="background-color:"
-								#eee;="#eee;">
+						<div class="challenge_cancel" >
 										<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 												<div class="alertWindow_class">
 														<div class="alertWindow_close">
@@ -350,9 +353,10 @@ true, }, }); */
 														</div>
 												</div>
 										</div>
+										
 								</div>
 
-						</div> 
+						
 						
 						<script>
 							function likelist(page) {
@@ -384,8 +388,8 @@ true, }, }); */
 															.each(
 																	function() {
 																		htmls += '<div class="m_c_list_detail">';
-																		htmls += '<div class="m_c_list_img">';
-																		htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
+																		 htmls += '<div class="m_c_list_img">'; 
+																		htmls += '<img class="m_c_list_img_please" src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
 																		htmls += '</div>';
 
 																		htmls += '<div class="m_c_list_title">';
@@ -532,9 +536,10 @@ true, }, }); */
 															.each(
 																	function() {
 																		htmls += '<div class="m_c_list_detail">';
-																		htmls += '<div class="m_c_list_img">';
-																		htmls += '<img src="/ex/resources/src/img/icon/360-250.png">';
-																		htmls += '</div>';
+																		 htmls += '<div class="m_c_list_img">'; 
+																			
+																			htmls += '<img class="m_c_list_img_please" src="${CONTEXT_PATH}/iruri/display?fileName=' + this.classImage + '" alt="">';
+																			htmls += '</div>';
 
 																		htmls += '<div class="m_c_list_title">';
 																		htmls += '<a href="/ex/iruri/challenge_detail_before?classId='

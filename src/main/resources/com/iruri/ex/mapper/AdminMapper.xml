@@ -52,7 +52,7 @@
 		<result property="moneyInput" column="money_input" />
 		<result property="moneyOutput" column="money_output" />
 		<result property="payId" column="pay_id" />
-		<result property="payUserId" column="user_id" />
+		<result property="userID" column="user_id" />
 	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.PayVO" id="payMap">
@@ -75,6 +75,11 @@
 		<result property="classPrice" column="class_pirce" />
 		<result property="userId" column="user_id" />
 	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.CategoryVO" id="categoryMap">
+		<result property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
 
 	<resultMap type="com.iruri.ex.vo.GradeVO" id="gradeMap">
 		<result property="gradeId" column="grade_id" />
@@ -88,6 +93,12 @@
 		<result property="avgGrade" column="grade" />
 		<collection property="iuserVo" resultMap="iUserMap" />
 		<collection property="authVo" resultMap="authMap" />
+	</resultMap>
+	
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="monthTotalJoinMap">
+		<result property="totalMoney" column="totalMoney" />
+		<result property="month" column="month" />
 	</resultMap>
 	
 	<resultMap type="com.iruri.ex.vo.TableJoinVO"
@@ -107,6 +118,11 @@
 		<collection property="reportVo" resultMap="reportMap" />
 	</resultMap>
 
+	<resultMap type="com.iruri.ex.vo.TableJoinVO"
+		id="userExInfoMap">
+		<collection property="iclassVo" resultMap="classMap" />
+		<collection property="categoryVo" resultMap="categoryMap" />
+	</resultMap>
 
 	<!-- 신고들어온 게시글(신고알림) 리스트 -->
 	<!-- 1.페이징처리 안된 리스트 -->
@@ -124,7 +140,7 @@
 		where r.board_id = c.board_id order by report_id desc
 		]]>
 	</select>
-
+	
 	<!-- 2.페이징처리 리스트 -->
 	<select id="getReportListWithPaging"
 		resultMap="reportIuserAuthJoinMap">
@@ -145,16 +161,14 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 3.리스트 갯수 -->
 	<select id="countReportId" resultType="Integer">
 		<![CDATA[
 		select count(REPORT_ID) from report
 		]]>
 	</select>
-
-
-
+	
 	<!-- 일반/유료회원 리스트 -->
 	<select id="getNormalUserList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -171,7 +185,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 일반/유료회원 리스트 갯수 -->
 	<select id="countNormalMember" resultType="Integer">
 		<![CDATA[
@@ -183,9 +197,7 @@
 		    ) li
 		]]>
 	</select>
-
-
-
+	
 	<!-- 일반/유료회원 블랙리스트 -->
 	<select id="getNormalUserBlackList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -202,7 +214,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
+	
 	<!-- 일반/유료회원 블랙리스트 갯수 -->
 	<select id="countNormalBlackMember" resultType="Integer">
 		<![CDATA[
@@ -214,10 +226,8 @@
 		    ) li
 		]]>
 	</select>
-
-
-
-
+	
+	
 	<!-- 트레이너 회원 리스트 -->
 	<select id="getTrainerMemberList" resultMap="iuserAuthJoinMap">
 		<![CDATA[  
@@ -225,7 +235,8 @@
 		from (
 		select rownum rn, li.*
 		from (
-			select u.user_id, a.auth_content, u.user_nickname, u.user_email, (avg(g.grade_score)+u.user_id) as grade
+			select * from(
+			select u.user_id, u.user_nickname, u.user_email, a.auth_content, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
 			inner join authority a
 			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
@@ -233,51 +244,51 @@
 			on u.user_id = c.user_id
 			left outer join grade g
 			on c.class_id = g.class_id
-			group by u.user_id, a.auth_content, u.user_nickname, u.user_email
-			order by u.user_id desc
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email) tr
+		]]>
+			<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_nickname like '%' || #{keyword} || '%' or tr.user_email like '%' || #{keyword} ||'%'
+			]]>	
+			</if>
+			
+		<![CDATA[  	
+			order by tr.user_id desc
 		) li
 		where rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
-
-	<!-- 트레이너 회원 리스트 -->
-	<!-- <select id="getTrainerMemberList2" resultMap="iUserMap"> <![CDATA[ 
-		select * from ( select rownum rn, li.* from ( select u.user_id, u.user_email, 
-		u.user_pw, u.user_nickname, u.user_name, user_signdate, u.user_blacklist, 
-		u.user_blacklist_reason, u.user_phone, a.auth_id, a.auth_content, c.class_id, 
-		g.grade_score from iuser u inner join authority a on u.user_id = a.user_id 
-		and a.auth_id = 3 inner join iclass c on u.user_id = c.user_id inner join 
-		grade g on c.class_id = g.class_id order by u.user_id desc ) li where rownum 
-		<= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} ]]> </select> 
-		<select id="getTrainerMemberList3" resultMap="iUserMap"> <![CDATA[ select 
-		* from ( select rownum rn, li.* from ( select u.user_id, u.user_email, u.user_pw, 
-		u.user_nickname, u.user_name, user_signdate, u.user_blacklist, u.user_blacklist_reason, 
-		u.user_phone, a.auth_id, a.auth_content from iuser u inner join authority 
-		a on u.user_id = a.user_id and a.auth_id = 3 order by u.user_id desc ) li 
-		where rownum <= #{pageNum} * #{amount} ) where rn > (#{pageNum} - 1) * #{amount} 
-		]]> </select> -->
-
-
+	
 	<!-- 트레이너회원 리스트 갯수 -->
 	<select id="countTrainerMemberList" resultType="Integer">
 		<![CDATA[
 		select count(li.user_id)
 		from(
-			select u.user_id, u.user_email, u.user_pw, u.user_nickname, u.user_name,
-			    user_signdate, u.user_blacklist, u.user_blacklist_reason, u.user_phone,
-			    a.auth_id, a.auth_content
+			select * from(
+			select u.user_id, u.user_nickname, u.user_email, a.auth_content, (avg(g.grade_score)+u.user_id) as grade
 			from iuser u
 			inner join authority a
-			on u.user_id = a.user_id and a.auth_id = 3
-			order by u.user_id desc
+			on u.user_id = a.user_id and a.auth_id = 3 and u.user_blacklist = 0
+			left outer join iclass c
+			on u.user_id = c.user_id
+			left outer join grade g
+			on c.class_id = g.class_id
+			group by u.user_id, a.auth_content, u.user_nickname, u.user_email) tr
+		]]>
+			<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_nickname like '%' || #{keyword} || '%' or tr.user_email like '%' || #{keyword} ||'%'
+			]]>	
+			</if>
+			
+		<![CDATA[  	
+			order by tr.user_id desc
 		) li
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 회원 블랙리스트 -->
 	<select id="getTrainerBlackList" resultMap="iuserAuthJoinMap">
 		<![CDATA[
@@ -301,8 +312,7 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 회원 블랙리스트 갯수 -->
 	<select id="countTrainerBlackList" resultType="Integer">
 		<![CDATA[
@@ -321,8 +331,7 @@
 		) li
 		]]>
 	</select>
-
-
+	
 	<!-- 트레이너 등록 -->
 	<insert id="trainerRegistInsert"
 		parameterType="com.iruri.ex.vo.IUserVO">
@@ -337,7 +346,7 @@
 		default, default, default
 		)
 	</insert>
-
+	
 	<!-- 트레이너 등록 후 권한 변경 -->
 	<update id="trainerAuthUpdate">
 		UPDATE authority SET auth_id = '3', auth_content =
@@ -355,7 +364,7 @@
 			on u.user_id = a.user_id where a.user_id = #{userId}
 		]]>
 	</select>
-
+	
 	<!-- 일반회원정보 포인트리스트 보기 -->
 	<select id="getUserBasicInfoPoint" resultMap="pointMap">
 		<![CDATA[
@@ -388,20 +397,45 @@
 		from ipoint where user_id=#{user_id}
 		]]>
 	</select>
+	
+	<!-- 일반/유료회원 포인트 수정 -->
+	<insert id="insertPoint">
+	INSERT INTO ipoint VALUES ((select max(point_id) from ipoint)+1, sysdate, sysdate, #{pointState}, #{pointValue}, '관리자 이벤트 포인트', #{userId})
+	</insert>
+
+	<!-- 일반회원 보유포인트 수정 -->
+	<update id="updatePoint">
+	UPDATE iuser  SET user_point = #{userPoint} where user_id = #{userId}
+	</update>
 
 
 	<!-- 일반회원정보 운동정보 리스트 -->
-	<select id="getUserExInfoAll" resultMap="pointMap">
+	<select id="getUserExInfoList" resultMap="userExInfoMap">
 		<![CDATA[
 		select *
 		from (
 			select rownum rn, li.*
 			from (
-				from (
-					select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
-					from iclass, category, (select class_id from buy
-		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
-				where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+				select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+				from iclass, category, (select class_id, user_id from buy
+				            where user_id = #{userId} 
+				            and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+				where iclass.class_id = b.class_id and iclass.category_id = category.category_id
+		]]>
+				<choose>
+					<when test='categoryId eq 2'>
+					<![CDATA[
+						and category.category_id = 2
+					]]> 
+					</when>
+					<when test='categoryId eq 1'>
+					<![CDATA[
+						and category.category_id = 1
+					]]> 
+					</when>
+				</choose>
+		<![CDATA[
+				order by iclass.class_id desc
 				) li
 			where rownum <= #{pageNum} * #{amount}
 				)
@@ -411,14 +445,30 @@
 
 
 	<!-- 일반회원정보 운동정보 갯수 -->
-	<select id="countUserExInfoAll" resultType="Integer">
+	<select id="countUserExInfoList" resultType="Integer">
 		<![CDATA[
 		select count(li.class_id)
 		from (
-		select iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
-		from iclass, category, (select class_id from buy
-		            where user_id = #{userId} and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
-		where iclass.class_id = b.class_id and iclass.category_id = category.category_id order by iclass.class_id desc
+				select b.user_id, iclass.class_id, iclass.class_state, category.category_name, iclass.class_title, iclass.category_id
+				from iclass, category, (select class_id, user_id from buy
+				            where user_id = #{userId} 
+				            and buy_id = any (select buy_id from pay where pay_state = 'pay')) b
+				where iclass.class_id = b.class_id and iclass.category_id = category.category_id
+		]]>
+				<choose>
+					<when test='categoryId eq 2'>
+					<![CDATA[
+						and category.category_id = 2
+					]]> 
+					</when>
+					<when test='categoryId eq 3'>
+					<![CDATA[
+						and category.category_id = 3
+					]]> 
+					</when>
+				</choose>
+		<![CDATA[
+				order by iclass.class_id desc
 		) li
 		]]>
 	</select>
@@ -526,7 +576,265 @@
 	
 	
 	
+	 <!-- 수익관리 - 전체수익 매출리스트 -->
+	<select id="getTotalMoneyInOutList" resultMap="moneyJoinMap">
+		<![CDATA[
+		select *
+		from (
+			select rownum rn, li.*
+			from (
+				select a.*, sum(a.total) over(order by rowId) totalMoney
+				from (
+			]]>
+			
+			<!-- 전체내역 볼 때 -->	    
+			<if test='inquire == "all"'>	    
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire == "input"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input) as total
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire == "output"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_output) as total
+			]]>
+			</if>
+			
+			<![CDATA[
+				   from money m
+				    inner join pay p
+				    on m.pay_id = p.pay_id
+				    INNER join buy b
+				    on p.buy_id = b.buy_id
+				    inner join iclass c
+				    on b.class_id = c.class_id
+		    ]]> 
+		    <!-- 트레이너별 내역보기 -->
+		    <if test ='userId != 0'>
+			<![CDATA[		
+				and c.user_id = #{userId}	
+			]]>
+			</if>
+		    <![CDATA[
+				    inner join iuser u
+				    on m.user_id = u.user_id
+		    ]]>
+			<!-- 기간을 선택했을 때 -->	    
+			<if test='periodStartDate != "0" and !periodEndDate.equals("0")'>
+			<![CDATA[	
+				    where m.money_date between TO_DATE(#{periodStartDate}, 'YYYY-MM-DD') and TO_DATE(#{periodEndDate}, 'YYYY-MM-DD') 
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire == "input"'>
+			<![CDATA[	
+				    and m.money_input > 0
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire == "output"'>
+			<![CDATA[	
+				    and m.money_output > 0
+			]]>
+		    </if>
+				    
+			<![CDATA[	    
+				    ) a
+				    order by a.money_id desc
+				) li
+				]]> 
+			
+			
+			<![CDATA[
+			where rownum <= #{pageNum} * #{amount}
+				)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
 	
 	
+	<!-- 수익관리 - 전체수익 매출리스트 갯수 -->
+	<select id="countTotalMoneyInOutList" resultType="Integer">
+		<![CDATA[
+		select count(li.money_id)
+		from (
+				select a.*, sum(a.total) over(order by rowId) totalMoney
+				from (
+			]]>
+			
+			<!-- 전체내역 볼 때 -->	    
+			<if test='inquire == "all"'>	    
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input - m.money_output) as total
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire == "input"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_input) as total
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire == "output"'>
+			<![CDATA[	
+				    select m.*, u.user_nickname, b.buy_point, p.pay_state, c.class_id, c.class_title, (m.money_output) as total
+			]]>
+			</if>
+			
+			<![CDATA[
+				   from money m
+				    inner join pay p
+				    on m.pay_id = p.pay_id
+				    INNER join buy b
+				    on p.buy_id = b.buy_id
+				    inner join iclass c
+				    on b.class_id = c.class_id
+		    ]]> 
+		    <!-- 트레이너별 내역보기 -->
+		    <if test ='userId != 0'>
+			<![CDATA[		
+				and c.user_id = #{userId}	
+			]]>
+			</if>
+		    <![CDATA[
+				    inner join iuser u
+				    on m.user_id = u.user_id
+				    ]]> 
+			
+			<!-- 기간을 선택했을 때 -->	    
+			<if test='periodStartDate != "0" and !periodEndDate.equals("0")'>
+			<![CDATA[	
+				    where m.money_date between TO_DATE(#{periodStartDate}, 'YYYY-MM-DD') and TO_DATE(#{periodEndDate}, 'YYYY-MM-DD') 
+			]]>
+			</if>
+			
+			<!-- 입금내역만 볼 때 -->
+			<if test='inquire == "input"'>
+			<![CDATA[	
+				    and m.money_input > 0
+			]]>
+			</if>
+			
+			<!-- 출금내역만 볼 때 -->
+			<if test='inquire == "output"'>
+			<![CDATA[	
+				    and m.money_output > 0
+			]]>
+		    </if>
+				    
+			<![CDATA[	    
+				    ) a
+				    order by a.money_id desc
+				) li
+			]]> 
+	</select>
 
+	<!-- 트레이너별 수익관리 트레이너 검색 -->
+	<select id="getTrainerSearchList" resultMap="iuserAuthJoinMap">
+		<![CDATA[  
+		select tr.*
+			from (select u.*, a.auth_content
+			from iuser u, authority a
+			where u.user_id = a.user_id and a.auth_id = 3) tr
+		]]>
+		
+		<if test= 'keyword != null and !keyword.equalsIgnoreCase("iruriAdmin15978213")'>
+			<![CDATA[
+				where tr.user_name like '%' || #{keyword} || '%' or tr.user_nickname like '%' || #{keyword} || '%'
+			]]>	
+		</if>
+	</select>
+	
+	<!-- 오늘의 매출 -전체 -->
+	<select id="sumTodayMoneyAll" resultType="Integer">
+		<![CDATA[  
+		select sum(money_input - money_output)
+		from money
+		where money_date = sysdate
+		]]>
+	</select>
+	
+	<!-- 오늘의 매출 - 트레이너 -->
+	<select id="sumTodayMoneyTrainer" resultType="Integer">
+		<![CDATA[  
+		select sum(pa.tot - ca.tot) as total
+		from (
+		select nvl(sum(b.buy_point + m.money_input), 0) as tot
+		from money m
+		inner join pay p
+		on m.pay_id = p.pay_id and p.pay_state = 'pay'
+		inner join buy b
+		on b.buy_id = p.buy_id
+		inner join iclass c
+		on b.class_id = c.class_id and c.user_id = #{userId}
+		where m.money_date = sysdate
+		) pa, (
+		select nvl(sum(b.buy_point + m.money_output), 0) as tot
+		from money m
+		inner join pay p
+		on m.pay_id = p.pay_id and p.pay_state = 'cancle'
+		inner join buy b
+		on b.buy_id = p.buy_id
+		inner join iclass c
+		on b.class_id = c.class_id and c.user_id = #{userId}
+		where m.money_date = sysdate
+		) ca
+		]]>
+	</select>
+	
+	<!-- 월별 수익 -전체 -->
+	<select id="sumMonthMoneyAll" resultMap="monthTotalJoinMap">
+		<![CDATA[  
+		select to_char(m.money_date, 'mm') as month , nvl(sum(m.money_input- m.money_output),0) as totalMoney
+		from money m
+		group by to_char(m.money_date, 'mm')
+		]]>
+	</select>
+	
+	<!-- 월별 수익 -트레이너 -->
+	<select id="sumMonthMoneyTrainer" resultMap="monthTotalJoinMap">
+		<![CDATA[  
+		select (m_in.mon) as month, sum(nvl(m_in.intot,0) - nvl(m_out.outtot,0)) as totalMoney
+		from (
+		select to_char(m.money_date, 'mm') as mon, sum(b.buy_point + m.money_input) as intot
+		from iclass c
+		inner join buy b
+		on c.class_id = b.class_id
+		inner join pay p
+		on b.buy_id = p.buy_id and p.pay_state = 'pay'
+		inner join money m
+		on m.pay_id = p.pay_id
+		where c.user_id = #{userId}
+		group by to_char(m.money_date, 'mm')
+		) m_in
+		full outer join (
+		select to_char(m.money_date, 'mm') as mon, sum(b.buy_point + m.money_output) as outtot
+		from iclass c
+		inner join buy b
+		on c.class_id = b.class_id
+		inner join pay p
+		on b.buy_id = p.buy_id and p.pay_state = 'cancle'
+		inner join money m
+		on m.pay_id = p.pay_id
+		where c.user_id = #{userId}
+		group by to_char(m.money_date, 'mm')
+		) m_out
+		on m_in.mon = m_out.mon
+		group by m_in.mon
+		]]>
+	</select>
+	
+	
 </mapper>

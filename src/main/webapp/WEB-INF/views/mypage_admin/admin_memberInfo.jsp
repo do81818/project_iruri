@@ -36,18 +36,27 @@
 
 	<div class="wrap">
 		<div class="admin_memberInfo_title">
-			<a href="#" onclick="history.back()"><img
-				src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+		<c:set var="member" value="${member}" />
+		<c:choose>
+		<%-- console.log(${member})); --%>
+			<c:when test="${member eq 'member'}">
+				<a href="${CONTEXT_PATH_ADMIN }/member/list?pageNum=${page}"><img
+					src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+			</c:when>
+			<c:when test="${member eq 'black'}">
+				<a href="${CONTEXT_PATH_ADMIN }/member/blacklist?pageNum=${page}"><img
+					src="${RESOURCES_PATH}/src/img/icon/arrow_red_left.png"></a>
+			</c:when>
+		</c:choose>
 			<h3>회원정보</h3>
 		</div>
 
 		<div id="admin_managementMenu">
 			<ul>
-				<li><a
-					href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}">기본정보<br>
+				<li><a href="${CONTEXT_PATH_ADMIN }/member/info?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">기본정보<br>
 						<span class="under_line"></span></a></li>
 				<li><a
-					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}">운동정보<br>
+					href="${CONTEXT_PATH_ADMIN }/member/exerciseinfo?userId=${info.iuserVo.userId}&member=${member}&pageNum=${page}">운동정보<br>
 						<span></span></a></li>
 			</ul>
 		</div>
@@ -161,7 +170,7 @@
 		     },
 		     dataType: 'json',
 		     beforeSend: function(xhr) {
-           		xhr.setRequestHeader(header, token);
+           		xhr.setRequestHeader(header, token)
        		 },
        		 success : function(result) {
        		  	console.log("성공");
@@ -213,7 +222,7 @@
 			     },
 			     dataType: 'json',
 			     beforeSend: function(xhr) {
-	           		xhr.setRequestHeader(header, token);
+	           		xhr.setRequestHeader(header, token)
 	       		 },
 	       		 success : function(result) {
 	       		  	console.log("성공");
@@ -234,18 +243,20 @@
 		<!---------------------- 포인트 적립/사용 테이블 -------------------------->
 		
 		<div class="admin_memberInfo_point">
-			<div class="admin_memberInfo_pointTitle">
+			<div class="admin_memberInfo_pointTitle" id="location_list">
 				<h3>포인트</h3>
 				<p>
-					현재보유포인트<span>${point}</span>
+					현재보유포인트<span id="admin_memberInfo_userPoint">${point}</span>
 				</p>
-				<form>
-					<input type="radio" id="memberInfo_point_rd1" name="memberInfo_point_rds"> 
+				<form onkeydown="return event.key != 'Enter';">
+						<span id="memberInfo_point_rds">
+						<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save"> 
 						<label for="memberInfo_point_rd1">적립</label> 
-						<input type="radio"	id="memberInfo_point_rd2" name="memberInfo_point_rds"> 
+						<input type="radio"	id="memberInfo_point_rd2" name="pointState" value="use"> 
 						<label for="memberInfo_point_rd2">사용</label> 
-						<input type="number" maxlength="10">
-					<button>포인트등록</button>
+						<input type="number" maxlength="10" name="pointValue" onkeyup="if(window.event.keyCode==13) {inputEnter()}">
+						</span>
+					<button type="button" id="pointInsertButton">포인트등록</button>
 				</form>
 
 			</div>
@@ -269,6 +280,58 @@
 	    console.log( "ready!" );
         getlist(1);
     });
+	
+	function inputEnter(){
+		const pointState = $("input[name=pointState]:checked").val();
+		console.log("pointState: "+ pointState);
+		const point = $("input[name=pointValue]").val();
+		console.log("point: "+point);
+		
+		if(point == "" || point == null || point < 0 || pointState.length < 1 || pointState == null) {
+			$("input[name=pointValue]").val('');
+			alert("적립/차감할 포인트를 입력하세요.");
+		} else {
+			userInfoPointInsert(${info.iuserVo.userId}, pointState, point);
+		}
+	}
+	
+	document.getElementById("pointInsertButton").addEventListener("click", function() {
+		inputEnter();
+	}, false);
+	
+	function userInfoPointInsert(userId, pointState, point){
+
+		console.log("userId: " + userId + ", pointState: "+ pointState+"point: "+ point);
+		 const header = $('meta[name="_csrf_header"]').attr('th:content');
+         const token = $('meta[name="_csrf"]').attr('th:content');
+         
+         $.ajax({
+		     url: '${CONTEXT_PATH_ADMIN}/ajax/member/info/pointInsert',
+		     type: 'POST',
+		     data: {
+		         userId: ${info.iuserVo.userId},
+                 pointState : pointState,
+                 pointValue : point,
+		     },
+		     dataType: 'json',
+		     beforeSend: function(xhr) {
+           		xhr.setRequestHeader(header, token)
+       		 },
+       		 success : function(result) {
+       		  	console.log("포인트 등록 성공!");
+       		  	var point = result['point'];
+       		  	var htmls = '<input type="radio" id="memberInfo_point_rd1" name="pointState" value="save">'
+       		  			+ '<label for="memberInfo_point_rd1">적립</label>'
+       		  			+ '<input type="radio"	id="memberInfo_point_rd2" name="pointState" value="use">'
+	       		  		+ '<label for="memberInfo_point_rd2">사용</label>'
+	       		  		+ '<input type="number" maxlength="10" name="pointValue" onkeyup="if(window.event.keyCode==13) {inputEnter()}">';       		  	
+       		  	
+       		  	$("#admin_memberInfo_userPoint").html(point);
+       		  	$("#memberInfo_point_rds").html(htmls);
+       		 	getlist(1);
+            }
+		})
+	}
 	
 	function getlist(page) {
 	    $.ajax({
@@ -325,20 +388,20 @@
                              
                              /* ------------------ 페이징 부분 --------------------- */
                              if (pagination['prev']) {
-                                 htmls2 += '<a class="arrow prev" href="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
+                                 htmls2 += '<a class="arrow prev" href="#location_list" onclick="javascript:getlist('+ (pagination['startPage']-1) +')"></a>';
              				} 
 
              				// 번호를 표시하는 부분
              				for (var idx = pagination['startPage']; idx <= pagination['endPage']; idx++) {
              					if (page !== idx) {
-             					   htmls2 += '<a class="pageNumLink" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					   htmls2 += '<a class="pageNumLink" href="#location_list" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
              					} else {
-             					   htmls2 += '<a class="pageNumLink active" href="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
+             					   htmls2 += '<a class="pageNumLink active" href="#location_list" onclick="javascript:getlist('+ idx + ')">' + (idx) + "</a>";
              					}
              				}
 
              				if (pagination['next']) {
-                                htmls2 += '<a class="arrow next" href="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
+                                htmls2 += '<a class="arrow next" href="#location_list" onclick="javascript:getlist('+ (pagination['endPage']+1) +')"></a>';
             						
             				}			
              			}	// if(list.length < 1) else 끝

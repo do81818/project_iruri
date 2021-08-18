@@ -256,16 +256,22 @@
                                                 var htmls = "";
                                                 var htmls2 = "";
 
-                                                var aaa = result['imgList'][0].boardList;
+                                                var aaa = [];
+                                                imgList.map(item => item.boardList)
+                                                					.forEach(item => {
+                                                						aaa.push(item[0]);
+                                                					});
+                                                //var aaa = result['imgList'][0].boardList;
                                                 localStorage.setItem('boardList', JSON.stringify(aaa));
                                                 
                                                 if (imgList.length < 1) {
                                                     htmls += '<div class="c_list_not_img">';
                                                     htmls += '현재 등록된 인증사진이 없습니다.';
                                                     htmls += '</div>';
+                                                    console.log(imgList.length);
                                                 } else {
 
-                                                    $(imgList).each(function() {
+                                                 
 
 
                                                         htmls += '<div class="c_certify_total">';
@@ -278,6 +284,7 @@
 
                                                         htmls += '<div class="c_certify_img_list">';
 														
+                                                        $(imgList).each(function() {
                                                         $(this.boardList).each(function() {
                      										
                                                             htmls += '<div class="c_certify_img" onclick="certify_details_modal('+ this.boardId +')">';
@@ -286,10 +293,9 @@
 
                                                         });
 
-                                                        htmls += ' </div>';
-                                                        
-
                                                     });
+                                                    
+                                                    htmls += ' </div>';
                                                     
                                                     /* ------------------ 페이징 부분 --------------------- */
 
@@ -389,28 +395,23 @@ $('.c_parti_modal_submit').click(function(){
 						var htmls2 = "";
 
 						if (replyList.length < 1) {
-							htmls += '<div class="c_list_not">';
-							htmls += '현재 등록된 댓글이 없습니다.';
-							htmls += '</div>';
+							 htmls += '<div class="c_list_not">';
+                             htmls += '현재 등록된 댓글이 없습니다.';
+                             htmls += '</div>';
 						} else {
-							
-							$(replyList).each(function() {
-								
-							
 								htmls += '<div class="reply_count">';
-								const count = $(this.boardList).length;
+								const count = pagination.total;
 								htmls += '총'
 										+ count 
 										+ '개';
 								htmls += '</div>';
 								
 								htmls += '<table class="reply_table">';
-								$(this.boardList).each(function() {
-												//댓글 리스트 
-												
-
-												
-												
+								
+								
+								$(replyList).each(function() {
+									$(this.boardList).each(function() {
+												//댓글 리스트
 												htmls += '<tr>';
 												
 												htmls += '<td class="reply_nickname">';
@@ -427,12 +428,9 @@ $('.c_parti_modal_submit').click(function(){
 												htmls += '</p>';
 												htmls += '</td>';
 												htmls += '</tr>';
-								});
-												
-								htmls += ' </table>';
-								
 											});
-							
+										});
+								htmls += ' </table>';
 						
 							
 					         /* ------------------ 페이징 부분 --------------------- */
@@ -455,13 +453,13 @@ $('.c_parti_modal_submit').click(function(){
 	        				}			
 	         			}	// if(list.length < 1) else 끝
 	                     
-	                        $(".c_before_reply").html(htmls);
-	         				$(".page_nation").html(htmls2);
-	         				
-	                     }
-	                     
-	                 });                             
-	            }
+                        $(".c_before_reply").html(htmls);
+         				$(".page_nation").html(htmls2);
+         				
+                    }
+                    
+                });                             
+           }
 
 	            $(document).ready(function() {
 	                getlist(1);

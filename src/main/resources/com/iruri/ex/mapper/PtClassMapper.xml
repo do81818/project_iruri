@@ -4,6 +4,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iruri.ex.mapper.PtClassMapper">
 
+	<resultMap type="com.iruri.ex.vo.BoardVO" id="boardMap">
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardContent" column="BOARD_CONTENT"/>
+		<result property="boardFile" column="BOARD_FILE"/>
+		<result property="boardDate" column="BOARD_DATE"/>
+		<result property="boardState" column="BOARD_STATE"/>
+		<result property="boardHit" column="BOARD_HIT"/>
+		<result property="boardLike" column="BOARD_LIKE"/>
+		<result property="boardGroupId" column="BOARD_GROUPID"/>
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="rnum" column="rnum"/>	
+		<result property="classId" column="CLASS_ID"/>
+		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />	
+	</resultMap>
+
 	<!-- PT 클래스 생성 -->
 	<insert id="insertPtClass">
 		<![CDATA[
@@ -571,5 +587,107 @@ FROM
 WHERE RNUM > (#{cri.pageNum}-1) * #{cri.amount}
 ]]>
    </select>
+   
+   <select id="joinCheck" resultType="int">
+<![CDATA[
+SELECT count(*)
+FROM iclass
+WHERE iclass.class_id = #{classId} and iclass.class_state = 'show' and class_enddate >= sysdate
+]]>
+   </select>
+   
+      <select id="joinCheckNum" resultType="int">
+<![CDATA[
+SELECT COUNT(*)
+FROM buy, pay
+WHERE buy.buy_id = pay.buy_id and class_id = #{classId} and user_id = #{userId}
+]]>
+   </select>
+   
+   <select id="ptSelectOne" resultMap="com.iruri.ex.mapper.ChallengeMapper.iClassMap">
+<![CDATA[
+SELECT ic.*, iu.user_nickname, exercise.exercise_kind, exercise.exercise_date
+FROM iclass ic, iuser iu,
+(
+    SELECt exkind.*, exdate.exercise_date
+    FROM
+    (
+        SELECT class_id, LISTAGG(exercise_kind, ',') WITHIN GROUP(ORDER BY exercise_kind DESC) AS exercise_kind
+        FROM exercise_kind
+        GROUP BY class_id
+    ) exkind,	
+    (
+        SELECT class_id, LISTAGG(exercise_date, ',') WITHIN GROUP(ORDER BY exercise_date DESC) AS exercise_date
+        FROM exercise_date
+        GROUP BY class_id
+    ) exdate
+    WHERE exkind.class_id = exdate.class_id
+) exercise
+WHERE ic.class_id = exercise.class_id and ic.user_id = iu.user_id and ic.class_id = #{classId}
+]]>
+   </select>
+   
+   <select id="ptSelectCount" resultType="int">
+<![CDATA[
+SELECT count(*)
+FROM iclass, buy, pay
+WHERE buy.buy_id = pay.buy_id and buy.class_id = iclass.class_id and iclass.class_id = #{classId}
+]]>
+   </select>
+   
+   <select id="ptClassCertifyCount" resultType="int">
+<![CDATA[
+SELECT count(*) 
+FROM board b, iclass i
+WHERE b.category_id = 5 and b.board_groupid = i.class_id and i.class_id = #{classId}
+]]>
+   </select>
+   
+   <select id="ptClassCertifyList" resultMap="boardMap">
+<![CDATA[
+SELECT *
+FROM
+(
+	SELECT ROWNUM rnum, c.*
+	FROM
+	(
+		SELECT B.*, u.user_nickname 
+		FROM board B, iclass A, iuser u
+		WHERE B.category_id=5 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+		ORDER BY B.board_date desc
+	) C
+	WHERE rownum <= #{cri.pageNum} * #{cri.amount} 
+)	
+WHERE rnum > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+   </select>
+   
+   <select id="ptClassReplyCount" resultType="int">
+<![CDATA[
+SELECT count(*) 
+FROM board b, iclass i
+WHERE b.category_id=6 and b.board_groupid=i.class_id and i.class_id=#{classId}
+and board_state='show'
+]]>
+   </select>
+   
+   <select id="ptClassReplyList" resultMap="boardMap">
+<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM rnum, c.*
+    FROM
+    (
+       SELECT B.*, u.user_nickname 
+       FROM board B, iclass A, iuser u
+	   where B.category_id=6 and B.board_groupid=A.class_id and A.class_id=#{classId} and u.user_id=B.user_id
+	   and B.board_state='show' order by B.board_date desc
+    ) C
+    WHERE rownum <= #{cri.pageNum} * #{cri.amount} 
+)	
+WHERE rnum > (#{cri.pageNum}-1) * #{cri.amount}
+]]>
+	</select>
    
 </mapper>

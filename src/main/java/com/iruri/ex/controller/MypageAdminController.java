@@ -2,12 +2,11 @@ package com.iruri.ex.controller;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.Locale;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
 import com.iruri.ex.service.AdminService;
 import com.iruri.ex.vo.IUserVO;
+import com.iruri.ex.vo.PointVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -65,9 +65,10 @@ public class MypageAdminController {
 
 	// showMemberList_Admin() ModelAndView 일반유저 목록 보기
 	@GetMapping("member/list")
-	public ModelAndView showMemberList_Admin(ModelAndView mav) {
+	public ModelAndView showMemberList_Admin(ModelAndView mav, int pageNum) {
 		log.info("showMemberList_Admin()...");
 		mav.setViewName("mypage_admin/mypage_admin_memberlist");
+		mav.addObject("page", pageNum);
 		return mav;
 	}
 
@@ -86,11 +87,11 @@ public class MypageAdminController {
 
 	// showMemberBlackList_Admin() ModelAndView 관리자 블랙리스트유저 목록 보기
 	@GetMapping("member/blacklist")
-	public ModelAndView showMemberBlackList_Admin(ModelAndView mav) {
+	public ModelAndView showMemberBlackList_Admin(ModelAndView mav, int pageNum) {
 		log.info("showMemberBlackList_Admin()...");
 		mav.setViewName("mypage_admin/mypage_admin_memberBlackList");
+		mav.addObject("page", pageNum);
 		return mav;
-
 	}
 
 	@ResponseBody
@@ -116,12 +117,12 @@ public class MypageAdminController {
 
 	@ResponseBody
 	@GetMapping("ajax/trainer/list")
-	public ResponseEntity<HashMap<String, Object>> restTrainerList(@RequestParam("pageNum") int pageNum) {
+	public ResponseEntity<HashMap<String, Object>> restTrainerList(@RequestParam("keyword") String keyword, @RequestParam("pageNum") int pageNum) {
 		HashMap<String, Object> result = new HashMap<>();
 		Criteria cri = new Criteria(pageNum, 10);
-		int total = adminService.countTrainerMemberList();
+		int total = adminService.countTrainerMemberList(keyword);
 		result.put("pageMaker", new PageVO(cri, total));
-		result.put("list", adminService.getTrainerMemberList(cri));
+		result.put("list", adminService.getTrainerMemberList(keyword,cri));
 		log.info(result);
 		return ResponseEntity.ok(result);
 	}
@@ -182,20 +183,24 @@ public class MypageAdminController {
 	
 	// showMemberDetail_Admin() ModelAndView 관리자 유저기본정보 상세보기
 	@GetMapping("member/info")
-	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId) {
+	public ModelAndView showMemberDetail_Admin(ModelAndView mav, @RequestParam("userId") int userId, @RequestParam("member") String member, int pageNum) {
+	    log.info(member);
 		log.info("showMemberDetail_Admin()...");
 		mav.setViewName("mypage_admin/admin_memberInfo");
 		mav.addObject("info", adminService.getUserBasicInfo(userId));
 		int totalPoint = adminService.getUserBasicInfoPointTotal(userId);
 		DecimalFormat formatter = new DecimalFormat("###,###");
-		mav.addObject("point",formatter.format(totalPoint));
+		mav.addObject("member", member);
+		mav.addObject("point", formatter.format(totalPoint));
+		mav.addObject("page", pageNum);
 		log.info(mav);
 		return mav;
 	}
-
+	
+	
 	//  유저기본정보 상세보기 _ 포인트리스트
 	@ResponseBody
-	@GetMapping("ajax/member/info")
+	@GetMapping({"ajax/member/info","ajax/member/blacklist/info"})
 	public ResponseEntity<HashMap<String, Object>> restMemberDetail(@RequestParam("userId") int userId, @RequestParam("pageNum") int pageNum) {
 	    log.info(userId);
 		HashMap<String, Object> result = new HashMap<>();
@@ -210,10 +215,32 @@ public class MypageAdminController {
 	
 	// showMemberDetailExercise_Admin() ModelAndView 관리자 유저운동정보 상세보기
 	@GetMapping("member/exerciseinfo")
-	public String showMemberDetailExercise_Admin(Locale locale, Model model) {
-
-		return "mypage_admin/admin_memberExerciseInfo";
+	public ModelAndView showMemberExerciseList_Admin(ModelAndView mav, @RequestParam("userId") int userId, @RequestParam("member") String member, @RequestParam("pageNum") int pageNum) {
+	    
+	        log.info("showMemberDetailExercise_Admin()...");
+	        mav.setViewName("mypage_admin/admin_memberExerciseInfo");
+	        mav.addObject("userId", userId);
+	        mav.addObject("member", member);
+	        mav.addObject("page", pageNum);
+	        log.info(mav);
+	        return mav;
+	    
 	}
+	
+	// 유저운동정보 리스트
+    @ResponseBody
+    @GetMapping("ajax/member/exerciseinfo")
+    public ResponseEntity<HashMap<String, Object>> restShowMemberExerciseList(@RequestParam("userId") int userId, @RequestParam("categoryId") int categoryId, @RequestParam("pageNum") int pageNum) {
+        log.info(userId);
+        HashMap<String, Object> result = new HashMap<>();
+        Criteria cri = new Criteria(pageNum, 10);
+        int total = adminService.countUserExInfoList(userId, categoryId);
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("exList", adminService.getUserExInfoList(userId, categoryId, cri));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
 	
 	
 	// showProfileTrainer_Admin() ModelAndView 트레이너 프로필 보기
@@ -240,15 +267,18 @@ public class MypageAdminController {
         Criteria cri = new Criteria(pageNum, 10);
         int total = adminService.countTrainerMoneyList(userId, month);
         result.put("pageMaker", new PageVO(cri, total));
+        // 트레이너 수익 리스트
         result.put("list", adminService.getTrainerMoneyList(userId, month, cri));
+        // 리스트-월별
         result.put("month", month);
         log.info(month);
+        // 합계금액
         result.put("monthTotal", adminService.trainerMoneyMonthTotal(userId, month));
         log.info(adminService.trainerMoneyMonthTotal(userId, month));
         log.info(result);
         return ResponseEntity.ok(result);
     }
-	
+    
 	
     // restUpdateBlacklist()  관리자 블랙리스트 수정
     @ResponseBody
@@ -304,13 +334,131 @@ public class MypageAdminController {
     
 	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
 	@GetMapping("paylist")
-	public String showPayList_Admin(Locale locale, Model model) {
-
-		return "mypage_admin/admin_managementMoney";
+	public ModelAndView showPayList_Admin(ModelAndView mav) {
+	    log.info("showPayList_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney");
+	    // 오늘의 매출추가
+	    // mav.addObject("todaySales",    );
+	    return mav;
 	}
-
 	
-	// insertPoint_Admin() ModelAndView 관리자 포인트 등록
+	// showPayList_Admin() ModelAndView 관리자 수익 목록 보기
+	@GetMapping("paylist/all")
+	public ModelAndView showPayList_All_Admin(ModelAndView mav) {
+	    log.info("showPayList_All_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney_all");
+	    int totalMoney = adminService.sumTodayMoneyAll();
+	    log.info("totalMoney:" + totalMoney);
+	    mav.addObject("totalMoney", totalMoney);
+	    log.info("mav:" + mav);
+	    
+	    return mav;
+	}
+	
+	// 전체수익 그래프
+    @ResponseBody
+    @GetMapping("ajax/paylist/all/graph")
+    public ResponseEntity<HashMap<String, Object>> showPayList_All_Graph() {
+    	HashMap<String, Object> result = new HashMap<>();
+        log.info("showPayList_All_Graph()..");
+        result.put("monthMoney", adminService.sumMonthMoneyAll());
+	    log.info(adminService.sumMonthMoneyAll()); 
+    	return ResponseEntity.ok(result);
+    }
+    
+    
+	@GetMapping("paylist/trainer")
+	public ModelAndView showPayList_trainer_Admin(ModelAndView mav) {
+		
+	    log.info("showPayList_trainer_Admin()..");
+	    mav.setViewName("mypage_admin/admin_managementMoney_trainer");
+	    // 오늘의 매출추가
+	    // mav.addObject("todaySales",    );
+	    return mav;
+	}
+	
+		
+	// 관리자 수익 목록 보기 
+    @ResponseBody
+    @GetMapping("ajax/paylist")
+    public ResponseEntity<HashMap<String, Object>> restShowPayList_Admin(@Param("userId") int userId, @Param("inquire") String inquire, @Param("periodStartDate") String periodStartDate, @Param("periodEndDate") String periodEndDate, 
+            @Param("pageNum") int pageNum) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("restShowPayList_Admin()..");
+        Criteria cri = new Criteria(pageNum, 10);
+        
+        int total = 0;
+        
+        if(periodStartDate.equals("30")) {
+        	total = 30; 
+        	periodStartDate = "0";
+        	periodEndDate = "0";
+        } else {
+        	total = adminService.countTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate);
+        }
+        result.put("pageMaker", new PageVO(cri, total));
+        result.put("list", adminService.getTotalMoneyInOutList(userId, inquire, periodStartDate, periodEndDate, cri));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+	
+	// 수익관리 - 트레이너 검색 
+    @ResponseBody
+    @GetMapping("ajax/trainerSearch")
+    public ResponseEntity<HashMap<String, Object>> getTrainerSearchList(@Param("keyword") String keyword) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("getTrainerSearchList()..");
+        result.put("list", adminService.getTrainerSearchList(keyword));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+    
+    // 수익관리 - 트레이너 수익 오늘의매출/월별매출 
+    @ResponseBody
+    @GetMapping("ajax/trainer/monthAndDay")
+    public ResponseEntity<HashMap<String, Object>> getTrainerMonthAndDay(@Param("userId") int userId) {
+        
+        HashMap<String, Object> result = new HashMap<>();
+        log.info("getTrainerMonthAndDay()..");
+        result.put("info", adminService.getUserBasicInfo(userId));
+        result.put("todayMoney", adminService.sumTodayMoneyTrainer(userId));
+        result.put("monthMoney", adminService.sumMonthMoneyTrainer(userId));
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+    // insertPoint_Admin() ModelAndView 관리자 포인트 등록
+    @ResponseBody
+    @PostMapping("ajax/member/info/pointInsert")
+    public ResponseEntity<HashMap<String, Object>> insertPoint_Admin(@Param("userId") int userId, @Param("pointState") String pointState, @Param("pointValue") int pointValue) {
+    	
+    	HashMap<String, Object> result = new HashMap<>();
+        log.info("insertPoint_Admin()..");
+        
+        // 포인트 등록/차감
+        PointVO vo = new PointVO();
+        vo.setPointState(pointState);
+        vo.setPointValue(pointValue);
+        vo.setUserId(userId);
+        adminService.insertPoint(vo);
+        
+        // 유저 현재 포인트 확인
+        int userPoint = adminService.getUserBasicInfoPointTotal(userId);
+        
+        // 유저 현재 포인트 업데이트
+        adminService.updatePoint(userId, userPoint);
+        
+        result.put("info", adminService.getUserBasicInfo(userId));
+        result.put("point", userPoint);
+        log.info(result);
+        return ResponseEntity.ok(result);
+    }
+	
+	
 	
 	// deleteTrainer_Admin() ResponseEntity 관리자 트레이너 탈퇴 전환
 	// showPayDetail_Admin() ModelAndView 관리자 수익 상세 보기
