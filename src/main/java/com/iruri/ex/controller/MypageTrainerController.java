@@ -118,7 +118,11 @@ public class MypageTrainerController {
         log.info("리스트: " + list);
 
         result.put("pageMaker", new PageVO(cri, total));
+        
+        List<IClassVO> classList = iClassService.classEndList(vo.getUserId());
+        result.put("jebal", classList);
 
+        
         return ResponseEntity.ok(result);
     }
 

@@ -124,7 +124,7 @@
 					</div>
 
 					<div id="challenge">
-						운영중인 챌린지
+						운영중인 클래스
 						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
