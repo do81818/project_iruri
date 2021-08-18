@@ -33,6 +33,7 @@ import com.iruri.ex.vo.ExerciseKindVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.IUserVO;
 import com.iruri.ex.vo.PortProfile;
+import com.iruri.ex.vo.PortVO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -239,61 +240,86 @@ public class PtClassController {
     
     // pt 구매
     @PostMapping("iruri/ptClassBuy")
-    public void ptClassBuy(@RequestParam("imp_uid") String imp_uid, @RequestParam("merchant_uid") String merchant_uid) {
-        log.info(imp_uid);
-        log.info(merchant_uid);
+    public void ptClassBuy(@RequestParam("imp_uid") String imp_uid, @RequestParam("merchant_uid") String merchant_uid, @RequestParam("buyId")int buyId) {
+        log.info("imp_uid" + imp_uid); // 결제 번호
+        log.info("merchant_uid" + merchant_uid); // 주문번호 
         
-        PortProfile token = payService.getAuthToken();
-        // ResponseEntity<String> data = payService.getPaymentData(token, imp_uid);
+        PortProfile token = payService.getAuthToken(); // 액세스 토큰 발급
+        PortVO data = payService.getPaymentData(token, imp_uid); // 아임포트 서버에서 결제 정보 조회
         
-        // log.info(data);
+        int amount = data.getResponse().getAmount();
+        int realPay = payService.getRealPay(buyId);
+        if(realPay == amount) {
+//            // 결제 검증하기 (결제 된 금액과 == 결제되어야 하는 금액)
+//            // 일치시 DB에 결제 정보 저장 (wait 에서 pay 로 업데이트)
+
+            payService.updatePay(buyId);
+            log.info("결제 성공");
         
+        } else {
+//            // 불일치시 결제 실패 (wait 에서 cancle 로)
+            payService.updateCancle(buyId);
+            log.info("결제 실패");
+        }
     }
     
-//    인증글 작성
-//    @PostMapping(value = "/ptClassUpload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public void ptClassUpload(MultipartFile uploadFile, BoardVO boardVO, @CurrentUser IUserVO iUservo) {
-//        
-//            String uploadFolder = "C:\\upload";
-//
-//            log.info("upload File Name: " + uploadFile.getOriginalFilename());
-//            log.info("upload File Size: " +uploadFile.getSize());            
-//
-//            String uploadFileName = uploadFile.getOriginalFilename();
-//
-//            // IE has file path
-//            uploadFileName = uploadFileName
-//                    .substring(uploadFileName.lastIndexOf("\\") + 1);
-//            log.info("only file name: " + uploadFileName);
-//            
-//            // 이름 중복방지 난수
-//            UUID uuid = UUID.randomUUID();
-//            uploadFileName = uuid.toString() + "_" + uploadFileName;
-//
-//            boardVO.setBoardFile(uploadFileName);
-//            boardVO.setCategoryId(5);
-//            boardVO.setIUserVO(iUservo);
-//            
-//            try {
-//                File saveFile = new File(uploadFolder, uploadFileName);
-//                uploadFile.transferTo(saveFile);
-//                
-//                if(imageController.checkImageType(saveFile)) {
-//                    FileOutputStream thumbnail = new FileOutputStream(
-//                            new File(uploadFolder, "s_" + uploadFileName));
-//                    
-//                    Thumbnailator.createThumbnail(
-//                            uploadFile.getInputStream(), thumbnail, 270, 270);
-//                    
-//                    thumbnail.close();
-//                    
-//                    // challengeService.insertChallengeCertify(boardVO);
-//                    ptClassService.insertChallengeCertify(boardVO);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } 
-//    }
+    @GetMapping("iruri/getBuyId")
+    public int getBuyId(@RequestParam("userId") int userId, @RequestParam("classId") int classId, @RequestParam("buyRealPay") int buyRealPay) {
+        
+        return payService.getBuyId(userId, classId, buyRealPay);
+    }
+    
+    // 인증글 작성
+    @PostMapping(value = "iruri/ptClassUpload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void ptClassUpload(MultipartFile uploadFile, BoardVO boardVO, @CurrentUser IUserVO iUservo) {
+        
+            String uploadFolder = "C:\\upload";
+
+            log.info("upload File Name: " + uploadFile.getOriginalFilename());
+            log.info("upload File Size: " +uploadFile.getSize());            
+
+            String uploadFileName = uploadFile.getOriginalFilename();
+
+            // IE has file path
+            uploadFileName = uploadFileName
+                    .substring(uploadFileName.lastIndexOf("\\") + 1);
+            log.info("only file name: " + uploadFileName);
+            
+            // 이름 중복방지 난수
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
+
+            boardVO.setBoardFile(uploadFileName);
+            boardVO.setCategoryId(5);
+            boardVO.setIUserVO(iUservo);
+            
+            try {
+                File saveFile = new File(uploadFolder, uploadFileName);
+                uploadFile.transferTo(saveFile);
+                
+                if(imageController.checkImageType(saveFile)) {
+                    FileOutputStream thumbnail = new FileOutputStream(
+                            new File(uploadFolder, "s_" + uploadFileName));
+                    
+                    Thumbnailator.createThumbnail(
+                            uploadFile.getInputStream(), thumbnail, 270, 270);
+                    
+                    thumbnail.close();
+                    
+                    // 인증글 DB 등록
+                    ptClassService.insertptClassCertify(boardVO);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
+    }
+    
+    // 인증글 보기
+    @GetMapping("/iruri/getCertifySelectOne")
+    public BoardVO getCertifySelectOne(@RequestParam("boardId") int boardId) {
+        
+        return ptClassService.getCertifySelectOne(boardId);
+    }
     
     @GetMapping("/iruri/ptClassMakeForm")
     public ModelAndView pt_make_form(ModelAndView mav) {
@@ -372,7 +398,9 @@ public class PtClassController {
 
     }
     
-    
-    
-    
+    @GetMapping("/iruri/insertReply")
+    public void insertReply(@RequestParam("boardGroupId") int boardGroupId, @RequestParam("boardContent") String boardContent, @RequestParam("userId") int userId) {
+        
+        ptClassService.insertReply(boardGroupId, boardContent, userId);
+    }
 }

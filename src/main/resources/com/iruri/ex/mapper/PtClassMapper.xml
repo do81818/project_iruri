@@ -689,5 +689,148 @@ FROM
 WHERE rnum > (#{cri.pageNum}-1) * #{cri.amount}
 ]]>
 	</select>
+	
+	<insert id="insertptClassCertify">
+<![CDATA[
+INSERT INTO BOARD
+(
+	board_id, 
+	board_title, 
+	board_content, 
+	board_file, 
+	board_date, 
+	board_state,
+	board_hit, 
+	board_like, 
+	board_groupId, 
+	category_id, 
+	user_id
+)
+			
+VALUES
+(
+	(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
+	#{boardTitle},
+	#{boardContent},
+	#{boardFile},
+	sysdate, 
+	'show',
+	0,
+	0,
+	#{boardGroupId},
+	5,
+	#{iUserVO.userId}
+)
+]]>
+	</insert>
+	
+	<select id="getBuyId" resultType="int">
+<![CDATA[
+SELECT DISTINCT(SELECT NVL(MAX(buy_id), MAX(buy_id)) FROM buy) buy_id
+FROM buy
+]]>
+	</select>
+	
+	<insert id="insertQuery">
+<![CDATA[
+INSERT ALL
+INTO buy
+(
+	buy_id,
+	buy_realpay,
+	user_id,
+	pay_id,
+	class_id
+) 
+VALUES
+(
+	(SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy),
+	#{buyRealPay},
+	#{userId},
+	(SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM pay),
+	#{classId} 
+)
+
+INTO pay
+(
+	pay_id,
+	pay_state,
+	pay_way,
+	buy_id
+) 
+VALUES
+(
+	(SELECT NVL(MAX(pay_id), MAX(pay_id)) + 1 FROM pay),
+	'wait',
+	'카드',
+	(SELECT NVL(MAX(buy_id), MAX(buy_id)) + 1 FROM buy)
+)			
+SELECT * FROM DUAL
+]]>
+	</insert>
+	
+	<select id="getRealPay" resultType="int">
+<![CDATA[
+SELECT buy_realpay
+FROM buy
+WHERE buy_id = #{buyId}
+]]>
+	</select>
+	
+	<update id="updatePay">
+<![CDATA[
+UPDATE pay
+SET pay_state = 'pay'
+WHERE buy_id = #{buyId}
+]]>
+	</update>
+	
+	<update id="updateCancle">
+<![CDATA[
+UPDATE pay
+SET pay_state = 'cancle'
+WHERE buy_id = #{buyId}
+]]>
+	</update>
+	
+	<select id="getCertifySelectOne" resultMap="boardMap">
+<![CDATA[
+SELECT *
+FROM board, iuser
+WHERE board.user_id = iuser.user_id and board_id = #{boardId}
+]]>
+	</select>
+	
+	<insert id="insertReply">
+<![CDATA[
+INSERT INTO board 
+(
+	board_id, 
+	board_title, 
+	BOARD_CONTENT, 
+	board_date,
+	board_state, 
+	board_hit, 
+	board_like, 
+	board_groupid, 
+	category_id, 
+	user_id
+)
+
+VALUES
+(
+	(SELECT NVL(MAX(board_id), MAX(board_id)) + 1 FROM board),
+	'챌린지댓글',
+	#{boardContent},
+	sysdate,
+	'show',
+	0,
+	0,
+	#{boardGroupId},
+	6,
+	#{userId}
+)
+]]>
+	</insert>
    
 </mapper>
