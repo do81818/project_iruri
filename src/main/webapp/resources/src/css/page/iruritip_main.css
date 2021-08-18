@@ -11,7 +11,7 @@
 	float: left;
 	padding-left: 110px;
 	font-family: 'Cafe24Ssurround';
-	color: var(- -iruri-blue-color);
+	color: var(--iruri-blue-color);
 	margin-top: 26px;
 }
 
@@ -25,12 +25,16 @@
 .tip_middle {
 	display: flex;
 	line-height: 26px;
+	font-family: 'Cafe24SsurroundAir';
+	font-weight: bold;
 }
 
 .tip_middle .tip_box_left {
 	flex: 45%;
 	margin: 60px;
 	padding-left: 90px;
+	
+	
 }
 
 .tip_middle .tip_box_right {
@@ -40,6 +44,7 @@
 .tip_box_left .tipbox_title {
 	font-size: 19px;
 	padding-bottom: 5px;
+	    color: var(--iruri-gray-color);
 }
 
 .tip_box_left .tipbox_date {
@@ -75,8 +80,8 @@ table, tr, td {
 
 .reply_table td:nth-of-type(1), .reply_table td:nth-of-type(2) {
 	padding: 23px 35px;
-	border-top: 1px solid var(- -iruri-light-gray-color);
-	border-bottom: 1px solid var(- -iruri-light-gray-color);
+	border-top: 1px solid var(--iruri-light-gray-color);
+	border-bottom: 1px solid var(--iruri-light-gray-color);
 }
 .tip_list_image{
 	width: 145px; 

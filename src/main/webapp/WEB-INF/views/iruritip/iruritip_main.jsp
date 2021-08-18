@@ -40,11 +40,11 @@
       <!-- 이루리팁 박스 -->
       <div class="tip_middle">
           <div class="tip_box_left">
-              <div class="tipbox_title">하루 1000 칼로리 식단입니다!</div>
-              <div class="tip_list_date">2021.07.01
-              <span class="tip_list_hit">조회수 342569회</span></div>
-              <div class="tipbox_content"><br>다이어트 하시느라 힘드신 분들 많으시죠?<br>다이어트식단에는 생각보다 많은 종류가 있습니다!
-              <br>사람의 하루 권장 칼로리는 몸무게와 키에 따라 다른데요</div>
+              <div class="tipbox_title"><a href="/ex/iruritip/boardlist"> 하루 1000 칼로리 식단입니다!</a></div>
+              <div class="tip_list_date"><a href="/ex/iruritip/boardlist">2021.07.01
+              <span class="tip_list_hit">조회수 342569회</span></a></div>
+              <div class="tipbox_content"><a href="/ex/iruritip/boardlist"><br>다이어트 하시느라 힘드신 분들 많으시죠?<br>다이어트식단에는 생각보다 많은 종류가 있습니다!
+              <br>사람의 하루 권장 칼로리는 몸무게와 키에 따라 다른데요</a></div>
           </div>
           <div class="tip_box_right">
             <div class="tipbox_image">
@@ -154,7 +154,7 @@
         <a href="#">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
-        <a href="#">5</a>
+       
         <a class="arrow next" href="#"></a>
       </div>
     

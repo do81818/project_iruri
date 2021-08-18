@@ -695,40 +695,7 @@ public class MypageUserController {
 		        return "redirect:/mypage/classlist";
 		        
 		    }
-			
-			
-			
-			// 이루리 팁 부분
-			  
-			 
-			   @GetMapping("/iruritip")
-			   public String iruritip_main(Principal principal,Model model) {
-
-			        
-			       return "/iruritip/iruritip_main";
-			       
-			   }
-			   
-			   // 마이페이지 포인트 리스트
-			   @GetMapping("/iruritip/freeboard")
-			   public String iruritip_freeboard(Principal principal,Model model) {
-
-			        
-			       return "/iruritip/iruritip_freeboard";
-			       
-			   }
-			   
-			   
-			   // 마이페이지 포인트 리스트
-			   @GetMapping("/iruritip/boardwrite")
-			   public String iruritip_boardwrite(Principal principal,Model model) {
-
-			        
-			       return "/iruritip/iruritip_boardwrite";
-			       
-			   }
-			   
-			   
+		   
 				// 신청한 클래스 취소
 				@GetMapping("/iruritip/submit")
 			    public String iruritip_submit(Principal principal,Model model) {
