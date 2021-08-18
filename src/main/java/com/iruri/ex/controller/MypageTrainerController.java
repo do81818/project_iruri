@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iruri.ex.page.Criteria;
 import com.iruri.ex.page.PageVO;
+import com.iruri.ex.page.mypageTainerPageVO;
 import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
@@ -132,7 +133,7 @@ public class MypageTrainerController {
         int userId = vo.getUserId();
         
         //트레이너의 운영중인 클래스
-        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        int countMypageTrainerClass = mypageTrainerService.countMypageTrainerClass(userId);
         model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
         
         // 트레이너 총수익
@@ -142,11 +143,60 @@ public class MypageTrainerController {
         model.addAttribute("trainerProfitMan", trainerProfitMan);
         
         // 트레이너 월별 수익
-        int monthProfit = mypageTrainerService.monthProfit(userId);
-        model.addAttribute("monthProfit", monthProfit);
-
+        //List<ProfitVO> monthProfitList = mypageTrainerService.monthProfitList(userId);
+       // model.addAttribute("monthProfitList", monthProfitList);
+      //  log.info("monthProfitList");
+       // log.info(monthProfitList);
+        
         return "mypage_trainer/mypage_trainer_profit";
     }
+    
+    // 월수익 ajax
+//    @ResponseBody
+//    @GetMapping("/ajax/mypage/monthProfit")
+//    public ResponseEntity<HashMap<String, Object>> mypageTrainerMonthProfit(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+//        log.info("mypageTrainerMonthProfit");
+//        // 1개의 리스트
+//        Criteria cri = new Criteria(pageNum, 1);
+//
+//        HashMap<String, Object> result = new HashMap<>();
+//
+//        int userId = vo.getUserId();
+//        log.info("유저아이디: " + userId);
+//
+//        int total = mypageTrainerService.getTotalCount_monthProfit(cri, userId);
+//        log.info("토탈: " + total);
+//
+//        // 트레이너 월별 수익
+//        List<ProfitVO> monthProfitList = mypageTrainerService.monthProfitList(cri, userId);
+//        
+//        result.put("monthProfitList", monthProfitList);
+//        log.info("monthProfitList");
+//        
+//        result.put("pageMaker", new mypageTainerPageVO(cri, total));
+//
+//        return ResponseEntity.ok(result);
+//    }
+    
+    
+    
+    @ResponseBody
+    @GetMapping("/ajax/mypage/monthProfit")
+    public ResponseEntity<HashMap<String, Object>> mypageTrainerMonth(@CurrentUser IUserVO vo) {
+        log.info("mypageTrainerMonthProfit");
+        HashMap<String, Object> result = new HashMap<>();
+        
+        int userId = vo.getUserId();
+     // 트레이너 월별 수익
+        List<ProfitVO> monthProfitList = mypageTrainerService.monthProfitList(userId);
+        
+        result.put("monthProfitList", monthProfitList);
+        log.info("monthProfitList");
+        
+        return ResponseEntity.ok(result);
+    }
+    
+    
     
     // 수익 ajax
     @ResponseBody
@@ -322,6 +372,8 @@ public class MypageTrainerController {
 
         return ResponseEntity.ok(result);
     }
+    
+
    
     
     

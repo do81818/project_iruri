@@ -495,15 +495,14 @@
   line-height: 27px;
 }
 
-.reply_insertBox {
- 
+.pt_reply_insertBox {
   height: 75px;
   padding: 15px 28px;
   display: flex;
   border-bottom: 1px solid var(--iruri-light-gray-color);
 }
 
-.reply_insertBox table {
+.pt_reply_insertBox table {
   width: 100%;
 }
 

@@ -75,6 +75,9 @@
 		<result property="classId" column="CLASS_ID"/>
 		<result property="classTitle" column="CLASS_TITLE"/>
 		<result property="rnum" column="rnum"/>
+		<result property="profit" column="profit"/>
+		<result property="buyProfit" column="buyProfit"/>
+		<result property="mm" column="mm"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
 
@@ -146,6 +149,7 @@
 		select count(*) from board b,  iclass c,  iuser u
 where board_groupid in (SELECT class_id from iclass where user_id =#{userId})
 and b.board_groupid = c.class_id and b.category_id=6 and b.user_id = u.user_id
+and b.board_state = 'show'
 	]]>
 	</select>
 	
@@ -161,6 +165,7 @@ FROM
        select b.*, c.class_title, c.class_state, u.user_nickname from board b,  iclass c,  iuser u
 where board_groupid in (SELECT class_id from iclass where user_id =#{userId})
 and b.board_groupid = c.class_id and b.category_id=6 and b.user_id = u.user_id
+and b.board_state = 'show'
     ) ac
      WHERE rownum <= #{cri.pageNum} * #{cri.amount}
 )
@@ -186,8 +191,9 @@ from buy where class_id in (select class_id from iclass where user_id = #{userId
 (select buy_id from buy where class_id in (select class_id from iclass where user_id = #{userId})))) FROM DUAL
 		]]>
 	</select>
+<!-- 	
 
-	<!-- 트레이너의 월별 수익 뽑기  -->
+	트레이너의 월별 수익 뽑기 
 	<select id="monthProfit" resultType="int">
 		<![CDATA[
 		select (select sum(buy_realpay + buy_point) 
@@ -202,8 +208,81 @@ and buy_date BETWEEN (SELECT TRUNC(SYSDATE, 'MM') FROM DUAL)
 and (SELECT LAST_DAY(SYSDATE) FROM DUAL)
 )))) as thisMonthProfit from dual
 		]]>
-	</select>
+	</select>  -->
 	
+	<!-- 트레이너 월수익 페이징 -->
+	<select id="getTotalCount_monthProfit" resultType="int">
+	<![CDATA[
+		select count(*)
+		from (SELECT extract(month from money_date) MM, SUM(money_output) output
+FROM money
+where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id=#{userId})))
+GROUP BY extract(month from money_date)
+order by MM) a,
+(SELECT extract(month from buy_date) MM, SUM(buy_realpay+buy.buy_point) PROFIT
+FROM buy
+WHERE class_id in (select class_id from iclass where user_id=#{userId})  
+GROUP BY extract(month from buy_date)
+order by MM)b
+where a.mm=b.mm
+order by a.mm desc
+	]]>
+	</select>
+<!-- 	
+	트레이너의 월별 수익 뽑기 페이징 
+	<select id="monthProfitList" parameterType="HashMap" resultMap="ProfitMap">
+		<![CDATA[
+SELECT *
+FROM
+(
+    SELECT ROWNUM rn, c.*
+    FROM
+    (
+		select b.PROFIT-a.output profit, a.mm 
+		from (SELECT extract(month from money_date) MM, SUM(money_output) output
+FROM money
+where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id=#{userId})))
+GROUP BY extract(month from money_date)
+order by MM) a,
+(SELECT extract(month from buy_date) MM, SUM(buy_realpay+buy.buy_point) PROFIT
+FROM buy
+WHERE class_id in (select class_id from iclass where user_id=#{userId})  
+GROUP BY extract(month from buy_date)
+order by MM)b
+where a.mm=b.mm
+order by a.mm desc
+    ) C
+     WHERE rownum <= #{cri.pageNum} * #{cri.amount}
+)
+WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
+		]]>
+	</select>
+	 -->
+		<!-- 트레이너의 월별 수익 뽑기 페이징 --> 
+	<select id="monthProfitList" parameterType="HashMap" resultMap="ProfitMap">
+		<![CDATA[
+
+		select b.PROFIT-a.output profit, a.mm 
+		from (SELECT extract(month from money_date) MM, SUM(money_output) output
+FROM money
+where pay_id in 
+(select pay_id from pay where buy_id in 
+(select buy_id from buy where class_id in (select class_id from iclass where user_id=#{userId})))
+GROUP BY extract(month from money_date)
+order by MM) a,
+(SELECT extract(month from buy_date) MM, SUM(buy_realpay+buy.buy_point) PROFIT
+FROM buy
+WHERE class_id in (select class_id from iclass where user_id=#{userId})  
+GROUP BY extract(month from buy_date)
+order by MM)b
+where a.mm=b.mm
+order by a.mm desc
+		]]>
+	</select>
 	
 	<!-- 트레이너 수익 페이징 -->
 	<select id="getTotalCount_mypageTrainerProfit" resultType="int">
@@ -223,7 +302,7 @@ FROM
     SELECT ROWNUM rn, c.*
     FROM
     (
-        SELECT buy_date, class_title, buy_realpay, buy_point
+        SELECT buy_date, class_title, buy_realpay+buy_point buyProfit
         FROM buy, iclass
         where buy.class_id=iclass.class_id and iclass.user_id = #{userId}
         order by buy.buy_date desc
