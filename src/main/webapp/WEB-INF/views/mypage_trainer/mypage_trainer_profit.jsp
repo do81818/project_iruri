@@ -16,20 +16,109 @@
 <title>마이페이지 트레이너 수익관리</title>
 <!-- 페이지 이름을 적어주세요 -->
 <script src=""></script>
-<!-- 해당 페이지에서만 사용되는 자바스크립트 파일 추가해주세요 -->
-<%-- <link rel="stylesheet"
-	href="${RESOURCES_PATH}/src/css/component/paging.css"> --%>
-<%-- <link rel="stylesheet"
-	href="${RESOURCES_PATH}/src/css/page/mypage_trianer.css">
-	<link rel="stylesheet"
-	href="${RESOURCES_PATH}/src/css/page/mypage_trainer_profit.css"> --%>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+<!-- <script>
+
+//구글 시각화 API를 로딩하는 메소드
+
+google.charts.load('current', {packages: ['corechart']});
+
+// 구글 시각화 API가 로딩이 완료되면,
+
+// 인자로 전달된 콜백함수를 내부적으로 호출하여 차트를 그리는 메소드
+
+// 화면이 실행될때 함께 실행된다.
+
+//google.charts.setOnLoadCallback(columnChart1);
+
+ 
+
+// 묶은 세로 막대형 차트 1
+
+function columnChart1(month) {
+
+// 버튼 클릭 시 ajax를 사용하여 서버로부터 json 배열 객체를 가져왔다고 가정함
+
+var arr = [
+
+['월', '수익'],
+
+[month, 1000],
+
+['7', 1170],
+
+['6', 660],
+
+['5', 1030]
+
+];
+
+// 실 데이터를 가진 데이터테이블 객체를 반환하는 메소드
+var dataTable = google.visualization.arrayToDataTable(arr);
+
+// 옵션객체 준비
+var options = {
+
+title: '트레이너 수익',
+
+hAxis: {
+
+title: '월',
+
+titleTextStyle: {
+
+color: 'red'
+
+}
+
+}
+
+};
+
+// 차트를 그릴 영역인 div 객체를 가져옴
+
+var objDiv = document.getElementById('column_chart_div1');
+
+// 인자로 전달한 div 객체의 영역에 컬럼차트를 그릴수 있는 차트객체를 반환
+
+var chart = new google.visualization.ColumnChart(objDiv);
+
+// 차트객체에 데이터테이블과 옵션 객체를 인자로 전달하여 차트 그리는 메소드
+
+chart.draw(dataTable, options);
+
+} // drawColumnChart1()의 끝
+
+ 
+
+// 버튼 동작
+
+$(document).ready(function(){
+
+$('button').on('click', function(){
+
+columnChart1(month);
+
+});
+
+});
+
+</script>
+ -->
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		profit(1);
 	});
 	function profit(page) {
-		$
-				.ajax({
+		$.ajax({
 					url : 'http://localhost:8282/ex/ajax/mypage/trainerProfit.json',
 					type : 'GET',
 					cache : false,
@@ -62,7 +151,7 @@
 														+ '</a>';
 												htmls += '</td>';
 												htmls += '<td class="pt_class_profit_money">'
-														+ this.buyRealpay
+														+ this.buyProfit
 														+ '</td>';
 												htmls += '</tr>';
 												htmls += '</table>';
@@ -104,8 +193,7 @@
 	});
 
 	function MonthProfit(index) {
-		$
-				.ajax({
+		$.ajax({
 					url : 'http://localhost:8282/ex/ajax/mypage/monthProfit.json',
 					type : 'GET',
 					cache : false,
@@ -181,6 +269,9 @@
 							/* $('.pt_next_month').html(htmls3);
 							$('.pt_pre_month').html(htmls4); */
 
+							
+							
+							chart(monthArr,valueArr);
 						}
 					}
 				});
@@ -207,6 +298,122 @@
 			}
 		}
 	}
+	
+	
+	/* 차트 */
+	function chart(monthArr,valueArr) {
+		const ctx = document.getElementById('myChart').getContext('2d');
+		console.log(monthArr);
+		console.log(monthArr.length);
+
+		var reMonthArr = monthArr.reverse();
+		var reValueArr = valueArr.reverse();
+		
+		let max = 0;
+		
+		for(let i = 0; i < length; i++){
+			if(max < reValueArr[i].totalMoney) {
+				max = reValueArr[i].totalMoney;
+			}
+		}
+		
+		let maxVal = (Math.ceil(max/5000000)+1) * 5000000;
+		
+		/* for(let i = 0 ; i < monthArr.length; i++) {
+			reMonthArr[i].push(monthArr[index-i]);
+			reValueArr[i].push(valueArr[index-i]);
+		} */
+		console.log(reMonthArr);
+		console.log(reValueArr);
+		
+		reMonthArr.push(monthArr.length + 1);
+		reValueArr.push(0);
+	
+		var myChart = new Chart(ctx, {
+	
+			type: 'line',
+	        data: {
+	        	 labels: reMonthArr,
+	             datasets: [{
+	            	// label: '# of Votes',
+              		// 해당 달의 금액
+		              data: reValueArr,
+		              fill: false,
+		
+		              borderColor: 'rgba(255, 0, 0, 1)',
+		              borderWidth: 1,
+		              
+		              pointBackgroundColor : 'rgba(255, 0, 0, 1)',
+	             }]
+	        },
+	        
+	        options: {
+            	legend: {
+                    display: false,
+                },
+
+                // responsive: false,
+                tooltips: {
+                    enabled: false,
+                },
+                hover: {
+                    animationDuration: 0,
+                },
+                animation: {
+                    // duration: 1,
+                    onComplete: function () {
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        ctx.font = Chart.helpers.fontString(Chart.defaults.global
+                            .defaultFontSize, Chart
+                            .defaults.global.defaultFontStyle, Chart.defaults.global
+                            .defaultFontFamily);
+                       
+                        ctx.fillStyle = 'rgba(24, 90, 189, 1)';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'center';
+                        ctx.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(
+                                i);
+                            meta.data.forEach(function (bar, index) {
+                                var data = dataset.data[index];
+                                ctx.fillText(data, bar._model.x, bar
+                                    ._model
+                                    .y - 5);
+                            });
+                        });
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 8,
+                            stepSize: 500000,
+                            max: maxVal,
+                            callback: function(value,index) {
+                            	if(value.toString() > 3){
+                            		return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '원';
+                            	}
+                            }
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 10,
+                            callback: function(value) {
+                            	
+                            		return value.toString() + '월';
+                            	}
+                            }
+                    }]
+                },
+            }
+	        
+		})
+	}
+		
 </script>
 </head>
 <body>
@@ -265,7 +472,9 @@
 					<div class="pt_profit">
 						<!-- 에이젝스 처리하기 -->
 						<table>
-							<tr><td colspan="3""><span class="pt_month_text">이달의 수익</span></td></tr>
+							<tr>
+								<td colspan="3""><span class="pt_month_text">이달의 수익</span></td>
+							</tr>
 							<tr>
 								<td class="pt_month_number"><span class="pt_won"></span></td>
 								<td class="pt_pre_month"><span>이전달</span> <a
@@ -277,13 +486,10 @@
 										src="/ex/resources/src/img/icon/arrow_red_right.png" alt="up"
 										class="arrow_width_up_down" /></a></td>
 							</tr>
-							
-
 						</table>
-						
-						
-			
-                
+
+
+
 
 						<!-- <div class="month_profit_list"></div>
              
@@ -295,8 +501,18 @@
 
 					</div>
 					<div class="pt_profit_graph">
-                <img src="../image/360-250.png" alt="수익그래프">
-            </div>
+						<!-- <img src="../image/360-250.png" alt="수익그래프"> -->
+						<canvas id="myChart"></canvas>
+
+					</div>
+
+
+
+					<!--         
+         <button type="button" id="btn">버튼</button> 
+
+			<div id="column_chart_div1" style="width: 900px; height: 500px;"></div> -->
+					<!-- <div id="myChart"></div> -->
 				</div>
 
 			</div>

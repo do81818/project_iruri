@@ -34,6 +34,7 @@ public class ProfitVO {
 
 	// 달마다 수익을 담기위한 객체 
 	private int profit;
+	private int buyProfit;
 	private int mm;
 
 	

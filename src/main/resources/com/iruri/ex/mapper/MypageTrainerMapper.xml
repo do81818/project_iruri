@@ -76,6 +76,7 @@
 		<result property="classTitle" column="CLASS_TITLE"/>
 		<result property="rnum" column="rnum"/>
 		<result property="profit" column="profit"/>
+		<result property="buyProfit" column="buyProfit"/>
 		<result property="mm" column="mm"/>
 		<association property="iUserVO" column="USER_ID" javaType="com.iruri.ex.vo.IUserVO" resultMap="com.iruri.ex.mapper.IUserMapper.iUserMap" />
 	</resultMap>
@@ -299,7 +300,7 @@ FROM
     SELECT ROWNUM rn, c.*
     FROM
     (
-        SELECT buy_date, class_title, buy_realpay+buy_point buy_profit
+        SELECT buy_date, class_title, buy_realpay+buy_point buyProfit
         FROM buy, iclass
         where buy.class_id=iclass.class_id and iclass.user_id = #{userId}
         order by buy.buy_date desc
