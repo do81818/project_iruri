@@ -13,6 +13,8 @@
     <title>트레이너 마이페이지 클래스 조회</title> <!-- 페이지 이름을 적어주세요 -->
     <link rel="stylesheet"
 	href="${RESOURCES_PATH}/src/css/component/paging.css">
+	    <link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/page/mypage_trainaer.css">
 	<script type="text/javascript">
 		$(document).ready(function(){
 			profit(1);
