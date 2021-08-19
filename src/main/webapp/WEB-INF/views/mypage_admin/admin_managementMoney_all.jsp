@@ -350,7 +350,7 @@
 				console.log("periodStartDate: " + periodStartDate);
 				console.log("periodEndDate: " + periodEndDate);
 
-				if ((periodStartDate < todayStr && periodEndDate <= periodEndDate)
+				if ((periodStartDate < todayStr && periodEndDate <= todayStr)
 						&& (periodStartDate < periodEndDate)) {
 
 					getlist(1, userId, inquire, periodStartDate, periodEndDate);

@@ -190,7 +190,6 @@
 	   	function updateBlackList_reason() {
 	   	    
 		   	let userId = ${info.iuserVo.userId};
-		   	let number = $('input[name=number]').val();
 		   	let reason = $('#memberInfo_balackList_reason').val();
 		   	 
 		   	 if(reason != "") {
@@ -199,9 +198,8 @@
 		   	     reason = 1;
 		   	 }
 		   	
-		     console.log("updateBlackList()..");
+		     console.log("updateBlackList_reason()..");
 		     console.log("userId", userId);
-		     console.log("number", number);
 		     console.log("reason", reason);
 		     
 		     const header = $('meta[name="_csrf_header"]').attr('th:content');
@@ -217,7 +215,7 @@
 			     type: 'POST',
 			     data: {
 			         userId: userId,
-			         number: number,
+			         number: 'none',
 			         reason: reason,
 			     },
 			     dataType: 'json',

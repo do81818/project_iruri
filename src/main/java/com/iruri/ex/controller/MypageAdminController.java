@@ -291,10 +291,11 @@ public class MypageAdminController {
         int number = 0;
         if(numberStr.equals("black")) {
             number = 1;
-        } else {
+            adminService.updateBlackList(userId, number);
+        } else if(numberStr.equals("noneBlack")) {
             number = 0;
+            adminService.updateBlackList(userId, number);
         }
-        adminService.updateBlackList(userId, number);
         log.info("1");
         if(!(reason.equals("1"))) {
             adminService.updateBlackListReason(userId, reason);
