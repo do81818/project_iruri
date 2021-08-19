@@ -55,5 +55,4 @@ public class MainController {
 	    return "/search_result";
 	}
 	
-
 }
