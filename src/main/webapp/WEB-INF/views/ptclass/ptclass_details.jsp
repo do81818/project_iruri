@@ -27,8 +27,16 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             <li>
               <a href="#reply">커뮤니티</a>
             </li>
+            <li>
+              <a href="#" onclick="runExercise()">운동하기</a>
+            </li>
             <span class="ptDetailNavHover"></span>
           </ul>
+          <script type="text/javascript">
+          	function runExercise() {
+          		window.open("https://192.168.0.38:8182/", 'a', "width=1000px, height=600px, status=no, menubar=no, toolbar=no, resizable=no, location=no");
+          	}
+          </script>
 
           <div class="ptDetail__infoDescription" id="trainerInfo">
             <h6>클래스소개</h6>

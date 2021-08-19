@@ -430,7 +430,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                             </div>
 
                             <div class="ptListSubTitle">트레이너 ${"${this.iuserVO.userNickname}"}</div>
-                            <div class="c_list_title ptListTitle"><a href="${CONTEXT_PATH}/iruri/ptClassDetails?classId=${"${this.classId}"}">${"${this.classTitle}"}</a></div>
+                            <div class="c_list_title ptListTitle"><a href="${CONTEXT_PATH}/iruri/ptClassDetails?classId=${"${this.classId}"}" target="_blank">${"${this.classTitle}"}</a></div>
 
                             <div class="c_list_date">${"${this.classStartDate}"} ~ ${"${this.classEndDate}"}</div>
 

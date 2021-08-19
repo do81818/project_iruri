@@ -28,10 +28,10 @@
         <div class="subMenu-container">
           <ul class="subMenu">
             <li>
-              <a href="#">이루리팁</a>
+              <a href="${CONTEXT_PATH}/iruritip">이루리팁</a>
             </li>
             <li>
-              <a href="#">자유게시판</a>
+              <a href="${CONTEXT_PATH}/iruritip/freeboard">자유게시판</a>
             </li>
           </ul>
         </div>
