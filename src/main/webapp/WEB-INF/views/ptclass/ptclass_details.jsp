@@ -33,9 +33,9 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
             <span class="ptDetailNavHover"></span>
           </ul>
           <script type="text/javascript">
-          	function runExercise() {
-          		window.open("https://192.168.0.38:8182/", 'a', "width=1000px, height=600px, status=no, menubar=no, toolbar=no, resizable=no, location=no");
-          	}
+            function runExercise() {
+              window.open("https://192.168.35.3:8182/", "a", "width=1000px, height=600px, status=no, menubar=no, toolbar=no, resizable=no, location=no");
+            }
           </script>
 
           <div class="ptDetail__infoDescription" id="trainerInfo">
@@ -75,9 +75,8 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                   userId: userId,
                 },
                 dataType: "json",
-              })
-              .always(function() {
-            	  detailsReplyAjax(1);
+              }).always(function () {
+                detailsReplyAjax(1);
               });
             });
           </script>
@@ -115,7 +114,9 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
 
             let titleInfoHtml =
               //
-              `<div class="ptDetail__img" style="background: url(/ex/iruri/display?fileName=${"${classVO.classImage}"})">
+              `<div class="ptDetail__img" style="background: url(/ex/iruri/display?fileName=${"${classVO.classImage}"}); background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;">
             <div class="ptDetail__person">1:${"${classVO.classTotalMember}"}</div>
               </div>
               <div class="ptDetail__infoData">
@@ -177,9 +178,7 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                 <div class="infoData__buyData">
                   <span class="buyData__price">${"${classVO.classPrice}"}</span>`;
 
-            if (classVO.classTotalMember <= result.classPerson) {
-              titleInfoHtml += `<button class="buyData__buyBtn" disabled>인원초과된 클래스입니다.</button>`;
-            } else if (result.joinCheck === 1) {
+            if (result.joinCheck === 1) {
               titleInfoHtml += `<button class="buyData__buyBtn" disabled>이미 참여한 클래스입니다.</button>`;
             } else if (result.joinCheck === 0) {
               titleInfoHtml += `<button class="buyData__buyBtn" onclick="requestPay()">구매하기</button>`;
@@ -327,9 +326,9 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                   success: function (result) {
                     showUploadedFile(result);
                   },
-                }).always(function() {
-                	detailsCertifyAjax(1);
-                	$("#pt_certify_modal").fadeOut();
+                }).always(function () {
+                  detailsCertifyAjax(1);
+                  $("#pt_certify_modal").fadeOut();
                 });
               });
 
@@ -563,16 +562,12 @@ prefix="form" uri="http://www.springframework.org/tags/form"%>
                       imp_uid: rsp.imp_uid, // 결제 번호
                       merchant_uid: result, // 주문번호
                       buyId: parseInt(result),
-                    },
-                  }).done(function (data) {
-                    console.log("data", data);
-                    if (data === "success") {
-                      location.reload(true);
                     }
-                  });
+                  })
                 } else {
                   console.log("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
                 }
+                window.location.href = window.location.href;
               }
             );
           });

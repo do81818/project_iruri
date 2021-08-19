@@ -192,11 +192,7 @@ public class PtClassController {
     // ptDetails 클래스 정보
     @GetMapping("/iruri/ptClassJoinCheck")
     public ResponseEntity<HashMap<String, Object>> joinCheck(@RequestParam("classId") int classId, @CurrentUser IUserVO vo) {
-        
-        if(vo == null) {
-            vo = new IUserVO();
-            vo.setUserId(0);
-        }
+
         
         HashMap<String, Object> result = ptClassService.joinCheck(classId, vo.getUserId());
         
@@ -240,7 +236,7 @@ public class PtClassController {
     
     // pt 구매
     @PostMapping("iruri/ptClassBuy")
-    public void ptClassBuy(@RequestParam("imp_uid") String imp_uid, @RequestParam("merchant_uid") String merchant_uid, @RequestParam("buyId")int buyId) {
+    public String ptClassBuy(@RequestParam("imp_uid") String imp_uid, @RequestParam("merchant_uid") String merchant_uid, @RequestParam("buyId")int buyId) {
         log.info("imp_uid" + imp_uid); // 결제 번호
         log.info("merchant_uid" + merchant_uid); // 주문번호 
         
@@ -249,17 +245,16 @@ public class PtClassController {
         
         int amount = data.getResponse().getAmount();
         int realPay = payService.getRealPay(buyId);
-        if(realPay == amount) {
-//            // 결제 검증하기 (결제 된 금액과 == 결제되어야 하는 금액)
-//            // 일치시 DB에 결제 정보 저장 (wait 에서 pay 로 업데이트)
-
-            payService.updatePay(buyId);
+        if(realPay == amount) { // 결제 검증하기 (결제 된 금액과 == 결제되어야 하는 금액)
+            payService.updatePay(buyId); // 일치시 DB에 결제 정보 저장
             log.info("결제 성공");
-        
+            
+            return "SUCCESS";
         } else {
-//            // 불일치시 결제 실패 (wait 에서 cancle 로)
-            payService.updateCancle(buyId);
+            payService.updateCancle(buyId); // 불일치시 결제 실패 (wait 에서 cancle 로)
             log.info("결제 실패");
+            
+            return "FAILURE";
         }
     }
     

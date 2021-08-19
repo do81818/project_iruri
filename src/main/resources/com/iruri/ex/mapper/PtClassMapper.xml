@@ -114,12 +114,10 @@ WHERE
 	
 	<sql id="searchKeyword">
 		<if test='g1 != null and g2 == null'>
-			and iu.user_id = iuserinfo.user_id 
-			and iuserinfo.user_gender = '남성'
+			and user_gender like '%'||'남성'||'%'
         </if>
         <if test='g1 == null and g2 != null'>
-			and iu.user_id = iuserinfo.user_id 
-			and iuserinfo.user_gender = '여성'
+			and user_gender like '%'||'여성'||'%'
         </if>
         
         <if test='ek1 != null'>
@@ -323,7 +321,7 @@ WHERE
 	<select id="getTotalClassAll" resultType="int">
 <![CDATA[
 SELECT count(*)
-FROM iclass ic, iuser iu,
+FROM iclass ic, iuser iu, iuserinfo,
 (
     SELECt exkind.*, exdate.exercise_date
     FROM
@@ -339,7 +337,7 @@ FROM iclass ic, iuser iu,
     ) exdate
     WHERE exkind.class_id = exdate.class_id
 ) exercise
-WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
+WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show' and iu.user_id = iuserinfo.user_id
 ]]>
 		
      <include refid="searchKeyword" />       
@@ -356,7 +354,8 @@ FROM
     FROM
     (
         SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
-        FROM iclass ic, iuser iu,
+        , ii.user_gender
+        FROM iclass ic,
         (
             SELECt exkind.*, exdate.exercise_date
             FROM
@@ -371,8 +370,8 @@ FROM
                 GROUP BY class_id
             ) exdate
             WHERE exkind.class_id = exdate.class_id
-        ) exercise
-        WHERE ic.class_id = exercise.class_id and ic.category_id = 2 and class_enddate >= sysdate and ic.user_id = iu.user_id and ic.class_state = 'show'
+        ) exercise, iuser iu, iuserinfo ii
+        WHERE ic.class_id = exercise.class_id and ic.user_id = iu.user_id and class_state = 'show' and iu.user_id = ii.user_id and category_id = 2 and class_enddate >= sysdate and iu.user_id = ii.user_id
 ]]>
          <include refid="searchKeyword"/>
 <![CDATA[

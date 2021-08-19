@@ -121,6 +121,10 @@
   color: var(--iruri-dark-gray);
 }
 
+.buyData__price:after {
+  content: '\\';
+}
+
 .buyData__buyBtn {
   width: 176px;
   height: 55px;

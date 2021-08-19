@@ -13,3 +13,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 public @interface CurrentUser {
 
 }
+
+/*
+ *  servel-context.xml
+ *  annotation-driven 에 아래 코드 추가
+ *
+ *  <argument-resolvers>
+ *    <beans:bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
+ *  </argument-resolvers>
+ * 
+ */

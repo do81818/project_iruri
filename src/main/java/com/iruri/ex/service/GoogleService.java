@@ -134,6 +134,7 @@ public class GoogleService {
         log.info("setContextHolder: " + code);
         
         GoogleAuth googleAuth = getGoogleTokenInfo(code);
+        
         GoogleProfile profile = getGoogleProfile(googleAuth.getAccess_token());
 
         IUserVO originUser = iUserService.findGoogleUser(profile.getEmail());
@@ -143,8 +144,11 @@ public class GoogleService {
             
             return 0;
         }
-        UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());
+        
+        UserDetails userDetails = iUserDetailsService.loadUserByUsername(originUser.getUserEmail());    
+        
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
         return 1;

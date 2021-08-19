@@ -28,12 +28,12 @@
           <form:form name="f" action="${loginUrl}" method="POST" id="loginForm">
             <div class="login-email">
               <label for="email">이메일</label>
-              <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요"/>
+              <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요" style="margin:0"/>
             </div>
       
             <div class="login-password">
               <label for="password">비밀번호</label>
-              <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요"/>
+              <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요" style="margin:0"/>
             </div>
       
             <div class="login-remember">

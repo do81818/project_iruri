@@ -57,7 +57,6 @@ public class PayService {
         return null;
     }
 
-    // imp_uid 로 아임포트 서버에서 결제 정보 조회
     public PortVO getPaymentData(PortProfile token, String imp_uid) {
         
         HttpHeaders headers = new HttpHeaders();

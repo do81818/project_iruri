@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>이루리 운동하기</title>
     <link rel="stylesheet" href="/css/main.css" />
-    <style type="text/css">
-      
+    <style>
       body {
-        overflow: hidden;
         margin: 0;
       }
-      
-      #video {
-        width: 100vw;
+
+      #videos {
         height: 100vh;
+        background-color: black;
+        display: flex;
+        align-items: center;
       }
-      
-      #localVideo {
-        position: absolute;
-        z-index: 100;
-        right: 0; 
-        width: 30%;
-      }
-      
+
       #remoteVideo {
-        position: relative;
-        width: 100% !important;
+        width: 100%;
+      }
+
+      #localVideo {
+        width: 35%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 5;
       }
     </style>
   </head>
 
   <body scroll="no">
-
     <div id="videos">
-      <video id="localVideo" autoplay muted playsinline></video>
       <video id="remoteVideo" autoplay playsinline></video>
+      <video id="localVideo" autoplay muted playsinline></video>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
