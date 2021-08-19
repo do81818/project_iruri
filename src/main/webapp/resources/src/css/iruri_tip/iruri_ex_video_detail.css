@@ -350,11 +350,11 @@ td.reply_button {
     border-radius: 50px;
 }
 
-.alertWindow_close {
+.alertWindow_close_11 {
     height: 40px;
 }
 
-.alertWindow_close>img {
+.alertWindow_close_11>img {
     float: right;
     width: 28px;
     cursor: pointer;

@@ -27,29 +27,45 @@ public class PointServiceImpl implements PointService {
     // 현재 포인트
     @Override
     public int savepoint(int userId) {
+    	try {
+    		 return pointMapper.savepoint(userId);	
+		} catch (Exception e) {
+			return 0;
+		}
 
-        int vo = pointMapper.savepoint(userId);
-
-        return vo;
     }
     
     @Override
     public int appointedpoint(int userId) {
-    	int vo = pointMapper.appointedpoint(userId);
-    	return vo;
+    	try {
+    		return pointMapper.appointedpoint(userId);
+		} catch (Exception e) {
+			return 0;
+		}
+    	
     }
     
     
     @Override
     public int usepoint(int userId) {
-    	int vo = pointMapper.usepoint(userId);
-    	return vo;
+    	try {
+			return pointMapper.usepoint(userId);
+		} catch (Exception e) {
+			return 0;
+		} 
+    	
     }
     
     @Override
     public int totalpoint(int userId) {
-    	int vo = pointMapper.totalpoint(userId);
-    	return vo;
+    	
+    	try {
+    		int vo = pointMapper.totalpoint(userId);
+    		return vo;
+			
+		} catch (Exception e) {
+			return 1500;
+		}
     }
     
     @Override

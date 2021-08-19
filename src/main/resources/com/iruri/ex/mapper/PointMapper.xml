@@ -17,7 +17,7 @@
 	</resultMap>
 	
 	
-	<select id="savepoint" parameterType="int" resultType="int">
+	<select id="savepoint" parameterType="int" resultType="Integer">
 		<![CDATA[
 		SELECT
 			sum(point_value)
@@ -30,7 +30,7 @@
 		]]> 
 	</select>
 	
-		<select id="appointedpoint" parameterType="int" resultType="int">
+		<select id="appointedpoint" parameterType="int" resultType="Integer">
 		<![CDATA[
 		SELECT
 			sum(point_value)
@@ -44,7 +44,7 @@
 	</select>
 	
 	
-			<select id="usepoint" parameterType="int" resultType="int">
+			<select id="usepoint" parameterType="int" resultType="Integer">
 		<![CDATA[
 		SELECT
 			sum(point_value)
@@ -58,7 +58,7 @@
 	</select>
 
 
-			<select id="totalpoint" parameterType="int" resultType="int">
+			<select id="totalpoint" parameterType="int" resultType="Integer">
 		<![CDATA[
 		SELECT DISTINCT 
 		((select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'save') - (select sum(point_value)from ipoint where user_id = #{userId} and point_state = 'use')) as total_point

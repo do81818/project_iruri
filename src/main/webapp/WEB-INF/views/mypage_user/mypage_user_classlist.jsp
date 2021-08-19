@@ -129,9 +129,10 @@
 												<img alt="" class="m_cl_recommend_img" src="${CONTEXT_PATH}/iruri/display?fileName=${userclasslist.classImage}" alt="" > 
 															<!--  <div style="width: 100%; height: 100%;"> -->
 														<button class="m_cl_cancel_class_bt" id="${userclasslist.classId}">클래스취소</button>
-														<div class="m_cl_recommend_title">
+														<div class="m_cl_recommend_title"><a href="/ex/iruri/ptClassDetails?classId=${userclasslist.classId}">
 																${userclasslist.classTitle}
-																
+																</a>
+						
 														</div>
 
 														<span class="m_cl_recommend_date">

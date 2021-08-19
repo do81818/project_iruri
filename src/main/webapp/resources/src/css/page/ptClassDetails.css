@@ -228,6 +228,10 @@
   padding-bottom: 85px;
 }
 
+.ptDetail_certify__images img {  
+  cursor: pointer;
+}
+
 .ptDetail_certify__images .images__image img {
   border-radius: 30px;
   width: 100%;
@@ -247,6 +251,10 @@
   outline: none;
   font-weight: bold;
   align-self: flex-end;
+}
+
+.ptClassDetailWrap .c_reply {
+  width: 1200px;
 }
 
 .c_reply_insert {

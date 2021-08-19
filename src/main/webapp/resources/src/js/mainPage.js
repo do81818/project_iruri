@@ -9,6 +9,13 @@
 				MoveSlide = slideWidth + slideMargin,
 				nextBtn = document.querySelector('#challengeNext');		
 	let		currentIdx = 0;
+
+	console.group('1')
+	console.log(slides);
+	console.log(slide);
+	console.log(prevBtn);
+	console.log(nextBtn);
+	console.groupEnd('1');
 	
 	//slide 배열
 		for(var i = 0; i < slide.length; i++){
@@ -21,19 +28,23 @@
 		currentIdx = num;
 	}
 	
+	console.log('slideCount',slideCount);
+	
 	// 버튼을 클릭하면 슬라이드 이동시키기
 	nextBtn.addEventListener('click',function(){	
-		 if(currentIdx < slideCount - 3){
+		console.log(currentIdx);
+		console.log(slideCount + 1);
+		if(currentIdx < slideCount + 2) {
 			goToSlide(currentIdx + 1);
-		 } else{
+		} else {
 			goToSlide(0);
-		 }	
+		}
 	 });
 	 prevBtn.addEventListener('click',function(){	
 		 if(currentIdx > 0){
 			goToSlide(currentIdx - 1);
 		 } else{
-			goToSlide(slideCount - 3);
+			goToSlide(-(slideCount - 2));
 		 }   
 	 });
 })();
@@ -61,17 +72,19 @@
 	}
 	
 	nextBtn.addEventListener('click',function(){	
-		 if(currentIdx < slideCount - 3){
+		console.log(currentIdx);
+		console.log(slideCount + 1);
+		if(currentIdx < slideCount + 2) {
 			goToSlide(currentIdx + 1);
-		 } else{
+		} else {
 			goToSlide(0);
-		 }	
+		}
 	 });
 	 prevBtn.addEventListener('click',function(){	
 		 if(currentIdx > 0){
 			goToSlide(currentIdx - 1);
 		 } else{
-			goToSlide(slideCount - 3);
+			goToSlide(-(slideCount - 2));
 		 }   
 	 });
 })();
@@ -98,17 +111,19 @@
 	}
 	
 	nextBtn.addEventListener('click',function(){	
-		 if(currentIdx < slideCount - 3){
+		console.log(currentIdx);
+		console.log(slideCount + 1);
+		if(currentIdx < slideCount + 2) {
 			goToSlide(currentIdx + 1);
-		 } else{
+		} else {
 			goToSlide(0);
-		 }	
+		}
 	 });
 	 prevBtn.addEventListener('click',function(){	
 		 if(currentIdx > 0){
 			goToSlide(currentIdx - 1);
 		 } else{
-			goToSlide(slideCount - 3);
+			goToSlide(-(slideCount - 2));
 		 }   
 	 });
 })();

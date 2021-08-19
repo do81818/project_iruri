@@ -279,4 +279,21 @@ public class PtClassServiceImpl implements PtClassService {
         return ptClassMapper.ptClassReplyList(cri, classId);
     }
 
+    @Override
+    public void insertptClassCertify(BoardVO boardVO) {
+        
+        ptClassMapper.insertptClassCertify(boardVO);
+    }
+    
+    @Override
+    public BoardVO getCertifySelectOne(int boardId) {
+        
+        return ptClassMapper.getCertifySelectOne(boardId);
+    }
+    
+    @Override
+    public void insertReply(int boardGroupId, String boardContent, int userId) {
+        
+        ptClassMapper.insertReply(boardGroupId, boardContent, userId);
+    }
 }

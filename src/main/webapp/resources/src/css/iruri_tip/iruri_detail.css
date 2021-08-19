@@ -1,0 +1,293 @@
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url("../font/NanumBarunGothic.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url("../font/Cafe24Ssurround.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url("../font/Cafe24SsurroundAir.ttf") format('truetype');
+}
+
+:root {
+    /* font-size */
+    --header-gnb-font-size: 22px;
+    --header-side-nav-font-size: 12px;
+    --footer-title-font-size: 20px;
+    --footer-normal-font-size: 13px;
+
+    /* colors */
+    --iruri-red-color: #ff0000;
+    --iruri-yellow-color: #ffeb00;
+    --iruri-blue-color: #185abd;
+    --iruri-light-blue-color: #02a3ff;
+    --iruri-green-color: #80ff48;
+    --iruri-indigo-color: #0a1931;
+    --iruri-dark-gray-color: #666;
+    --iruri-gray-color: #999;
+    --iruri-light-gray-color: #ccc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'NanumBarunGothic', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    min-width: 900px;
+    margin: 0 auto;
+    /* background-color: #eee; */
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 게시판 상세페이지 */
+.boardtop {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-family: 'Cafe24SsurroundAir';
+    
+}
+.display_flex {
+    display: flex;
+    margin-bottom: 20px;
+}
+.board_iruritip_title {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Cafe24SsurroundAir';
+
+}
+
+.dropdown {
+    position: relative;
+    left: 650px;
+    display: inline-block;
+
+}
+
+.dropbtn {
+    color: var(--iruri-red-color);
+    padding: 16px;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+    background-color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 130px;
+    z-index: 1;
+    border: var(--iruri-yellow-color);
+    border: 2px solid var(--iruri-red-color);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: white;
+}
+
+.margin_20px {
+    margin-bottom: 40px;
+}
+
+.board_text {
+    font-size: 16px;
+    line-height: 40px;
+    margin-bottom: 40px;
+    font-family: 'Cafe24SsurroundAir';
+    white-space : 'pre-line';  
+	word-wrap : 'break-word'; 
+	word-break: break-all;
+	text-align: center;
+	
+}
+
+.board_reply_insertBox {
+    width: inherit;
+    height: 111px;
+    padding: 24px 38px;
+    border: 2px solid var(--iruri-blue-color);
+    margin-bottom: 40px;
+    border-radius:30px;
+
+}
+.board_reply_insertBox table {
+    width: 100%;
+}
+
+.board_reply_textarea {
+    width: 95%;
+}
+.board_reply_insertButton {
+    width: 5%;
+    text-align: right;
+    position:relative;
+    font-family: 'Cafe24SsurroundAir';
+   
+    
+}
+
+.board_reply_insertButton > button {
+    font-size: 15px;
+    background-color: var(--iruri-yellow-color);
+    border: 2px solid var(--iruri-blue-color);
+    border-radius:50px;
+    outline: none;
+    cursor: pointer;
+    color: var(--iruri-blue-color);
+    padding: 5px 5px;
+    position:absolute ;
+    right:0;
+}
+
+.board_reply_textarea > textarea {
+    width: 98%;
+    height: 100%;
+    resize: none;
+    font-size: 18px;
+    line-height: 27px;
+    font-family: 'NanumBarunGothic';
+    color: var(--iruri-indigo-color);
+    outline: none;
+    border: none;
+    
+}
+
+.board_reply_textarea > textarea::placeholder {
+    font-size: 16px;
+    font-family: 'NanumBarunGothic';
+    color: var(--iruri-gray-color);
+}
+
+.board_contentbox{
+  margin: 30px 20px;
+   font-family: 'Cafe24SsurroundAir';
+   line-height: 25px;
+  
+}
+.board_nickname{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.board_name{
+    width: 60px;
+    font-size: 20px;
+}
+.board_revise{
+    font-size: 14px;
+    margin-right: 3px;
+    margin-top: 7px;
+}
+.board_delete{
+    font-size: 14px;
+    margin-right: 1rem;
+    margin-top: 7px;
+}
+.board_date{
+    font-size: 12px;
+    margin-right: 1rem;
+}
+.board_rewrite{
+    font-size: 12px;
+    margin-right: 1rem;
+}
+.board_call{
+    font-size: 12px;
+    margin-right: 1rem;
+}
+
+
+.board_buttons{
+  display: flex;
+  position:relative;
+  margin-bottom: 20px;
+}
+
+.board_buttons button{
+  font-size: 16px;
+  font-family: 'Cafe24SsurroundAir';
+    color: var(--iruri-indigo-color);
+    background-color: white;
+    padding: 10px 20px;
+  border: 2px solid var(--iruri-blue-color); 
+  border-radius:30px;
+}
+
+.board_buttons div{
+  position:absolute ;
+  right:0;
+}
+
+
+.preview_and_nextview{
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-family: 'Cafe24SsurroundAir';
+   font-size: 16px;
+}
+.preview{
+  display: flex;
+  flex-direction: row;
+  border-top: 2px solid var(--iruri-blue-color);
+  border-bottom: 2px solid var(--iruri-blue-color);
+  height: 50px;
+  
+  padding-top: 13px;
+}
+.up-arrow{
+  margin-right: 1rem;
+}
+.prewriting{
+  margin-right: 1rem;
+}
+.nextview{
+  display: flex;
+  flex-direction: row;  
+  border-bottom: 2px solid var(--iruri-blue-color);
+  height: 50px;
+  padding-top: 14px;
+}
+.down-arrow{
+  margin-right: 1rem;
+}
+.nextwriting{
+  margin-right: 1rem;
+}
+

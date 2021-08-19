@@ -10,12 +10,16 @@
 <html lang="ko">
   <head>
     <%@ include file="../include/static.jsp" %> 
-    <title>이루리 메인</title> <!-- 페이지 이름을 적어주세요 -->
-    <script src=""></script> <!-- js -->
+    <title>트레이너 마이페이지 클래스 조회</title> <!-- 페이지 이름을 적어주세요 -->
+    <link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/component/paging.css">
+	    <link rel="stylesheet"
+	href="${RESOURCES_PATH}/src/css/page/mypage_trainaer.css">
 	<script type="text/javascript">
 		$(document).ready(function(){
 			profit(1);
 		});
+		
 		function profit(page){
 			$.ajax({
 				url : 'http://localhost:8282/ex/ajax/mypage/classReply.json',
@@ -107,7 +111,7 @@
 					<div id="user_info">
 						<div class="nickname"> <!-- 루리 -->
 							${user.userNickname}
-							<button class="infobutton" type="button" onclick=""​>클래스
+							<button class="infobutton" type="button" onclick="location.href='/ex/iruri/ptClassMakeForm'">클래스
 								개설</button>
 						</div>
 						<div class="user_detail">
@@ -120,7 +124,7 @@
 					</div>
 
 					<div id="challenge">
-						운영중인 챌린지
+						운영중인 클래스
 						<div class="count">${countMypageTrainerClass}</div>
 					</div>
 
@@ -135,11 +139,10 @@
 				<!-- 관리메뉴 -->
 				<div class="class_MenuBar">
 					<ul>
-						<li class="class_MenuBar_text"><a href="#">클래스관리</a></li>
-						<li class="class_MenuBar_text"><a href="#">회원관리</a></li>
-						<li class="class_MenuBar_text_now"><a href="#">클래스댓글조회</a></li>
-						<li class="class_MenuBar_text"><a href="#">수익관리</a></li>
-						<li class="class_MenuBar_text"><a href="#">프로필관리</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer">클래스관리</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer/userManagement">회원관리</a></li>
+						<li class="class_MenuBar_text_now"><a href="/ex/mypage/trainer/classReply">클래스댓글조회</a></li>
+						<li class="class_MenuBar_text"><a href="/ex/mypage/trainer/profit">수익관리</a></li>
 					</ul>
 				</div>
 

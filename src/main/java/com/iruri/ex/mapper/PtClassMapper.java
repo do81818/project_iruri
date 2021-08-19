@@ -97,4 +97,15 @@ public interface PtClassMapper {
     // 댓글 리스트
     List<BoardVO> ptClassReplyList(@Param("cri") Criteria cri, @Param("classId") int classId);
     
+    void insertQuery(@Param("userId")int userId, @Param("classId")int classId, @Param("buyRealPay")int buyRealPay);
+    int getBuyId();
+    int getRealPay(int buyId);
+    void updatePay(int buyId);
+    void updateCancle(int buyId);
+    
+    void insertptClassCertify(BoardVO boardVO);
+    BoardVO getCertifySelectOne(int boardId);
+    
+    void insertReply(@Param("boardGroupId") int boardGroupId, @Param("boardContent") String boardContent, @Param("userId") int userId);
+    
 }
