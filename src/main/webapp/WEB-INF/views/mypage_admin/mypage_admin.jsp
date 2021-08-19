@@ -121,11 +121,11 @@
 											} else if (this.authVo.authContent == "ROLE_PAYUSER") {
 												htmls += '유료회원';
 											}
-											var url = '${CONTEXT_PATH_ADMIN}/member/info?userId=' + this.iuserVo.userId + '&member=member&pageNum=1';
+											var url2 = '${CONTEXT_PATH_ADMIN}/member/info?userId=' + this.iuserVo.userId + '&member=member&pageNum=1';
 											        
 											htmls += '</td>';
 											htmls += '<td class="table_indigo_text">'
-													+ '<a href="' + url + '" target="_blank">'
+													+ '<a href="' + url2 + '" target="_blank">'
 													+ this.iuserVo.userNickname
 													+ '</td>';
 											htmls += '<td class="table_blue_text">'
