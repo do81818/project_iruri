@@ -49,11 +49,10 @@ public class MainController {
 		return "/main";
 	}
 	
-	@ResponseBody
-	@RequestMapping("/test")
-    public List<IClassVO> test() {
+	@RequestMapping("/search_result")
+    public String test() {
     
-	    return iClassService.mainPageChallengeList();
+	    return "/search_result";
 	}
 	
 

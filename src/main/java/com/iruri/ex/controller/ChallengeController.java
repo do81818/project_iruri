@@ -297,6 +297,8 @@ public class ChallengeController {
     @ResponseBody
     public void joinCheck(@RequestParam("classId") int classId, @CurrentUser IUserVO vo, HttpServletResponse response) throws IOException {
         
+        vo = vo == null ? new IUserVO() : vo;
+        
         int check = challengeService.getUserJoinChallengeListCheck(classId, vo.getUserId());
     
         if(check == 0) {

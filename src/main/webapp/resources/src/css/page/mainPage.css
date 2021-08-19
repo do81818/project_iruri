@@ -9,9 +9,15 @@
 
 /* 배너 */
 .mainPage__banner {
-  width: 1200px;
   margin: 0 auto;
-  max-height: 680px;
+}
+
+.mainPage__banner .carousel-control-prev {
+  left: 120px;
+}
+
+.mainPage__banner .carousel-control-next {
+  right: 120px;  
 }
 
 /* 챌린지 */
@@ -237,4 +243,11 @@
   position: absolute;
   width: 360px;
   height: 502px;
+}
+
+#ch-plugin-launcher {
+  width: 100px !important;
+  height: 100px !important;
+  background-size: contain!important;
+  background-repeat: no-repeat;  
 }
