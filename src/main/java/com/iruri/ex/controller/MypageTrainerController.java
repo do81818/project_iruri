@@ -21,6 +21,7 @@ import com.iruri.ex.security.CurrentUser;
 import com.iruri.ex.service.IClassService;
 import com.iruri.ex.service.IUserService;
 import com.iruri.ex.service.MypageTrainerService;
+import com.iruri.ex.vo.BoardVO;
 import com.iruri.ex.vo.IClassVO;
 import com.iruri.ex.vo.ICommentVO;
 import com.iruri.ex.vo.IUserVO;
@@ -121,7 +122,6 @@ public class MypageTrainerController {
     }
 
     // 수익
-    
     @RequestMapping("/mypage/trainer/profit")
     public String mypageProfit(Principal principal, Model model) {
         log.info("profit() ... ");
@@ -272,6 +272,54 @@ public class MypageTrainerController {
         // 트레이너 개설 클래스 리스트
         result.put("commentList", mypageTrainerService.ClassBuyUserCommentList(userIdInput,classId));
         
+        return ResponseEntity.ok(result);
+    }
+    
+    // 클래스 댓글조회
+    @RequestMapping("/mypage/trainer/classReply")
+    public String mypageclassReply(@CurrentUser IUserVO vo, Model model) {
+        log.info("classReply() ... ");
+        
+        // 유저정보 받기
+        model.addAttribute("user", vo);
+        
+        int userId = vo.getUserId();
+        //트레이너의 운영중인 클래스
+        int countMypageTrainerClass =mypageTrainerService.countMypageTrainerClass(userId);
+        model.addAttribute("countMypageTrainerClass", countMypageTrainerClass);
+        
+        // 트레이너 총수익
+        int trainerProfit = mypageTrainerService.trainerProfit(userId);
+        int trainerProfitMan = trainerProfit/10000;
+        model.addAttribute("trainerProfitMan", trainerProfitMan);
+        
+        return "mypage_trainer/mypage_trainer_class_comment";
+    }
+    
+    // 클래스 댓글조회
+    @ResponseBody
+    @GetMapping("/ajax/mypage/classReply")
+    public ResponseEntity<HashMap<String, Object>> mypageclassReplyAjax(@CurrentUser IUserVO vo, @RequestParam("pageNum") int pageNum) {
+        log.info("mypageTrainerProfit");
+        // 3개의 리스트
+        Criteria cri = new Criteria(pageNum, 3);
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        int userId = vo.getUserId();
+        log.info("유저아이디: " + userId);
+
+        int total = mypageTrainerService.countReply(cri, userId);
+        log.info("토탈: " + total);
+
+        // 클래스 댓글 리스트
+        List<BoardVO> ReplyList = mypageTrainerService.classReplyList(cri, userId);
+        result.put("ReplyList", ReplyList);
+
+        log.info("리스트: " + ReplyList);
+        
+        result.put("pageMaker", new PageVO(cri, total));
+
         return ResponseEntity.ok(result);
     }
    
