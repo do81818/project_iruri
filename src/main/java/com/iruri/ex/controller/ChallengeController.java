@@ -190,46 +190,50 @@ public class ChallengeController {
     }
 
     // 챌린지 개설 폼 작성 후 입력 (챌린지 등록)
+    @ResponseBody
     @PostMapping(value = "/iruri/insert_challenge", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     //, method = RequestMethod.POST
-    public String c_make_form2(@RequestParam("imageCheck") String imageCheck, MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo) {
+    public void c_make_form2( MultipartFile uploadFile, IClassVO iClassVO, @CurrentUser IUserVO vo, HttpServletResponse response) throws IOException {
         log.info("challenge_make_form()...");
 
         log.info("upload File Name: " + uploadFile.getOriginalFilename());
         log.info("upload File Size: " +uploadFile.getSize());            
+
+          
+        String uploadFolder = "C:\\upload";
+        String uploadFileName = uploadFile.getOriginalFilename();
         
-        if(imageCheck.equals("customImage")) {
-            String uploadFolder = "C:\\upload";
-            String uploadFileName = uploadFile.getOriginalFilename();
-            
-            uploadFileName = uploadFileName
-                    .substring(uploadFileName.lastIndexOf("\\") + 1); 
-            
-            UUID uuid = UUID.randomUUID();
-            uploadFileName = uuid.toString() + "_" + uploadFileName;
+        uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1); 
+        
+        UUID uuid = UUID.randomUUID();
+        uploadFileName = uuid.toString() + "_" + uploadFileName;
 
-            iClassVO.setClassImage(uploadFileName);
-
-            try {
-                File saveFile = new File(uploadFolder, uploadFileName);
-                uploadFile.transferTo(saveFile);
-                
-                if(imageController.checkImageType(saveFile)) {
-                    FileOutputStream thumbnail = new FileOutputStream(
-                            new File(uploadFolder, "s_" + uploadFileName));
-                    
-                    Thumbnailator.createThumbnail(
-                            uploadFile.getInputStream(), thumbnail, 537, 490);
-                    
-                    thumbnail.close();
-                    
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-        } else {
+        
+        if(uploadFile.getSize() == 0) {
             iClassVO.setClassImage("default.png");
-        }
+        } else {
+            iClassVO.setClassImage(uploadFileName);                
+        } 
+        
+        try {
+            File saveFile = new File(uploadFolder, uploadFileName);
+            uploadFile.transferTo(saveFile);
+            
+            if(imageController.checkImageType(saveFile)) {
+                FileOutputStream thumbnail = new FileOutputStream(
+                        new File(uploadFolder, "s_" + uploadFileName));
+                
+                Thumbnailator.createThumbnail(
+                        uploadFile.getInputStream(), thumbnail, 360, 250);
+                
+                thumbnail.close();
+                
+                iClassVO.setIUserVO(vo);
+                challengeService.insertChallenge(iClassVO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
         
         // default.png 기본 이미지
         // classTitle 챌린지명      
@@ -241,11 +245,9 @@ public class ChallengeController {
         // classContent 상세정보
         // classImage 대표이미지
         
-        iClassVO.setIUserVO(vo);
-        challengeService.insertChallenge(iClassVO);
         log.info("iClassVO: " + iClassVO);
 
-        return "redirect:challengeList";
+        response.sendRedirect("/ex/iruri/challengeList");
     }
 
    

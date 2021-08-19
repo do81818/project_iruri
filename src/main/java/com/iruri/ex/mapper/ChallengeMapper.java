@@ -48,7 +48,8 @@ public interface ChallengeMapper {
     int getTotalCount_challengeEndList(Criteria cri);
     
     //관심 챌린지 
-    List<IClassVO> getListWithPaging_challengeLikeList(@Param("pageNum") int pageNum, @Param("amount") int amount, @Param("keyword") String keyword, @Param("userId") int userId);
+    List<IClassVO> getListWithPaging_challengeLikeList(@Param("pageNum") int pageNum, 
+            @Param("amount") int amount, @Param("keyword") String keyword, @Param("userId") int userId);
     int getTotalCount_challengeLikeList(@Param("keyword") String keyword, @Param("userId") int userId);
     
     /*----------챌린지 상세페이지-----------*/
