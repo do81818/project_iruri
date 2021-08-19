@@ -283,7 +283,9 @@ public class MypageAdminController {
     // restUpdateBlacklist()  관리자 블랙리스트 수정
     @ResponseBody
     @PostMapping("ajax/update/blacklist")
-    public ResponseEntity<HashMap<String, Object>> restUpdateBlacklist(@RequestParam("userId") int userId, @RequestParam("number") String numberStr, @RequestParam("reason") String reason) {
+    public ResponseEntity<HashMap<String, Object>> restUpdateBlacklist(@RequestParam("userId") int userId, 
+            @RequestParam("number") String numberStr, @RequestParam("reason") String reason) {
+        
         HashMap<String, Object> result = new HashMap<>();
         log.info("restUpdateBlacklist()..");
         int number = 0;
@@ -434,7 +436,8 @@ public class MypageAdminController {
     // insertPoint_Admin() ModelAndView 관리자 포인트 등록
     @ResponseBody
     @PostMapping("ajax/member/info/pointInsert")
-    public ResponseEntity<HashMap<String, Object>> insertPoint_Admin(@Param("userId") int userId, @Param("pointState") String pointState, @Param("pointValue") int pointValue) {
+    public ResponseEntity<HashMap<String, Object>> insertPoint_Admin(@Param("userId") int userId, 
+            @Param("pointState") String pointState, @Param("pointValue") int pointValue) {
     	
     	HashMap<String, Object> result = new HashMap<>();
         log.info("insertPoint_Admin()..");

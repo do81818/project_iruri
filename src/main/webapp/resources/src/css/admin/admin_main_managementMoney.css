@@ -116,6 +116,7 @@
 
 .admin_monthly_sales>div {
 	flex: 75;
+	width: 400px;
 	position: relative; 
 	/* background-color: #ccc; */
     vertical-align: top;

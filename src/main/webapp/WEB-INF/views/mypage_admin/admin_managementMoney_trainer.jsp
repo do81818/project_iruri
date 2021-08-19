@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <script src="${RESOURCES_PATH}/src/js/admin_main.js" defer></script>
 
 <!------------------------ 트레이너 검색 --------------------------->
@@ -28,7 +30,7 @@
 		</div>
 		<div class="admin_monthly_sales">
 			<h3>월별매출</h3>
-			<div><canvas id="myChart" width="160" height="60"></canvas></div>
+			<div><canvas id="myChart"></canvas></div>
 		</div>
 	</div>
 
@@ -210,11 +212,12 @@
 		                 }],
 		            },
 		            options: {
+		                maintainAspectRatio: false,
 		            	legend: {
 		                    display: false,
 		                },
 
-		                // responsive: false,
+		                //responsive: false,
 		                tooltips: {
 		                    enabled: false,
 		                },

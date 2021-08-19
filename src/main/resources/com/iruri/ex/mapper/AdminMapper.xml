@@ -141,24 +141,30 @@
 		]]>
 	</select>
 	
+	
+	
 	<!-- 2.페이징처리 리스트 -->
 	<select id="getReportListWithPaging"
 		resultMap="reportIuserAuthJoinMap">
 		<![CDATA[
 		select *
-			from (
-			select rownum rn, d.* from (select r.*, c.user_nickname, c.auth_content 
-			from report r,
-			    (select b.board_id, u.user_id, u.user_nickname, u.auth_content 
-				from board b, (select distinct iuser.user_id as user_id, iuser.user_nickname as user_nickname, 
-				                authority.auth_content as auth_content
-				     from authority, iuser 
-				     where authority.user_id = iuser.user_id) u
-				where b.user_id = u.user_id order by b.board_id desc) c
-				where r.board_id = c.board_id order by report_id desc) d
-			where rownum <= #{pageNum} * #{amount}
+		from (
+		select rownum rn, li.*
+		from (
+			select r.report_id, r.board_id, r.report_content, b.user_id, u.user_nickname, a.auth_content
+			from report r
+			inner join board b
+			on r.board_id = b.board_id
+			inner join iuser u
+			on u.user_id = b.user_id
+			inner join authority a
+			on u.user_id = a.user_id
+			order by r.report_id desc
+		) li
+		where rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} - 1) * #{amount}
+
 		]]>
 	</select>
 	
