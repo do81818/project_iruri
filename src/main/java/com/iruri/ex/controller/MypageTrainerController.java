@@ -41,7 +41,8 @@ public class MypageTrainerController {
     IClassService iClassService;
     @Autowired
     MypageTrainerService mypageTrainerService;
-    // 마이페이지로 이동
+    
+    //---- 트레이너 마이페이지
     @RequestMapping("/mypage/trainer")
     public String mypageT(@CurrentUser IUserVO vo, Model model) {
         log.info("main() ... ");
@@ -79,18 +80,15 @@ public class MypageTrainerController {
         log.info("토탈: " + total);
 
         List<IClassVO> list = iClassService.mypageTrainerClassList(cri, userId);
-        // ajax 로 페이징 처리가 되어 다중값이 처리가 안됨-> 해결방법 나중에 생각하기!!!!!!!!!!!!!!!!!!!!
+        // ajax 로 페이징 처리가 되어 다중값이 처리가 안됨
         result.put("list", list);
-
         
         log.info("리스트: " + list);
 
         result.put("pageMaker", new PageVO(cri, total));
-
+        // 다중 값 처리를 위해 클래스 리스트를 받아옴
         List<IClassVO> classList = iClassService.classList(vo.getUserId());
         result.put("jebal", classList);
-
-        
         return ResponseEntity.ok(result);
     }
 

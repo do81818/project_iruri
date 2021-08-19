@@ -191,6 +191,7 @@ from buy where class_id in (select class_id from iclass where user_id = #{userId
 (select buy_id from buy where class_id in (select class_id from iclass where user_id = #{userId})))) FROM DUAL
 		]]>
 	</select>
+	
 <!-- 	
 
 	트레이너의 월별 수익 뽑기 

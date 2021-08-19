@@ -3,8 +3,9 @@
     display: flex;
 }
 .pt_profit_graph{
-   flex: 4;
+   /* flex: 4; */
    /* background-color: #dffffd; */
+   width: 450px;
    height: 300px;
    padding: 50px;
    position: relative;

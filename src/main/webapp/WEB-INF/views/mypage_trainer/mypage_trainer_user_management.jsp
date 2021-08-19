@@ -55,19 +55,19 @@
 					$(list).each(function() {
 						// 테이블 시작
 						htmls += '<table class="management_table">';
-						console.log("너머니"+ this.classId );
+						console.log()
 						// 클래스 상태/제목/인원수	
 						htmls += '<tr>'
-							+ '<a href="/ex/iruri/ptClassDetails?classId='+ this.classId +'"><td class="pt_title">'
+							+ '<a href="/ex/iruri/ptClassDetails?classId='+this.classId+'"><td class="pt_title">'
 							+ '<span class="title_icon-red">'
 							+ this.classState
 							+ '</span>&nbsp;'
 
-							+ this.classTitle
+							+ '<a href="/ex/iruri/ptClassDetails?classId='+this.classId+'">'+this.classTitle+'</a>'
 							+ '&nbsp;(총<span>'
 							+ this.classJoinMember
 							+ '</span>명)'
-							+ '</td></a</tr>';
+							+ '</td></tr>';
 						
 
 						// 유저 코멘트
@@ -214,7 +214,9 @@
 				var htmls2 = '';
 			    
 				
+				
 				htmls2 += '<button type="button" onclick="javascript:insertUserComment('+ userId + ',' + classId +')">입력</button>';
+				
 				
 				
 				if(commentList.length < 1) {
@@ -241,7 +243,13 @@
 		})
 	}
 
-	function insertUserComment(userId, classId) {
+	function insertUserComment(userId
+	    
+	   /*  htmls += '<input type="hidden" name="classId_'+ classId +'_'+ userInfo[i].iuserVo.userId + '" value="'+ classId + '">';
+		htmls += '<input type="hidden" name="userId_'+ classId +'_'+ userInfo[i].iuserVo.userId + '" value="'+ userInfo[i].iuserVo.userId + '">'; */
+	   /*  
+	    var userId = $('input[name=userId_'+ classId +'_'+ userId + ']').val();
+		var classId = $('input[name=classId_'+ classId +'_'+ userId + ']').val(); */, classId) {
 	    
 	   /*  htmls += '<input type="hidden" name="classId_'+ classId +'_'+ userInfo[i].iuserVo.userId + '" value="'+ classId + '">';
 		htmls += '<input type="hidden" name="userId_'+ classId +'_'+ userInfo[i].iuserVo.userId + '" value="'+ userInfo[i].iuserVo.userId + '">'; */
@@ -339,9 +347,7 @@
 
 
 	<!-- 회원관리 -->
-	<div class="pt_user_management">
-		
-	</div>
+	<div class="pt_user_management"></div>
 
 	<div class="page_nation">
 	</div>

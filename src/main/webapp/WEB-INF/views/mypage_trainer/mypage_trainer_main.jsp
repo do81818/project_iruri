@@ -34,7 +34,7 @@
 				console.log("원래리스트");
 				console.log(list);
 				var jebal = result['jebal'];
-				console.log("제발리스트");
+				console.log("복사하기 위한 리스트");
 				console.log(jebal); 
 				var pagination = result['pageMaker'];
 				var htmls = ''; 

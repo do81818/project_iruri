@@ -41,14 +41,14 @@
 
 						<div>
 							<div class="title">클래스명</div>
-							<input type="text" name="classTitle" required>
+							<input type="text" name="classTitle" required autocomplete="off">
 						</div>
 
 						<div>
 							<div class="title">운동종류</div>
 
 							<div class="exerciseList">
-								<input id="EList1" type="checkbox" name="exerciseKind" value="헬스">
+								<input id="EList1" type="checkbox" name="exerciseKind" value="헬스" >
 								<label for="EList1">
 									<i class="iruri-check-no-icon"></i>
 									<span>헬스</span>
@@ -78,7 +78,7 @@
 
 						<div>
 							<div class="title">준비물</div>
-							<input type="text" name="classNeed" required>
+							<input type="text" name="classNeed" required autocomplete="off">
 						</div>
 
 						<div>
@@ -107,9 +107,9 @@
 							<div class="title">운동기간</div>
 
 							<div class="exerciseTerm">
-								<input type="text" id="sDate" name="classStartDate" required>
+								<input type="text" id="sDate" name="classStartDate" required autocomplete="off">
 								<span>&nbsp - &nbsp</span> 
-								<input type="text" id="eDate" name="classEndDate" required>
+								<input type="text" id="eDate" name="classEndDate" required autocomplete="off">
 							</div>
 						</div>
 
@@ -159,7 +159,7 @@
 							<div class="title">운동시간</div>
 
 							<div class="exerciseTime">
-								<input type="text" name="classTime" required>
+								<input type="text" name="classTime" required autocomplete="off">
 								<span>&nbsp분&nbsp</span>
 							</div>
 						</div>
@@ -195,7 +195,7 @@
 							<div class="title">가격</div>
 
 							<div class="exercisePrice">
-								<input type="text" name="classPrice" required>
+								<input type="text" name="classPrice" required autocomplete="off">
 								<span>&nbsp원&nbsp</span> 
 							</div>
 						</div>
