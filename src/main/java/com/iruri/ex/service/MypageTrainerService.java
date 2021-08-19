@@ -24,10 +24,9 @@ public interface MypageTrainerService {
     // 총수익
     int trainerProfit(int userId);
     
-    // 월 수익 리스트
-    //int monthProfit(int userId);
+    // 월 수익 리스트    
     int getTotalCount_monthProfit(Criteria cri, int userId);
-   // List<ProfitVO> monthProfitList(Criteria cri, int userId);
+   
     List<ProfitVO> monthProfitList(int userId);
     
     // 트레이너 수익 리스트

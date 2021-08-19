@@ -34,7 +34,7 @@
 				console.log("원래리스트");
 				console.log(list);
 				var jebal = result['jebal'];
-				console.log("제발리스트");
+				console.log("복사하기 위한 리스트");
 				console.log(jebal); 
 				var pagination = result['pageMaker'];
 				var htmls = ''; 
@@ -58,12 +58,12 @@
 						
 						// src="../image/360-250.png"
 						htmls +=	'<div class="pt_card">';
-						htmls += 		'<div class="pt_image_and_mark">';
+						htmls += 		'<a href="/ex/iruri/ptClassDetails?classId='+ this.classId +'"><div class="pt_image_and_mark">';
 						htmls += 			'<img src="${CONTEXT_PATH}/iruri/display?fileName='+this.classImage + '" alt="" class="pt_image">';
 						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
-						htmls += 		'</div>';
+						htmls += 		'</div></a>';
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
+						htmls +=		'<a href="/ex/iruri/ptClassDetails?classId='+ this.classId +'"><div class="pt_title">' +this.classTitle + '</div></a>';
 						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
 						htmls +=		'<div class="pt_icon">';
 						htmls +=			'<div class="pt_icon-blue">';
@@ -153,12 +153,12 @@
 					$(list).each(function() {
 						// src="../image/360-250.png"
 						htmls +=	'<div class="pt_card">';
-						htmls += 		'<div class="pt_image_and_mark">';
+						htmls += 		'<a href="/ex/iruri/ptClassDetails?classId='+ this.classId +'"><div class="pt_image_and_mark">';
 						htmls += 			'<img src="${CONTEXT_PATH}/iruri/display?fileName='+this.classImage + '" alt="" class="pt_image">';
 						htmls +=			'<div class="pt_mark">1:'+ this.classTotalMember+'</div>';
-						htmls += 		'</div>';
+						htmls += 		'</div></a>';
 						htmls +=		'<div class="trainer_name">${user.userNickname}</div>';
-						htmls +=		'<div class="pt_title">' +this.classTitle + '</div>';
+						htmls +=		'<a href="/ex/iruri/ptClassDetails?classId='+ this.classId +'"><div class="pt_title">' +this.classTitle + '</div></a>';
 						htmls +=		'<div class="pt_date">' + this.classStartDate + '~' + this.classEndDate + '</div>';
 						htmls +=		'<div class="pt_icon">';
 						htmls +=			'<div class="pt_icon-blue">';
@@ -233,7 +233,7 @@
 						</div>
 						<div class="user_detail">
 							<c:if test="${user.authList[0].authContent eq 'ROLE_TRAINER'}">
-								<div>트레이너입니다</div>
+								<div>나는 이루리의 자랑스러운 <span class = "mypagetrainer_bold">트레이너!</span></div>
 							</c:if>
 							<div>${user.userEmail}</div>
 							

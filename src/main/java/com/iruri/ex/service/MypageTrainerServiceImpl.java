@@ -34,7 +34,11 @@ public class MypageTrainerServiceImpl implements MypageTrainerService {
  // 수익---------------------------------------------------
     // 총수익
     public int trainerProfit(int userId) {
+        try {
         return mypageTrainerMapper.trainerProfit(userId);
+    } catch (Exception e) {
+        return 0;
+    }
     }
     
     // 이달의 수익

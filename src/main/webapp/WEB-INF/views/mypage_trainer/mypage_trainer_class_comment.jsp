@@ -46,9 +46,9 @@
 						htmls +='<div class="ing_red">';
 						htmls += this.iclassList[0].classState; 
 						htmls +='</div>';
-						htmls +='<div class="class_title">';
+						htmls +='<a href="/ex/iruri/ptClassDetails?classId='+ this.iclassList[0].classId +'"><div class="class_title">';
 						htmls +=this.iclassList[0].classTitle; 
-						htmls +='</div>';
+						htmls +='</div></a>';
 						htmls +='</div>';
 
 						htmls +='<div class="class_nickname_and_day">';
@@ -116,7 +116,7 @@
 						</div>
 						<div class="user_detail">
 							<c:if test="${user.authList[0].authContent eq 'ROLE_TRAINER'}">
-								<div>트레이너입니다</div>
+								<div>나는 이루리의 자랑스러운 <span class = "mypagetrainer_bold">트레이너!</span></div>
 							</c:if>
 							<div>${user.userEmail}</div>
 							

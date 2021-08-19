@@ -323,7 +323,7 @@ WHERE
 	<select id="getTotalClassAll" resultType="int">
 <![CDATA[
 SELECT count(*)
-FROM iclass ic, iuser iu, iuserinfo,
+FROM iclass ic, iuser iu,
 (
     SELECt exkind.*, exdate.exercise_date
     FROM
@@ -356,7 +356,7 @@ FROM
     FROM
     (
         SELECT ic.class_id, ic.class_totalmember, ic.class_image, iu.user_nickname, ic.class_title, ic.class_startdate, ic.class_enddate, ic.class_time, ic.class_level, exercise_kind, exercise_date, ic.class_price
-        FROM iclass ic, iuser iu, iuserinfo,
+        FROM iclass ic, iuser iu,
         (
             SELECt exkind.*, exdate.exercise_date
             FROM

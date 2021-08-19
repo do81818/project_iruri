@@ -162,7 +162,7 @@ FROM
     SELECT ROWNUM rn, ac.*
     FROM
     (
-       select b.*, c.class_title, c.class_state, u.user_nickname from board b,  iclass c,  iuser u
+       select b.*, c.class_id, c.class_title, c.class_state, u.user_nickname from board b,  iclass c,  iuser u
 where board_groupid in (SELECT class_id from iclass where user_id =#{userId})
 and b.board_groupid = c.class_id and b.category_id=6 and b.user_id = u.user_id
 and b.board_state = 'show'
@@ -181,7 +181,7 @@ WHERE rn > (#{cri.pageNum}-1) * #{cri.amount}
 	</select>
 
 	<!-- 트레이너의 총수익 뽑기  -->
-	<select id="trainerProfit" resultType="int">
+	<select id="trainerProfit" resultType="integer">
 		<![CDATA[
 	SELECT (select sum(buy_realpay + buy_point)
 from buy where class_id in (select class_id from iclass where user_id = #{userId}))
@@ -191,6 +191,7 @@ from buy where class_id in (select class_id from iclass where user_id = #{userId
 (select buy_id from buy where class_id in (select class_id from iclass where user_id = #{userId})))) FROM DUAL
 		]]>
 	</select>
+	
 <!-- 	
 
 	트레이너의 월별 수익 뽑기 
