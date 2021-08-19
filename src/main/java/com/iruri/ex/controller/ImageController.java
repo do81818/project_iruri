@@ -17,7 +17,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Controller
 public class ImageController {
-
     public boolean checkImageType(File file) {
         
         try {
@@ -26,8 +25,7 @@ public class ImageController {
             return contentType.startsWith("image");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        
+        }  
         return false;
     }
     
@@ -50,8 +48,7 @@ public class ImageController {
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        
+        }  
         return result;
     }
 }

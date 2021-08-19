@@ -101,18 +101,18 @@ body {
     float: right;
 }
 
-input[type=checkbox] {
+.ai_heart .heart_label input[type=checkbox] {
     display: none;
 }
 
-input[type=checkbox]+label {
+.ai_heart .heart_label input[type=checkbox]+label {
     display: inline-block;
     cursor: pointer;
-    background: url('../images/images/icon/heart_gray.png') center/48px 43px no-repeat;
+    background: url('/ex/resources/src/img/icon/heart_gray.png') center/48px 43px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
-    background-image: url('../images/images/icon/heart_red.png');
+.ai_heart .heart_label input[type=checkbox]:checked+label {
+    background-image: url('/ex/resources/src/img/icon/heart_red.png');
 }
 
 
@@ -142,7 +142,7 @@ input[type=checkbox]:checked+label {
     height: 48px;
     color: var(--iruri-blue-color);
     padding: 11px 7px;
-    background: white url('../images/images/icon/select_box_arrow.png') right/16px 16px no-repeat scroll;
+    background: white url('/ex/resources/src/img/icon/select_box_arrow.png') right/16px 16px no-repeat scroll;
     border-bottom: 1px solid var(--iruri-blue-color);
     font-size: 16px;
     cursor: pointer;
@@ -273,18 +273,18 @@ input[type=checkbox]:checked+label {
     float: right;
 }
 
-input[type=checkbox] {
+.ai_list_heart .heart_label input[type=checkbox] {
     display: none;
 }
 
-input[type=checkbox]+label {
+.ai_list_heart .heart_label input[type=checkbox]+label {
     display: inline-block;
     cursor: pointer;
-    background: url('../images/images/icon/heart_gray.png') center/43px 43px no-repeat;
+    background: url('/ex/resources/src/img/icon/heart_gray.png') center/43px 43px no-repeat;
 }
 
-input[type=checkbox]:checked+label {
-    background-image: url('../images/images/icon/heart_red.png');
+.ai_list_heart .heart_label input[type=checkbox]:checked+label {
+    background-image: url('/ex/resources/src/img/icon/heart_red.png');
 }
 
 
@@ -314,7 +314,7 @@ input[type=checkbox]:checked+label {
 .page_nation .prev {
     position: relative;
     top: 9px;
-    background: transparent url('../images/images/icon/icon_page_arrow_left.png') no-repeat center center;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_left.png') no-repeat center center;
     width: 14px;
     height: 14px;
     background-size: cover;
@@ -324,7 +324,7 @@ input[type=checkbox]:checked+label {
 .page_nation .next {
     position: relative;
     top: 9px;
-    background: transparent url('../images/images/icon/icon_page_arrow_right.png') no-repeat center center;
+    background: transparent url('/ex/resources/src/img/icon/icon_page_arrow_right.png') no-repeat center center;
     width: 14px;
     height: 14px;
     background-size: cover;

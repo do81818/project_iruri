@@ -1,7 +1,6 @@
 package com.iruri.ex.page;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,16 +26,11 @@ public class Criteria {
         this.amount = amount;
     }
     
-
-
     public Criteria(int pageNum, int amount, String keyword) {
         this.pageNum = pageNum;
         this.amount = amount;
         this.keyword = keyword;
-    }
-    
-    
-    
+    } 
 }
 
 

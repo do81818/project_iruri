@@ -328,9 +328,7 @@
 
 
                                   $('.c_certify_modal_submit').on('click', function(e) {
-                                  	  top.window.location.reload(true);
-                                     
-
+       
                                       var boardTitle = document.querySelector('input[name="boardTitle"]');
                                       var boardContent = document.querySelector('textarea[name="boardContent"]');
 
@@ -364,13 +362,14 @@
                                           dataType: 'json',
                                           success: function(result) {
                                               showUploadedFile(result);
-                         				      getlist(1);
+                         				     
                                           }  
                                         
-                                      });
-                                       window.opener.parent.location.reload(); // 부모창 새로고침 
-                                       
-                                    window.self.close(); // 현재 팝업 닫기 
+                                      }).always(function() {
+                                   	   getImagelist(1);
+                                	   $("#c_certify_modal").fadeOut();
+                                   })
+                                        
                                  });                                            
                              });
                           </script>
@@ -464,9 +463,7 @@
 	
 	
 	                                   $('.c_certify_modify_submit').on('click', function(e) {
-	                                   	top.window.location.reload(true);
-	                                      
-	                                   	
+	                   
 										   var boardId1 = document.querySelector('input[name="boardId"]');
 	                                       var boardTitle1 = document.querySelector('input[name="boardTitle1"]');
 	                                       var boardContent1 = document.querySelector('textarea[name="boardContent1"]');
@@ -501,19 +498,16 @@
 	                                           data: formData1,
 	                                           dataType: 'json',
 	                                           success: function(result) {
-	                                        	   getlist(1);
-	                                               showUploadedFile(result);
-	                                               
+	                                               showUploadedFile(result);     
+	                                               console.log("success");
 	                                           }  
-	                                         
-	                                       });
-	                                       
-	                                     window.opener.parent.location.reload(); // 부모창 새로고침 
-	                                     window.self.close(); // 현재 팝업 닫기
-	                                      
-	                                     
-	                                     
-	                                  });                                            
+	                                       }).always(function() {
+	                                    	   getImagelist(1);
+	                                    	   $("#c_certify_modify_modal").fadeOut();
+	                                       })
+	    
+	                                  });      
+	                                   
 	                              });
 	                           </script>
 	                           

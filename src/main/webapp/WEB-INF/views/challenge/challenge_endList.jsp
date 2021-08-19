@@ -174,33 +174,29 @@
 
                                             <form action="/" method="POST" id="form_wrap">
 
-                                                <ul class="c_make_modal_ul">
-                                                    <div class="input_check">
-                                                        <input type="checkbox" name="agree" id="check1" value="check1" required><label for="check1" class="c_make_modal_label">
-										<li>이 정보를 사용하여 시스템의 라이센스 계약, 환경 주의사항, 안전 주의사항, 하드웨어 보증서 및
-											보증 서비스를 이해하십시오.</li>
+                                               <ul class="c_make_modal_ul">
+                                                <div class="input_check">
+                                                    <input type="checkbox" name="agree" id="check1" value="check1" required><label for="check1" class="c_make_modal_label">
+										<li>챌린지는 참여 인원에 따라 혼자 또는 다수와 함께 할 수 있습니다.</li>
 
 									</label>
-                                                    </div>
+                                                </div>
 
-                                                    <div class="input_check">
-                                                        <input type="checkbox" name="agree" id="check2" value="check2" required><label for="check2" class="c_make_modal_label">
-										<li>이 정보를 사용하여 시스템의 라이센스 계약, 환경 주의사항, 안전 주의사항, 하드웨어 보증서 및
-											보증 서비스를 이해하십시오.</li>
-
-									</label>
-                                                    </div>
-
-                                                    <div class="input_check">
-                                                        <input type="checkbox" name="agree" id="check3" value="check3" required><label for="check3" class="c_make_modal_label">
-										<li>이 정보를 사용하여 시스템의 라이센스 계약, 환경 주의사항, 안전 주의사항, 하드웨어 보증서 및
-											보증 서비스를 이해하십시오.</li>
+                                                <div class="input_check">
+                                                    <input type="checkbox" name="agree" id="check2" value="check2" required><label for="check2" class="c_make_modal_label">
+										<li>챌린지 삭제는 개설 후 시작일 전까지 개설자 외 다른 참여자가 없을 경우에만 가능합니다.</li>
 
 									</label>
-                                                    </div>
+                                                </div>
 
-                                                </ul>
+                                                <div class="input_check">
+                                                    <input type="checkbox" name="agree" id="check3" value="check3" required><label for="check3" class="c_make_modal_label">
+										<li>챌린지가 시작되면 챌린지는 삭제할 수 없고, 중도 포기는 불가능 합니다.</li>
 
+									</label>
+                                                </div>
+
+                                            </ul>
                                                 <div class="modal_button">
 
                                                     <button class="c_make_modal_cancle" type="reset" onclick="check_cancle_click(this)">챌린지 개설 취소</button>

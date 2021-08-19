@@ -25,11 +25,8 @@
                         <!-- 달력 한글 추가를 위해 커스텀 -->
                         <script src="${RESOURCES_PATH}/src/js/challenge/datepicker.ko.js" defer></script>
 
-
-
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_check.js" defer></script>
                         <script src="${RESOURCES_PATH}/src/js/challenge/c_calendar.js" defer></script>
-
 
                         <link href="${RESOURCES_PATH}/src/css/page/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
 
@@ -49,9 +46,8 @@
                                 <div class="c_container">
                                     <div class="c_makeForm_insert">
 
-                                        <c:url value="/iruri/insert_challenge" var="insertChallenge" />
-                                        <form:form name="aa" class="c_makeForm" method="POST" action="${insertChallenge}" accept-charset="utf-8" enctype="multipart/form-data">
-
+                                        <form class="c_makeForm" method="POST" action="/ex/iruri/insert_challenge" accept-charset="utf-8" enctype="multipart/form-data">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <h2 class="c_makeForm_title">챌린지 개설</h2>
 
                                             <div class="c_name">
@@ -106,11 +102,12 @@
 
                                             <div class="c_img_direct">
                                                 <p>대표이미지 설정</p>
-                                                <input type="radio" id="direct" name="imageCheck" value="customImage"/>
-                                                <label for="direct" class="rd_label">직접 이미지 올리기</label> 
+                                                <!-- <input type="radio" id="direct" name="imageCheck" value="customImage"/>
+                                                <label for="direct" class="rd_label">직접 이미지 올리기</label>  -->
+                                                
                                                 <input type="file" name="uploadFile" accept=".jpg, .png" id="upload">
                                                 <label for="upload" class="file_upload"></label>
-                                                <span style="color: #999;">* 최대 5MB 크기의 jpg.png</span>
+                                                <span style="color: #999; position: relative; top: 10px;">* 최대 5MB 크기의 jpg.png</span>
                                             </div>
                                             
                                             <span class="uploadResult_makeForm">
@@ -118,20 +115,20 @@
                                             </span>
                                             
 
-                                            <div class="c_img_basic">
+                                            <!-- <div class="c_img_basic">
                                                 <p></p>
                                                 <input type="radio" id="basic" name="imageCheck" value="defaultImage" checked><label for="basic" class="rd_label">기본 이미지 사용</label>
-                                            </div>
+                                            </div> -->
 
                                             <div class="button">
                                                 <p></p>
                                                 <button class="c_make_button_cancle" type="reset"><a href="challengeList">챌린지등록 취소</a></button>
-                                                <button class="c_make_button_submit" type="submit"><a href="challengeList">챌린지등록</button>
+                                                <button class="c_make_button_submit" type="submit">챌린지등록</button>
                                             </div>
 
 
 
-                                        </form:form>
+                                        </form>
 
                                     </div>
 
