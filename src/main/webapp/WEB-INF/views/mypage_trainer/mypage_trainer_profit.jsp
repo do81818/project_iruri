@@ -343,7 +343,7 @@
 						</div>
 						<div class="user_detail">
 							<c:if test="${user.authList[0].authContent eq 'ROLE_TRAINER'}">
-								<div>당신은 이루리의 트레이너!!</div>
+								<div>나는 이루리의 자랑스러운 <span class = "mypagetrainer_bold">트레이너!</span></div>
 							</c:if>
 							<div>${user.userEmail}</div>
 

@@ -645,3 +645,10 @@
   .classbar a:active {
    color: var(--iruri-light-blue-color);
    }
+   
+   .mypagetrainer_bold{
+   font-family: 'Cafe24SsurroundAir';
+    font-size: 16px;
+    line-height: 25px;
+    color: var(--iruri-red-color);
+   }
